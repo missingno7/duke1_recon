@@ -349,34 +349,41 @@ def main() -> int:
     if a.skeleton:
         print(skeleton(ctx), end="")
         return 0
-    print(f"{ctx['id']}  {ctx['unit']}  {ctx['class']} ({ctx['confidence']})")
+    print(render(ctx), end="")
+    return 0
+
+
+def render(ctx: dict) -> str:
+    """The human-readable context report (also written into task packets)."""
+    out = [f"{ctx['id']}  {ctx['unit']}  {ctx['class']} ({ctx['confidence']})"]
     for e, v in ctx["locations"].items():
-        print(f"  {e}: {v['frame_offset']} linear {v['start']} size {v['size']} boundary {v['boundary']}")
+        out.append(f"  {e}: {v['frame_offset']} linear {v['start']} size {v['size']} boundary {v['boundary']}")
     ev = {k: v for k, v in ctx["mapping_evidence"].items() if k != "present"}
-    print(f"  mapping evidence: {ev}")
+    out.append(f"  mapping evidence: {ev}")
     if ctx["accepted"]:
-        print(f"  ACCEPTED: { {e: v['status'] for e, v in ctx['accepted'].items()} }")
-    print(f"  signature hints (heuristic): {ctx['signature_hints']}")
-    print("  calls:")
+        out.append(f"  ACCEPTED: { {e: v['status'] for e, v in ctx['accepted'].items()} }")
+    out.append(f"  signature hints (heuristic): {ctx['signature_hints']}")
+    out.append("  calls:")
     for c in ctx["calls"]:
         h = c.get("hints")
         hs = ""
         if h:
             hs = f" pascal={h['pascal']} params~{h.get('param_bytes', h.get('param_bytes_seen'))}B"
-        print(f"    {c['kind']:12s} {c['callee']}{hs}{' [accepted]' if c.get('accepted') else ''}")
-    print(f"  callers: {[(c['caller'], c['kind']) for c in ctx['callers']][:12]}")
+        out.append(f"    {c['kind']:12s} {c['callee']}{hs}{' [accepted]' if c.get('accepted') else ''}")
+    out.append(f"  callers: {[(c['caller'], c['kind']) for c in ctx['callers']][:12]}")
     if ctx["data"]:
-        print("  data (dn1-named; per-episode DGROUP offsets):")
+        out.append("  data (dn1-named; per-episode DGROUP offsets):")
         for nm, d in sorted(ctx["data"].items()):
             addrs = " ".join(f"{e}={v:04x}" if v is not None else f"{e}=?" for e, v in d["addresses"].items())
-            print(f"    {nm} {d['region']:4s} {addrs}  width {sorted(d['widths'])}{' indexed' if d['indexed'] else ''}")
+            out.append(f"    {nm} {d['region']:4s} {addrs}  width {sorted(d['widths'])}"
+                       f"{' indexed' if d['indexed'] else ''}")
     if ctx["experiments"]:
-        print(f"  experiments: {ctx['experiments']}")
+        out.append(f"  experiments: {ctx['experiments']}")
     if ctx["open_blockers"]:
-        print(f"  OPEN BLOCKERS: {ctx['open_blockers']}")
-    print(f"  listing ({ctx['episode_shown']}, frame offsets):")
-    print("\n".join(ctx["listing"]))
-    return 0
+        out.append(f"  OPEN BLOCKERS: {ctx['open_blockers']}")
+    out.append(f"  listing ({ctx['episode_shown']}, frame offsets):")
+    out.extend(ctx["listing"])
+    return "\n".join(out) + "\n"
 
 
 if __name__ == "__main__":

@@ -1,0 +1,32 @@
+#include <dos.h>
+extern int d_02fb;
+extern char d_a0fa;
+extern char d_d134;
+extern char d_d4c0;
+void pascal g1_0042(int a0);
+void pascal g2_3d8c(int a0, int a1, int a2);
+void pascal g2_37b6(char far *a0, int a1, int a2);
+void pascal g2_2870(int a0, int a1);
+void g2_01d5(void) {}
+/*@body*/
+void g2_0e98(void)
+{
+    d_a0fa = 0;
+    g1_0042(0x19);
+    g2_3d8c(2, 3, 2);
+    g2_37b6("Secret Tip: Find the key", 3, 7);
+    g2_37b6("that goes here and press", 3, 8);
+    g2_37b6("the UP ARROW.           ", 3, 9);
+    g2_37b6("      Press ENTER:      ", 3, 10);
+    enable();
+    do {
+        g2_2870(0x1a, 10);
+        d_d4c0 = 0;
+        d_d134 = 0;
+    } while (d_a0fa != 0x1c);
+    disable();
+    d_02fb = 0;
+    g2_01d5();
+}
+
+

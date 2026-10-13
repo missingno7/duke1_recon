@@ -247,16 +247,13 @@ def packet(fid: str, worker: str) -> Path:
         "result_schema": "result.json as described in PROMPT.md",
     }
     atomic_json(d / "task.json", snap)
-    (d / "context.txt").write_text(subprocess.run([sys.executable, str(ROOT / "tools" / "context.py"), fid],
-                                                  capture_output=True, text=True, cwd=ROOT).stdout)
+    (d / "context.txt").write_text(ctxmod.render(ctx))
     (d / "skeleton.c").write_text(ctxmod.skeleton(ctx))
     episode_note = ""
     if ctx["class"] in ("PARAMETERIZED", "EPISODE_SPECIFIC", "UNRESOLVED"):
         for e in ctx["locations"]:
             if e != "dn1":
-                (d / f"context-{e}.txt").write_text(subprocess.run(
-                    [sys.executable, str(ROOT / "tools" / "context.py"), fid, "--episode", e],
-                    capture_output=True, text=True, cwd=ROOT).stdout)
+                (d / f"context-{e}.txt").write_text(ctxmod.render(ctxmod.gather(fid, e)))
         episode_note = f"""
 ## Episode differences
 This function differs between episodes (class {ctx['class']}; see context-dn2.txt / context-dn3.txt).
@@ -336,13 +333,15 @@ Declarations and stub definitions first, then a line `/*@body*/`, then exactly t
     return d
 
 
-def wave(n: int, route: str, dry: bool) -> list:
+def wave(n: int, route: str, dry: bool, unit: str | None = None, routes: list | None = None) -> list:
     doc = plan()
     if doc["revision"]["canonical_dirty"]:
         print("WARNING: canonical files have uncommitted changes; packets record the dirty state")
     con = _db()
     leased = {r["id"] for r in con.execute("SELECT id FROM tasks WHERE status IN ('LEASED','RESULT')")}
-    picks = [r for r in doc["targets"] if r["route"] == route and f"fn-{r['function']}" not in leased][:n]
+    want = set(routes or [route])
+    picks = [r for r in doc["targets"] if r["route"] in want and f"fn-{r['function']}" not in leased
+             and (unit is None or r["unit"] == unit)][:n]
     out = []
     for k, r in enumerate(picks):
         worker = f"luna-{r['function']}"
@@ -441,6 +440,8 @@ def main() -> int:
     w.add_argument("n", type=int)
     w.add_argument("--route", default="GRINDABLE_C", choices=ROUTES)
     w.add_argument("--dry-run", action="store_true")
+    w.add_argument("--unit", help="only targets in this unit, e.g. G2_TEXT")
+    w.add_argument("--routes", nargs="+", choices=ROUTES, help="several routes at once")
     i = sub.add_parser("intake")
     i.add_argument("dirs", nargs="*")
     i.add_argument("--batch-out", help="append clean confirmed candidates (no review flags) as 'FUNCTION CANDIDATE' lines")
@@ -459,7 +460,7 @@ def main() -> int:
     elif a.cmd == "packet":
         print(rel(packet(a.function, a.worker)))
     elif a.cmd == "wave":
-        for x in wave(a.n, a.route, a.dry_run):
+        for x in wave(a.n, a.route, a.dry_run, a.unit, a.routes):
             print(json.dumps(x))
     elif a.cmd == "intake":
         clean = []

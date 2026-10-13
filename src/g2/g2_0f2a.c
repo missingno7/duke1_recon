@@ -1,0 +1,31 @@
+#include <dos.h>
+extern int d_02fb;
+extern char d_a0fa;
+extern char d_d134;
+extern char d_d4c0;
+void pascal g1_0042(int a0);
+void pascal g2_3d8c(int a0, int a1, int a2);
+void pascal g2_37b6(char far *a0, int a1, int a2);
+void pascal g2_2870(int a0, int a1);
+void g2_01d5(void) {}
+/*@body*/
+void g2_0f2a(void)
+{
+    d_a0fa = 0;
+    g1_0042(0x19);
+    g2_3d8c(2, 3, 2);
+    g2_37b6("Secret Tip: Press the UP", 3, 7);
+    g2_37b6("ARROW to read the notes.", 3, 8);
+    g2_37b6("                        ", 3, 8);
+    g2_37b6("      Press ENTER:      ", 3, 10);
+    enable();
+    do {
+        g2_2870(0x1a, 0x0a);
+        d_d4c0 = 0;
+        d_d134 = 0;
+    } while (d_a0fa != 0x1c);
+    disable();
+    d_a0fa = 0;
+    d_02fb = 0;
+    g2_01d5();
+}
