@@ -6,7 +6,7 @@ extern char d_02f7;
 extern char d_02f8;
 extern char d_02f9;
 /*@body*/
-void g2_205f(char far *filename, int unused)
+void g2_205f(char far *filename)
 {
     FILE *stream;
     stream = fopen(filename, "wb");

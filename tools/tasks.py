@@ -369,7 +369,7 @@ def intake(dirs: list) -> list:
             outcomes.append({"dir": rel(d), "outcome": "NO_RESULT"})
             continue
         try:
-            res = load_json(rp)
+            res = json.loads(rp.read_text(encoding="utf-8-sig"))   # PowerShell writes a BOM
             task = load_json(d / "task.json")
         except ValueError as exc:
             outcomes.append({"dir": rel(d), "outcome": "MALFORMED_RESULT", "error": str(exc)})

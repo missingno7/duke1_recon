@@ -7,7 +7,7 @@ TCC 2.0  -ml -Z -G -O -1- -f- -K      (wrapper adds -c -IINCLUDE)
 ```
 
 Origin: an external claim (lethal-guitar/Duke1Decomp `BUILD.BAT`), treated as a
-hypothesis and tested here. Every statement below is re-run by
+hypothesis and tested here. All switches except `-f-` now have discriminating evidence. Every statement below is re-run by
 `python tools/probe.py` from [evidence/compiler-rules.json](../evidence/compiler-rules.json).
 
 | Rule | Outcome | Evidence |
@@ -20,7 +20,7 @@ hypothesis and tested here. Every statement below is re-run by
 | FLAG-K | confirmed | without `-K`: `cbw` on char loads, `g2_276f`/`g2_01d5` stop matching |
 | FLAG-G | confirmed | without `-G`: `pop cx` replaces `inc sp; inc sp` in `g2_01d5` |
 | CPU-8086 | confirmed | with `-1`: `push imm` appears, `g1_006f` stops matching |
-| FLAG-Z | consistent, not discriminated | removing `-Z` changes none of the accepted functions yet |
+| FLAG-Z | confirmed | removing `-Z` breaks 68 of 170 accepted C functions (e.g. `g1_0042`, `g1_1247`, `g1_12ce`) |
 | Z-EFFECT | confirmed (object level) | with `-Z`, `a=b; c=b;` stores AX twice without reloading |
 | CALL-FORMS | confirmed (object level) | extern → far call (EXTDEF); earlier-defined or `static` (even forward-declared) → `push cs; call near` (no fixup); later-defined public → far call (own-segment fixup) |
 | PASCAL-CALLEE | confirmed | `g1_e92e` matches only as `pascal` |

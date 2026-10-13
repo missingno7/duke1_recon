@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-extern void far *d_b638;
+extern char far *d_b638;
 /*@body*/
 void pascal g2_3252(char far *filename)
 {

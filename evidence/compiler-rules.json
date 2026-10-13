@@ -94,23 +94,21 @@
   },
   {
    "id": "FLAG-Z",
-   "statement": "-Z (register load suppression) is part of the external Duke1Decomp profile. No accepted function yet changes when -Z is removed; status stays open until a discriminating function is matched.",
+   "statement": "-Z (register load suppression) is in effect: removing it makes 68 of 170 accepted C functions stop matching (scan of 2026-10-13); the rule re-checks a fixed sample.",
    "check": "flag",
    "args": {
     "functions": [
-     "g1_e92e",
-     "g1_1053",
-     "g2_276f",
-     "g1_0acc",
-     "g1_006f",
-     "g2_01d5",
-     "g1_2a1d"
+     "g1_0042",
+     "g1_1247",
+     "g1_12ce",
+     "g1_2a40",
+     "g1_3558"
     ],
     "remove": [
      "-Z"
     ]
    },
-   "outcome": "CONSISTENT_NOT_DISCRIMINATED"
+   "outcome": "CONFIRMED"
   },
   {
    "id": "Z-EFFECT",

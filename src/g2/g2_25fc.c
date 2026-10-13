@@ -6,7 +6,7 @@ extern char d_530b;
 extern char d_531b;
 extern void interrupt far (*d_a0f4)(void);
 extern char d_a8d8;
-extern int far *d_cbb5[];
+extern char far *d_cbb5[];
 extern char d_d579;
 extern int d_d718;
 /*@body*/
@@ -20,14 +20,14 @@ void interrupt g2_25fc(void)
         d_a8d8 = 1;
     }
 
-    if (d_cbb5[(unsigned char)d_531b][d_0f2a] == -1) {
+    if (((int far *)d_cbb5[(unsigned char)d_531b])[d_0f2a] == -1) {
         d_a8d8 = 0;
         d_d579 = 0;
         outportb(0x61, inportb(0x61) & 0xfd);
     }
 
     if (d_a8d8 != 0) {
-        period = d_cbb5[(unsigned char)d_531b][d_0f2a];
+        period = ((int far *)d_cbb5[(unsigned char)d_531b])[d_0f2a];
         if (period == 0 && d_0097 != 0) {
             outportb(0x61, inportb(0x61) & 0xfc);
         } else if (d_0097 != 0) {

@@ -3,7 +3,7 @@ extern int d_0b9f;
 extern unsigned char d_0ce1[];
 extern unsigned char d_0d04[];
 extern int d_5305;
-void pascal g2_385b(int a0, int a1, int a2) {}
+void pascal g2_385b(char a0, int a1, int a2) {}
 /*@body*/
 void g2_3f68(void)
 {

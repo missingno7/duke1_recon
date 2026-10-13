@@ -22,7 +22,7 @@ and [docs/proof-model.md](docs/proof-model.md) for exactly what is and is not pr
   in an x86 emulator at two load segments (`tools/oracle.py --crosscheck`).
 * **Toolchain identified with discriminating evidence:** Turbo C 2.0, large model,
   `-ml -Z -G -O -1- -f- -K`; `-O`, `-K`, `-G` and `-1-` are each falsified when
-  changed, `-Z` is consistent but not yet discriminated
+  changed, and `-Z` breaks 68 of 170 accepted functions when removed
   ([evidence/compiler-rules.json](evidence/compiler-rules.json), `tools/probe.py`).
 * **Census:** every code byte is accounted for as C0L startup (457 B), shared
   hand-written assembly (1,082 B, identical in all episodes), two first-party C
