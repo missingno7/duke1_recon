@@ -1,6 +1,6 @@
 extern unsigned int far *d_7729;
 /*@body*/
-int g1_3714(int a0, int a1, int a2)
+int g1_3714(int a0, int a1)
 {
     unsigned int far *p;
     unsigned int far *q;

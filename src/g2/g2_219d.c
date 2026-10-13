@@ -28,7 +28,7 @@ extern long d_68f8;
 void pascal g2_3d8c(int a0, int a1, int a2);
 void pascal g2_37b6(char far* a0, int a1, int a2);
 /*@body*/
-void pascal g2_219d(int a0)
+void pascal g2_219d(char a0)
 {
     char previous;
     FILE *stream;

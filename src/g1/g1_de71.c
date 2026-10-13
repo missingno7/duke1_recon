@@ -4,7 +4,7 @@ extern int d_040e;
 extern char d_530e;
 extern char d_c278;
 /*@body*/
-void g1_de71(char far *filename, char far *buffer, int unused)
+void g1_de71(char far *filename, char far *buffer)
 {
     FILE *fp;
 

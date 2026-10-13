@@ -3,7 +3,7 @@ extern int d_009b;
 extern int d_009d;
 extern int d_009f;
 /*@body*/
-int g1_35ee(register int a0, int a1, int a2, int a3)
+int g1_35ee(register int a0, int a1, int a2)
 {
     register int index;
     index = ((d_009b >> 4) << 7) + d_009f - a2 + 2;

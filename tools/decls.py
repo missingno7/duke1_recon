@@ -72,15 +72,26 @@ def collect() -> dict:
     return {"functions": fviews, "data": dviews}
 
 
+def _unit(v: dict) -> str:
+    return v["file"].split("/")[1] if v["file"].startswith("src/") else "?"
+
+
 def conflicts(views: dict) -> dict:
-    out = {"functions": {}, "data": {}}
-    for name, vs in views["functions"].items():
-        sigs = {(v["ret"], v["conv"], v["params"]) for v in vs}
-        if len(sigs) > 1:
-            out["functions"][name] = vs
-    for name, vs in views["data"].items():
-        if len({(v["type"], v["array"]) for v in vs}) > 1:
-            out["data"][name] = vs
+    """Conflicting views inside one translation unit (a unit has one declaration
+    per name).  Differences between G1 and G2 are legal C and occur in the
+    original (d_9682: int in G1, char in G2); they are listed under cross_unit."""
+    out = {"functions": {}, "data": {}, "cross_unit": {}}
+    for kind, key in (("functions", lambda v: (v["ret"], v["conv"], v["params"])),
+                      ("data", lambda v: (v["type"], v["array"]))):
+        for name, vs in views[kind].items():
+            units = defaultdict(set)
+            for v in vs:
+                units[_unit(v)].add(key(v))
+            bad = [v for v in vs if len(units[_unit(v)]) > 1]
+            if bad:
+                out[kind][name] = bad
+            elif len(set().union(*units.values())) > 1:
+                out["cross_unit"][name] = vs
     return out
 
 
@@ -103,7 +114,9 @@ def main() -> int:
     for name, vs in sorted(c["data"].items()):
         print(f"  CONFLICT {name}: " + "; ".join(f"{v['type']}{'[]' if v['array'] else ''} in {v['file']}" for v in vs))
     if not c["functions"] and not c["data"]:
-        print("  no conflicting views")
+        print("  no conflicting views inside a unit")
+    for name, vs in sorted(c["cross_unit"].items()):
+        print(f"  cross-unit {name}: " + "; ".join(sorted({f"{v.get('type') or v.get('params')} in {_unit(v)}" for v in vs})))
     return 0
 
 

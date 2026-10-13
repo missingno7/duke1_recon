@@ -7,6 +7,8 @@
     python tools/tasks.py intake [WORKER_DIR ...]  validate results, re-verify claims fresh, record
     python tools/tasks.py status
     python tools/tasks.py release FUNCTION         reopen a leased task (dead or cancelled worker)
+    python tools/tasks.py resume FUNCTION --session ID   re-lease a task whose worker is resumed with
+                                                   FOLLOWUP.md (archives result.json as result-N.json)
 
 The supervisor owns canonical integration: intake never promotes, it prints
 the promote command for each re-verified EQUAL candidate.  Packets are
@@ -42,6 +44,10 @@ REVIEW_PATTERNS = [
     (r"typedef\s+[\w\s]+\bFILE\b", "fake FILE typedef: include <stdio.h>"),
     (r"MK_FP\s*\(\s*d_", "far pointer rebuilt from two globals: declare one far pointer"),
     (r"\bgoto\b", "goto: check whether structured loops produce the same emission"),
+    (r"\(\s*[\w\s]+\b(near|far)?\s*\*\s*\)\s*\(?\s*(0x[0-9a-fA-F]{3,4}\b|[A-Z_][A-Z0-9_]*BASE\b)",
+     "pointer built from a numeric address: declare the object (extern T d_XXXX[];)"),
+    (r"\(\s*\w[\w\s]*\(\s*far\s*\*\s*\)\s*\([^)]*\)\s*\)\s*(g[12]|asm)_[0-9a-f]{4}",
+     "function-pointer cast at a call site: fix the callee's declaration"),
     (r"\b(junk|pad|dummy|unused)\w*\b", "possible steering local/field"),
     (r"(?m)^\s*\w[\w\s\*]*\b(g[12]|asm)_[0-9a-f]{4}\s*\(\s*\)\s*;", "old-style declaration: use a prototype"),
     (r"(?m)^\s*(void|int|char|long)\s+(fopen|fclose|fread|fwrite|fprintf|printf|putw|getw|strcpy|strlen|"
@@ -163,6 +169,8 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
 - Arrays of structs in DGROUP are addressed through ES:BX built from DS (`mov ax,ds; mov es,ax`)
   even for plain `table[i].field = x` in the large model.
 - `inportb/outportb/disable/enable` from <dos.h> are inline intrinsics (IN/OUT/CLI/STI).
+- Never write a data address as a number (`(T near *)0xc01e`, a per-episode #define BASE):
+  declare the object `extern T d_c01e[];` -- the comparer binds it in every episode.
 - Globals are named by their DN1 DGROUP offset: `extern int d_4ed4;`.  Other functions are
   named by logical id (g1_XXXX, g2_XXXX, asm_XXXX).  Library functions use their real names.
 - String literals in your file are verified by content at the address the original uses; prefer
@@ -176,8 +184,17 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
 - Give each global its real type: a 32-bit object is `extern long d_XXXX;`, not two ints viewed
   through a cast or a #define.  A far pointer global is `extern char far *d_XXXX;`, not MK_FP of
   two ints.
-- Write structured C (for/while/if/switch).  Use goto only if you MEASURED that the structured
-  form emits different code, and say so in notes.  `switch (x)` with case labels starting at N
+- Write structured C (for/while/if/else-if/switch/continue).  Turbo C emits the same jumps for
+  `if (...) {...} else if (...)`, `continue` and `||`/`&&` as for hand-written goto chains: the
+  supervisor rewrote 6 of 7 goto submissions as plain structured C with identical emission.
+  Use goto only if you MEASURED that the structured form emits different code, and name the
+  structured receipt and its size in notes.  Before keeping a goto chain such as
+  `if (a) goto X; if (b) goto Y; X: ...; continue; Y: ...`, try `if (a || !b) { X...; continue; }
+  Y...`: Turbo C emits the same short-circuit jumps for || and && as for the goto chain.
+  Unreachable code in the original (a jmp over a statement) is `if (0) statement;`: Turbo C 2.0
+  keeps constant-false bodies behind an unconditional jump.
+  An unused parameter changes nothing in the callee but breaks callers: if every caller passes
+  two arguments, the function takes two.  `switch (x)` with case labels starting at N
   compiles to `sub ax,N`; do not write `switch (x - N)`.
 - Use prototypes, never old-style `int f();` declarations.  Lines in skeleton.c marked
   `accepted` repeat declarations already proven in other functions: keep them identical.
@@ -448,6 +465,9 @@ def main() -> int:
     sub.add_parser("status")
     rl = sub.add_parser("release")
     rl.add_argument("function")
+    rs = sub.add_parser("resume")
+    rs.add_argument("function")
+    rs.add_argument("--session", required=True)
     a = ap.parse_args()
     if a.cmd == "plan":
         doc = plan()
@@ -482,6 +502,25 @@ def main() -> int:
             con.execute("UPDATE tasks SET status='OPEN', worker=NULL, packet=NULL, updated=? WHERE id=?",
                         (time.time(), f"fn-{a.function}"))
         print(f"fn-{a.function} released")
+    elif a.cmd == "resume":
+        import db
+        con = _db()
+        row = con.execute("SELECT packet, worker FROM tasks WHERE id=?", (f"fn-{a.function}",)).fetchone()
+        if not row or not row["packet"]:
+            ap.error(f"fn-{a.function} has no packet")
+        d = ROOT / row["packet"]
+        if not (d / "FOLLOWUP.md").exists():
+            ap.error(f"write {rel(d)}/FOLLOWUP.md first")
+        res = d / "result.json"
+        if res.exists():
+            n = 1
+            while (d / f"result-{n}.json").exists():
+                n += 1
+            res.replace(d / f"result-{n}.json")
+        with db.tx(con):
+            con.execute("UPDATE tasks SET status='LEASED', updated=? WHERE id=?", (time.time(), f"fn-{a.function}"))
+        print(f"python ~/.codex-dashboard/cx.py run -n {row['worker']}-r --resume {a.session} "
+              f"< {(d / 'FOLLOWUP.md').as_posix()}")
     elif a.cmd == "status":
         con = _db()
         for r in con.execute("SELECT route, status, COUNT(*) n FROM tasks GROUP BY route, status ORDER BY route"):

@@ -1,7 +1,7 @@
 #include <stdio.h>
 extern int d_0410;
 /*@body*/
-void g1_dfb2(char far *filename, void far *buffer, int unused)
+void g1_dfb2(char far *filename, void far *buffer)
 {
     FILE *stream;
     stream = fopen(filename, "wb");

@@ -6,7 +6,7 @@ void pascal g1_0b85(long a0) {}
 /* goto kept: the structured form (testing *p == 0x1800 || p[128] == 0x1800 first)
    emits 10 more bytes; measured 2026-10-13. */
 /*@body*/
-int g1_367e(register int a0, register int a1, int a2)
+int g1_367e(register int a0, register int a1)
 {
     int far *p;
 

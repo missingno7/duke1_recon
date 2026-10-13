@@ -24,7 +24,7 @@ extern int d_a0f8;
 extern int d_c295;
 extern int d_cc82;
 /*@body*/
-void pascal g1_0151(int a0)
+void pascal g1_0151(char a0)
 {
     FILE *stream;
     char *name;
