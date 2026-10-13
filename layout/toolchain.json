@@ -236,6 +236,13 @@
    "sha256": "d7c45c2c325457f1eb7589b99b0b7cfe703597f09c9e47b4e2b0e9d06ce947c3"
   }
  },
+ "packer": {
+  "executable": "C:/tools/lzexe-0.91/files/LZEXE.EXE",
+  "note": "Hangs under MS-DOS Player (Turbo Pascal runtime); runs headless in DOSBox-X. Sorts relocations itself, so the input relocation order does not affect the output.",
+  "product": "LZEXE 0.91 (bellard.org/lzexe/lzexe91.zip, sha256 6d5c2caa...5a40)",
+  "runner": "independent_runner (DOSBox-X)",
+  "sha256": "dd953e9d5634327202d18a262767240a67c7cffabd358af364f34a51551af20e"
+ },
  "runner": {
   "args": [
    "-e",

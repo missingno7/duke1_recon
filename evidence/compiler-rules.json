@@ -145,6 +145,12 @@
     "prefix": 6
    },
    "outcome": "CONFIRMED"
+  },
+  {
+   "id": "REPACK-REPRODUCIBLE",
+   "statement": "The pinned LZEXE 0.91 (bellard.org/lzexe/lzexe91.zip) run headless in DOSBox-X turns the canonical unpacked image of each episode back into the byte-identical original DN?.EXE. Packed-file equality therefore follows from unpacked-image equality (image bytes, relocation set, header fields); the TLINK relocation order is irrelevant because LZEXE sorts relocations.",
+   "check": "repack",
+   "outcome": "CONFIRMED"
   }
  ]
 }

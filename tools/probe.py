@@ -196,7 +196,16 @@ def check_link_path(args: dict) -> dict:
     return {"outcome": "CONFIRMED" if ok else "FALSIFIED", "facts": facts}
 
 
-CHECKS = {"flag": check_flag, "link_path": check_link_path, "variant": check_variant, "call_forms": check_call_forms,
+def check_repack(args: dict) -> dict:
+    """LZEXE 0.91 (pinned, DOSBox-X) reproduces every original packed file
+    from the canonical unpacked image."""
+    import repack
+    rows = repack.oracle_check()
+    ok = all(r["equal"] for r in rows.values())
+    return {"outcome": "CONFIRMED" if ok else "FALSIFIED", "rows": rows}
+
+
+CHECKS = {"flag": check_flag, "link_path": check_link_path, "repack": check_repack, "variant": check_variant, "call_forms": check_call_forms,
           "z_effect": check_z_effect, "startup_model": check_startup_model,
           "c0_reassembly": check_c0_reassembly, "runtime": check_runtime, "relocs_sorted": check_relocs_sorted}
 

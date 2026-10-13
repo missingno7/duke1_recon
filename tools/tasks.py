@@ -34,6 +34,26 @@ ROUTES = ("GRINDABLE_C", "EPISODE_PARAMETERIZED", "EPISODE_SPECIFIC", "ASM_RECON
           "STRUCTURAL_EVIDENCE", "BLOCKED_BY_SHARED_MECHANISM", "NEEDS_REVIEW", "ACCEPTED")
 RESULT_STATUSES = ("EQUAL_CANDIDATE", "PARTIAL_EQUAL", "NEAR", "BLOCKED", "NEEDS_EVIDENCE")
 
+# Source forms that compiled to the right bytes before but were not plausible
+# historical source (docs/waves.md).  Intake flags them for supervisor review.
+REVIEW_PATTERNS = [
+    (r"#\s*define\s+\w+\s+\(?\s*\*\s*\(", "macro view of memory (#define x (*(T *)&...)): give the global its real type"),
+    (r"\(\s*\w[\w\s]*\*\s*\)\s*&\s*d_[0-9a-f]{4}\s*\+", "address computed as an offset from another symbol"),
+    (r"typedef\s+[\w\s]+\bFILE\b", "fake FILE typedef: include <stdio.h>"),
+    (r"MK_FP\s*\(\s*d_", "far pointer rebuilt from two globals: declare one far pointer"),
+    (r"\bgoto\b", "goto: check whether structured loops produce the same emission"),
+    (r"\b(junk|pad|dummy|unused)\w*\b", "possible steering local/field"),
+    (r"(?m)^\s*\w[\w\s\*]*\b(g[12]|asm)_[0-9a-f]{4}\s*\(\s*\)\s*;", "old-style declaration: use a prototype"),
+    (r"(?m)^\s*(void|int|char|long)\s+(fopen|fclose|fread|fwrite|fprintf|printf|putw|getw|strcpy|strlen|"
+     r"outport|inport|delay|setvect|getvect)\s*\(", "hand-written library prototype: include the Turbo C header"),
+]
+
+
+def review_flags(text: str) -> list:
+    import re
+    t = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
+    return [msg for rx, msg in REVIEW_PATTERNS if re.search(rx, t)]
+
 
 def revision() -> dict:
     def git(*a):
@@ -149,7 +169,15 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
 - Use the pinned Turbo C headers for library calls (`#include <stdio.h>`, <dos.h>, ...), not
   hand-written prototypes or fake typedefs such as `typedef char FILE`.
 - Give each global its real type: a 32-bit object is `extern long d_XXXX;`, not two ints viewed
-  through a cast or a #define.
+  through a cast or a #define.  A far pointer global is `extern char far *d_XXXX;`, not MK_FP of
+  two ints.
+- Write structured C (for/while/if/switch).  Use goto only if you MEASURED that the structured
+  form emits different code, and say so in notes.  `switch (x)` with case labels starting at N
+  compiles to `sub ax,N`; do not write `switch (x - N)`.
+- Use prototypes, never old-style `int f();` declarations.  Lines in skeleton.c marked
+  `accepted` repeat declarations already proven in other functions: keep them identical.
+- Switch jump tables and other labels inside the function are verified relationally by the
+  comparer; they are not a blocker.
 """
 
 RULES = """\
@@ -324,6 +352,7 @@ def intake(dirs: list) -> list:
                                worker="intake", note=f"intake of {rel(d)}")
             eq = sorted(e for e, v in fresh["results"].items() if v["status"] == "EQUAL")
             o["reverified_equal"] = eq
+            o["review_flags"] = review_flags(text)
             o["stale_packet"] = task["context_key"] != fresh["context_key"]
             if res["status"] in ("EQUAL_CANDIDATE", "PARTIAL_EQUAL") and not eq:
                 o["outcome"] = "EQUAL_CLAIM_REJECTED"
