@@ -333,10 +333,10 @@
    "mechanism": "EVENT_LOOP_STATE_DISPATCH",
    "next_experiment": "Recover the outer event-loop nesting and the 19-way d_03a1 dispatch as structured C, then compile the complete first handler region through its common join to discriminate the source shape.",
    "reporter": "luna-g1_ecf4",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (main game loop (3985 bytes); 17 measured gotos (structuring backlog); text as literal)",
+   "resolved": 1791928370.1855047,
    "scope": "g1_ecf4",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "DATA_OWNERSHIP",
@@ -593,10 +593,10 @@
    "mechanism": "TAIL_MERGE_LAYOUT_SATURATION",
    "next_experiment": "Start a new control-flow family by auditing the post_mode branch against f9bc/f9ce and the fba5/fbf5 back-edges. Express the d_a0fa==0x44 fallback and common outer-loop decision as one structured if/else-if chain, then compile to test whether the remaining 85 bytes are in that join.",
    "reporter": "luna-g1_ecf4",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (main game loop (3985 bytes); 17 measured gotos (structuring backlog); text as literal)",
+   "resolved": 1791928370.1855047,
    "scope": "g1_ecf4",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",

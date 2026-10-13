@@ -22,5 +22,33 @@
    }
   ],
   "proven": true
+ },
+ "G1_TEXT": {
+  "data_segment_range": {
+   "dn1": [
+    "0x0094",
+    "0x0b46"
+   ],
+   "dn2": [
+    "0x0094",
+    "0x0b46"
+   ],
+   "dn3": [
+    "0x0094",
+    "0x0b46"
+   ]
+  },
+  "range_evidence": "start: after C0L's 147-byte _DATA (exact match) and one alignment byte; end: G2's proven start 0x0b46. Proven by the unit data check (one trailing alignment byte).",
+  "fragments": [
+   {
+    "file": "src/g1/data/prefix.c",
+    "before": "start"
+   },
+   {
+    "file": "src/g1/data/tail.c",
+    "before": "g1_0e30"
+   }
+  ],
+  "proven": true
  }
 }

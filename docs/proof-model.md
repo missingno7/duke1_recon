@@ -9,8 +9,8 @@
 | Function boundary | `[start, next start)` per function | **verified** when recursive descent (with switch tables) covers the extent exactly; all 248 C functions per episode |
 | Cross-episode identity | one logical function, up to three locations | **evidence with confidence**: separate byte/shape/size/call/data signals; never proof by itself |
 | Function match (strict) | candidate C compiles to the original function in an episode | **proof**, per episode, relative to the symbol table (below) |
-| Translation unit (code) | one compile of a whole unit: every function EQUAL at its original offset, original segment length | **proven for G2** and for the **assembly unit** (one TASM module, `src/asm/toolbox.asm`: its whole 1,082-byte `_TEXT` contribution, data tables included) in DN1/DN2/DN3 (`tools/tubuild.py`); G1 incomplete |
-| Translation unit (data) | the unit's `_DATA`: initialised globals then its literal pool | **proven for G2** (`tools/tubuild.py G2_TEXT --data`, `layout/unit-data.json`): the unit's 16 KB `_DATA` equals DGROUP 0x0b46..library start byte for byte in all episodes, every fixup bound, relocation set equal (one trailing alignment byte in DN1/DN3); G1 not yet |
+| Translation unit (code) | one compile of a whole unit: every function EQUAL at its original offset, original segment length | **proven for G1, G2** and the **assembly unit** (one TASM module, `src/asm/toolbox.asm`: its whole 1,082-byte `_TEXT` contribution, data tables included) in DN1/DN2/DN3 (`tools/tubuild.py`) |
+| Translation unit (data) | the unit's `_DATA`: initialised globals then its literal pool | **proven for G1 and G2** (`tools/tubuild.py UNIT --data`, `layout/unit-data.json`): G1's `_DATA` equals DGROUP 0x0094..0x0b46 and G2's 0x0b46..library start, byte for byte in all episodes, every fixup bound, relocation set equal (one trailing alignment byte each where the original has it) |
 | Data ownership | which unit defines each DGROUP byte; BSS order | not yet attempted |
 | Natural link | real TLINK of C0 + asm + G1 + G2 + CL.LIB | not yet attempted |
 | Unpacked image equality | linked image == oracle image, relocation set equal | not yet |
