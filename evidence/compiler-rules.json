@@ -151,6 +151,18 @@
    "statement": "The pinned LZEXE 0.91 (bellard.org/lzexe/lzexe91.zip) run headless in DOSBox-X turns the canonical unpacked image of each episode back into the byte-identical original DN?.EXE. Packed-file equality therefore follows from unpacked-image equality (image bytes, relocation set, header fields); the TLINK relocation order is irrelevant because LZEXE sorts relocations.",
    "check": "repack",
    "outcome": "CONFIRMED"
+  },
+  {
+   "id": "DATA-LAYOUT",
+   "statement": "Object level (probes/data_layout.c): a unit's _DATA holds its initialised globals first, in definition order (explicit zero initialisers included), then every string literal of the unit in order of appearance; duplicates are kept unless -d is given. Uninitialised globals go to _BSS (static ones not in plain definition order: open).",
+   "check": "data_layout",
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "G2-NO-STRING-MERGE",
+   "statement": "In every episode G2's literal references are all distinct offsets while the referenced texts repeat (e.g. the same 'Press any key.' line), so G2 was compiled without -d (string merging), consistent with the default profile.",
+   "check": "g2_no_merge",
+   "outcome": "CONFIRMED"
   }
  ]
 }

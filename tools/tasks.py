@@ -390,9 +390,12 @@ def intake(dirs: list) -> list:
         if cand:
             text = cpath.read_text("latin-1")
             r = load_json(RECIPES / f"{fid}.json") if (RECIPES / f"{fid}.json").exists() else None
-            fresh = search.run(text, fid, flags=__import__("tcc").profile_flags(task["default_profile"]),
-                               profile=task["default_profile"], fresh=True, fresh_compile=True,
-                               worker="intake", note=f"intake of {rel(d)}")
+            asm = search.is_asm(cpath)
+            prof = load_json(LAYOUT / "profiles.json").get("default_asm", "tasm10-mx") if asm \
+                else task["default_profile"]
+            fresh = search.run(text, fid, flags=__import__("tcc").profile_flags(prof),
+                               profile=prof, fresh=True, fresh_compile=True,
+                               worker="intake", note=f"intake of {rel(d)}", asm=asm)
             eq = sorted(e for e, v in fresh["results"].items() if v["status"] == "EQUAL")
             o["reverified_equal"] = eq
             o["review_flags"] = review_flags(text)

@@ -205,7 +205,62 @@ def check_repack(args: dict) -> dict:
     return {"outcome": "CONFIRMED" if ok else "FALSIFIED", "rows": rows}
 
 
-CHECKS = {"flag": check_flag, "link_path": check_link_path, "repack": check_repack, "variant": check_variant, "call_forms": check_call_forms,
+def check_data_layout(args: dict) -> dict:
+    """Object level: initialised globals first (definition order, explicit
+    zeros included), every string literal after them in order of appearance;
+    -d removes duplicate literals; -d is off by default."""
+    import omf as _omf
+    src = (ROOT / "probes/data_layout.c").read_text("latin-1")
+    base = tcc.profile_flags("tc20-l-gzo")
+    d0 = _omf.OmfReader().read(tcc.compile_c(src, base).obj).segments["_DATA"]
+    d1 = _omf.OmfReader().read(tcc.compile_c(src, base + ["-d"]).obj).segments["_DATA"]
+    lits = [b"ptr-literal", b"in-f1-a", b"in-f1-b", b"in-f2"]
+    pos = [d0.find(x) for x in lits]
+    facts = {
+        "globals_before_literals": d0.find(b"\x11\x11") == 0 and d0.find(b"\x01\x02\x03") < pos[0],
+        "literals_in_order_at_end": pos == sorted(pos) and d0.endswith(b"in-f1-a\x00"),
+        "duplicates_kept_by_default": d0.count(b"in-f1-a") == 2,
+        "minus_d_merges": d1.count(b"in-f1-a") == 1,
+    }
+    return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts}
+
+
+def check_g2_no_merge(args: dict) -> dict:
+    """In every episode, G2's literal pool contains duplicate texts and no
+    literal offset is referenced twice: G2 was compiled without -d."""
+    import collections
+    import struct
+    import oracle
+    import symbols as _sym
+    rows = {}
+    for e in ("dn1", "dn2", "dn3"):
+        img, _ = oracle.load_image(e)
+        c = _sym.census(e)
+        dg = c["dgroup_frame"] << 4
+        bss = c["startup"]["bss_start"]
+        vals = []
+        for f in [f for f in c["functions"] if f["segment"] == "G2_TEXT"]:
+            a = f["start"]
+            while a < f["end"]:
+                t = next((t for t in f["tables"] if t[0] <= a < t[1]), None)
+                if t:
+                    a = t[1]
+                    continue
+                i = disasm.decode(img, a, 0)
+                if i.raw[0] == 0xB8 and img[a - 1] == 0x1E:
+                    v = struct.unpack_from("<H", i.raw, 1)[0]
+                    if 0x10 <= v < bss:
+                        vals.append(v)
+                a += i.size
+        texts = collections.Counter(img[dg + v:img.index(0, dg + v)] for v in set(vals))
+        rows[e] = {"literal_refs": len(vals), "distinct_offsets": len(set(vals)),
+                   "duplicate_texts": sum(1 for n in texts.values() if n > 1)}
+    ok = all(r["literal_refs"] == r["distinct_offsets"] and r["duplicate_texts"] > 0 for r in rows.values())
+    return {"outcome": "CONFIRMED" if ok else "FALSIFIED", "rows": rows}
+
+
+CHECKS = {"flag": check_flag, "link_path": check_link_path, "repack": check_repack,
+          "data_layout": check_data_layout, "g2_no_merge": check_g2_no_merge, "variant": check_variant, "call_forms": check_call_forms,
           "z_effect": check_z_effect, "startup_model": check_startup_model,
           "c0_reassembly": check_c0_reassembly, "runtime": check_runtime, "relocs_sorted": check_relocs_sorted}
 

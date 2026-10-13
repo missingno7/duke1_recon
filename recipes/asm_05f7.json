@@ -1,0 +1,43 @@
+{
+ "class": "SHARED_EXACT",
+ "episodes": {
+  "dn1": {
+   "offset": 1527,
+   "original_sha256": "b95db397819fcd961a1fb1b192129f4ce7bd47528700fd80f5ee5c86b8d203be",
+   "size": 12,
+   "start": 1527,
+   "status": "EQUAL"
+  },
+  "dn2": {
+   "offset": 1527,
+   "original_sha256": "b95db397819fcd961a1fb1b192129f4ce7bd47528700fd80f5ee5c86b8d203be",
+   "size": 12,
+   "start": 1527,
+   "status": "EQUAL"
+  },
+  "dn3": {
+   "offset": 1527,
+   "original_sha256": "b95db397819fcd961a1fb1b192129f4ce7bd47528700fd80f5ee5c86b8d203be",
+   "size": 12,
+   "start": 1527,
+   "status": "EQUAL"
+  }
+ },
+ "flags": [
+  "/MX"
+ ],
+ "function": "asm_05f7",
+ "language": "asm",
+ "name": null,
+ "per_episode_compile": false,
+ "profile": "tasm10-mx",
+ "proven_under": {
+  "atlas_sha256": "16f2321f98447793fb35739d00b3eeb0ccc34455539992e2d3f16c34e7ea1a5d",
+  "context_key": "2c282ec2c2dcf296ef00502b95bbcd2662516f22e4b543396378dd8430b09d8a",
+  "emission_key": "536f7e1dbac5f3df54be51c22084f86314ef5297b4f0586c90c1f7081550f2dd",
+  "oracle_lock_sha256": "56e7bc0d0b23a678199ccd7d152ee72a0a96114de02dae56e08e5ad9b8b4b2ec"
+ },
+ "source": "src/asm/asm_05f7.asm",
+ "source_sha256": "0d6c3e865105eea4884a61e2a39c212db8cde3dd780e5716f72526a34ea3c1f0",
+ "unit": "ASM_TEXT"
+}
