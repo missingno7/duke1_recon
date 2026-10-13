@@ -1,0 +1,257 @@
+{
+ "description": "Pinned historical toolchain. Binaries live outside the repository and are never committed or redistributed.",
+ "files": {
+  "BIN/CPP.EXE": {
+   "sha256": "c0422b51e4fe521f7082caec84f4edb9e27b0c8089bef3c53e9f988157ad2d01",
+   "size": 59531
+  },
+  "BIN/TASM.EXE": {
+   "sha256": "754b70821e4bac4997f398e3bdcee0f046a42cc3dad89cfbe0138f67d5b6142b",
+   "size": 97876
+  },
+  "BIN/TCC.EXE": {
+   "sha256": "24535a9a628b70f1daf3e2382c6911046f671baad02e890be5e7e62dbaad6c1e",
+   "size": 179917
+  },
+  "BIN/TLIB.EXE": {
+   "sha256": "90d19a7734e80d89dc8ef6961ad650a1f3a3b1203da212f69e988e1a6f76a29b",
+   "size": 31104
+  },
+  "BIN/TLINK.EXE": {
+   "sha256": "997fcac6089fa88f3d868bdaf8bd65bd44c5aa83885a1d61e73f77808bd4f8f7",
+   "size": 21717
+  },
+  "INCLUDE/ALLOC.H": {
+   "sha256": "0f896335b457a26a4604f94bf4e68141fbbebcfb727c48c8515d4a11da1af040",
+   "size": 1346
+  },
+  "INCLUDE/ASSERT.H": {
+   "sha256": "5772751889678e0f283ab62d9cafd68fbf931fb009be576259d1f58093e83d7c",
+   "size": 414
+  },
+  "INCLUDE/BIOS.H": {
+   "sha256": "9a957d827101de6682c48993f61731262bfbcd8fb79a7b7288f772f48ff93b88",
+   "size": 532
+  },
+  "INCLUDE/CONIO.H": {
+   "sha256": "c406df3248a9a006a87ef657b46b7c2f8bd0d796b45bab93fdf3bac66d61103d",
+   "size": 2257
+  },
+  "INCLUDE/CTYPE.H": {
+   "sha256": "841927e1843938f218366a66792699e99f1fdbd1bbeef7e92f90d5b983828980",
+   "size": 1323
+  },
+  "INCLUDE/DIR.H": {
+   "sha256": "d4d855f4bd27bf2ec10308337203d7efb0cb783e5add989f0a1ecb85db6e7599",
+   "size": 1391
+  },
+  "INCLUDE/DOS.H": {
+   "sha256": "2628ede2e348ea8d531d04282fe2dc7858c9dd0c950e67730654b4a9c4bd8dce",
+   "size": 7832
+  },
+  "INCLUDE/ERRNO.H": {
+   "sha256": "e92fa7713e16a3c3b8b10238355882b9d8cd75143b22bbbc43d300cf84e6a0bd",
+   "size": 2657
+  },
+  "INCLUDE/FCNTL.H": {
+   "sha256": "98ffc5bc53c6f160b5374a374ed800ee4a421cdc1df7602ee68222ed7e7e1090",
+   "size": 1320
+  },
+  "INCLUDE/FLOAT.H": {
+   "sha256": "e840afbece3f7b6d7972fee75ffe66c2e289ff46a73ec91b93a5e00894f6c477",
+   "size": 3978
+  },
+  "INCLUDE/GRAPHICS.H": {
+   "sha256": "a228f9567d0c8dd1f354cc0a5af0ff55b294d28bd256fe560b0ceb21abb8c3e0",
+   "size": 12289
+  },
+  "INCLUDE/IO.H": {
+   "sha256": "3804eef0557734e282d855d8b85a5d35ddb0291b98838463439691622ac84573",
+   "size": 2469
+  },
+  "INCLUDE/LIMITS.H": {
+   "sha256": "4c9d11c6cd193b43d7eedb5babf0a1b40d842e52bcb72ecfed460efd061f23c7",
+   "size": 762
+  },
+  "INCLUDE/MATH.H": {
+   "sha256": "760afbf5d8fbd638b976cc9782df8cdae781f5ad5443476a9aeb3f69023dbc5b",
+   "size": 3049
+  },
+  "INCLUDE/MEM.H": {
+   "sha256": "dcd55e93f3142f31fa0e0401656378900afbdedff6016844b00dec22b684ad37",
+   "size": 1298
+  },
+  "INCLUDE/PROCESS.H": {
+   "sha256": "cf6f41ee95969d6bfe3c71183a258d48ebfcbf65431a9c9040f4fca3fc90f83d",
+   "size": 1797
+  },
+  "INCLUDE/SETJMP.H": {
+   "sha256": "cacf3395f279aa7de159ff1e9659799aae09b36ba199fcc712647494402d6d02",
+   "size": 547
+  },
+  "INCLUDE/SHARE.H": {
+   "sha256": "93d802a1f5d8c6b1c5a45edc8744ba404449fe497ad5891c66abeba761069cfe",
+   "size": 439
+  },
+  "INCLUDE/SIGNAL.H": {
+   "sha256": "d1d676efd5ddb2214f90a6a201c43d95714e69b244eb85f30b5ffe85c5c9f3b2",
+   "size": 1219
+  },
+  "INCLUDE/STDARG.H": {
+   "sha256": "73731316fd3791bcb47dc918383b8899b2d92ced23c18b6a39739d3989514bd3",
+   "size": 469
+  },
+  "INCLUDE/STDDEF.H": {
+   "sha256": "51d1df5297d7fe6e9df84f3dd319b41f40341d19f56a7975ecf991565ee1af58",
+   "size": 672
+  },
+  "INCLUDE/STDIO.H": {
+   "sha256": "aab1100309dedb797dd13f3ce1b102913c5e6638328f939a1a770845af17cd0d",
+   "size": 6890
+  },
+  "INCLUDE/STDLIB.H": {
+   "sha256": "73dd4b4dae883b66fb009bc09df6004acbdcade7226ab5574b19704328e0f26e",
+   "size": 4173
+  },
+  "INCLUDE/STRING.H": {
+   "sha256": "724e0ab4d8a1f4b14ade9e80ab6ca24abd2909dc2d82854ea5fbcb77374ee004",
+   "size": 2219
+  },
+  "INCLUDE/SYS/STAT.H": {
+   "sha256": "52362c8a1db850a3a39e499ac7db81ceb8d353cebc62d83cbc881292388e6942",
+   "size": 1020
+  },
+  "INCLUDE/SYS/TIMEB.H": {
+   "sha256": "c1aadbd459aee98285e325096a91125c35eace4f2ab7ca9f5909d4202b4c2580",
+   "size": 425
+  },
+  "INCLUDE/SYS/TYPES.H": {
+   "sha256": "58167794511ebd21e4484bff4c6399c774a56de4f83ed626e9eed4217f899c57",
+   "size": 193
+  },
+  "INCLUDE/TIME.H": {
+   "sha256": "2b726b5c8ce68ee521358d55cd3baa66fb1fd3a768eaed93dcdf23629795c702",
+   "size": 1043
+  },
+  "INCLUDE/VALUES.H": {
+   "sha256": "7a41586d69b743dbd27b0c9004e0967ff40a297dc24b0952ae0df953241e16c3",
+   "size": 996
+  },
+  "LIB/C0C.OBJ": {
+   "sha256": "3575676cbea21093cc2b1d50d039b915144887fa537dbd7d49c629489385c2b4",
+   "size": 2026
+  },
+  "LIB/C0H.OBJ": {
+   "sha256": "b817fa905695b5bb6309bdb969107b337346d3698ac7ab2d830bdc1505522911",
+   "size": 1977
+  },
+  "LIB/C0L.OBJ": {
+   "sha256": "cc2555af491bb0947c457230e4417c3d3560d643a52dabc51e142965894617b4",
+   "size": 2043
+  },
+  "LIB/C0M.OBJ": {
+   "sha256": "e506aef6023a2001d976f925dddf4293b272b5a129c233fa3189c0dcc1884d58",
+   "size": 2217
+  },
+  "LIB/C0S.OBJ": {
+   "sha256": "99acb39c571b40d1bb6c825acc8d4945097bd1273440eb7cb77b84a094f39582",
+   "size": 2200
+  },
+  "LIB/C0T.OBJ": {
+   "sha256": "18ea4913fb3fd7bb0f986c64648e104bee6b4e7637218b9a3f3a932645d7c75d",
+   "size": 2107
+  },
+  "LIB/CC.LIB": {
+   "sha256": "d60ce692d8a458fec2c9c1b9b8f70db6ecf79d32693fca7ce325fa8ef6c92179",
+   "size": 107895
+  },
+  "LIB/CH.LIB": {
+   "sha256": "1fe2b77b98bd89e19a98a6a348817c13a8ad35436eaaa9bfc2d6669cc63f3860",
+   "size": 107556
+  },
+  "LIB/CL.LIB": {
+   "sha256": "8acad0642a2d9d38f50115a8138203522b9d81e2336a1ff00ad7f5c3da26e2b8",
+   "size": 110973
+  },
+  "LIB/CM.LIB": {
+   "sha256": "b0e4d61bf621bea2e1973c53064027aa8227ea5109d66b580bab73a90ccf8b9e",
+   "size": 107959
+  },
+  "LIB/CS.LIB": {
+   "sha256": "cd0879060ade6e052b6f375a735b9140969b7f75cdb9fb9b6b2ce675554c9238",
+   "size": 104894
+  },
+  "LIB/EMU.LIB": {
+   "sha256": "23a6745a5ccf4540243850d0066a510490e2d503e64fe216549e83eef5f0615a",
+   "size": 15384
+  },
+  "LIB/FP87.LIB": {
+   "sha256": "2de0f1f74a2cb16b481ba9f4e45a6dc5205dddcb24955c0e4a0e0592ea2fc803",
+   "size": 3540
+  },
+  "LIB/GRAPHICS.LIB": {
+   "sha256": "fe01dd704b55b5d45f9ab8e6542466c3e779f39ddd292c1e4cc623fceebcb7ee",
+   "size": 29247
+  },
+  "LIB/MATHL.LIB": {
+   "sha256": "389616bfe6c4509319ecb4d4ef60b7e6a2a5342a1e02a98dc50d7af195ae9cd0",
+   "size": 21510
+  },
+  "STARTUP/C0.ASM": {
+   "sha256": "8fa6ce7121a9cc2fbab4ace23f0e3d211ce2e8b316b3509cdc564308463ad044",
+   "size": 21932
+  },
+  "STARTUP/EMUVARS.ASI": {
+   "sha256": "32d979dadca8ceb71b474e422c19ce56dcf564069d525a4d347cf2bbdfff2ba6",
+   "size": 4648
+  },
+  "STARTUP/RULES.ASI": {
+   "sha256": "a072ae0d31c771047df34e3ef97bd35997f7d48dc48c83befbf5049d5b9af0fe",
+   "size": 11457
+  },
+  "STARTUP/SETARGV.ASM": {
+   "sha256": "aa80779d5028ded259e1657823293507016c389f05af80845394199a8f324432",
+   "size": 16502
+  },
+  "STARTUP/SETENVP.ASM": {
+   "sha256": "30bc4ef62cddfd7b3990abbd6332400cc99cc49f32ad17fba985d262e746e55c",
+   "size": 2211
+  }
+ },
+ "independent_runner": {
+  "backend": "dosbox-x",
+  "executable": "C:/tools/dosbox-x/dosbox-x.exe",
+  "note": "Second, independent DOS execution host (headless: SDL dummy drivers, -fastlaunch -exit). Used for the oracle cross-check and runner-parity checks.",
+  "sha256": "b028a4d328302ea270722dec69f3ec3a10ebf76beba72a51970db33a88df2bf6"
+ },
+ "independent_tools": {
+  "LZEXE.EXE": {
+   "path": "C:/tools/lzexe90/LZEXE.EXE",
+   "role": "LZEXE 0.90 (NOT 0.91); repack experiments only",
+   "sha256": "d9cfc09396ca7a192649a9e0bae8d811bef8b877fac3f77e19c4bd23f695bb53"
+  },
+  "UNLZEXE.EXE": {
+   "path": "C:/tools/unlzexe5/UNLZEXE.EXE",
+   "role": "independent LZ91 unpacker for oracle cross-check",
+   "sha256": "d7c45c2c325457f1eb7589b99b0b7cfe703597f09c9e47b4e2b0e9d06ce947c3"
+  }
+ },
+ "runner": {
+  "args": [
+   "-e",
+   "-v5.00"
+  ],
+  "backend": "msdos-player",
+  "executable": "C:/tools/nmlgcdos/msdos.exe",
+  "note": "nmlgc ReC98 MS-DOS Player fork (ia32). Upstream builds misread large TASM inputs; empires found the fork fails TLINK with >~20 objects, so TLINK may use the override.",
+  "overrides": {
+   "TLINK.EXE": {
+    "executable": "C:/tools/msdos/binary/i86_x64/msdos.exe",
+    "sha256": "9a89681083c955304e80a6da6db481796947dd9698b297ffbab31061e1df96f5"
+   }
+  },
+  "sha256": "f7f6cb0a3e816c5edb13112d327c1bddbf7463fe7bf9a005ca1eb5317751bd02"
+ },
+ "toolchain_identity_note": "TCC 2.0 / TLINK 2.0 / CL.LIB from archive.org turboc20.zip (sha256 a12eeaa5...288b); TASM 1.0 from the WinWorld Turbo Assembler 1.0 media (C:/tools/tasm-1.00). TCC/TLINK/CC.LIB/C0C.OBJ/TASM hashes are byte-identical to the independently acquired empires_reconstruction pins.",
+ "toolchain_root": "C:/tools/turboc-2.00-full"
+}

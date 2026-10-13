@@ -1,0 +1,15 @@
+{
+ "default": "tc20-l-gzo",
+ "profiles": {
+  "tc20-l-gzo": {
+   "flags": ["-ml", "-Z", "-G", "-O", "-1-", "-f-", "-K"],
+   "status": "HYPOTHESIS",
+   "origin": "external claim: lethal-guitar/Duke1Decomp src/BUILD.BAT (TCC -ml -Z -G -O -1- -f- -K -c); to be confirmed or falsified by evidence/compiler-rules.json probes"
+  },
+  "tc20-l-plain": {
+   "flags": ["-ml", "-1-", "-f-"],
+   "status": "CONTROL",
+   "origin": "control profile without optimisation switches, used for discriminating probes"
+  }
+ }
+}
