@@ -153,6 +153,11 @@ def promote(function: str, candidate: Path, profile: str | None, flags: list | N
             post = validate.prove_recipe(function, load_json(rpath), fresh=True)
             if not post["ok"]:
                 raise PromotionError(f"post-publication proof failed: {post['problems']}")
+            unit = symbols.atlas()[function]["segment"]
+            broken = {u: eps for u, eps in validate.check_units({unit}).items()
+                      if any(s not in ("EQUAL", "INCOMPLETE") for s in eps.values())}
+            if broken:
+                raise PromotionError(f"publication would break a complete translation unit: {broken}")
             transaction.finish()
         except BaseException:
             transaction.rollback(journal)
@@ -221,6 +226,11 @@ def promote_batch(items: list, note: str | None) -> list:
             bad = [r for r in post if not r["ok"]]
             if bad:
                 raise PromotionError(f"post-publication proof failed: {bad}")
+            touched = {symbols.atlas()[f]["segment"] for f, *_ in staged}
+            broken = {u: eps for u, eps in validate.check_units(touched).items()
+                      if any(s not in ("EQUAL", "INCOMPLETE") for s in eps.values())}
+            if broken:
+                raise PromotionError(f"publication would break a complete translation unit: {broken}")
             transaction.finish()
         except BaseException:
             transaction.rollback(journal)

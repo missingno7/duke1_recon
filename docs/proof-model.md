@@ -9,11 +9,12 @@
 | Function boundary | `[start, next start)` per function | **verified** when recursive descent (with switch tables) covers the extent exactly; all 248 C functions per episode |
 | Cross-episode identity | one logical function, up to three locations | **evidence with confidence**: separate byte/shape/size/call/data signals; never proof by itself |
 | Function match (strict) | candidate C compiles to the original function in an episode | **proof**, per episode, relative to the symbol table (below) |
-| Translation unit | function order, statics, string pooling, data emission | not yet attempted |
+| Translation unit (code) | one compile of a whole unit: every function EQUAL at its original offset, original segment length | **proven for G2** in DN1/DN2/DN3 (`tools/tubuild.py`); G1 incomplete |
+| Translation unit (data) | the unit's `_DATA`: initialised globals then its literal pool | not yet: G2's literal pool interleaves strings of initialised global tables, which are still extern |
 | Data ownership | which unit defines each DGROUP byte; BSS order | not yet attempted |
 | Natural link | real TLINK of C0 + asm + G1 + G2 + CL.LIB | not yet attempted |
 | Unpacked image equality | linked image == oracle image, relocation set equal | not yet |
-| Repacked equality | LZEXE 0.91 output == original file | not yet (LZEXE 0.91 not acquired; 0.90 only) |
+| Repacked equality | LZEXE 0.91 output == original file | **packer reproducible**: the pinned LZEXE 0.91 turns each canonical unpacked image back into the original DN?.EXE (rule REPACK-REPRODUCIBLE); depends only on unpacked-image equality |
 
 ## What a strict function match checks (`tools/compare.py`)
 
@@ -73,8 +74,9 @@ conditionals; such sources are compiled once per episode with `-DEPISODE=n`.
 ## Not claimed
 
 * No hybrid image has been built, so nothing claims "complete source".
-* The hand-written assembly region (`ASM_TEXT`, 1,082 bytes, identical in all
-  episodes) and the game's C0 variant are identified, not reconstructed.
+* All nine hand-written assembly routines are proven individually (TASM 1.0); the
+  data bytes of the region (bitmask tables, the ProGraphx banner, the page variable)
+  and the game's C0 variant as one object are not yet reconstructed.
 * CL.LIB modules are identified by exact match outside fixups; they are not yet
   linked from the pinned library.
 * The runtime region is fully attributed: 65 CL.LIB modules (12,849 bytes; the

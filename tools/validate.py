@@ -63,6 +63,21 @@ def check_recipes(fresh: bool = True, only: set | None = None, workers: int = 6)
         return list(pool.map(lambda kv: prove_recipe(kv[0], kv[1], fresh), items))
 
 
+def check_units(only: set | None = None) -> dict:
+    """Whole-unit proof for every first-party C unit whose functions are all
+    accepted (tools/tubuild.py): {unit: {episode: status}}."""
+    import tubuild
+    out = {}
+    for unit in ("G1_TEXT", "G2_TEXT"):
+        if only is not None and unit not in only:
+            continue
+        out[unit] = {}
+        for e in EPISODES:
+            a = tubuild.assemble(unit, e)
+            out[unit][e] = "INCOMPLETE" if a["missing"] else tubuild.check(unit, e)["status"]
+    return out
+
+
 def coverage(results: list) -> dict:
     census = {e: load_json(BUILD / "census" / f"{e}.json") for e in EPISODES}
     rs = recipes()
@@ -174,7 +189,13 @@ def main() -> int:
         if not r["ok"]:
             failures.append(f"{r['function']}: {r['problems']}")
     print(f"recipes: {sum(r['ok'] for r in results)}/{len(results)} re-proven fresh")
+    units = check_units()
+    for u, eps in units.items():
+        print(f"unit {u}: " + ", ".join(f"{e} {s}" for e, s in eps.items()))
+        failures += [f"unit {u} {e}: {s}" for e, s in eps.items() if s not in ("EQUAL", "INCOMPLETE")]
     cov = coverage(results)
+    for e in EPISODES:
+        cov[e]["complete_units_equal"] = sorted(u for u, eps in units.items() if eps.get(e) == "EQUAL")
     for e in EPISODES:
         c = cov[e]
         print(f"  {e}: C {c['matching_c_functions']}/{c['first_party_c_functions']} functions, "

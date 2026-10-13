@@ -93,3 +93,30 @@ recorded experiments per function, 0.7–11 minutes per worker. Supervisor
 review changed 7 of 24 sources to more natural, equally proven forms.
 Throughput limits observed: none in compiles or intake; review is the
 bottleneck. A larger wave (≥16) is justified by these numbers.
+
+## Rolling waves (after the bootstrap report)
+
+With approval for more workers, waves became a rolling pipeline of about 20–40
+concurrent Luna workers: packets for the top-ranked open functions, intake as each
+finishes, clean confirmations batch-promoted, freed slots refilled.
+
+* All 9 assembly routines (TASM 1.0, new `.asm` path in search/promote/validate) and
+  all 99 G2 functions were recovered; G1 is in progress.
+* **G2 as one translation unit** (`tools/tubuild.py`): a dedicated consolidation worker
+  unified declarations in 4 files; the unit compiles to the exact G2 code segment in
+  all three episodes. Promotion and validation now protect complete units.
+* Shared mechanisms fixed once, then released blocked work:
+  * comparer did not wrap `push cs; call near` targets at 64 KB
+    (`NEAR_CALL_TARGET_WRAP_UNMASKED`, found by a worker);
+  * intake re-verified `.asm` candidates with the C profile (supervisor bug);
+  * `decls.py` crashed on assembly recipes, which silently dropped the
+    "accepted declaration" lines from packets and let declarations drift;
+  * workers' `result.json` with a UTF-8 BOM (PowerShell).
+* `-Z` is now confirmed: 68 of 170 accepted C functions stop matching without it.
+* Including Turbo C's `<stdlib.h>` turns `abs` into an inline intrinsic; the original
+  calls CL.LIB `abs()`, so the original unit did not use stdlib.h's `abs` macro.
+* Review flags at intake (macro views of memory, MK_FP over two ints, fake FILE,
+  offsets from unrelated symbols, goto, old-style declarations, hand library
+  prototypes) plus `tools/naturalize.py` keep accepted sources plausible.
+* A small hard tail (register-allocation order, branch layout, eliminated terminal
+  compares, far-pointer reload) is recorded as blockers with next experiments.
