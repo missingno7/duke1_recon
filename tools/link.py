@@ -126,6 +126,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--episode", default=None)
     ap.add_argument("--keep", help="keep the link directory here")
+    ap.add_argument("--repack", action="store_true",
+                    help="if the linked image is EQUAL, pack it with LZEXE 0.91 and compare with the original file")
     ap.add_argument("--diagnostic", action="store_true",
                     help="link even with missing functions (never a proof): compares the segments before the gap")
     a = ap.parse_args()
@@ -139,6 +141,15 @@ def main() -> int:
             if undefined:
                 res["undefined_symbols"] = len(undefined)
                 res["status"] = "DIAGNOSTIC_ONLY"
+            if a.repack and res["status"] == "EQUAL":
+                import repack
+                from common import sha256
+                packed = repack.pack(exe)
+                want = load_json(LAYOUT / "oracle.lock.json")["episodes"][ep]["packed"]["sha256"]
+                res["repacked"] = {"sha256": sha256(packed), "size": len(packed),
+                                   "status": "EQUAL" if sha256(packed) == want else "DIFFER"}
+                if res["repacked"]["status"] != "EQUAL":
+                    res["status"] = "REPACK_DIFFER"
         except LinkError as exc:
             res = {"status": "LINK_ERROR", "error": str(exc)}
         res["episode"] = ep
