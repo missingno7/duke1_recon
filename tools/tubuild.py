@@ -231,7 +231,7 @@ def check_asm_unit(ep: str, source: Path | None = None) -> dict:
 
 
 def check(unit: str, ep: str, write: Path | None = None, override: Path | None = None,
-          plan=None, data: bool = False) -> dict:
+          plan=None, data: bool = False, allow_incomplete: bool = False) -> dict:
     if unit == "ASM_TEXT":
         return check_asm_unit(ep, override)
     plan = data_plan(unit, plan)
@@ -241,7 +241,7 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
     if write:
         write.parent.mkdir(parents=True, exist_ok=True)
         write.write_text(a["source"], encoding="latin-1")
-    if a["missing"]:
+    if a["missing"] and not (allow_incomplete and data):
         out["status"] = "INCOMPLETE"
         return out
     profile = load_json(LAYOUT / "profiles.json")["default"]
@@ -269,6 +269,11 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
             out["bss"] = check_bss(module, ep, plan)
             if out["bss"]["status"] == "EQUAL":
                 own_base = dict(own_base or {}, _BSS=int(plan["bss_range"][ep][0], 16))
+    if a["missing"]:
+        # diagnostic only: the data of an incomplete unit (its missing functions'
+        # literals are absent), no code verdict
+        out["status"] = "INCOMPLETE_DATA_DIAGNOSTIC"
+        return out
     for fid in a["order"]:
         loc = symbols.atlas()[fid]["locations"][ep]
         rel = loc["start"] - useg["start"]
@@ -433,12 +438,15 @@ def main() -> int:
     ap.add_argument("--override", help="directory of FUNCTION.c files that replace accepted sources (read-only use)")
     ap.add_argument("--data", action="store_true", help="also check the unit's initialised data")
     ap.add_argument("--data-plan", help="JSON data plan replacing the layout/unit-data.json entry")
+    ap.add_argument("--allow-incomplete", action="store_true",
+                    help="with --data: check the data of a unit with missing functions (diagnostic, never a proof)")
     a = ap.parse_args()
     eps = [a.episode] if a.episode else ["dn1", "dn2", "dn3"]
     rc = 0
     for ep in eps:
         res = check(a.unit, ep, Path(a.write.replace("{ep}", ep)) if a.write else None,
-                    Path(a.override) if a.override else None, plan=a.data_plan, data=a.data)
+                    Path(a.override) if a.override else None, plan=a.data_plan, data=a.data,
+                    allow_incomplete=a.allow_incomplete)
         atomic_json(BUILD / "tu" / f"{a.unit}-{ep}.json", res)
         if a.unit == "ASM_TEXT":
             print(f"{a.unit} {ep}: {res['status']}  " + str({k: v for k, v in res.items() if k not in ('unit', 'episode', 'status')}))
