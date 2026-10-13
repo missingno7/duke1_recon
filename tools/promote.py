@@ -165,10 +165,22 @@ def promote(function: str, candidate: Path, profile: str | None, flags: list | N
     try:
         import db
         db.rebuild(db.connect())
+        _close_blockers([function], note)
     except Exception as exc:  # the database is advisory
         print(f"[db] rebuild skipped: {exc}")
     summary["published"] = [path, rel(rpath)]
     return summary
+
+
+def _close_blockers(functions, note) -> None:
+    """An accepted function has no open blocker: resolve the ones scoped to it."""
+    import db
+    con = db.connect()
+    with db.tx(con):
+        for f in functions:
+            con.execute("UPDATE blockers SET status='RESOLVED', resolved=?, resolution=? "
+                        "WHERE scope=? AND status='OPEN'",
+                        (time.time(), f"accepted ({note or 'promotion'})", f))
 
 
 def promote_batch(items: list, note: str | None) -> list:
@@ -238,6 +250,7 @@ def promote_batch(items: list, note: str | None) -> list:
     try:
         import db
         db.rebuild(db.connect())
+        _close_blockers([f for f, *_ in staged], note)
     except Exception as exc:
         print(f"[db] rebuild skipped: {exc}")
     return [{"function": f, "equal": out["equal"]} for f, _, _, _, _, _, out, _ in staged]

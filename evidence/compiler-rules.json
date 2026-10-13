@@ -173,6 +173,12 @@
    "statement": "With -O, Turbo C 2.0 cross-jumps identical instruction tails of different branches: the matching suffix is emitted once and the other branch jumps into it. Duplicated code in the original therefore means the two tails differ somewhere; shared code can come from two identical source tails (g1_fd15).",
    "check": "tail_merge",
    "outcome": "CONFIRMED"
+  },
+  {
+   "id": "LAZY-CLEANUP",
+   "statement": "In a function with a BP frame but no locals and no saved SI/DI, Turbo C 2.0 follows every cdecl call, even one without arguments, with `mov sp,bp`; pascal calls get no cleanup. A zero-argument callee called without that cleanup from such a caller is pascal (g1_ec3d, g1_fd15, g1_fc85 from main; g1_1b51, g1_2a1d, g1_bb9f from g1_e3e0).",
+   "check": "lazy_cleanup",
+   "outcome": "CONFIRMED"
   }
  ]
 }

@@ -280,11 +280,22 @@ def check_tail_merge(args: dict) -> dict:
     return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts}
 
 
+def check_lazy_cleanup(args: dict) -> dict:
+    rows = _listing("probes/lazy_cleanup.c", tcc.profile_flags("tc20-l-gzo"))
+    after = {}
+    for k, r in enumerate(rows[:-1]):
+        if r["asm"].startswith("call") and k and rows[k - 1]["raw"] == "0e":
+            after[r["fn"]] = rows[k + 1]["asm"]
+    facts = {"cdecl_zero_arg_call_followed_by_mov_sp_bp": after.get("_use_cdecl") == "mov sp, bp",
+             "pascal_call_has_no_cleanup": after.get("USE_PASCAL", after.get("_use_pascal")) != "mov sp, bp"}
+    return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts, "after_call": after}
+
+
 CHECKS = {"flag": check_flag, "link_path": check_link_path, "repack": check_repack,
           "data_layout": check_data_layout, "g2_no_merge": check_g2_no_merge, "variant": check_variant, "call_forms": check_call_forms,
           "z_effect": check_z_effect, "startup_model": check_startup_model,
           "c0_reassembly": check_c0_reassembly, "runtime": check_runtime, "relocs_sorted": check_relocs_sorted,
-          "register_priority": check_register_priority, "tail_merge": check_tail_merge}
+          "register_priority": check_register_priority, "tail_merge": check_tail_merge, "lazy_cleanup": check_lazy_cleanup}
 
 
 def run_rule(rule: dict) -> dict:

@@ -23,7 +23,7 @@ void asm_0424(char far *a0, int a1, int a2);
 void g2_1b19(void);
 char pascal g1_326e(int a0, int a1) { return 0; }
 int g1_3513(int a0, int a1) { return 0; }
-void g1_bb9f(void) {}
+void pascal g1_bb9f(void) {}
 void pascal g1_0042(int a0) {}
 void pascal g1_0b85(long a0) {}
 /*@body*/

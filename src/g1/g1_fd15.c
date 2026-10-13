@@ -32,7 +32,7 @@ unsigned char pascal g1_0126(int a0) { return 0; }
 void g1_fc9c(void) {}
 void pascal g1_0042(int a0) {}
 /*@body*/
-void g1_fd15(void)
+void pascal g1_fd15(void)
 {
     register int state;
 

@@ -125,10 +125,10 @@
    "mechanism": "LOOP_BOUND_TEMP",
    "next_experiment": "Try a pointer-induction loop over d_726b with a one-time advance before the first body, to test whether TC can emit the direct SI bound check without materializing the preincrement expression.",
    "reporter": "luna-g1_7cfa",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: for loop instead of goto loop, measured equal)",
+   "resolved": 1791922999.6678605,
    "scope": "g1_7cfa",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -138,10 +138,10 @@
    "mechanism": "FAR_POINTER_RESET_RELOAD",
    "next_experiment": "Test a source form that independently evaluates the far-pointer lvalue only inside the threshold-reset arm; accept it only if TC20 adds LES BX,[BP-4] at the zero store and leaves earlier accesses unchanged.",
    "reporter": "luna-g1_2f4c",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (rolling batch)",
+   "resolved": 1791922861.1720486,
    "scope": "g1_2f4c",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -164,10 +164,10 @@
    "mechanism": "IDENTICAL_TAIL_FOLD",
    "next_experiment": "Make one tail arm syntactically distinct but value-equivalent (for example d_a0fb + 0 versus d_a0fb), then search to see whether Turbo C retains two call sites while emitting the same pointer setup.",
    "reporter": "luna-g1_42b8",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (rolling batch)",
+   "resolved": 1791922861.1725485,
    "scope": "g1_42b8",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "CALL_BINDING",
@@ -177,10 +177,10 @@
    "mechanism": "CDECL_NEAR_STACK_RESTORE",
    "next_experiment": "Supervisor should verify the original call-site declaration for g1_fc85 under the pinned compiler. If evidence supports a Pascal call-site type, test that type while preserving the accepted callee definition, then rerun search to validate bindings and extent.",
    "reporter": "luna-g1_ff16",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "g1_ec3d/g1_fd15/g1_fc85 are pascal: a cdecl zero-arg call in a bp-framed caller without locals/saved registers is followed by mov sp,bp (rule LAZY-CLEANUP)",
+   "resolved": 1791922440.084379,
    "scope": "g1_ff16",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -203,10 +203,10 @@
    "mechanism": "ODD_PATH_SHARED_GENERIC_TAIL",
    "next_experiment": "Reshape the parity-specific special cases as an if/else block followed by one shared p[0] > 0x20 renderer, so odd-path calls and fallthrough both reach that renderer; measure the resulting CFG and extent.",
    "reporter": "luna-g1_14af",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (later promotion)",
+   "resolved": 1791922462.7674246,
    "scope": "g1_14af",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -216,10 +216,10 @@
    "mechanism": "DUAL_RETRY_TARGETS",
    "next_experiment": "Use separate retry-setup and dispatch labels: route the g2_0d97 failure path to offset 0x17, and route an unhandled state other than 0x44 to offset 0x53; then compile with search.py.",
    "reporter": "luna-g1_037e",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (later promotion)",
+   "resolved": 1791922462.7674246,
    "scope": "g1_037e",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -242,10 +242,10 @@
    "mechanism": "STATE_BRANCH_FORMS_SAME_EMISSION",
    "next_experiment": "Replace switch(d_0437) with an explicit comparison tree in the observed order (0x40, then greater-than/0x60, then 0 and 0x20), and rerun search.py.",
    "reporter": "luna-g1_9986",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (rolling batch)",
+   "resolved": 1791922861.1725485,
    "scope": "g1_9986",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "DECLARATION_VIEW",
@@ -281,10 +281,10 @@
    "mechanism": "TC20_TAIL_MERGE",
    "next_experiment": "Change only the outer cleanup decrement to the unused postfix form p->used--; then inspect whether Turbo C emits a second cleanup block while preserving the oracle's DEC instruction sequence.",
    "reporter": "luna-g1_3882",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (later promotion)",
+   "resolved": 1791922462.7674246,
    "scope": "g1_3882",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "DECLARATION_VIEW",
@@ -320,10 +320,10 @@
    "mechanism": "FAR_POINTER_RETURN_ORDER",
    "next_experiment": "Determine the original return expression from caller/type evidence, then test a C form that returns the aggregate-copy destination with DS loaded before the symbol offset without duplicating address conversion.",
    "reporter": "luna-g1_0c52",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (later promotion)",
+   "resolved": 1791922462.7674246,
    "scope": "g1_0c52",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -359,10 +359,10 @@
    "mechanism": "CALL_CLEANUP_SI_SAVE",
    "next_experiment": "Try a source shape that keeps the far-pointer table accesses shared without allocating SI, while suppressing the three post-call stack resets and preserving the accepted cdecl stub signatures.",
    "reporter": "luna-g1_e3e0",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (rolling batch)",
+   "resolved": 1791922936.225912,
    "scope": "g1_e3e0",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "DECLARATION_VIEW",
@@ -476,9 +476,22 @@
    "mechanism": "LOOP_LATCH_COMPARE_FORM",
    "next_experiment": "Try a structured loop with SI zero-initialized and incremented at a shared latch, while routing every continue through that latch, to combine xor si,si with the direct cmp si,[d_05de] form.",
    "reporter": "luna-g1_9986",
+   "resolution": "accepted (rolling batch)",
+   "resolved": 1791922861.1725485,
+   "scope": "g1_9986",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791922832.0425406,
+   "evidence": "The no-goto structured candidate cand18 emits 633 bytes versus the 631-byte original in dn1, dn2, and dn3, with diff_bytes 0. Its state-1 and state-2 branches end in identical draw-selection statements; Turbo C cross-jumps the shared tail. Search reports identical emission already produced by three other sources in this family. The explicit outer (state == 1 || state == 2) variant emitted 650 bytes because dispatch retested state. The final nested-if guard remains codegen-identical to the combined guard.",
+   "id": 38,
+   "mechanism": "TC20_CONTROL_FLOW_CANONICALIZATION",
+   "next_experiment": "If reopened, test the distinct loop form for (i = 1; i < d_05b6; ++i) while holding the state branches and final guard fixed, to check whether direct loop initialization removes the remaining two-byte extent.",
+   "reporter": "luna-g1_5f0c",
    "resolution": null,
    "resolved": null,
-   "scope": "g1_9986",
+   "scope": "g1_5f0c",
    "status": "OPEN"
   }
  ],

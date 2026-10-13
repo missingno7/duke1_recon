@@ -19,7 +19,7 @@ void g1_e83e(void) {}
 void g1_e00d(void) {}
 void pascal g1_e89d(char far *filename) {}
 /*@body*/
-void g1_ec3d(void)
+void pascal g1_ec3d(void)
 {
     g1_e83e();
     g2_25cd();

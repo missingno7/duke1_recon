@@ -217,7 +217,9 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
   `if (...) {...} else if (...)`, `continue` and `||`/`&&` as for hand-written goto chains: the
   supervisor rewrote 6 of 7 goto submissions as plain structured C with identical emission.
   Use goto only if you MEASURED that the structured form emits different code, and name the
-  structured receipt and its size in notes.  Before keeping a goto chain such as
+  structured receipt and its size in notes.  When a goto candidate becomes EQUAL, re-test the
+  structured form OF THAT FINAL CANDIDATE: the supervisor keeps finding that the change which fixed
+  the code was elsewhere and the plain for/while/if form is EQUAL too.  Before keeping a goto chain such as
   `if (a) goto X; if (b) goto Y; X: ...; continue; Y: ...`, try `if (a || !b) { X...; continue; }
   Y...`: Turbo C emits the same short-circuit jumps for || and && as for the goto chain.
   With -O Turbo C cross-jumps identical tails (rule TAIL-MERGE): a jump into another branch's
@@ -225,6 +227,9 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
 - Register allocation (rule REGISTER-PRIORITY): the `register` variable with the MOST uses gets SI,
   the next DI; ties keep declaration order.  Declaration order alone does not decide.  -Z also
   remembers that a register equals a parameter until the next call, so `x = a1; f(a1);` pushes x.
+- Lazy cleanup (rule LAZY-CLEANUP): in a function with a BP frame but no locals and no saved
+  SI/DI, every cdecl call (even without arguments) is followed by `mov sp,bp`.  If the original
+  has no such cleanup after a zero-argument call there, the callee is `pascal`.
 - A conditional jump BACKWARDS (marked BACK-EDGE in context.txt) is a loop condition, e.g.
   `do { r = g(); } while (r.b == 1 || r.c == 1);`, not an early exit.
   An unused parameter changes nothing in the callee but breaks callers: if every caller passes
@@ -407,17 +412,34 @@ def wave(n: int, route: str, dry: bool, unit: str | None = None, routes: list | 
     return out
 
 
+def running_workers() -> set:
+    """Names of codex workers that are still running (cx ps); empty if unknown."""
+    cx = Path.home() / ".codex-dashboard" / "cx.py"
+    if not cx.exists():
+        return set()
+    try:
+        r = subprocess.run([sys.executable, str(cx), "ps"], capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.SubprocessError):
+        return set()
+    return {line.split()[0] for line in r.stdout.splitlines() if line.strip() and line.startswith("luna")}
+
+
 def intake(dirs: list) -> list:
     import db
     con = db.connect()
     if not dirs:
         dirs = [Path(r["packet"]) for r in con.execute("SELECT packet FROM tasks WHERE status='LEASED' AND packet IS NOT NULL")]
+    running = running_workers()
     outcomes = []
     for d in dirs:
         d = (ROOT / d) if not Path(d).is_absolute() else Path(d)
         rp = d / "result.json"
         if not rp.exists():
             outcomes.append({"dir": rel(d), "outcome": "NO_RESULT"})
+            continue
+        if any(w == d.parent.name or w.startswith(d.parent.name + "-") for w in running):
+            # a (resumed) worker may write an interim result.json; take it in only when it ends
+            outcomes.append({"dir": rel(d), "outcome": "NO_RESULT", "note": "worker still running"})
             continue
         try:
             res = json.loads(rp.read_text(encoding="utf-8-sig"))   # PowerShell writes a BOM

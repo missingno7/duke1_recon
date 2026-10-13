@@ -7,7 +7,7 @@ extern char far *d_a0fb;
 void asm_05eb(int a0);
 void asm_0424(char far *a0, int a1, int a2);
 /*@body*/
-void g1_bb9f(void)
+void pascal g1_bb9f(void)
 {
     register int si;
     register int di;

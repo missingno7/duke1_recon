@@ -4,7 +4,7 @@ void g1_e655(void) {}
 void pascal g1_0151(char a0) {}
 void g1_ecf4(void) {}
 /*@body*/
-void g1_fc85(void)
+void pascal g1_fc85(void)
 {
     g1_e655();
     if (!d_5318) {

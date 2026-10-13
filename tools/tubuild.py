@@ -17,7 +17,22 @@ and checked:
   * the code segment length equals the original segment length.
 
 Together this proves function order, intra-unit call forms and code layout
-of the whole unit.  Data (_DATA contents and placement) is NOT proven here.
+of the whole unit.
+
+    python tools/tubuild.py G2_TEXT --data [--data-plan PLAN.json]
+
+--data additionally checks the unit's initialised data.  Data fragments
+(definitions of initialised globals, src/<unit>/data/*.c) are inserted between
+function bodies at the positions recorded in layout/unit-data.json, because
+Turbo C places a unit's initialised globals first in its _DATA (definition
+order) and then every string literal in order of appearance (rule
+DATA-LAYOUT): where a table is defined decides where its strings land.  The
+unit's _DATA must equal the original DGROUP range recorded for the unit byte
+for byte; every fixup in it must bind (far pointers to the unit's own data at
+the right DGROUP offset, externals through tools/symbols.py) and the set of
+segment words must equal the original MZ relocations in that range.  A single
+trailing zero byte of the range is accepted as segment alignment padding.
+--data-plan replaces the registry entry (workers test placements read-only).
 """
 from __future__ import annotations
 
@@ -51,8 +66,21 @@ def split(path: Path) -> tuple:
     return pre, body
 
 
-def assemble(unit: str, ep: str, override: Path | None = None) -> dict:
+def data_plan(unit: str, plan=None) -> dict | None:
+    """The unit's data plan: a dict, a JSON file, or the layout/unit-data.json entry."""
+    if isinstance(plan, dict):
+        return plan
+    if plan is not None:
+        return load_json(Path(plan))
+    reg = LAYOUT / "unit-data.json"
+    return load_json(reg).get(unit) if reg.exists() else None
+
+
+def assemble(unit: str, ep: str, override: Path | None = None, plan: dict | None = None) -> dict:
     order = unit_functions(unit, ep)
+    frags = {}
+    for fr in (plan or {}).get("fragments", []):
+        frags.setdefault(fr["before"], []).append(ROOT / fr["file"])
     def source_of(f):
         if override and (override / f"{f}.c").exists():
             return override / f"{f}.c"
@@ -85,14 +113,28 @@ def assemble(unit: str, ep: str, override: Path | None = None) -> dict:
     includes = [d for d in decls if d.lstrip().startswith("#")]
     others = [d for d in decls if not d.lstrip().startswith("#")]
     text = "\n".join(includes + list(structs.values()) + others) + "\n\n"
+
+    def fragments(key):
+        nonlocal episode_dependent
+        out = ""
+        for f in frags.get(key, []):
+            src = f.read_text("latin-1")
+            episode_dependent |= "EPISODE" in src
+            out += f"/* data: {f.name} */\n{src.strip()}\n\n"
+        return out
+    text += fragments("start")
     for fid, body in bodies:
+        text += fragments(fid)
         text += f"/* {fid} */\n{body}\n\n"
+    text += fragments("end")
     return {"order": order, "missing": missing, "source": text, "conflicts": conflicts,
             "episode_dependent": episode_dependent}
 
 
-def check(unit: str, ep: str, write: Path | None = None, override: Path | None = None) -> dict:
-    a = assemble(unit, ep, override)
+def check(unit: str, ep: str, write: Path | None = None, override: Path | None = None,
+          plan=None, data: bool = False) -> dict:
+    plan = data_plan(unit, plan)
+    a = assemble(unit, ep, override, plan)
     out = {"unit": unit, "episode": ep, "functions": len(a["order"]), "missing": a["missing"],
            "declaration_conflicts": a["conflicts"]}
     if write:
@@ -135,6 +177,87 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
                 "unit_static_bases": {k: sorted(v) for k, v in static_bases.items()}})
     out["status"] = "EQUAL" if not bad and not layout and seg_len == useg["size"] else "DIFFER"
     out["literal_pool"] = literal_pool(module, ep)
+    if data:
+        out["data"] = check_data(module, ep, plan) if plan else {"status": "NO_PLAN"}
+    return out
+
+
+def check_data(module, ep: str, plan: dict) -> dict:
+    """The unit's _DATA against the original DGROUP range [start, end) of the
+    plan: identical bytes outside fixups, every fixup bound, relocation set
+    equal.  One trailing zero byte of the range may be alignment padding."""
+    import struct
+    import oracle
+    start, end = (int(x, 16) for x in plan["data_segment_range"][ep])
+    data = module.segments.get("_DATA", b"")
+    img, relocs = oracle.load_image(ep)
+    c = symbols.census(ep)
+    frame = c["dgroup_frame"]
+    base = frame << 4
+    orig = img[base + start:base + end]
+    out = {"range": [hex(start), hex(end)], "bytes": [len(data), len(orig)]}
+    pad = 0
+    if len(data) == len(orig) - 1 and orig[-1] == 0 and end % 2 == 0:
+        pad = 1
+    elif len(data) != len(orig):
+        out["status"] = "LENGTH_MISMATCH"
+        n = min(len(data), len(orig))
+        out["first_diff"] = next((hex(start + i) for i in range(n) if data[i] != orig[i]), hex(start + n))
+        return out
+    errors, covered, segwords = [], set(), set()
+    for fx in module.linker_fixups:
+        if fx["segment"] != "_DATA":
+            continue
+        at, width, loc = fx["offset"], fx["width"], fx["loc"]
+        emb = int.from_bytes(data[at:at + 2], "little")
+        addend = (fx["displacement"] + emb) & 0xFFFF
+        tkind, tname = fx["target_kind"], fx["target"]
+        got_off = struct.unpack_from("<H", orig, at)[0]
+        try:
+            if tkind == "segment" and tname in ("_DATA", "DGROUP"):
+                exp_off, exp_seg = (start + addend) & 0xFFFF, frame
+            elif tkind == "external":
+                tgt = symbols.resolve(tname, ep)
+                if tgt["kind"] == "data":
+                    exp_off, exp_seg = (tgt["dgroup_offset"] + addend) & 0xFFFF, frame
+                elif tgt["kind"] in ("function", "library", "startup"):
+                    exp_off, exp_seg = (tgt["offset"] + addend) & 0xFFFF, tgt["frame"]
+                else:
+                    raise symbols.SymbolError(f"unsupported external kind {tgt['kind']}")
+            else:
+                raise symbols.SymbolError(f"unsupported target {tkind} {tname}")
+        except symbols.SymbolError as exc:
+            errors.append(f"{hex(start + at)} {loc} -> {tname}: {exc}")
+            continue
+        if loc == "pointer32":
+            got_seg = struct.unpack_from("<H", orig, at + 2)[0]
+            if (got_off, got_seg) != (exp_off, exp_seg):
+                errors.append(f"{hex(start + at)} far {tname}+{addend:#x}: original {got_seg:04X}:{got_off:04X}, "
+                              f"binding {exp_seg:04X}:{exp_off:04X}")
+                continue
+            segwords.add(at + 2)
+        elif loc == "offset16":
+            if got_off != exp_off:
+                errors.append(f"{hex(start + at)} near {tname}+{addend:#x}: original {got_off:04X}, binding {exp_off:04X}")
+                continue
+        elif loc == "base16":
+            if got_off != exp_seg:
+                errors.append(f"{hex(start + at)} segment {tname}: original {got_off:04X}, binding {exp_seg:04X}")
+                continue
+            segwords.add(at)
+        else:
+            errors.append(f"{hex(start + at)} unsupported fixup location {loc}")
+            continue
+        covered.update(range(at, at + width))
+    diffs = [i for i in range(len(data)) if i not in covered and data[i] != orig[i]]
+    orig_relocs = {(s << 4) + o - base - start for s, o in relocs}
+    orig_relocs = {r for r in orig_relocs if 0 <= r < len(orig)}
+    if orig_relocs != segwords:
+        errors.append(f"relocation set differs: missing {sorted(hex(start + r) for r in orig_relocs - segwords)[:6]}, "
+                      f"extra {sorted(hex(start + r) for r in segwords - orig_relocs)[:6]}")
+    out.update({"fixups_bound": len(covered) // 2, "binding_errors": errors[:12], "differing_bytes": len(diffs),
+                "first_diff": hex(start + diffs[0]) if diffs else None, "alignment_pad": pad})
+    out["status"] = "EQUAL" if not errors and not diffs else "DIFFER"
     return out
 
 
@@ -166,20 +289,24 @@ def main() -> int:
     ap.add_argument("--episode", default=None)
     ap.add_argument("--write")
     ap.add_argument("--override", help="directory of FUNCTION.c files that replace accepted sources (read-only use)")
+    ap.add_argument("--data", action="store_true", help="also check the unit's initialised data")
+    ap.add_argument("--data-plan", help="JSON data plan replacing the layout/unit-data.json entry")
     a = ap.parse_args()
     eps = [a.episode] if a.episode else ["dn1", "dn2", "dn3"]
     rc = 0
     for ep in eps:
         res = check(a.unit, ep, Path(a.write.replace("{ep}", ep)) if a.write else None,
-                    Path(a.override) if a.override else None)
+                    Path(a.override) if a.override else None, plan=a.data_plan, data=a.data)
         atomic_json(BUILD / "tu" / f"{a.unit}-{ep}.json", res)
         print(f"{a.unit} {ep}: {res['status']}  functions {res['functions']}, missing {len(res['missing'])}")
         if res.get("literal_pool"):
             print(f"   literal pool: {res['literal_pool']}")
+        if "data" in res:
+            print(f"   data: {res['data']}")
         for k in ("declaration_conflicts", "layout_mismatches", "function_failures", "log"):
             for x in res.get(k, [])[:8]:
                 print(f"   {k}: {x}")
-        rc |= res["status"] != "EQUAL"
+        rc |= res["status"] != "EQUAL" or (a.data and res.get("data", {}).get("status") != "EQUAL")
     return rc
 
 

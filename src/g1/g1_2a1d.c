@@ -3,7 +3,7 @@ struct s8 { int a, b, c, d; };
 extern struct s8 d_d4c3[];
 extern int d_0518;
 /*@body*/
-void g1_2a1d(void)
+void pascal g1_2a1d(void)
 {
     register int i;
 

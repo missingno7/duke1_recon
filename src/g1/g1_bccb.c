@@ -14,7 +14,7 @@ int g1_3513(int a0, int a1) {}
 void pascal g1_0042(int a0) {}
 void pascal g1_0b85(long a0) {}
 void pascal g1_2a40(int a0, int a1, int a2) {}
-void g1_bb9f(void) {}
+void pascal g1_bb9f(void) {}
 /*@body*/
 void g1_bccb(void)
 {

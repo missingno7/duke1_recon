@@ -1,0 +1,12 @@
+{
+ "G2_TEXT": {
+  "data_segment_range": {
+   "dn1": ["0x0b46", "0x4a2a"],
+   "dn2": ["0x0b46", "0x4b02"],
+   "dn3": ["0x0b46", "0x4916"]
+  },
+  "range_evidence": "start: first G2 initialised object after G1's last literal (OBSERVED, build/workers/luna-g2-data); end: start of CL.LIB IOERROR _DATA, exact 91-byte match (PROVEN). The data check itself proves the range once the unit reproduces it.",
+  "fragments": [],
+  "proven": false
+ }
+}
