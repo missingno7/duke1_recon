@@ -1,5 +1,5 @@
 /* g2_01a9 candidate */
-void delay(unsigned int milliseconds);
+#include <dos.h>
 void asm_029d(int index, int value);
 /*@body*/
 void pascal g2_01a9(int value)

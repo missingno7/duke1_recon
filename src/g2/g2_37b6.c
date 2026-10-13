@@ -1,5 +1,5 @@
+#include <dos.h>
 extern char far *d_6b54;
-void outport(int port, int value);
 void asm_04c5(char far *a0, int a1, int a2);
 /*@body*/
 void pascal g2_37b6(char far *text, register int x, int y)

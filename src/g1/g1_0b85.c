@@ -1,6 +1,6 @@
 /* Add to the score and redraw it on both pages (resets display on wrap to 0). */
+#include <dos.h>
 extern long d_68f8;
-void outport(int port, int value);
 void asm_05eb(int a0);
 void pascal g2_2789(long a0, int a1, int a2);
 /*@body*/

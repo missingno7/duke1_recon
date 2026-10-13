@@ -1,4 +1,4 @@
-void outport(int port, int value);
+#include <dos.h>
 void asm_05eb(int a0);
 void asm_02ad(int a0, int a1);
 /*@body*/

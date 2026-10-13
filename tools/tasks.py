@@ -52,7 +52,10 @@ REVIEW_PATTERNS = [
 def review_flags(text: str) -> list:
     import re
     t = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
-    return [msg for rx, msg in REVIEW_PATTERNS if re.search(rx, t)]
+    flags = [msg for rx, msg in REVIEW_PATTERNS if re.search(rx, t)]
+    if "goto kept:" in text:        # supervisor-measured: structured form emits differently
+        flags = [f for f in flags if not f.startswith("goto")]
+    return flags
 
 
 def revision() -> dict:
@@ -167,7 +170,9 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
   DGROUP offset) and used under #if EPISODE.  Never address an object as an offset from an
   unrelated symbol (e.g. `(char *)&d_4713 + 0x19`): supervisor review rejects it.
 - Use the pinned Turbo C headers for library calls (`#include <stdio.h>`, <dos.h>, ...), not
-  hand-written prototypes or fake typedefs such as `typedef char FILE`.
+  hand-written prototypes or fake typedefs such as `typedef char FILE`.  Exception: `abs` -- the
+  original calls CL.LIB abs() as a function, but <stdlib.h> turns it into an inline intrinsic, so
+  declare `int abs(int);` yourself.
 - Give each global its real type: a 32-bit object is `extern long d_XXXX;`, not two ints viewed
   through a cast or a #define.  A far pointer global is `extern char far *d_XXXX;`, not MK_FP of
   two ints.
@@ -397,6 +402,7 @@ def main() -> int:
     w.add_argument("--dry-run", action="store_true")
     i = sub.add_parser("intake")
     i.add_argument("dirs", nargs="*")
+    i.add_argument("--batch-out", help="append clean confirmed candidates (no review flags) as 'FUNCTION CANDIDATE' lines")
     sub.add_parser("status")
     rl = sub.add_parser("release")
     rl.add_argument("function")
@@ -415,8 +421,18 @@ def main() -> int:
         for x in wave(a.n, a.route, a.dry_run):
             print(json.dumps(x))
     elif a.cmd == "intake":
+        clean = []
         for o in intake([Path(x) for x in a.dirs]):
-            print(json.dumps(o))
+            short = {k: o.get(k) for k in ("function", "outcome", "reverified_equal", "review_flags",
+                                           "blocker_id", "blocker_rejected") if o.get(k)}
+            print(json.dumps(short))
+            if o.get("outcome") in ("CONFIRMED_EQUAL", "UNCLAIMED_EQUAL_FOUND") and not o.get("review_flags") \
+                    and o.get("reverified_equal") and not o.get("note"):
+                clean.append(f"{o['function']} {o['promote'].split()[-1]}")
+        if a.batch_out and clean:
+            with open(a.batch_out, "a") as fh:
+                fh.write("".join(line + "\n" for line in clean))
+            print(f"{len(clean)} clean candidate(s) appended to {a.batch_out}")
     elif a.cmd == "release":
         import db
         con = _db()

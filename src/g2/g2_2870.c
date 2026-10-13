@@ -4,7 +4,6 @@ extern char d_a0fa;
 extern char far *d_a0fb;
 extern char d_d56b;
 void asm_0424(char far *bitmap, int a0, int a1);
-void delay(unsigned int milliseconds);
 void g1_1076(void);
 /*@body*/
 void pascal g2_2870(register int a0, register int a1)

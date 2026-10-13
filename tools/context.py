@@ -237,7 +237,9 @@ LIB_HEADERS = {
     "dos.h": "outport inport outportb inportb delay getvect setvect disable enable geninterrupt int86 intdos "
              "sound nosound".split(),
     "conio.h": "textmode clrscr gotoxy getch kbhit cprintf".split(),
-    "stdlib.h": "abs exit atexit malloc free ltoa itoa atoi rand srand random".split(),
+    # abs deliberately absent: <stdlib.h> makes it the inline __abs__ intrinsic, while the
+    # original calls CL.LIB abs() (rule ABS-IS-A-CALL); declare `int abs(int);` instead
+    "stdlib.h": "exit atexit malloc free ltoa itoa atoi rand srand random".split(),
     "io.h": "open close read write lseek access chmod eof".split(),
     "alloc.h": "farmalloc farfree coreleft farcoreleft".split(),
 }
