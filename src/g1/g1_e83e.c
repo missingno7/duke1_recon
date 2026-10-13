@@ -1,7 +1,6 @@
 #include <alloc.h>
 #include <stdio.h>
 #include <stdlib.h>
-extern void far __exit(int);
 /*@body*/
 void g1_e83e(void)
 {
@@ -13,6 +12,6 @@ void g1_e83e(void)
         printf("(There needs to be at least 520k available.)\n");
         printf("Try unloading TSRs or exiting from a shell\n");
         printf("and then try running the game again.  Thanks!\n");
-        __exit(0);
+        _exit(0);
     }
 }

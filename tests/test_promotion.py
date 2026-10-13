@@ -22,14 +22,14 @@ void pascal g1_e92e(register int n)
 
 NEW_FN = """extern int d_0518;
 struct s8 { int a, b, c, d; };
-extern struct s8 d_d4c3[];
+extern struct s8 d_d4c3_[];
 /*@body*/
-void g1_2a1d(void)
+void pascal g1_2a1d(void)
 {
     register int i;
 
     for (i = 0; i < d_0518; i++)
-        d_d4c3[i].a = 0;
+        d_d4c3_[i].a = 0;
 }
 """
 
@@ -154,7 +154,8 @@ print('RECOVERED', transaction.recover(), q.exists())
 
     def test_10_batch_is_all_or_nothing(self):
         good = self.write("g.c", CANDIDATE.replace("/* sandbox candidate */", "/* batch good */"))
-        bad = self.write("h.c", NEW_FN.replace("d_d4c3[i].a = 0;", "d_d4c3[i].b = 0;"))
+        bad = self.write("h.c", NEW_FN.replace("d_d4c3_[i].a = 0;", "d_d4c3_[i].b = 0;"))
+        self.assertNotEqual(bad.read_text(), NEW_FN)
         lst = self.work / "batch.txt"
         lst.write_text(f"g1_e92e {good}\ng1_2a1d {bad}\n")
         before = (self.sb.dir / "src" / "g1" / "g1_e92e.c").read_bytes()

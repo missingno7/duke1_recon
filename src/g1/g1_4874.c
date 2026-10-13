@@ -7,9 +7,7 @@ extern int d_009f;
 extern int d_0437;
 extern int d_0544;
 extern int d_0546[];
-extern int d_0548[];
 extern int d_0576[];
-extern int d_0578[];
 extern int d_05a6;
 extern int d_05a8;
 extern char d_6379_;
@@ -53,7 +51,7 @@ void g1_4874(void)
             }
             if (obj->step <= 20) {
                 obj->x += d_0546[obj->step];
-                obj->y += d_0548[obj->step];
+                obj->y += (d_0546 + 1)[obj->step];
                 obj->step += 2;
             } else {
                 obj->y += 128;
@@ -82,7 +80,7 @@ void g1_4874(void)
             }
             if (obj->step < 20) {
                 obj->x += d_0576[obj->step];
-                obj->y += d_0578[obj->step];
+                obj->y += (d_0576 + 1)[obj->step];
                 obj->step += 2;
             } else {
                 obj->y += 128;

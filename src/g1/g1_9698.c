@@ -5,7 +5,6 @@ extern int d_009f;
 extern int d_05da;
 extern char d_6379_;
 extern char far *d_a0fb_;
-extern int d_a0fd_;
 char pascal g1_326e(int a0, int a1) { return 0; }
 int g1_3513(int a0, int a1) { return 0; }
 void asm_0424(char far *bitmap, int row, int offset);

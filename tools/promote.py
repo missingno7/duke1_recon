@@ -136,7 +136,8 @@ def promote(function: str, candidate: Path, profile: str | None, flags: list | N
         if candidate.read_bytes() != raw:
             raise PromotionError("candidate changed during verification; re-run")
         protected = validate.check_recipes(fresh=True)
-        broken = [r for r in protected if not r["ok"]]
+        # the function being replaced is exempt: its new source was just verified fresh
+        broken = [r for r in protected if not r["ok"] and r["function"] != function]
         if broken:
             raise PromotionError(f"canonical state does not validate; refusing to publish: {broken[:3]}")
         recipe = build_recipe(function, path, text, flags, profile, name, out)
@@ -215,7 +216,8 @@ def promote_batch(items: list, note: str | None, source_path: str | None = None)
         for function, candidate, raw, *_ in staged:
             if candidate.read_bytes() != raw:
                 raise PromotionError(f"{function}: candidate changed during verification")
-        broken = [r for r in validate.check_recipes(fresh=True) if not r["ok"]]
+        replaced = {f for f, *_ in staged}       # verified fresh above; their old proofs may not hold
+        broken = [r for r in validate.check_recipes(fresh=True) if not r["ok"] and r["function"] not in replaced]
         if broken:
             raise PromotionError(f"canonical state does not validate; refusing to publish: {broken[:3]}")
         log_path = EVIDENCE / "promotions.jsonl"

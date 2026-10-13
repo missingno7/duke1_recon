@@ -11,10 +11,10 @@
 | Function match (strict) | candidate C compiles to the original function in an episode | **proof**, per episode, relative to the symbol table (below) |
 | Translation unit (code) | one compile of a whole unit: every function EQUAL at its original offset, original segment length | **proven for G1, G2** and the **assembly unit** (one TASM module, `src/asm/toolbox.asm`: its whole 1,082-byte `_TEXT` contribution, data tables included) in DN1/DN2/DN3 (`tools/tubuild.py`) |
 | Translation unit (data) | the unit's `_DATA`: initialised globals then its literal pool | **proven for G1 and G2** (`tools/tubuild.py UNIT --data`, `layout/unit-data.json`): G1's `_DATA` equals DGROUP 0x0094..0x0b46 and G2's 0x0b46..library start, byte for byte in all episodes, every fixup bound, relocation set equal (one trailing alignment byte each where the original has it) |
-| Data ownership | which unit defines each DGROUP byte; BSS order | not yet attempted |
-| Natural link | real TLINK of C0 + asm + G1 + G2 + CL.LIB | not yet attempted |
-| Unpacked image equality | linked image == oracle image, relocation set equal | not yet |
-| Repacked equality | LZEXE 0.91 output == original file | **packer reproducible**: the pinned LZEXE 0.91 turns each canonical unpacked image back into the original DN?.EXE (rule REPACK-REPRODUCIBLE); depends only on unpacked-image equality |
+| Data ownership | which unit defines each DGROUP byte; BSS order | **proven by the link**: C0L `_DATA`, G1 and G2 `_DATA` (unit data checks), G1 and G2 `_BSS` (`check_bss`: length and every global's address; order by rule BSS-ORDER), CL.LIB data/BSS from the stock library. The G1/G2 split of the BSS is not observable in the binary beyond alignment and is chosen (DN1 0xa0f4) |
+| Natural link | real TLINK of C0 + asm + G1 + G2 + CL.LIB | **proven** in DN1/DN2/DN3 (`python tools/link.py --repack`, `layout/link.json`; re-run by `tools/validate.py`) |
+| Unpacked image equality | linked image == oracle image, relocation set equal | **proven**: every byte of the load module, the relocation set and the header fields (CS:IP, SS:SP, min/max allocation) in all three episodes |
+| Repacked equality | LZEXE 0.91 output == original file | **proven**: LZEXE 0.91 packs the linked image of each episode into a file whose SHA-256 equals the original DN1.EXE / DN2.EXE / DN3.EXE |
 
 ## What a strict function match checks (`tools/compare.py`)
 
@@ -86,15 +86,15 @@ conditionals; such sources are compiled once per episode with `-DEPISODE=n`.
 
 ## Not claimed
 
-* No hybrid image has been built, so nothing claims "complete source".
-* The assembly unit is reconstructed as one module including its data tables
-  (written as data definitions: bit masks, the ProGraphx banner, the page
-  variable); the game's C0 variant as one object is not yet reconstructed.
-* CL.LIB modules are identified by exact match outside fixups; they are not yet
-  linked from the pinned library.
-* The runtime region is fully attributed: 65 CL.LIB modules (12,849 bytes; the
-  4-byte `REALCVT` module is placed positionally in the only gap it fits) plus
-  2/3/5 bytes of TLINK fill before the paragraph-aligned `DELAY_TEXT`. This is
-  identification by exact match, not a link.
-* Function names, types and parameter names are reconstructions; only the
-  emitted code is proven.
+* The canonical sources are still the per-function files of the matching phase
+  (preludes, stubs, logical names `g1_XXXX` / `d_XXXX`); the readable standalone
+  tree is the next phase (`docs/roadmap.md`).  Every change to them is checked by
+  the full link.
+* Function names, types, struct fields and parameter names are reconstructions;
+  only the emitted program is proven.  Several sources keep measured gotos and
+  idioms that exist to reproduce the original code generation (`goto kept:` notes).
+* The G1/G2 ownership of BSS objects and some object boundaries inside data
+  (array extents, unreferenced regions marked in the data fragments) are choices
+  consistent with the binary, not observations: the binary does not record them.
+* Relocation order is unobservable (rule RELOCATION-ORDER-UNOBSERVABLE); only the
+  relocation set is compared.

@@ -19,9 +19,28 @@
    {
     "file": "src/g2/data/prefix.c",
     "before": "start"
+   },
+   {
+    "file": "src/g2/data/bss.c",
+    "before": "header"
    }
   ],
-  "proven": true
+  "proven": true,
+  "bss_range": {
+   "dn1": [
+    "0xa0f4",
+    "0xd71a"
+   ],
+   "dn2": [
+    "0xa1cc",
+    "0xd7f2"
+   ],
+   "dn3": [
+    "0x9fe0",
+    "0xd606"
+   ]
+  },
+  "bss_evidence": "Uninitialised globals named d_XXXX_ (one hash, rule BSS-ORDER) defined in the unit's header fragment in address order; check_bss proves the _BSS length and every defined global's address. The G1/G2 split (DN1 0xa0f4) is not observable in the binary beyond alignment; chosen at G2's timer-vector pointer d_a0f4_ (luna-bss2 NOTES)."
  },
  "G1_TEXT": {
   "data_segment_range": {
@@ -47,8 +66,27 @@
    {
     "file": "src/g1/data/tail.c",
     "before": "g1_0e30"
+   },
+   {
+    "file": "src/g1/data/bss.c",
+    "before": "header"
    }
   ],
-  "proven": true
+  "proven": true,
+  "bss_range": {
+   "dn1": [
+    "0x4eca",
+    "0xa0f4"
+   ],
+   "dn2": [
+    "0x4fa2",
+    "0xa1cc"
+   ],
+   "dn3": [
+    "0x4db6",
+    "0x9fe0"
+   ]
+  },
+  "bss_evidence": "Uninitialised globals named d_XXXX_ (one hash, rule BSS-ORDER) defined in the unit's header fragment in address order; check_bss proves the _BSS length and every defined global's address. The G1/G2 split (DN1 0xa0f4) is not observable in the binary beyond alignment; chosen at G2's timer-vector pointer d_a0f4_ (luna-bss2 NOTES)."
  }
 }

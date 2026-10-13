@@ -1,7 +1,6 @@
 #include <conio.h>
 #include <dos.h>
 #include <stdlib.h>
-extern void far __exit(int);
 extern void far *d_9684_;
 extern void far *d_5a0d_;
 extern void interrupt far (*d_5556_)(void);
@@ -38,5 +37,5 @@ void g1_fc9c(void)
     setvect(9, d_5556_);
     g2_1319();
     enable();
-    __exit(0);
+    _exit(0);
 }

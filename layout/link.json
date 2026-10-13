@@ -1,0 +1,6 @@
+{
+ "proven": true,
+ "command": "python tools/link.py --repack",
+ "statement": "TLINK 2.0 (/c /d /s) of C0L (reassembled from STARTUP/C0.ASM), the toolbox module, G1 and G2 (each one Turbo C 2.0 compile of its unit: functions, initialised data, BSS) with the stock CL.LIB gives the unpacked image of every episode byte for byte (image, relocation set, header); LZEXE 0.91 packs it into the original DN1.EXE / DN2.EXE / DN3.EXE (SHA-256 equal to layout/oracle.lock.json).",
+ "proven_on": "2026-10-14"
+}

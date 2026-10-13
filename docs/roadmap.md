@@ -24,11 +24,11 @@ outputs with `layout/oracle.lock.json`.
 
 ## Phases
 
-1. **Reconstruction** (in progress): every function proven; G1/G2 initialised data
+1. **Reconstruction** (done, 2026-10-14): every function proven; G1/G2 initialised data
    and BSS reproduced (`tools/tubuild.py --data`); the natural link
    (`tools/link.py`) equal to the unpacked oracle images; LZEXE 0.91 repack equal to
    the original files (rule REPACK-REPRODUCIBLE).
-2. **The link becomes the proof**: `tools/validate.py` runs the full link and the
+2. **The link becomes the proof** (done: `layout/link.json`): `tools/validate.py` runs the full link and the
    repack for all three episodes; any change that moves one byte fails.  From here
    on, refactoring is safe and mechanical to check.
 3. **Readability pass** (no change in emitted code, verified by phase 2 on every step):

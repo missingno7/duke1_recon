@@ -5,7 +5,6 @@ extern int d_009f;
 extern int d_0437;
 extern int d_5319_;
 extern char far *d_a0fb_;
-extern int d_a0fd_;
 void asm_0424(char far *bitmap, int x, int y);
 char pascal g1_326e(int x, int y) { return 0; }
 /*@body*/

@@ -5,22 +5,22 @@ every recipe. Numbers are per episode; nothing here counts original bytes as sou
 
 | | DN1 | DN2 | DN3 |
 |---|---:|---:|---:|
-| Matching C functions | 245 | 245 | 245 |
-| Matching C code bytes | 69678 | 69741 | 69771 |
+| Matching C functions | 248 | 248 | 248 |
+| Matching C code bytes | 83446 | 83509 | 83539 |
 | First-party C code bytes | 83446 | 83509 | 83539 |
 | First-party C functions | 248 | 248 | 248 |
 | Matching ASM code bytes | 1082 | 1082 | 1082 |
 | ASM code bytes | 1082 | 1082 | 1082 |
 | Identified runtime code bytes (C0L + CL.LIB) | 13306 | 13306 | 13306 |
-| Unresolved code bytes | 13774 | 13775 | 13777 |
-| Code relocations inside proven functions | 1237 | 1240 | 1242 |
+| Unresolved code bytes | 6 | 7 | 9 |
+| Code relocations inside proven functions | 1312 | 1315 | 1317 |
 | Code relocations | 1455 | 1458 | 1460 |
 | Initialized DGROUP bytes | 20170 | 20386 | 19894 |
-| Matching data bytes | 16100 | 16316 | 15824 |
+| Matching data bytes | 18838 | 19054 | 18562 |
 | BSS bytes | 35042 | 35042 | 35042 |
 | BSS bytes with proven ownership | 0 | 0 | 0 |
 
-Natural historical link: not attempted yet. Unpacked image equality: no. Repacked (LZEXE 0.91) equality: no.
+Natural historical link: dn1 EQUAL, dn2 EQUAL, dn3 EQUAL. Unpacked image equality: dn1 yes, dn2 yes, dn3 yes. Repacked (LZEXE 0.91) equality: dn1 yes, dn2 yes, dn3 yes.
 
 Relocation order is unobservable in the oracles: LZEXE 0.91 stores relocations as ascending deltas,
 so only the relocation *set* can be compared.
@@ -71,6 +71,7 @@ so only the relocation *set* can be compared.
 | `g1_1b51` | dn1, dn2, dn3 |
 | `g1_1b8a` | dn1, dn2, dn3 |
 | `g1_1bf6` | dn1, dn2, dn3 |
+| `g1_1e77` | dn1, dn2, dn3 |
 | `g1_290f` | dn1, dn2, dn3 |
 | `g1_295e` | dn1, dn2, dn3 |
 | `g1_29d0` | dn1, dn2, dn3 |
@@ -166,6 +167,7 @@ so only the relocation *set* can be compared.
 | `g1_c0c7` | dn1, dn2, dn3 |
 | `g1_c1b2` | dn1, dn2, dn3 |
 | `g1_c243` | dn1, dn2, dn3 |
+| `g1_c287` | dn1, dn2, dn3 |
 | `g1_de26` | dn1, dn2, dn3 |
 | `g1_de71` | dn1, dn2, dn3 |
 | `g1_dee9` | dn1, dn2, dn3 |
@@ -180,6 +182,7 @@ so only the relocation *set* can be compared.
 | `g1_e92e` | dn1, dn2, dn3 |
 | `g1_e947` | dn1, dn2, dn3 |
 | `g1_ec3d` | dn1, dn2, dn3 |
+| `g1_ecf4` | dn1, dn2, dn3 |
 | `g1_fc85` | dn1, dn2, dn3 |
 | `g1_fc9c` | dn1, dn2, dn3 |
 | `g1_fd15` | dn1, dn2, dn3 |

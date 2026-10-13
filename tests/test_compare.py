@@ -162,7 +162,8 @@ class StrictCompare(unittest.TestCase):
 
     def test_static_for_shared_global_is_rejected(self):
         """A unit-local static cannot stand in for a global other functions use."""
-        text = (ROOT / "src/g1/g1_0acc.c").read_text().replace("extern int d_4ed4;", "static int d_4ed4;")
+        text = (ROOT / "src/g1/g1_0acc.c").read_text().replace("extern int d_4ed4_;", "static int d_4ed4_;")
+        self.assertIn("static int d_4ed4_;", text)
         rec = tcc.compile_c(text, tcc.profile_flags("tc20-l-gzo"))
         res = compare.compare_object(rec.obj, "g1_0acc", "dn1")
         self.assertEqual(res.status, "BINDING_ERROR", res.detail)

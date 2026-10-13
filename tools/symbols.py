@@ -82,7 +82,8 @@ _CODEDATA = re.compile(r"^c_([0-9a-f]{4})$")            # data inside the shared
 
 def resolve(name: str, ep: str) -> dict:
     key = norm(name)
-    key = norm(aliases().get(key, key))
+    if key in aliases():            # normalise once only: `__exit` must stay `_exit` (C0), not `exit` (CL.LIB)
+        key = norm(aliases()[key])
     if key in atlas():
         f = atlas()[key]
         loc = f["locations"].get(ep)

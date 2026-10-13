@@ -6,10 +6,6 @@ extern long d_4faa_[];
 extern long d_4fae_[];
 extern long d_4fb2_[];
 extern char d_5008_[10][11];
-extern char d_5013_[11];
-extern char d_501e_[11];
-extern char d_5029_[11];
-extern char d_5034_[11];
 /*@body*/
 void g2_24b1(void)
 {
@@ -25,15 +21,15 @@ void g2_24b1(void)
 #endif
     if (stream == 0) {
         d_4fa2_[0] = 40000L;
-        strcpy(&d_5008_[0][0], "TODD");
+        strcpy(d_5008_[0], "TODD");
         d_4fa6_[0] = 30000L;
-        strcpy(d_5013_, "SCOTT");
+        strcpy(d_5008_[1], "SCOTT");
         d_4faa_[0] = 20000L;
-        strcpy(d_501e_, "GEORGE");
+        strcpy(d_5008_[2], "GEORGE");
         d_4fae_[0] = 10000L;
-        strcpy(d_5029_, "AL");
+        strcpy(d_5008_[3], "AL");
         d_4fb2_[0] = 500L;
-        strcpy(d_5034_, "JOHN");
+        strcpy(d_5008_[4], "JOHN");
     } else {
         for (i = 0; i < 10; i++) {
             fscanf(stream, "%lu", &d_4fa2_[i]);
