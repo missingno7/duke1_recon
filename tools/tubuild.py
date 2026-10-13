@@ -1,6 +1,9 @@
 """Translation-unit build: compile a whole unit from accepted function sources.
 
-    python tools/tubuild.py G2_TEXT [--episode dn1] [--write build/tu/G2.C]
+    python tools/tubuild.py G2_TEXT [--episode dn1] [--write build/tu/G2-{ep}.C] [--override DIR]
+
+--override DIR uses DIR/FUNCTION.c instead of the accepted source where present
+(workers test consolidated declarations without touching canonical files).
 
 The unit source is assembled in original function order (per episode):
 declarations from every accepted file's prelude (stub definitions become
@@ -48,17 +51,22 @@ def split(path: Path) -> tuple:
     return pre, body
 
 
-def assemble(unit: str, ep: str) -> dict:
+def assemble(unit: str, ep: str, override: Path | None = None) -> dict:
     order = unit_functions(unit, ep)
-    missing = [f for f in order if not (RECIPES / f"{f}.json").exists()]
+    def source_of(f):
+        if override and (override / f"{f}.c").exists():
+            return override / f"{f}.c"
+        if (RECIPES / f"{f}.json").exists():
+            return ROOT / load_json(RECIPES / f"{f}.json")["source"]
+        return None
+    missing = [f for f in order if source_of(f) is None]
     decls, seen_lines, structs, conflicts = [], set(), {}, []
     bodies = []
     episode_dependent = False
     for fid in order:
         if fid in missing:
             continue
-        r = load_json(RECIPES / f"{fid}.json")
-        pre, body = split(ROOT / r["source"])
+        pre, body = split(source_of(fid))
         episode_dependent |= "EPISODE" in pre + body
         pre = re.sub(r"/\*.*?\*/", "", pre, flags=re.S)
         for m in STRUCT.finditer(pre):
@@ -83,8 +91,8 @@ def assemble(unit: str, ep: str) -> dict:
             "episode_dependent": episode_dependent}
 
 
-def check(unit: str, ep: str, write: Path | None = None) -> dict:
-    a = assemble(unit, ep)
+def check(unit: str, ep: str, write: Path | None = None, override: Path | None = None) -> dict:
+    a = assemble(unit, ep, override)
     out = {"unit": unit, "episode": ep, "functions": len(a["order"]), "missing": a["missing"],
            "declaration_conflicts": a["conflicts"]}
     if write:
@@ -118,7 +126,30 @@ def check(unit: str, ep: str, write: Path | None = None) -> dict:
             bad.append(f"{fid}: {res.status} {res.detail[:2]}")
     out.update({"segment_length": [seg_len, useg["size"]], "layout_mismatches": layout, "function_failures": bad})
     out["status"] = "EQUAL" if not bad and not layout and seg_len == useg["size"] else "DIFFER"
+    out["literal_pool"] = literal_pool(module, ep)
     return out
+
+
+def literal_pool(module, ep: str) -> dict:
+    """With every global still extern, the unit's _DATA is exactly its string
+    literal pool (rule DATA-LAYOUT: literals follow the initialised globals
+    at the end of the unit's _DATA).  Locate it in the original DGROUP: it
+    must occur, byte for byte, exactly once."""
+    import oracle
+    data = module.segments.get("_DATA", b"")
+    if not data:
+        return {"status": "EMPTY"}
+    img, _ = oracle.load_image(ep)
+    c = symbols.census(ep)
+    base = c["dgroup_frame"] << 4
+    dg = img[base:base + c["startup"]["bss_start"]]
+    hits = []
+    at = dg.find(data)
+    while at != -1:
+        hits.append(at)
+        at = dg.find(data, at + 1)
+    return {"status": "EQUAL" if len(hits) == 1 else ("AMBIGUOUS" if hits else "NOT_FOUND"),
+            "bytes": len(data), "dgroup_offset": hits[0] if len(hits) == 1 else None}
 
 
 def main() -> int:
@@ -126,13 +157,17 @@ def main() -> int:
     ap.add_argument("unit")
     ap.add_argument("--episode", default=None)
     ap.add_argument("--write")
+    ap.add_argument("--override", help="directory of FUNCTION.c files that replace accepted sources (read-only use)")
     a = ap.parse_args()
     eps = [a.episode] if a.episode else ["dn1", "dn2", "dn3"]
     rc = 0
     for ep in eps:
-        res = check(a.unit, ep, Path(a.write.replace("{ep}", ep)) if a.write else None)
+        res = check(a.unit, ep, Path(a.write.replace("{ep}", ep)) if a.write else None,
+                    Path(a.override) if a.override else None)
         atomic_json(BUILD / "tu" / f"{a.unit}-{ep}.json", res)
         print(f"{a.unit} {ep}: {res['status']}  functions {res['functions']}, missing {len(res['missing'])}")
+        if res.get("literal_pool"):
+            print(f"   literal pool: {res['literal_pool']}")
         for k in ("declaration_conflicts", "layout_mismatches", "function_failures", "log"):
             for x in res.get(k, [])[:8]:
                 print(f"   {k}: {x}")

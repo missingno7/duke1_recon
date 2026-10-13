@@ -136,6 +136,15 @@ class StrictCompare(unittest.TestCase):
         self.assertNotEqual(res.status, "EQUAL")
         self.assertTrue(any("local label" in d for d in res.detail), res.detail)
 
+    def test_near_call_displacement_wraps_at_64k(self):
+        """A backward push cs/call near spanning more than 32 KB is encoded with
+        a positive displacement that wraps modulo 64 KB (g1_c1b2 -> g1_326e)."""
+        obj = _obj("g1_c1b2")
+        for ep in ("dn1", "dn2", "dn3"):
+            res = compare.compare_object(obj, "g1_c1b2", ep)
+            self.assertEqual(res.status, "EQUAL", res.detail)
+            self.assertTrue(any(b["kind"] == "near_cs" for b in res.bound))
+
     def test_data_offset_mismatch(self):
         text = (ROOT / "src/g1/g1_0acc.c").read_text().replace("d_4ed4", "d_4ed6")
         rec = tcc.compile_c(text, tcc.profile_flags("tc20-l-gzo"))

@@ -293,7 +293,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
                 and ins.size == 3 and orig[a - 1] == 0x0E and orig[a] == cand[a]:
             if ins.raw[0] == 0xE8:
                 ctgt = (cstart + a + 3 + struct.unpack_from("<h", cand, a + 1)[0]) & 0xFFFF
-                otgt_lin = ostart + a + 3 + struct.unpack_from("<h", orig, a + 1)[0]
+                otgt_lin = (loc["frame"] << 4) + ((loc["offset"] + a + 3 + struct.unpack_from("<h", orig, a + 1)[0]) & 0xFFFF)
             else:
                 ctgt = word(cand, a + 1)
                 otgt_lin = (loc["frame"] << 4) + word(orig, a + 1)

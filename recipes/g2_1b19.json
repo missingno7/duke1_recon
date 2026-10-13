@@ -1,0 +1,49 @@
+{
+ "class": "SHARED_SHAPE",
+ "episodes": {
+  "dn1": {
+   "offset": 6937,
+   "original_sha256": "55cf58dc1bfc465ae714237c258a718005868d6a0530654764ddf3446d265737",
+   "size": 151,
+   "start": 74745,
+   "status": "EQUAL"
+  },
+  "dn2": {
+   "offset": 6937,
+   "original_sha256": "0f8739ddbf6e80000ffc29bf9143b99acae1beae59d8653177cb298a00d1657c",
+   "size": 151,
+   "start": 74745,
+   "status": "EQUAL"
+  },
+  "dn3": {
+   "offset": 6937,
+   "original_sha256": "b63026e52be1dd22aff9ea62af909bf9be0eb3cd98e35ffc591a3945f54585b4",
+   "size": 151,
+   "start": 74745,
+   "status": "EQUAL"
+  }
+ },
+ "flags": [
+  "-ml",
+  "-Z",
+  "-G",
+  "-O",
+  "-1-",
+  "-f-",
+  "-K"
+ ],
+ "function": "g2_1b19",
+ "language": "c",
+ "name": null,
+ "per_episode_compile": false,
+ "profile": "tc20-l-gzo",
+ "proven_under": {
+  "atlas_sha256": "16f2321f98447793fb35739d00b3eeb0ccc34455539992e2d3f16c34e7ea1a5d",
+  "context_key": "f9ddbcc283e21bc356743487d14ff3f5ad3eb95ce4d611e18daa57db7b166cbb",
+  "emission_key": "c2ae325d5386f51fa8a3cab5a41bb99e70a0f0e5e53abd52b18ae1055ae20d0c",
+  "oracle_lock_sha256": "56e7bc0d0b23a678199ccd7d152ee72a0a96114de02dae56e08e5ad9b8b4b2ec"
+ },
+ "source": "src/g2/g2_1b19.c",
+ "source_sha256": "fe5b5cfa5d15b03d9a18af5df527a10fea0a88b38fe2ec59c7a576f62e7b4d95",
+ "unit": "G2_TEXT"
+}

@@ -51,6 +51,8 @@ def collect() -> dict:
     dviews = defaultdict(list)
     for rp in sorted(RECIPES.glob("*.json")):
         r = load_json(rp)
+        if r.get("language") == "asm":
+            continue
         raw = (ROOT / r["source"]).read_text("latin-1")
         prelude, body = raw.split("/*@body*/", 1)
         prelude = re.sub(r"/\*.*?\*/", "", prelude, flags=re.S)
