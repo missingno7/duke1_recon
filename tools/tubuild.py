@@ -298,7 +298,8 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
     out.update({"segment_length": [seg_len, useg["size"]], "layout_mismatches": layout, "function_failures": bad,
                 "unit_static_bases": {k: sorted(v) for k, v in static_bases.items()}})
     out["status"] = "EQUAL" if not bad and not layout and seg_len == useg["size"] else "DIFFER"
-    out["literal_pool"] = literal_pool(module, ep)
+    if not plan:            # superseded by the data proof once a unit has a data plan
+        out["literal_pool"] = literal_pool(module, ep)
     return out
 
 

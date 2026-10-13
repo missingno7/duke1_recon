@@ -98,6 +98,30 @@ def check_units(only: set | None = None) -> dict:
     return out
 
 
+def check_link(units: dict) -> dict:
+    """Natural TLINK of the whole program + LZEXE repack (tools/link.py), once
+    every unit is complete: {episode: result}.  Empty while a unit is incomplete."""
+    if any(s == "INCOMPLETE" for eps in units.values() for s in eps.values()):
+        return {}
+    import link
+    out = {}
+    for e in EPISODES:
+        try:
+            exe, mapfile, log = link.link(link.build_objects(e), BUILD / "scratch" / "link" / f"validate-{e}")
+            res = link.compare(exe, mapfile, e)
+            if res["status"] == "EQUAL":
+                import repack
+                packed = repack.pack(exe)
+                want = load_json(LAYOUT / "oracle.lock.json")["episodes"][e]["packed"]["sha256"]
+                res["repacked"] = {"status": "EQUAL" if sha256(packed) == want else "DIFFER"}
+                if res["repacked"]["status"] != "EQUAL":
+                    res["status"] = "REPACK_DIFFER"
+        except link.LinkError as exc:
+            res = {"status": "LINK_ERROR", "error": str(exc)[:300]}
+        out[e] = res
+    return out
+
+
 def coverage(results: list) -> dict:
     census = {e: load_json(BUILD / "census" / f"{e}.json") for e in EPISODES}
     rs = recipes()
@@ -162,8 +186,9 @@ def progress_md(cov: dict, results: list) -> str:
             ("BSS bytes", "bss_bytes"), ("BSS bytes with proven ownership", "bss_owned_bytes")]
     for label, k in rows:
         lines.append(f"| {label} | " + " | ".join(str(cov[e][k]) for e in EPISODES) + " |")
-    lines += ["", "Natural historical link: not attempted yet. Unpacked image equality: no. "
-              "Repacked (LZEXE 0.91) equality: no.", "",
+    lines += ["", "Natural historical link: " + ", ".join(f"{e} {cov[e]['natural_link']}" for e in EPISODES)
+              + ". Unpacked image equality: " + ", ".join(f"{e} {'yes' if cov[e]['unpacked_image_equal'] else 'no'}" for e in EPISODES)
+              + ". Repacked (LZEXE 0.91) equality: " + ", ".join(f"{e} {'yes' if cov[e]['repacked_executable_equal'] else 'no'}" for e in EPISODES) + ".", "",
               "Relocation order is unobservable in the oracles: LZEXE 0.91 stores relocations as ascending deltas,",
               "so only the relocation *set* can be compared.", "", "## Accepted functions", "",
               "| Function | Episodes proven |", "|---|---|"]
@@ -218,9 +243,18 @@ def main() -> int:
         print(f"unit {u}: " + ", ".join(f"{e} {s}" for e, s in eps.items())
               + (f"; data proven {UNIT_DATA[u]}" if u in UNIT_DATA else ""))
         failures += [f"unit {u} {e}: {s}" for e, s in eps.items() if s not in ("EQUAL", "INCOMPLETE")]
+    link = check_link(units)
+    for e, r in link.items():
+        print(f"link {e}: {r['status']}" + (f", repacked {r['repacked']['status']}" if r.get("repacked") else ""))
+    if (LAYOUT / "link.json").exists() and load_json(LAYOUT / "link.json").get("proven"):
+        failures += [f"natural link {e}: {r['status']}" for e, r in link.items() if r["status"] != "EQUAL"]
     cov = coverage(results)
     for e in EPISODES:
         cov[e]["complete_units_equal"] = sorted(u for u, eps in units.items() if eps.get(e) == "EQUAL")
+        lk = link.get(e, {})
+        cov[e]["natural_link"] = lk.get("status", "not attempted")
+        cov[e]["unpacked_image_equal"] = lk.get("status") in ("EQUAL", "REPACK_DIFFER")
+        cov[e]["repacked_executable_equal"] = lk.get("repacked", {}).get("status") == "EQUAL"
         if units.get("ASM_TEXT", {}).get(e) == "EQUAL":
             cov[e]["matching_asm_code"] = cov[e]["asm_code"]     # data tables in the segment included
             cov[e]["unresolved_code"] = (cov[e]["code_bytes"] - cov[e]["matching_c_code"] - cov[e]["asm_code"]
