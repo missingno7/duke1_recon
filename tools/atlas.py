@@ -176,6 +176,27 @@ def build() -> dict:
         head = [x for x in extra if x[0] == -1]
         rows[s] = [{e: j} for _, e, j in head] + ordered
 
+    # 1b. a function present in complementary episode sets at different
+    #     positions with an identical shape is one logical function whose
+    #     position in the unit moved (recorded as order evidence).
+    moved = {}
+    for s in segnames:
+        partial = [k for k, row in enumerate(rows[s]) if len(row) < len(EPISODES)]
+        for a_i in partial:
+            for b_i in partial:
+                ra, rb = rows[s][a_i], rows[s][b_i]
+                if a_i == b_i or not ra or not rb or set(ra) & set(rb):
+                    continue
+                sa = {F[e][s][j]["shape"] for e, j in ra.items()}
+                sb = {F[e][s][j]["shape"] for e, j in rb.items()}
+                if len(sa) == 1 and sa == sb:
+                    keep, drop = (a_i, b_i) if REF in ra or b_i > a_i else (b_i, a_i)
+                    rows[s][keep].update(rows[s][drop])
+                    moved[(s, keep)] = sorted(rows[s][drop])
+                    rows[s][drop] = {}
+        rows[s] = [r for r in rows[s] if r]
+        # moved keys refer to pre-compaction indices; resolve by content below
+
     # 2. index: (ep, linear start) -> logical id
     ids = {}
     logical = []
@@ -225,6 +246,14 @@ def build() -> dict:
                        "shape": f["shape"], "boundary": f["status"]}
         present = sorted(row)
         ev = {"present": present}
+        # order: the logical predecessor (previous function in the unit)
+        # in every present episode; differing predecessors = moved.
+        if len(present) > 1:
+            prev = {}
+            for e in present:
+                j = row[e]
+                prev[e] = ids.get((e, F[e][s][j - 1]["start"])) if j else None
+            ev["order"] = "same" if len(set(prev.values())) == 1 else "moved"
         if len(present) > 1:
             fs = {e: F[e][s][row[e]] for e in present}
             base = present[0]

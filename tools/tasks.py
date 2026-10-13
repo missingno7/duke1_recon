@@ -210,6 +210,22 @@ def packet(fid: str, worker: str) -> Path:
     (d / "context.txt").write_text(subprocess.run([sys.executable, str(ROOT / "tools" / "context.py"), fid],
                                                   capture_output=True, text=True, cwd=ROOT).stdout)
     (d / "skeleton.c").write_text(ctxmod.skeleton(ctx))
+    episode_note = ""
+    if ctx["class"] in ("PARAMETERIZED", "EPISODE_SPECIFIC", "UNRESOLVED"):
+        for e in ctx["locations"]:
+            if e != "dn1":
+                (d / f"context-{e}.txt").write_text(subprocess.run(
+                    [sys.executable, str(ROOT / "tools" / "context.py"), fid, "--episode", e],
+                    capture_output=True, text=True, cwd=ROOT).stdout)
+        episode_note = f"""
+## Episode differences
+This function differs between episodes (class {ctx['class']}; see context-dn2.txt / context-dn3.txt).
+Write ONE source.  Put episode differences in `#if EPISODE == 1` / `#elif` / `#else` blocks, as
+small as the evidence allows (constants, a changed condition, an extra call).  When the source
+mentions EPISODE, search.py compiles it once per episode with -DEPISODE=1/2/3 and compares each
+episode separately.  A per-episode partial result (e.g. dn1+dn2 EQUAL, dn3 not) is still useful:
+report it as PARTIAL_EQUAL with the episodes listed.
+"""
     import db as _db_mod
     prompt = f"""# Task {task}: recover `{fid}` as Turbo C 2.0 source
 
@@ -227,6 +243,7 @@ AGENTS.md explains the project rules.
 {RULES.format(dir=rel(d), fid=fid, worker=worker)}
 ## Compiler facts
 {LESSONS}
+{episode_note}
 ## Candidate format
 Declarations and stub definitions first, then a line `/*@body*/`, then exactly the definition of
 `{fid}`.  Start from skeleton.c; fix types/signatures from the evidence.
