@@ -1,8 +1,10 @@
 """Split lines holding several statements (outside parentheses) into one
 statement per line, then re-indent with tools/reindent.py.  Body only."""
 import sys
-sys.path.insert(0, r"D:\Prog\duke1_recon\tools")
-import reindent
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import reindent  # noqa: E402
 
 
 def split_line(line):
