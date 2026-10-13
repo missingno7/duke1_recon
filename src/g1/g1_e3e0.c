@@ -105,7 +105,7 @@ void pascal g1_1b51(void) {}    /* accepted signature; stub for push cs; call ne
 void g1_de26(char far* a0) {}    /* accepted signature; stub for push cs; call near */
 void pascal g1_10fb(char far* a0, int a1, int a2) {}    /* accepted signature; stub for push cs; call near */
 void pascal g1_2a1d(void) {}    /* accepted signature; stub for push cs; call near */
-void pascal g1_c287(int a0) {}    /* stub: called via push cs; call near */
+void pascal g1_c287(unsigned int a0) {}    /* stub: called via push cs; call near */
 void pascal g1_bb9f(void) {}    /* accepted signature; stub for push cs; call near */
 /*@body*/
 void pascal g1_e3e0(char far *a0)

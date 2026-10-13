@@ -44,6 +44,6 @@
   "oracle_lock_sha256": "56e7bc0d0b23a678199ccd7d152ee72a0a96114de02dae56e08e5ad9b8b4b2ec"
  },
  "source": "src/g1/g1_e3e0.c",
- "source_sha256": "9a15f956c21b668b6a9d27db8da67657743f882305bafa0e451223268d92aae3",
+ "source_sha256": "92f8b5a560a58ebf3fa4258982f0dda8f99535c78172c56d89e25853d246d82a",
  "unit": "G1_TEXT"
 }
