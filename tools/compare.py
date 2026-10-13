@@ -142,10 +142,13 @@ def _data_users(ep: str) -> dict:
 def _own_public(module, seg: str, addend: int):
     """(name, delta) if a candidate public in its own data segment `seg`
     covers `addend` (a defined global); None for literals.  A public's
-    extent ends at the next public; the last one only matches exactly."""
+    extent ends at the next public; the last one only matches exactly in
+    _DATA (literals follow it) and extends to the segment end in _BSS."""
     pubs = sorted((p["offset"], p["name"]) for p in module.publics if p["segment"] == seg)
+    seg_end = module.segment_lengths.get(seg, 0)
     for k, (off, nm) in enumerate(pubs):
-        nxt = pubs[k + 1][0] if k + 1 < len(pubs) else off + 1
+        # _BSS holds no literals: its last object extends to the segment end
+        nxt = pubs[k + 1][0] if k + 1 < len(pubs) else (seg_end if seg == "_BSS" else off + 1)
         if off <= addend < nxt:
             return nm, addend - off
     return None
@@ -284,6 +287,34 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
                                   "provenance": tgt["provenance"]})
             elif tgt["kind"] == "own_data":
                 own = module.segments.get("_DATA", b"")
+                if own_data_base is not None and tname in own_data_base:
+                    # unit level, the unit's _DATA/_BSS layout already proven against
+                    # the original range: every own offset binds relationally
+                    exp = (own_data_base[tname] + addend) & 0xFFFF
+                    if got != exp:
+                        errors.append(f"+{at:#x} {tname}+{addend:#x}: original {got:#06x}, unit data binds {exp:#06x}")
+                        continue
+                    res.bound.append({"at": at, "kind": "unit_data", "segment": tname, "offset": addend,
+                                      "dgroup_offset": got})
+                    covered.update(range(at, at + 2))
+                    continue
+                named = _own_public(module, tname, addend)
+                if named:
+                    # a global DEFINED in this unit (initialised data or BSS), not a
+                    # literal or an anonymous static: bind it by name like an external
+                    pname, delta = named
+                    try:
+                        t2 = symbols.resolve(pname, ep)
+                    except symbols.SymbolError as exc:
+                        errors.append(f"+{at:#x} defined global {pname}: {exc}")
+                        continue
+                    if t2["kind"] != "data" or got != (t2["dgroup_offset"] + delta) & 0xFFFF:
+                        errors.append(f"+{at:#x} defined global {pname}+{delta:#x}: original {got:#06x}")
+                        continue
+                    res.bound.append({"at": at, "kind": "data", "target": pname, "addend": delta,
+                                      "provenance": t2.get("provenance")})
+                    covered.update(range(at, at + 2))
+                    continue
                 if tname == "_BSS":
                     # A unit-local static with no name the function could declare
                     # (Turbo C's struct-return temporary, a function-local
@@ -302,34 +333,6 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
                         continue
                     res.bound.append({"at": at, "kind": "unit_static", "segment": tname, "offset": addend,
                                       "dgroup_offset": got})
-                    covered.update(range(at, at + 2))
-                    continue
-                if own_data_base is not None and tname in own_data_base:
-                    # unit level, the unit's _DATA already proven equal to the
-                    # original range: every own-data offset binds relationally
-                    exp = (own_data_base[tname] + addend) & 0xFFFF
-                    if got != exp:
-                        errors.append(f"+{at:#x} {tname}+{addend:#x}: original {got:#06x}, unit data binds {exp:#06x}")
-                        continue
-                    res.bound.append({"at": at, "kind": "unit_data", "segment": tname, "offset": addend,
-                                      "dgroup_offset": got})
-                    covered.update(range(at, at + 2))
-                    continue
-                named = _own_public(module, tname, addend)
-                if named:
-                    # a global DEFINED in this unit (initialised data), not a literal:
-                    # bind it by name like an external
-                    pname, delta = named
-                    try:
-                        t2 = symbols.resolve(pname, ep)
-                    except symbols.SymbolError as exc:
-                        errors.append(f"+{at:#x} defined global {pname}: {exc}")
-                        continue
-                    if t2["kind"] != "data" or got != (t2["dgroup_offset"] + delta) & 0xFFFF:
-                        errors.append(f"+{at:#x} defined global {pname}+{delta:#x}: original {got:#06x}")
-                        continue
-                    res.bound.append({"at": at, "kind": "data", "target": pname, "addend": delta,
-                                      "provenance": t2.get("provenance")})
                     covered.update(range(at, at + 2))
                     continue
                 if addend >= len(own):

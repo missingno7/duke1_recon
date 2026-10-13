@@ -257,6 +257,10 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
         if out["data"]["status"] == "EQUAL":
             # the unit's _DATA is the original range: own-data references bind to it
             own_base = {"_DATA": int(plan["data_segment_range"][ep][0], 16)}
+        if plan and plan.get("bss_range"):
+            out["bss"] = check_bss(module, ep, plan)
+            if out["bss"]["status"] == "EQUAL":
+                own_base = dict(own_base or {}, _BSS=int(plan["bss_range"][ep][0], 16))
     for fid in a["order"]:
         loc = symbols.atlas()[fid]["locations"][ep]
         rel = loc["start"] - useg["start"]
@@ -358,6 +362,37 @@ def check_data(module, ep: str, plan: dict) -> dict:
     return out
 
 
+def check_bss(module, ep: str, plan: dict) -> dict:
+    """The unit's _BSS against the original range [start, end) of the plan:
+    its length (one trailing alignment byte allowed) and the offset of every
+    global it defines (PUBDEF in _BSS) must put that global exactly at the
+    DGROUP offset its name is bound to in this episode.  BSS holds no bytes, so
+    length plus symbol placement is the whole layout."""
+    start, end = (int(x, 16) for x in plan["bss_range"][ep])
+    length = module.segment_lengths.get("_BSS", 0)
+    out = {"range": [hex(start), hex(end)], "bytes": [length, end - start]}
+    pad = 1 if length == end - start - 1 else 0
+    errors, defined = [], 0
+    for p in module.publics:
+        if p["segment"] != "_BSS":
+            continue
+        name = symbols.norm(p["name"])
+        try:
+            t = symbols.resolve(name, ep)
+        except symbols.SymbolError as exc:
+            errors.append(f"{name}: {exc}")
+            continue
+        defined += 1
+        if t["kind"] != "data" or t["dgroup_offset"] != start + p["offset"]:
+            errors.append(f"{name} at _BSS+{p['offset']:#x} = {start + p['offset']:#06x}, "
+                          f"bound to {t.get('dgroup_offset', 0):#06x}")
+    if length != end - start and not pad:
+        errors.insert(0, f"_BSS is {length} bytes, the range {end - start}")
+    out.update({"defined_globals": defined, "errors": errors[:12], "alignment_pad": pad,
+                "status": "EQUAL" if not errors and defined else ("NO_DEFINITIONS" if not defined else "DIFFER")})
+    return out
+
+
 def literal_pool(module, ep: str) -> dict:
     """With every global still extern, the unit's _DATA is exactly its string
     literal pool (rule DATA-LAYOUT: literals follow the initialised globals
@@ -404,6 +439,8 @@ def main() -> int:
             print(f"   literal pool: {res['literal_pool']}")
         if "data" in res:
             print(f"   data: {res['data']}")
+        if "bss" in res:
+            print(f"   bss: {res['bss']}")
         for k in ("declaration_conflicts", "layout_mismatches", "function_failures", "log"):
             for x in res.get(k, [])[:8]:
                 print(f"   {k}: {x}")
