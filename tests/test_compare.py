@@ -108,6 +108,34 @@ class StrictCompare(unittest.TestCase):
         res = compare.compare_object(obj, "g1_1053", "dn1", name="g1_e92e")
         self.assertIn(res.status, ("EXTENT_MISMATCH", "DIFFER"))
 
+    def test_switch_table_local_labels(self):
+        """Switch jump tables are own-segment offset16 fixups to labels inside
+        the function: bound relationally; a redirected entry must fail."""
+        obj = _obj("g1_314c")
+        for ep in ("dn1", "dn2", "dn3"):
+            res = compare.compare_object(obj, "g1_314c", ep)
+            self.assertEqual(res.status, "EQUAL", res.detail)
+            self.assertTrue(any(b["kind"] == "local_label" for b in res.bound))
+        import omf
+        m = omf.OmfReader().read(obj)
+        seg = next(s["name"] for s in m.segment_defs if s["class"] == "CODE")
+        local = next(f for f in m.linker_fixups if f["segment"] == seg and f["target_kind"] == "segment"
+                     and f["loc"] == "offset16")
+        recs = _records(obj)
+        out = []
+        for r in recs:
+            if r[0] == 0xA0:
+                start = 3 + 1 + 2
+                base = struct.unpack_from("<H", r, 4)[0]
+                rel = local["offset"] - base
+                if 0 <= rel < len(r) - start - 1:
+                    v = struct.unpack_from("<H", r, start + rel)[0]
+                    struct.pack_into("<H", r, start + rel, v + 2)   # point the entry 2 bytes later
+            out.append(r)
+        res = compare.compare_object(_join(out), "g1_314c", "dn1")
+        self.assertNotEqual(res.status, "EQUAL")
+        self.assertTrue(any("local label" in d for d in res.detail), res.detail)
+
     def test_data_offset_mismatch(self):
         text = (ROOT / "src/g1/g1_0acc.c").read_text().replace("d_4ed4", "d_4ed6")
         rec = tcc.compile_c(text, tcc.profile_flags("tc20-l-gzo"))

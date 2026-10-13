@@ -1,5 +1,47 @@
 {
  "generated_by": "tools/tu.py (rule CALL-FORMS)",
+ "literal_pools": {
+  "G1_TEXT": {
+   "dn1": {
+    "first": 60,
+    "inversions": 2,
+    "last": 2875,
+    "references": 69
+   },
+   "dn2": {
+    "first": 60,
+    "inversions": 2,
+    "last": 2875,
+    "references": 69
+   },
+   "dn3": {
+    "first": 60,
+    "inversions": 2,
+    "last": 2875,
+    "references": 69
+   }
+  },
+  "G2_TEXT": {
+   "dn1": {
+    "first": 5773,
+    "inversions": 2,
+    "last": 18959,
+    "references": 418
+   },
+   "dn2": {
+    "first": 5915,
+    "inversions": 2,
+    "last": 19177,
+    "references": 422
+   },
+   "dn3": {
+    "first": 5396,
+    "inversions": 2,
+    "last": 18684,
+    "references": 424
+   }
+  }
+ },
  "note": "Functions only ever called backward (or not at all) are UNDETERMINED: both storage classes compile identically for them.",
  "storage_class_evidence": {
   "g1_0008": {

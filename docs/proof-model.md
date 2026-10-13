@@ -77,7 +77,9 @@ conditionals; such sources are compiled once per episode with `-DEPISODE=n`.
   episodes) and the game's C0 variant are identified, not reconstructed.
 * CL.LIB modules are identified by exact match outside fixups; they are not yet
   linked from the pinned library.
-* Four bytes at `0x805` (`jmp far [..]`, after CVTFAK) and 2–5 zero bytes before
-  `DELAY_TEXT` are inside the runtime region but not yet attributed.
+* The runtime region is fully attributed: 65 CL.LIB modules (12,849 bytes; the
+  4-byte `REALCVT` module is placed positionally in the only gap it fits) plus
+  2/3/5 bytes of TLINK fill before the paragraph-aligned `DELAY_TEXT`. This is
+  identification by exact match, not a link.
 * Function names, types and parameter names are reconstructions; only the
   emitted code is proven.

@@ -40,8 +40,12 @@ python tools/context.py --list --unit G2_TEXT --max-size 80 --open
    candidate fresh (no cache), records proposed blockers (mechanism token +
    next experiment are mandatory) and prints a promote command for confirmed
    candidates. It never promotes.
-5. The supervisor reviews and promotes one candidate at a time
-   (`tools/promote.py`), then `tools/validate.py --write-progress`, commits.
+5. The supervisor reviews each candidate (natural declarations: real types for
+   globals, pinned Turbo C headers, literals for text, no offsets from unrelated
+   symbols, no steering), fixes small issues by hand and re-runs `search.py`,
+   then promotes with `tools/promote.py --batch LIST.txt` (one lock, one full
+   re-proof, one journal, all-or-nothing), checks `tools/decls.py` for
+   conflicting views, runs `tools/validate.py --write-progress`, commits.
 
 Start with about four workers. Grow only while compiles (≈0.3 s each, cached
 and coalesced in `build/cc-cache`) and intake keep up. If DOS compiles ever

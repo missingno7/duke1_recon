@@ -161,7 +161,42 @@ def check_relocs_sorted(args: dict) -> dict:
     return {"outcome": "CONFIRMED" if ok else "FALSIFIED", "rows": rows}
 
 
-CHECKS = {"flag": check_flag, "variant": check_variant, "call_forms": check_call_forms,
+def check_link_path(args: dict) -> dict:
+    """TLINK 2.0 links a trivial large-model unit with C0L.OBJ and CL.LIB under
+    the pinned runner; the far library segments it pulls in for the startup's
+    own references come out in the same order as the originals' first ones."""
+    import shutil
+    import uuid
+    import mz
+    import oracle
+    import census
+    import toolchain
+    from common import BUILD
+    r = tcc.compile_c("int g;\nint main(void) { g = 3; return g; }\n", tcc.profile_flags("tc20-l-gzo"))
+    w = BUILD / "scratch" / "link" / uuid.uuid4().hex[:8]
+    w.mkdir(parents=True)
+    (w / "UNIT.OBJ").write_bytes(r.obj)
+    for f in ("LIB/C0L.OBJ", "LIB/CL.LIB"):
+        shutil.copy(toolchain.tool(f), w / Path(f).name)
+    rc, out, _ = toolchain.run_dos("BIN/TLINK.EXE", ["/c", "/d", "/s", "C0L.OBJ", "UNIT.OBJ,OUT.EXE,OUT.MAP,CL.LIB"], w)
+    facts = {"tlink_ok": rc == 0 and (w / "OUT.EXE").exists()}
+    if facts["tlink_ok"]:
+        segs = [ln.split()[3] for ln in (w / "OUT.MAP").read_text("latin-1").splitlines()
+                if ln.strip().endswith("CODE") and len(ln.split()) >= 5]
+        linked = [x[:-5] for x in segs if x.endswith("_TEXT") and x not in ("_TEXT", "UNIT_TEXT")
+                  and x != "STKLEN_TEXT"]
+        img, _ = oracle.load_image("dn1")
+        orig = [h["module"] for h in census.scan_library(img) if h["segment"] != "_TEXT"]
+        n = args["prefix"]
+        facts["library_prefix_order_equal"] = linked[:n] == orig[:n]
+        facts["linked_prefix"] = linked[:n]
+        facts["unpacked_mz"] = len(mz.parse((w / "OUT.EXE").read_bytes()).image) > 0
+    shutil.rmtree(w, ignore_errors=True)
+    ok = facts["tlink_ok"] and facts.get("library_prefix_order_equal") and facts.get("unpacked_mz")
+    return {"outcome": "CONFIRMED" if ok else "FALSIFIED", "facts": facts}
+
+
+CHECKS = {"flag": check_flag, "link_path": check_link_path, "variant": check_variant, "call_forms": check_call_forms,
           "z_effect": check_z_effect, "startup_model": check_startup_model,
           "c0_reassembly": check_c0_reassembly, "runtime": check_runtime, "relocs_sorted": check_relocs_sorted}
 

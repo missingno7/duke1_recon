@@ -146,6 +146,10 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
   literals for text.  Data that exists only in one episode is named d_dnN_XXXX (that episode's
   DGROUP offset) and used under #if EPISODE.  Never address an object as an offset from an
   unrelated symbol (e.g. `(char *)&d_4713 + 0x19`): supervisor review rejects it.
+- Use the pinned Turbo C headers for library calls (`#include <stdio.h>`, <dos.h>, ...), not
+  hand-written prototypes or fake typedefs such as `typedef char FILE`.
+- Give each global its real type: a 32-bit object is `extern long d_XXXX;`, not two ints viewed
+  through a cast or a #define.
 """
 
 RULES = """\

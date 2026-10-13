@@ -15,9 +15,12 @@
   },
   {
    "id": "RUNTIME-CL-LIB",
-   "statement": "64 Turbo C 2.0 CL.LIB code segments (12,845 bytes) occur exactly once, byte-exact outside their fixups, in each episode; library code is CL.LIB (large model).",
+   "statement": "65 Turbo C 2.0 CL.LIB code segments (12,849 bytes) are located in each episode: 64 by a unique exact match outside fixups, plus the 4-byte REALCVT _TEXT placed positionally in the only gap it fills; the remaining 2/3/5 zero bytes are TLINK fill before the paragraph-aligned DELAY_TEXT. Library code is CL.LIB (large model).",
    "check": "runtime",
-   "args": {"modules": 64, "bytes": 12845},
+   "args": {
+    "modules": 65,
+    "bytes": 12849
+   },
    "outcome": "CONFIRMED"
   },
   {
@@ -30,35 +33,83 @@
    "id": "FLAG-O",
    "statement": "-O (jump optimisation) is in effect for G1/G2 C code: without it the canonical pilots grow jump chains (jmp $+2) and stop matching.",
    "check": "flag",
-   "args": {"functions": ["g1_e92e", "g1_1053", "g2_276f"], "remove": ["-O"]},
+   "args": {
+    "functions": [
+     "g1_e92e",
+     "g1_1053",
+     "g2_276f"
+    ],
+    "remove": [
+     "-O"
+    ]
+   },
    "outcome": "CONFIRMED"
   },
   {
    "id": "FLAG-K",
    "statement": "-K (char is unsigned) is in effect: without it char loads gain cbw and compares widen.",
    "check": "flag",
-   "args": {"functions": ["g2_276f", "g2_01d5"], "remove": ["-K"]},
+   "args": {
+    "functions": [
+     "g2_276f",
+     "g2_01d5"
+    ],
+    "remove": [
+     "-K"
+    ]
+   },
    "outcome": "CONFIRMED"
   },
   {
    "id": "FLAG-G",
    "statement": "-G (optimise for speed) is in effect: 2-byte caller cleanup is 'inc sp; inc sp' instead of 'pop cx'.",
    "check": "flag",
-   "args": {"functions": ["g2_01d5"], "remove": ["-G"]},
+   "args": {
+    "functions": [
+     "g2_01d5"
+    ],
+    "remove": [
+     "-G"
+    ]
+   },
    "outcome": "CONFIRMED"
   },
   {
    "id": "CPU-8086",
    "statement": "-1- (8086 instructions) is in effect: with -1 (80186) 'push imm' replaces 'mov ax,imm; push ax' and g1_006f stops matching.",
    "check": "flag",
-   "args": {"functions": ["g1_006f", "g1_e92e"], "remove": ["-1-"], "add": ["-1"]},
+   "args": {
+    "functions": [
+     "g1_006f",
+     "g1_e92e"
+    ],
+    "remove": [
+     "-1-"
+    ],
+    "add": [
+     "-1"
+    ]
+   },
    "outcome": "CONFIRMED"
   },
   {
    "id": "FLAG-Z",
    "statement": "-Z (register load suppression) is part of the external Duke1Decomp profile. No accepted function yet changes when -Z is removed; status stays open until a discriminating function is matched.",
    "check": "flag",
-   "args": {"functions": ["g1_e92e", "g1_1053", "g2_276f", "g1_0acc", "g1_006f", "g2_01d5", "g1_2a1d"], "remove": ["-Z"]},
+   "args": {
+    "functions": [
+     "g1_e92e",
+     "g1_1053",
+     "g2_276f",
+     "g1_0acc",
+     "g1_006f",
+     "g2_01d5",
+     "g1_2a1d"
+    ],
+    "remove": [
+     "-Z"
+    ]
+   },
    "outcome": "CONSISTENT_NOT_DISCRIMINATED"
   },
   {
@@ -77,7 +128,22 @@
    "id": "PASCAL-CALLEE",
    "statement": "Functions ending in 'retf N' are pascal: g1_e92e matches only when declared pascal (callers then do no stack cleanup, cf. g1_006f calling g2_1f5a).",
    "check": "variant",
-   "args": {"functions": ["g1_e92e"], "pattern": "void pascal", "replace": "void"},
+   "args": {
+    "functions": [
+     "g1_e92e"
+    ],
+    "pattern": "void pascal",
+    "replace": "void"
+   },
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "LINK-PATH",
+   "statement": "The pinned TLINK 2.0 links a large-model unit with C0L.OBJ and CL.LIB under the pinned runner (/c /d /s), and the far library segments pulled in by the startup's own references come out in the same order as the first library segments of the originals (IOERROR, EXIT, ATEXIT, FMALLOC, FBRK, SETBLOCK).",
+   "check": "link_path",
+   "args": {
+    "prefix": 6
+   },
    "outcome": "CONFIRMED"
   }
  ]

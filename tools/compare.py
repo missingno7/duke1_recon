@@ -98,6 +98,7 @@ class Result:
     orig: bytes = b""
     cand_base: int = 0
     orig_base: int = 0
+    covered: frozenset = frozenset()   # positions verified by a binding (diagnostics only)
 
     def summary(self) -> dict:
         return {"status": self.status, "episode": self.episode, "function": self.function,
@@ -193,6 +194,11 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
         try:
             if tkind == "external":
                 tgt = symbols.resolve(tname, ep)
+            elif tkind == "segment" and tname == seg and loc_name == "offset16" and                     cstart <= (addend & 0xFFFF) < cend:
+                # a label inside this function (switch jump-table entries and
+                # the table address itself): must land at the same relative
+                # offset in the original function
+                tgt = {"kind": "local_label", "relative": (addend & 0xFFFF) - cstart}
             elif tkind == "segment" and tname == seg:
                 names = pubs_by_off.get(addend & 0xFFFF)
                 if not names:
@@ -232,7 +238,14 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
             res.bound.append({"at": at, "kind": "seg", "target": tname})
         elif loc_name == "offset16":
             got = word(ow, 0)
-            if tgt["kind"] == "data":
+            if tgt["kind"] == "local_label":
+                exp = (loc["offset"] + tgt["relative"]) & 0xFFFF
+                if got != exp:
+                    errors.append(f"+{at:#x} local label +{tgt['relative']:#x}: original {got:#06x}, "
+                                  f"expected {exp:#06x}")
+                    continue
+                res.bound.append({"at": at, "kind": "local_label", "relative": tgt["relative"]})
+            elif tgt["kind"] == "data":
                 exp = (tgt["dgroup_offset"] + addend) & 0xFFFF
                 if got != exp:
                     errors.append(f"+{at:#x} {tname}+{addend:#x}: original {got:#06x}, binding {exp:#06x}")
@@ -304,6 +317,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
         errors.append(f"original relocations without candidate fixups at {[hex(x) for x in missing]}")
     if extra:
         errors.append(f"candidate segment fixups where original has no relocation: {[hex(x) for x in extra]}")
+    res.covered = frozenset(covered)
     diffs = [i for i in range(len(cand)) if i not in covered and i not in attempted and cand[i] != orig[i]]
     res.diff_bytes = len(diffs)
     if diffs:
@@ -341,7 +355,11 @@ def instruction_diff(res: Result, context: int = 3, limit: int = 40) -> list:
             a += ins.size
         return out
     import difflib
-    lc, lo = listing(res.cand, res.cand_base), listing(res.orig, res.orig_base)
+    shown = bytearray(res.cand)
+    for i in res.covered:           # verified bindings are not differences
+        if i < len(shown) and i < len(res.orig):
+            shown[i] = res.orig[i]
+    lc, lo = listing(bytes(shown), res.cand_base), listing(res.orig, res.orig_base)
     kc = [x[2] for x in lc]
     ko = [x[2] for x in lo]
     sm = difflib.SequenceMatcher(None, kc, ko, autojunk=False)

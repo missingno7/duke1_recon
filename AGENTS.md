@@ -51,7 +51,10 @@ python tools/tasks.py plan
 python tools/tasks.py wave 4                    # packets + cx launch commands
 # launch each printed command as its own background task
 python tools/tasks.py intake                    # re-verifies every claim fresh; never promotes
-python tools/promote.py FUNCTION CANDIDATE.c    # one at a time; full re-proof under the lock
+# review each candidate: no #define/cast views of globals, no fake typedefs, literals for text,
+# no offsets from unrelated symbols; fix by hand if needed and re-run search.py
+python tools/promote.py --batch LIST.txt        # FUNCTION CANDIDATE per line; one lock, one re-proof
+python tools/decls.py                           # conflicting prototypes/types across accepted files
 python tools/validate.py --write-progress && git commit
 ```
 

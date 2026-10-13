@@ -66,6 +66,37 @@ def build() -> dict:
             u["episodes"][ep] = {"start": s["start"], "size": s["size"], "frame": s["frame"],
                                  "functions": sum(1 for f in fns.values() if f["segment"] == sname),
                                  "call_forms": stats}
+    # string-literal pools: Turbo C emits a unit's literals into its _DATA in
+    # source order, so far-pointer literal references ('push ds; mov ax, imm'
+    # into initialised DGROUP) should increase through the unit and the units'
+    # ranges should follow link order.  Inversions are reported, not hidden
+    # (they can come from -d string merging or from a mis-read immediate).
+    import oracle
+    import disasm
+    import struct
+    literals = {}
+    for ep in EPISODES:
+        c = symbols.census(ep)
+        img, _ = oracle.load_image(ep)
+        bss = c["startup"]["bss_start"]
+        for sname in [s["name"] for s in c["segments"] if s["kind"] == "game"]:
+            vals = []
+            for f in [f for f in c["functions"] if f["segment"] == sname]:
+                a = f["start"]
+                while a < f["end"]:
+                    t = next((t for t in f["tables"] if t[0] <= a < t[1]), None)
+                    if t:
+                        a = t[1]
+                        continue
+                    i = disasm.decode(img, a, 0)
+                    if i.raw[0] == 0xB8 and img[a - 1] == 0x1E:
+                        v = struct.unpack_from("<H", i.raw, 1)[0]
+                        if 0x10 <= v < bss:
+                            vals.append(v)
+                    a += i.size
+            literals.setdefault(sname, {})[ep] = {
+                "references": len(vals), "first": min(vals) if vals else None, "last": max(vals) if vals else None,
+                "inversions": sum(1 for x, y in zip(vals, vals[1:]) if y < x)}
     fn_class = {}
     for fid in sorted(storage):
         ev = storage[fid]
@@ -83,6 +114,7 @@ def build() -> dict:
     for v in fn_class.values():
         counts[v["storage"]] += 1
     return {"generated_by": "tools/tu.py (rule CALL-FORMS)", "units": units,
+            "literal_pools": literals,
             "storage_class_evidence": fn_class, "storage_counts": dict(counts),
             "note": "Functions only ever called backward (or not at all) are UNDETERMINED: both storage classes "
                     "compile identically for them."}

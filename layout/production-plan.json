@@ -318,6 +318,7 @@
     "PCMP",
     "LXMUL",
     "CVTFAK",
+    "REALCVT",
     "CRTINIT",
     "SCANTOD",
     "PSBP",

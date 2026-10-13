@@ -42,7 +42,7 @@ def library_patterns() -> tuple:
     for name, data in r.split_library(toolchain.tool("LIB/CL.LIB").read_bytes()):
         o = r.read(data)
         for seg, body in o.segments.items():
-            if not seg.endswith("TEXT") or len(body) < 6:
+            if not seg.endswith("TEXT") or not body:
                 continue
             mask = set()
             for f in o.fixups:
@@ -50,7 +50,8 @@ def library_patterns() -> tuple:
                     mask.update(range(f["offset"], f["offset"] + f["width"]))
             rx = b"".join(b"." if i in mask else re.escape(bytes([body[i]])) for i in range(len(body)))
             pubs = tuple(sorted((p["offset"], p["name"]) for p in o.publics if p["segment"] == seg))
-            pats.append((name, seg, re.compile(rx, re.S), len(body), pubs, tuple(sorted(mask))))
+            align = next(d["alignment"] for d in o.segment_defs if d["name"] == seg)
+            pats.append((name, seg, re.compile(rx, re.S), len(body), pubs, tuple(sorted(mask)), align))
     return tuple(pats)
 
 
@@ -68,11 +69,19 @@ def startup_text() -> tuple:
 
 
 def scan_library(img: bytes) -> list:
+    """CL.LIB code segments located in the image.  Segments of 6+ bytes must
+    match exactly once anywhere; smaller ones (e.g. REALCVT's 4-byte _TEXT)
+    are only accepted when they exactly fill a gap between two located
+    modules (positional evidence), never by a free search."""
     hits = []
-    for name, seg, rx, size, pubs, _mask in library_patterns():
+    small = []
+    for name, seg, rx, size, pubs, _mask, align in library_patterns():
+        if size < 6:
+            small.append((name, seg, rx, size, pubs, align))
+            continue
         found = [m.start() for m in rx.finditer(img)]
         if len(found) == 1:
-            hits.append({"module": name, "segment": seg, "start": found[0], "size": size,
+            hits.append({"module": name, "segment": seg, "start": found[0], "size": size, "align": align,
                          "publics": [{"name": n, "linear": found[0] + o} for o, n in pubs]})
     # Drop matches contained in a longer match (e.g. GFREEMEM inside FFREE).
     hits.sort(key=lambda h: (h["start"], -h["size"]))
@@ -81,6 +90,20 @@ def scan_library(img: bytes) -> list:
         if kept and h["start"] < kept[-1]["start"] + kept[-1]["size"]:
             continue
         kept.append(h)
+    for a, b in zip(list(kept), list(kept[1:])):
+        gap0, gap1 = a["start"] + a["size"], b["start"]
+        fits = [m for m in small if gap1 - gap0 == m[3] and m[2].fullmatch(img[gap0:gap1])]
+        if len(fits) == 1:
+            name, seg, rx, size, pubs, align = fits[0]
+            kept.append({"module": name, "segment": seg, "start": gap0, "size": size, "align": align,
+                         "publics": [{"name": n, "linear": gap0 + o} for o, n in pubs], "positional": True})
+    kept.sort(key=lambda h: h["start"])
+    # TLINK alignment fill in front of word/paragraph-aligned library segments
+    for a, b in zip(kept, kept[1:]):
+        gap0, gap1 = a["start"] + a["size"], b["start"]
+        unit = {"word": 2, "paragraph": 16}.get(b.get("align"), 1)
+        if gap1 > gap0 and gap1 - gap0 < unit and gap1 % unit == 0 and not any(img[gap0:gap1]):
+            b["link_fill_before"] = gap1 - gap0
     return kept
 
 

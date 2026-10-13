@@ -27,14 +27,20 @@ and [docs/proof-model.md](docs/proof-model.md) for exactly what is and is not pr
 * **Census:** every code byte is accounted for as C0L startup (457 B), shared
   hand-written assembly (1,082 B, identical in all episodes), two first-party C
   translation units (G1: 149 functions, 65,393 B, structurally identical in all
-  episodes; G2: 99 functions, 18–18.1 KB) and 64 CL.LIB modules (12,845 B).
-* **Atlas:** 258 logical functions mapped across episodes with separate byte,
-  shape, size, call-graph and data-map evidence (`evidence/atlas.json`).
-* **Pilots:** 7 functions accepted, each proven EQUAL in all three episodes.
+  episodes; G2: 99 functions, 18–18.1 KB), 65 CL.LIB modules (12,849 B) and
+  2–5 bytes of TLINK alignment fill.
+* **Atlas:** 257 logical functions mapped across episodes with separate byte,
+  shape, size, call-graph, data-map and order evidence (`evidence/atlas.json`);
+  one function that moved within G2 in DN3 is recognised as the same function.
+* **Accepted functions:** 7 supervisor pilots plus worker-recovered functions from three
+  measured GPT-6 Luna waves (4, 8 and 12 workers), every one proven EQUAL in all three
+  episodes and re-proven fresh by `tools/validate.py` ([docs/waves.md](docs/waves.md)).
 
 ## Requirements
 
-* Windows, Python 3.11 with `capstone` 5.x and `unicorn` 2.x.
+* Windows, Python 3.11 with `capstone` 5.0.9 and `unicorn` 2.1.4 installed for the
+  supervisor; `python tools/setup_env.py` vendors them into `build/python`, which all
+  tools (and sandboxed workers) use.
 * Pinned tools outside the repo (hashes in [layout/toolchain.json](layout/toolchain.json)):
   `C:\tools\turboc-2.00-full` (TCC/TLINK 2.0, CL.LIB, C0L.OBJ, headers, startup sources, TASM 1.0),
   `C:\tools\nmlgcdos\msdos.exe` (MS-DOS Player), `C:\tools\dosbox-x` (independent runner).
@@ -43,9 +49,11 @@ and [docs/proof-model.md](docs/proof-model.md) for exactly what is and is not pr
 ## Rebuild from a clean clone
 
 ```bash
+python tools/setup_env.py
 python tools/oracle.py --crosscheck
 python tools/census.py
 python tools/atlas.py --check
+python tools/tu.py --check
 python tools/db.py rebuild
 python tools/probe.py
 python tools/validate.py --tests

@@ -5,15 +5,15 @@ every recipe. Numbers are per episode; nothing here counts original bytes as sou
 
 | | DN1 | DN2 | DN3 |
 |---|---:|---:|---:|
-| Matching C functions | 19 | 19 | 19 |
-| Matching C code bytes | 1159 | 1159 | 1125 |
+| Matching C functions | 31 | 31 | 31 |
+| Matching C code bytes | 4586 | 4586 | 4552 |
 | First-party C code bytes | 83446 | 83509 | 83539 |
 | First-party C functions | 248 | 248 | 248 |
 | Matching ASM code bytes | 0 | 0 | 0 |
 | ASM code bytes (unresolved) | 1082 | 1082 | 1082 |
-| Identified runtime code bytes (C0L + CL.LIB) | 13302 | 13302 | 13302 |
-| Unresolved code bytes | 83379 | 83443 | 83509 |
-| Code relocations inside proven functions | 12 | 12 | 12 |
+| Identified runtime code bytes (C0L + CL.LIB) | 13306 | 13306 | 13306 |
+| Unresolved code bytes | 79948 | 80012 | 80078 |
+| Code relocations inside proven functions | 77 | 77 | 77 |
 | Code relocations | 1455 | 1458 | 1460 |
 | Initialized DGROUP bytes | 20170 | 20386 | 19894 |
 | Matching data bytes | 0 | 0 | 0 |
@@ -31,20 +31,32 @@ so only the relocation *set* can be compared.
 |---|---|
 | `g1_0042` | dn1, dn2, dn3 |
 | `g1_006f` | dn1, dn2, dn3 |
+| `g1_0151` | dn1, dn2, dn3 |
 | `g1_0acc` | dn1, dn2, dn3 |
+| `g1_0b85` | dn1, dn2, dn3 |
 | `g1_1053` | dn1, dn2, dn3 |
+| `g1_1247` | dn1, dn2, dn3 |
+| `g1_12ce` | dn1, dn2, dn3 |
+| `g1_15f4` | dn1, dn2, dn3 |
+| `g1_1b8a` | dn1, dn2, dn3 |
 | `g1_2a1d` | dn1, dn2, dn3 |
 | `g1_2a40` | dn1, dn2, dn3 |
 | `g1_2b86` | dn1, dn2, dn3 |
 | `g1_2e64` | dn1, dn2, dn3 |
+| `g1_314c` | dn1, dn2, dn3 |
 | `g1_326e` | dn1, dn2, dn3 |
 | `g1_3513` | dn1, dn2, dn3 |
 | `g1_3558` | dn1, dn2, dn3 |
+| `g1_367e` | dn1, dn2, dn3 |
 | `g1_3714` | dn1, dn2, dn3 |
+| `g1_6292` | dn1, dn2, dn3 |
 | `g1_e92e` | dn1, dn2, dn3 |
 | `g2_01a9` | dn1, dn2, dn3 |
 | `g2_01d5` | dn1, dn2, dn3 |
 | `g2_276f` | dn1, dn2, dn3 |
+| `g2_2870` | dn1, dn2, dn3 |
 | `g2_3114` | dn1, dn2, dn3 |
+| `g2_37b6` | dn1, dn2, dn3 |
 | `g2_3bd7` | dn1, dn2, dn3 |
+| `g2_3d8c` | dn1, dn2, dn3 |
 | `g2_4334` | dn1, dn2, dn3 |

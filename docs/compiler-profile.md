@@ -14,7 +14,8 @@ hypothesis and tested here. Every statement below is re-run by
 |---|---|---|
 | MODEL-LARGE | confirmed | C0L.OBJ `_TEXT` equals image `[0,455)` outside fixups in all episodes; the five other startup objects differ |
 | STARTUP-C0-REASSEMBLY | confirmed | TASM 1.0 reassembles `STARTUP\C0.ASM` (`/D__LARGE__ /MX`) to C0L.OBJ's bytes, fixups and publics |
-| RUNTIME-CL-LIB | confirmed | 64 CL.LIB code segments, 12,845 bytes, each found exactly once per episode |
+| RUNTIME-CL-LIB | confirmed | 65 CL.LIB code segments, 12,849 bytes (64 unique exact matches + the 4-byte REALCVT placed positionally); 2/3/5 bytes of TLINK fill before paragraph-aligned DELAY_TEXT |
+| LINK-PATH | confirmed | pinned TLINK 2.0 links C0L + a unit + CL.LIB; the startup-driven library order (IOERROR, EXIT, ATEXIT, FMALLOC, FBRK, SETBLOCK) equals the originals' |
 | FLAG-O | confirmed | without `-O`: jump chains, `g1_e92e`/`g1_1053`/`g2_276f` stop matching |
 | FLAG-K | confirmed | without `-K`: `cbw` on char loads, `g2_276f`/`g2_01d5` stop matching |
 | FLAG-G | confirmed | without `-G`: `pop cx` replaces `inc sp; inc sp` in `g2_01d5` |
