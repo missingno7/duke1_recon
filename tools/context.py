@@ -103,6 +103,11 @@ def listing(ep: str, f: dict, img: bytes, relocset: set, dn1_names: dict) -> lis
         elif i.target is not None and i.mnem == "call":
             t = base + ((a - base + ((i.target - a) & 0xFFFF)) & 0xFFFF)
             note.append(f"-> {symbols.function_at(ep, t) or '?'}")
+        elif i.target is not None and f["start"] <= i.target < f["end"]:
+            # jump operands print as linear addresses; show the listing offset,
+            # and mark loop back-edges (a conditional jump backwards is a loop
+            # condition, not an exit)
+            note.append(f"to {i.target - base:04x}" + (" (BACK-EDGE: loop)" if i.target <= a else ""))
         if i.raw[0] in (0xB8, 0xBB) and a >= 1 and img[a - 1] == 0x0E and i.size == 3:
             v = struct.unpack_from("<H", i.raw, 1)[0]
             note.append(f"&{symbols.function_at(ep, base + v) or '?'}")

@@ -151,6 +151,23 @@ class StrictCompare(unittest.TestCase):
         res = compare.compare_object(rec.obj, "g1_0acc", "dn1")
         self.assertEqual(res.status, "BINDING_ERROR")
 
+    def test_unit_static_binds_struct_return_temporary(self):
+        """Turbo C returns a struct through a static temporary in the unit's
+        _BSS; it binds relationally (one base, no other user)."""
+        obj = _obj("g1_0c52")
+        for ep in ("dn1", "dn2", "dn3"):
+            res = compare.compare_object(obj, "g1_0c52", ep)
+            self.assertEqual(res.status, "EQUAL", res.detail)
+            self.assertTrue(any(b["kind"] == "unit_static" for b in res.bound))
+
+    def test_static_for_shared_global_is_rejected(self):
+        """A unit-local static cannot stand in for a global other functions use."""
+        text = (ROOT / "src/g1/g1_0acc.c").read_text().replace("extern int d_4ed4;", "static int d_4ed4;")
+        rec = tcc.compile_c(text, tcc.profile_flags("tc20-l-gzo"))
+        res = compare.compare_object(rec.obj, "g1_0acc", "dn1")
+        self.assertEqual(res.status, "BINDING_ERROR", res.detail)
+        self.assertTrue(any("also used by" in d for d in res.detail), res.detail)
+
 
 if __name__ == "__main__":
     unittest.main()

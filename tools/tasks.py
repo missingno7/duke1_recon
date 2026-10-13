@@ -55,10 +55,38 @@ REVIEW_PATTERNS = [
 ]
 
 
-def review_flags(text: str) -> list:
+def signature_flags(text: str, fid: str) -> list:
+    """Declarations/stubs in a candidate that differ from the accepted
+    definition of that function in the same translation unit (one unit has
+    one signature per function; see tools/decls.py)."""
+    import re
+    import decls
+    unit = fid.split("_")[0]
+    prelude = re.sub(r"/\*.*?\*/", "", text.split("/*@body*/", 1)[0], flags=re.S)
+    defs = {}
+    for name, vs in decls.collect()["functions"].items():
+        for v in vs:
+            if v["kind"] == "definition" and v["file"].startswith(f"src/{unit}/"):
+                defs[name] = (v["ret"], v["conv"], v["params"])
+    out = []
+    for m in decls.FN.finditer(prelude):
+        name = m.group("name")
+        if name not in defs or name == fid:
+            continue
+        mine = (decls.norm_type(re.sub(r"(static|far|extern)", "", m.group("ret"))),
+                (m.group("conv") or "").strip() or "cdecl", decls.norm_params(m.group("params")))
+        if mine != defs[name]:
+            out.append(f"{name} declared {mine[1]} {mine[0]} ({mine[2]}) but accepted as "
+                       f"{defs[name][1]} {defs[name][0]} ({defs[name][2]}): reconcile the signature")
+    return out
+
+
+def review_flags(text: str, fid: str | None = None) -> list:
     import re
     t = re.sub(r"/\*.*?\*/", "", text, flags=re.S)
     flags = [msg for rx, msg in REVIEW_PATTERNS if re.search(rx, t)]
+    if fid and fid.startswith(("g1_", "g2_")):
+        flags += signature_flags(text, fid)
     if "goto kept:" in text:        # supervisor-measured: structured form emits differently
         flags = [f for f in flags if not f.startswith("goto")]
     return flags
@@ -164,7 +192,8 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
   your /*@body*/ marker; a callee reached with a far call must only be DECLARED.
 - `retf N` = pascal function (callee pops N bytes; callers do no cleanup).
 - No `push bp; mov bp,sp` when a function has no parameters and no locals.
-- Register variables: first `register` local -> SI, second -> DI. Parameters can be `register`.
+- Register variables: see REGISTER-PRIORITY below (use count, then declaration order). Parameters
+  can be `register`.
 - 2-byte caller cleanup is `inc sp; inc sp` (-G); larger cleanups `add sp,N` or `mov sp,bp`.
 - Arrays of structs in DGROUP are addressed through ES:BX built from DS (`mov ax,ds; mov es,ax`)
   even for plain `table[i].field = x` in the large model.
@@ -191,8 +220,13 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
   structured receipt and its size in notes.  Before keeping a goto chain such as
   `if (a) goto X; if (b) goto Y; X: ...; continue; Y: ...`, try `if (a || !b) { X...; continue; }
   Y...`: Turbo C emits the same short-circuit jumps for || and && as for the goto chain.
-  Unreachable code in the original (a jmp over a statement) is `if (0) statement;`: Turbo C 2.0
-  keeps constant-false bodies behind an unconditional jump.
+  With -O Turbo C cross-jumps identical tails (rule TAIL-MERGE): a jump into another branch's
+  code usually means both branches END with the same statements in your source.
+- Register allocation (rule REGISTER-PRIORITY): the `register` variable with the MOST uses gets SI,
+  the next DI; ties keep declaration order.  Declaration order alone does not decide.  -Z also
+  remembers that a register equals a parameter until the next call, so `x = a1; f(a1);` pushes x.
+- A conditional jump BACKWARDS (marked BACK-EDGE in context.txt) is a loop condition, e.g.
+  `do { r = g(); } while (r.b == 1 || r.c == 1);`, not an early exit.
   An unused parameter changes nothing in the callee but breaks callers: if every caller passes
   two arguments, the function takes two.  `switch (x)` with case labels starting at N
   compiles to `sub ax,N`; do not write `switch (x - N)`.
@@ -414,7 +448,7 @@ def intake(dirs: list) -> list:
                                worker="intake", note=f"intake of {rel(d)}", asm=asm)
             eq = sorted(e for e, v in fresh["results"].items() if v["status"] == "EQUAL")
             o["reverified_equal"] = eq
-            o["review_flags"] = review_flags(text)
+            o["review_flags"] = review_flags(text, fid)
             o["stale_packet"] = task["context_key"] != fresh["context_key"]
             if res["status"] in ("EQUAL_CANDIDATE", "PARTIAL_EQUAL") and not eq:
                 o["outcome"] = "EQUAL_CLAIM_REJECTED"

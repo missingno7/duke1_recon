@@ -132,8 +132,6 @@ void g1_fd15(void)
             d_c278 = 1;
             d_040c = 0;
             d_0098 = 2;
-            if (0)      /* unreachable store present in the original: TC 2.0 keeps if (0) bodies */
-                d_040c = 0;
             d_03a3 = 0;
             g2_0009(0x14);
             return;

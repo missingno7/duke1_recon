@@ -115,6 +115,7 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
     useg = next(s for s in census["segments"] if s["name"] == unit)
     pubs = {symbols.norm(p["name"]): p["offset"] for p in module.publics if p["segment"] == seg}
     bad, layout = [], []
+    static_bases = {}      # unit-local statics (unit_static bindings) must share one base per segment
     for fid in a["order"]:
         loc = symbols.atlas()[fid]["locations"][ep]
         rel = loc["start"] - useg["start"]
@@ -124,7 +125,14 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
         res = compare.compare_object(rec.obj, fid, ep)
         if res.status != "EQUAL":
             bad.append(f"{fid}: {res.status} {res.detail[:2]}")
-    out.update({"segment_length": [seg_len, useg["size"]], "layout_mismatches": layout, "function_failures": bad})
+        for b in res.bound:
+            if b["kind"] == "unit_static":
+                static_bases.setdefault(b["segment"], set()).add((b["dgroup_offset"] - b["offset"]) & 0xFFFF)
+    for segname, bases in static_bases.items():
+        if len(bases) > 1:
+            bad.append(f"unit statics in {segname} bind with inconsistent bases {sorted(map(hex, bases))}")
+    out.update({"segment_length": [seg_len, useg["size"]], "layout_mismatches": layout, "function_failures": bad,
+                "unit_static_bases": {k: sorted(v) for k, v in static_bases.items()}})
     out["status"] = "EQUAL" if not bad and not layout and seg_len == useg["size"] else "DIFFER"
     out["literal_pool"] = literal_pool(module, ep)
     return out

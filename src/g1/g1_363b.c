@@ -5,7 +5,7 @@ extern int d_009b;
 extern int d_009d;
 extern int d_009f;
 /*@body*/
-int g1_363b(int a0, int a1, int a2)
+int g1_363b(int a0, int a1)
 {
     register int v = d_009b;
 

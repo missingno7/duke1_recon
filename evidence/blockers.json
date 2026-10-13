@@ -73,10 +73,10 @@
    "mechanism": "TERMINAL_COMPARE_ELIMINATION",
    "next_experiment": "Use a shared exit label: if result.second == 1 goto done; if result.third == 1 goto done; done: ; then search.py to test whether a labeled exit preserves both comparisons.",
    "reporter": "luna-g1_1076",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "the two final je are loop back-edges: do { r = g1_0c52(1); } while (r.b == 1 || r.c == 1);",
+   "resolved": 1791921447.8872862,
    "scope": "g1_1076",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -86,10 +86,10 @@
    "mechanism": "REGISTER_ALLOCATION_ORDER",
    "next_experiment": "Run a minimal target-only probe with a register row and register column separated by one far asm_0424 call, then a near g1_326e call using the column; compare parameter versus local-copy spelling to isolate whether the intervening far call forces a stack reload or changes register allocation.",
    "reporter": "luna-g1_af06",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "register priority by use count (rule REGISTER-PRIORITY): row split into two statements, first call passes the parameter (-Z knows DI==a1)",
+   "resolved": 1791921706.0420015,
    "scope": "g1_af06",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "TOOLCHAIN",
@@ -112,10 +112,10 @@
    "mechanism": "REGISTER_ALLOCATION_ORDER",
    "next_experiment": "Use a minimal far-call/near-call probe with a1 declared as a register parameter and row as the register local; inspect whether that formal can occupy DI across the far call without moving row out of SI.",
    "reporter": "luna-g1_af06",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "same as 7",
+   "resolved": 1791921706.1916883,
    "scope": "g1_af06",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -151,10 +151,10 @@
    "mechanism": "TERMINAL_COMPARE_ELIMINATION",
    "next_experiment": "Use the faithful recovered g1_0c52 definition and exact return prototype before the unchanged g1_1076 body, then search.py again; this tests whether whole-translation-unit callee semantics, absent from the required empty stub, are needed to retain the final reads.",
    "reporter": "luna-g1_1076",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "same as 6",
+   "resolved": 1791921448.0341003,
    "scope": "g1_1076",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -336,6 +336,149 @@
    "resolution": null,
    "resolved": null,
    "scope": "g1_ecf4",
+   "status": "OPEN"
+  },
+  {
+   "category": "DATA_OWNERSHIP",
+   "created": 1791920989.5670207,
+   "evidence": "Struct-by-value candidate is 478/478 bytes with diff_bytes 0 in dn1/dn2/dn3, but comparer reports two references to candidate-local BSS/static +0 at function offsets +0x1c2 and +0x1d6. Original binds those references to d_4eca at dn1=0x4eca, dn2=0x4fa2, dn3=0x4db6. Adding extern struct reading d_4eca left emission identical and the binding errors unchanged.",
+   "id": 27,
+   "mechanism": "STRUCT_RETURN_TEMP_UNBOUND",
+   "next_experiment": "Expose the compiler-generated Turbo C struct-return temporary's object symbol to the function-level comparer and test an explicit binding of that BSS symbol to the episode-specific d_4eca global.",
+   "reporter": "luna-g1_0c52",
+   "resolution": "comparer binds candidate _BSS (TC struct-return temporary) relationally as unit_static: single base, no other function uses the address; unit build checks base consistency",
+   "resolved": 1791921196.603385,
+   "scope": "g1_0c52",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791920989.6935525,
+   "evidence": "Fresh search for cand12.c reports EXTENT_MISMATCH 630/629 in dn1, dn2, and dn3. The candidate's local row-index form adds push/pop SI and uses add sp,4 around cdecl calls; the no-local form retains three mov sp,bp instructions after no-argument cdecl stubs. Ordinary int, unsigned int, and register int row hypotheses produced identical emission.",
+   "id": 28,
+   "mechanism": "CALL_CLEANUP_SI_SAVE",
+   "next_experiment": "Try a source shape that keeps the far-pointer table accesses shared without allocating SI, while suppressing the three post-call stack resets and preserving the accepted cdecl stub signatures.",
+   "reporter": "luna-g1_e3e0",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_e3e0",
+   "status": "OPEN"
+  },
+  {
+   "category": "DECLARATION_VIEW",
+   "created": 1791921040.360713,
+   "evidence": "The requested unqualified extern int d_0650[][6] declaration with [row][column] indexing emits the same 614-byte function as three earlier table-view hypotheses; all three episodes remain 614/591 with zero matched-length byte differences. Its first-word read uses add bx,0; mov ax,ds; mov es,ax; cmp es:[bx],0, while the original uses direct cmp [bx+0x650],0. The candidate's later struct-style field reads use ES:[BX+field], matching the target form.",
+   "id": 29,
+   "mechanism": "MIXED_DS_ES_TABLE_ACCESS",
+   "next_experiment": "Express the guard and first draw value as direct int-array elements while expressing fields 1-5 through a typed six-word row record for the same table; measure whether Turbo C emits the required DS direct access and ES record-field accesses together.",
+   "reporter": "luna-g1_4d42",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_4d42",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921054.1061697,
+   "evidence": "The best mapped candidate emits 1059 bytes versus the original 981 in dn1, dn2, and dn3. Three distinct timer-gate source hypotheses produced identical emission. The instruction diff shows a candidate inverse short branch plus near jump to its state handler (destination at +0x106) where the original uses a short conditional jump (destination at +0xed).",
+   "id": 30,
+   "mechanism": "TC20_SHORT_BRANCH_EXPANSION",
+   "next_experiment": "Reorder the timer and state-dispatch blocks so the even-tick path falls through and its conditional target remains within 127 bytes, then measure whether Turbo C emits the original short branch and reduces the extent.",
+   "reporter": "luna-g1_049f",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_049f",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921229.6434062,
+   "evidence": "After applying the confirmed G1 view extern int d_9682 and g2_219d(char), the structured candidate emits 500 bytes in dn1/dn2/dn3 versus the original 489. The remaining 11-byte excess is the second d_02fa load/zero-extension/index scaling for the second indexed argument. The original computes the offset once in BX and pushes [BX+0x3a6] then [BX+0x3a4]. Casted direct indexing, uncast direct indexing, and a near-pointer form emitted identical code; search.py reported two prior identical emissions for the third hypothesis. A shared local index instead uses SI and adds a save/restore, while a two-column array form emits 515 bytes.",
+   "id": 31,
+   "mechanism": "REPEATED_INDEX_CODEGEN",
+   "next_experiment": "Test a C expression that computes one near base pointer into the existing 4-byte local storage, then reads its adjacent words in argument order; measure whether Turbo C keeps the base in BX without adding an SI save or changing the frame.",
+   "reporter": "luna-g1_e655",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_e655",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921229.7699585,
+   "evidence": "With the refreshed three-argument g1_35ee declaration, outer-first separate and combined register declarations, counter renaming, and while/for variants emitted the same code (search.py reported identical emission across the variants). The candidate uses DI for the outer counter and SI for the inner counter; the original uses SI outside and DI inside. All episodes remain 554/548 bytes.",
+   "id": 32,
+   "mechanism": "NESTED_REGISTER_ALLOCATION",
+   "next_experiment": "Keep only the outer counter register-qualified and make the inner counter automatic; measure whether the compiler assigns the outer counter to SI and whether the six-byte frame grows.",
+   "reporter": "luna-g1_3a98",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_3a98",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921229.9083893,
+   "evidence": "The no-goto structured candidate emits 645 bytes versus the 631-byte original in dn1, dn2, and dn3, with diff_bytes 0. Changing only the final g1_3513/state-range guard to nested if statements emitted identical code to the combined guard (search key e085626b1df7c6f8). The structured candidate's movement/draw selection retests mutable state to reach the common state-1/state-2 draw block; the original branches directly to that block.",
+   "id": 33,
+   "mechanism": "TC20_CONTROL_FLOW_CANONICALIZATION",
+   "next_experiment": "Keep the final guard fixed and restructure only the state-1/state-2 movement and shared draw selection under an outer (state == 1 || state == 2) branch, with state 3 in its else-if branch; compare the resulting tail and extent.",
+   "reporter": "luna-g1_5f0c",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_5f0c",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921306.4470937,
+   "evidence": "Three different counter-gate hypotheses (combined short-circuit condition, one skip goto, and separate counter_check/counter_done gotos) produced identical emission; search.py reported two prior sources for cand15. Candidate gate remains 629 bytes versus original 612 in dn1/dn2/dn3. Original at relative 0x77 branches on the first result to the threshold check at 0x8f, then the second result uses JE to skip at 0x9e. Candidate emission uses JNE to 0x92 for both results and an extra JMP to 0x144.",
+   "id": 34,
+   "mechanism": "TC20_GATE_CANONICALIZATION",
+   "next_experiment": "Resume only with a different, evidence-backed gate source shape; the smallest discriminating test is a source form that makes the second result branch directly to counter_done without compiling to the repeated JNE-plus-JMP sequence.",
+   "reporter": "luna-g1_5b0b",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_5b0b",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921320.0724213,
+   "evidence": "All three episodes emit 913 bytes, but the current candidate is DIFFER (257/256/257 differing bytes). Three timer/reset source hypotheses emitted identical code. The original has the shared-motion target at +0xDA and the reset sequence uses JG-to-reset followed by JMP-to-common; measured structured and goto candidates jump to +0xD4 with JLE-over-reset.",
+   "id": 35,
+   "mechanism": "TIMER_COMMON_BRANCH_LAYOUT",
+   "next_experiment": "Try a structured source form that places the common motion block after both timer outcomes without duplicating it; measure whether it emits the original JG reset branch and the two reset-arm jumps to the shared block.",
+   "reporter": "luna-g1_b595",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_b595",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921383.3362627,
+   "evidence": "The listing compares d_03a1 at offset 0x1e8a, branches to the local g1_143e path at 0x1e94 when zero, and otherwise jumps to the continuation at listing address 0x235e (linear 0x2cce), 0x4e7 bytes from the function entry. Candidate probes covering only this guard emitted 20 or 31 bytes, so no candidate included or verified that long join; all three episodes remain extent mismatches.",
+   "id": 36,
+   "mechanism": "NONLOCAL_CONTINUATION_JOIN",
+   "next_experiment": "Recover the statements from the first g1_143e call through the continuation at 0x235e, then measure whether the complete structured branch emits the 0x4e7-byte jump and its local target.",
+   "reporter": "luna-g1_1e77",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_1e77",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791921874.6001866,
+   "evidence": "All three episodes remain non-equal. The closest candidate, cand15.c, is 560 bytes versus 559 and uses mov si,1 followed by the direct SI comparison. The oracle instead zeroes SI, jumps to a latch that increments and compares SI directly. Three zero-initialized prefix-increment loop spellings (cand12.c, cand13.c, cand16.c) emitted identical 561-byte code with an AX copy; the explicit guard form cand14.c used a direct SI compare but changed continue targets and was 555 bytes.",
+   "id": 37,
+   "mechanism": "LOOP_LATCH_COMPARE_FORM",
+   "next_experiment": "Try a structured loop with SI zero-initialized and incremented at a shared latch, while routing every continue through that latch, to combine xor si,si with the direct cmp si,[d_05de] form.",
+   "reporter": "luna-g1_9986",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_9986",
    "status": "OPEN"
   }
  ],

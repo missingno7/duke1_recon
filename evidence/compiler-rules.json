@@ -161,6 +161,18 @@
    "statement": "In every episode G2's literal references are all distinct offsets while the referenced texts repeat (e.g. the same 'Press any key.' line), so G2 was compiled without -d (string merging), consistent with the default profile.",
    "check": "g2_no_merge",
    "outcome": "CONFIRMED"
+  },
+  {
+   "id": "REGISTER-PRIORITY",
+   "statement": "Turbo C 2.0 assigns SI to the `register` variable (local or parameter) with the most uses and DI to the next; ties keep declaration order. Declaration order alone does not decide (g1_af06).",
+   "check": "register_priority",
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "TAIL-MERGE",
+   "statement": "With -O, Turbo C 2.0 cross-jumps identical instruction tails of different branches: the matching suffix is emitted once and the other branch jumps into it. Duplicated code in the original therefore means the two tails differ somewhere; shared code can come from two identical source tails (g1_fd15).",
+   "check": "tail_merge",
+   "outcome": "CONFIRMED"
   }
  ]
 }

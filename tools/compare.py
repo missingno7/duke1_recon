@@ -123,6 +123,22 @@ def candidate_extent(module, pub) -> tuple:
     return seg, pub["offset"], end
 
 
+_DATA_USERS: dict = {}
+
+
+def _data_users(ep: str) -> dict:
+    """{DGROUP offset: {function start}} for direct (non-based) data references."""
+    if ep not in _DATA_USERS:
+        users = {}
+        for f in symbols.census(ep)["functions"]:
+            for d in f.get("datarefs", []):
+                if d.get("seg") == "ds" and not d.get("based"):
+                    for k in range(d.get("width", 1)):
+                        users.setdefault((d["disp"] + k) & 0xFFFF, set()).add(f["start"])
+        _DATA_USERS[ep] = users
+    return _DATA_USERS[ep]
+
+
 def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = None) -> Result:
     res = Result("DIFFER", ep, function_id)
     try:
@@ -175,6 +191,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
     attempted = set()      # fixup positions whose binding failed (reported as binding errors)
     cand_segwords = set()
     errors = []
+    static_base = {}
 
     def word(buf, at):
         return struct.unpack_from("<H", buf, at)[0]
@@ -254,9 +271,29 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
                                   "provenance": tgt["provenance"]})
             elif tgt["kind"] == "own_data":
                 own = module.segments.get("_DATA", b"")
-                if tname == "_BSS" or addend >= len(own):
-                    errors.append(f"+{at:#x} reference to candidate-local BSS/static at +{addend:#x}: "
-                                  "declare it extern d_XXXX for function-level proof")
+                if tname == "_BSS":
+                    # A unit-local static with no name the function could declare
+                    # (Turbo C's struct-return temporary, a function-local
+                    # static).  It binds only if every such reference shares one
+                    # base, and no other function of the original touches the
+                    # address; its placement is proven by the unit build.
+                    base = (got - addend) & 0xFFFF
+                    if static_base.setdefault(tname, base) != base:
+                        errors.append(f"+{at:#x} candidate _BSS+{addend:#x} at original {got:#06x}: "
+                                      f"inconsistent with other _BSS references (base {static_base[tname]:#06x})")
+                        continue
+                    users = _data_users(ep).get(got, set()) - {ostart}
+                    if users:
+                        errors.append(f"+{at:#x} candidate-local static at original {got:#06x} is also used by "
+                                      f"{len(users)} other function(s): declare it extern d_{got:04x}")
+                        continue
+                    res.bound.append({"at": at, "kind": "unit_static", "segment": tname, "offset": addend,
+                                      "dgroup_offset": got})
+                    covered.update(range(at, at + 2))
+                    continue
+                if addend >= len(own):
+                    errors.append(f"+{at:#x} reference to candidate-local static at _DATA+{addend:#x} "
+                                  "(beyond the literals): declare it extern d_XXXX for function-level proof")
                     continue
                 lit = own[addend:own.index(b"\0", addend) + 1] if b"\0" in own[addend:] else own[addend:]
                 if img[dgroup_base + got:dgroup_base + got + len(lit)] != lit:

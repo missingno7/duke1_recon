@@ -259,10 +259,32 @@ def check_g2_no_merge(args: dict) -> dict:
     return {"outcome": "CONFIRMED" if ok else "FALSIFIED", "rows": rows}
 
 
+def check_register_priority(args: dict) -> dict:
+    rows = _listing("probes/register_priority.c", tcc.profile_flags("tc20-l-gzo"))
+    first = {}
+    for r in rows:
+        if r["asm"].startswith("mov si, word ptr [bp + 6]") or r["asm"].startswith("mov di, word ptr [bp + 6]"):
+            first.setdefault(r["fn"], r["asm"].split()[1].rstrip(","))
+    facts = {"more_used_first_declared_gets_si": first.get("_a_more") == "si",
+             "more_used_second_declared_gets_si": first.get("_b_more") == "di",
+             "tie_keeps_declaration_order": first.get("_tie") == "si"}
+    return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts, "x_register": first}
+
+
+def check_tail_merge(args: dict) -> dict:
+    flags = tcc.profile_flags("tc20-l-gzo")
+    on = [r for r in _listing("probes/tail_merge.c", flags) if r["fn"] == "_m"]
+    off = [r for r in _listing("probes/tail_merge.c", [f for f in flags if f != "-O"]) if r["fn"] == "_m"]
+    calls = lambda rows: sum(1 for r in rows if r["asm"].startswith("lcall"))
+    facts = {"with_O_shared_tail_emitted_once": calls(on) == 2, "without_O_tail_duplicated": calls(off) == 3}
+    return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts}
+
+
 CHECKS = {"flag": check_flag, "link_path": check_link_path, "repack": check_repack,
           "data_layout": check_data_layout, "g2_no_merge": check_g2_no_merge, "variant": check_variant, "call_forms": check_call_forms,
           "z_effect": check_z_effect, "startup_model": check_startup_model,
-          "c0_reassembly": check_c0_reassembly, "runtime": check_runtime, "relocs_sorted": check_relocs_sorted}
+          "c0_reassembly": check_c0_reassembly, "runtime": check_runtime, "relocs_sorted": check_relocs_sorted,
+          "register_priority": check_register_priority, "tail_merge": check_tail_merge}
 
 
 def run_rule(rule: dict) -> dict:

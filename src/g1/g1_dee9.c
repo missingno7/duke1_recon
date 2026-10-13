@@ -2,7 +2,7 @@
 extern int d_0410;
 extern char d_c278;
 /*@body*/
-void g1_dee9(char far *filename, char far *buffer, int a2)
+void g1_dee9(char far *filename, char far *buffer)
 {
     FILE *stream;
 
