@@ -170,8 +170,10 @@ def explore(img: bytes, seg: Segment, entry: int, relocset: set) -> dict:
                 # function (Turbo C builds same-TU function pointers from CS)
                 imm = struct.unpack_from("<H", ins.raw, ins.imm_off)[0]
                 calls.append({"site": pc, "kind": "fnptr_cs", "target": base + imm})
-            if ins.mem_disp is not None and not ins.mem_base and ins.mem_seg in (None, "ds", "es"):
-                datarefs.append({"site": pc, "disp": ins.mem_disp, "seg": ins.mem_seg or "ds"})
+            if ins.mem_disp is not None and ins.mem_seg in (None, "ds", "es") and not ins.mem_bp and (
+                    not ins.mem_base or (ins.disp_size == 2 and ins.mem_disp >= 0x100)):
+                datarefs.append({"site": pc, "disp": ins.mem_disp, "seg": ins.mem_seg or "ds",
+                                 "based": ins.mem_base, "width": ins.mem_size})
             if ins.raw[:2] == b"\x2e\xff" and (ins.raw[2] & 0x38) == 0x20 and ins.disp_size == 2:
                 # jmp word ptr cs:[bx+table]  (Turbo C switch)
                 tab = base + struct.unpack_from("<H", ins.raw, ins.disp_off)[0]

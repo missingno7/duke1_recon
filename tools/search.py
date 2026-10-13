@@ -126,7 +126,13 @@ def run(source_text: str, function: str, *, flags: list, profile: str | None, ep
         best = "EQUAL"
     elif best == "EQUAL":
         best = "PARTIAL_EQUAL"
+    repeats = []
+    if con is not None and emis:
+        repeats = [dict(r) for r in con.execute(
+            "SELECT key, source_sha256, best_status, note FROM experiments WHERE function_id=? AND emission_key=? "
+            "AND source_sha256 != ?", (function, emis, req["source"]))]
     out = {"key": key, "cached": False, "context_key": ctx, "function": function, "results": results,
+           "repeat_emission": repeats,
            "best_status": best, "compile_keys": receipts, "lint": problems, "emission_key": emis,
            "source_sha256": req["source"], "flags": compiles, "diffs": diffs}
     if con is not None:
@@ -179,6 +185,9 @@ def main() -> int:
                 print(f"      {d}")
         if out["lint"]:
             print("  LINT:", "; ".join(out["lint"]))
+        if out.get("repeat_emission"):
+            print(f"  NOTE: identical emission already produced by {len(out['repeat_emission'])} other source(s) "
+                  f"(e.g. experiment {out['repeat_emission'][0]['key'][:16]}); this change did not alter codegen")
         if out.get("diffs") and (a.asm or len(out["diffs"]) and not out["cached"]):
             e, lines = next(iter(out["diffs"].items()))
             shown = lines if a.asm else lines[:24]

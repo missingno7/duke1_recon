@@ -1,0 +1,84 @@
+{
+ "note": "Rule register. Every rule is re-run by tools/probe.py (and by tools/validate.py --tests). outcome: CONFIRMED = discriminating evidence for the statement; CONSISTENT_NOT_DISCRIMINATED = everything matched so far is compatible, but no experiment has yet shown the alternative fails; FALSIFIED = evidence against.",
+ "rules": [
+  {
+   "id": "MODEL-LARGE",
+   "statement": "All three episodes were linked with the Turbo C 2.0 large-model startup: C0L.OBJ _TEXT equals image bytes [0,455) outside its own fixups in DN1/DN2/DN3; C0S/C0T/C0C/C0M/C0H all differ.",
+   "check": "startup_model",
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "STARTUP-C0-REASSEMBLY",
+   "statement": "TASM 1.0 (/D__LARGE__ /MX) reassembles the shipped STARTUP\\C0.ASM to the same _TEXT bytes, fixups and publics as the shipped C0L.OBJ, so a C0 variant with appended assembly (the region [0x1C9,0x603) shared by all episodes) is buildable from source with the pinned assembler. The game's own C0 variant is NOT yet reconstructed.",
+   "check": "c0_reassembly",
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "RUNTIME-CL-LIB",
+   "statement": "64 Turbo C 2.0 CL.LIB code segments (12,845 bytes) occur exactly once, byte-exact outside their fixups, in each episode; library code is CL.LIB (large model).",
+   "check": "runtime",
+   "args": {"modules": 64, "bytes": 12845},
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "RELOCATION-ORDER-UNOBSERVABLE",
+   "statement": "LZEXE 0.91 stores relocations as ascending deltas with paragraph-normalised offsets, so the original TLINK relocation table order and seg:off split are not recoverable from DN?.EXE; acceptance compares relocation sets only.",
+   "check": "relocs_sorted",
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "FLAG-O",
+   "statement": "-O (jump optimisation) is in effect for G1/G2 C code: without it the canonical pilots grow jump chains (jmp $+2) and stop matching.",
+   "check": "flag",
+   "args": {"functions": ["g1_e92e", "g1_1053", "g2_276f"], "remove": ["-O"]},
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "FLAG-K",
+   "statement": "-K (char is unsigned) is in effect: without it char loads gain cbw and compares widen.",
+   "check": "flag",
+   "args": {"functions": ["g2_276f", "g2_01d5"], "remove": ["-K"]},
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "FLAG-G",
+   "statement": "-G (optimise for speed) is in effect: 2-byte caller cleanup is 'inc sp; inc sp' instead of 'pop cx'.",
+   "check": "flag",
+   "args": {"functions": ["g2_01d5"], "remove": ["-G"]},
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "CPU-8086",
+   "statement": "-1- (8086 instructions) is in effect: with -1 (80186) 'push imm' replaces 'mov ax,imm; push ax' and g1_006f stops matching.",
+   "check": "flag",
+   "args": {"functions": ["g1_006f", "g1_e92e"], "remove": ["-1-"], "add": ["-1"]},
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "FLAG-Z",
+   "statement": "-Z (register load suppression) is part of the external Duke1Decomp profile. No accepted function yet changes when -Z is removed; status stays open until a discriminating function is matched.",
+   "check": "flag",
+   "args": {"functions": ["g1_e92e", "g1_1053", "g2_276f", "g1_0acc", "g1_006f", "g2_01d5", "g1_2a1d"], "remove": ["-Z"]},
+   "outcome": "CONSISTENT_NOT_DISCRIMINATED"
+  },
+  {
+   "id": "Z-EFFECT",
+   "statement": "Object-level: with -Z, 'a = b; c = b;' stores AX twice without reloading b; without -Z it reloads. Pattern to look for when hunting a -Z discriminator in the original code.",
+   "check": "z_effect",
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "CALL-FORMS",
+   "statement": "Large model, one translation unit: calls to externals are relocated far calls (EXTDEF fixup); calls to functions defined earlier, and to static functions even when only forward-declared, are 'push cs; call near' resolved at compile time (no fixup); calls to public functions defined later are far calls with an own-segment fixup. Consequence: in the original, backward far calls inside one segment never occur (verified: 0 in G1 and G2) and forward 'push cs; call near' (197 in G1) indicate static functions.",
+   "check": "call_forms",
+   "outcome": "CONFIRMED"
+  },
+  {
+   "id": "PASCAL-CALLEE",
+   "statement": "Functions ending in 'retf N' are pascal: g1_e92e matches only when declared pascal (callers then do no stack cleanup, cf. g1_006f calling g2_1f5a).",
+   "check": "variant",
+   "args": {"functions": ["g1_e92e"], "pattern": "void pascal", "replace": "void"},
+   "outcome": "CONFIRMED"
+  }
+ ]
+}

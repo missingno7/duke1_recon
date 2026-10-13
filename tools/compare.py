@@ -171,6 +171,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
         if p["segment"] == seg:
             pubs_by_off.setdefault(p["offset"], []).append(p["name"])
     covered = set()        # byte positions verified by binding
+    attempted = set()      # fixup positions whose binding failed (reported as binding errors)
     cand_segwords = set()
     errors = []
 
@@ -185,6 +186,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
         if at + width > len(cand):
             errors.append(f"fixup at +{at:#x} crosses the extent end")
             continue
+        attempted.update(range(at, at + width))
         addend = fx["displacement"] + int.from_bytes(cand[at:at + width], "little")
         tkind, tname = fx["target_kind"], fx["target"]
         loc_name = fx["loc"]
@@ -196,6 +198,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
                 if not names:
                     raise symbols.SymbolError(f"own-segment target +{addend:#x} is not a public")
                 tgt = symbols.resolve(names[0], ep)
+                addend = 0         # the embedded value was the public's own offset
             elif tkind in ("segment", "group") and tname in ("_DATA", "_BSS", "DGROUP"):
                 tgt = {"kind": "own_data", "segment": tname}
             else:
@@ -208,10 +211,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
             if tgt["kind"] not in ("function", "library", "startup"):
                 errors.append(f"+{at:#x} far pointer to non-code {tname}")
                 continue
-            if tkind == "external":
-                exp_off = (tgt["offset"] + addend) & 0xFFFF
-            else:
-                exp_off = tgt["offset"]
+            exp_off = (tgt["offset"] + addend) & 0xFFFF
             got_off, got_seg = word(ow, 0), word(ow, 2)
             if (got_off, got_seg) != (exp_off, tgt["frame"]):
                 errors.append(f"+{at:#x} far {tname}: original {got_seg:04X}:{got_off:04X}, "
@@ -304,7 +304,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
         errors.append(f"original relocations without candidate fixups at {[hex(x) for x in missing]}")
     if extra:
         errors.append(f"candidate segment fixups where original has no relocation: {[hex(x) for x in extra]}")
-    diffs = [i for i in range(len(cand)) if i not in covered and cand[i] != orig[i]]
+    diffs = [i for i in range(len(cand)) if i not in covered and i not in attempted and cand[i] != orig[i]]
     res.diff_bytes = len(diffs)
     if diffs:
         res.first_diff = diffs[0]

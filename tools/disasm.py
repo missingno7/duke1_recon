@@ -36,6 +36,8 @@ class Insn:
     mem_disp: int | None = None      # absolute DS-relative displacement, if any
     mem_seg: str | None = None       # segment override register name
     mem_base: bool = False           # memory operand uses a base/index register
+    mem_bp: bool = False             # ... and that register is BP (stack frame)
+    mem_size: int = 0                # operand size in bytes
 
 
 def decode(code: bytes, off: int, frame_off: int = 0) -> Insn | None:
@@ -66,6 +68,8 @@ def decode(code: bytes, off: int, frame_off: int = 0) -> Insn | None:
             seg = i.reg_name(op.mem.segment) if op.mem.segment else None
             ins.mem_seg = seg
             ins.mem_base = bool(op.mem.base or op.mem.index)
+            ins.mem_bp = op.mem.base == X.X86_REG_BP
+            ins.mem_size = op.size
             if i.disp_size:
                 ins.mem_disp = op.mem.disp & 0xFFFF
     return ins
