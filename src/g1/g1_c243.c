@@ -1,7 +1,7 @@
-extern long d_514b[];
+extern void (far *d_514b[])(void);
 extern int d_554d;
 /*@body*/
-void pascal g1_c243(long key)
+void pascal g1_c243(void (far *key)(void))
 {
     register int i;
 

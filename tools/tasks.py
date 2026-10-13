@@ -224,8 +224,9 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
   Y...`: Turbo C emits the same short-circuit jumps for || and && as for the goto chain.
   With -O Turbo C cross-jumps identical tails (rule TAIL-MERGE): a jump into another branch's
   code usually means both branches END with the same statements in your source.
-- Register allocation (rule REGISTER-PRIORITY): the `register` variable with the MOST uses gets SI,
-  the next DI; ties keep declaration order.  Declaration order alone does not decide.  -Z also
+- Register allocation (rule REGISTER-PRIORITY): the `register` variable with the highest WEIGHTED
+  use count gets SI, the next DI; a use inside for/while/do counts 3x per loop level (label/goto
+  loops are not weighted); ties keep declaration order.  Declaration order alone does not decide.  -Z also
   remembers that a register equals a parameter until the next call, so `x = a1; f(a1);` pushes x.
 - Lazy cleanup (rule LAZY-CLEANUP): in a function with a BP frame but no locals and no saved
   SI/DI, every cdecl call (even without arguments) is followed by `mov sp,bp`.  If the original

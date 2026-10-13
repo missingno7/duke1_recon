@@ -63,18 +63,34 @@ def check_recipes(fresh: bool = True, only: set | None = None, workers: int = 6)
         return list(pool.map(lambda kv: prove_recipe(kv[0], kv[1], fresh), items))
 
 
+UNIT_DATA: dict = {}      # {unit: {episode: matching data bytes}} from the last check_units()
+
+
 def check_units(only: set | None = None) -> dict:
     """Whole-unit proof for every first-party C unit whose functions are all
-    accepted (tools/tubuild.py): {unit: {episode: status}}."""
+    accepted (tools/tubuild.py): {unit: {episode: status}}.  A unit with a
+    proven data plan (layout/unit-data.json) must also reproduce its data:
+    otherwise its status is DATA_<data status>."""
     import tubuild
     out = {}
     for unit in ("G1_TEXT", "G2_TEXT"):
         if only is not None and unit not in only:
             continue
         out[unit] = {}
+        plan = tubuild.data_plan(unit)
         for e in EPISODES:
-            a = tubuild.assemble(unit, e)
-            out[unit][e] = "INCOMPLETE" if a["missing"] else tubuild.check(unit, e)["status"]
+            a = tubuild.assemble(unit, e, plan=plan)
+            if a["missing"]:
+                out[unit][e] = "INCOMPLETE"
+                continue
+            r = tubuild.check(unit, e, plan=plan, data=bool(plan and plan.get("fragments")))
+            status = r["status"]
+            d = r.get("data", {})
+            if d.get("status") == "EQUAL":
+                UNIT_DATA.setdefault(unit, {})[e] = d["bytes"][1]
+            elif plan and plan.get("proven") and status == "EQUAL":
+                status = f"DATA_{d.get('status', 'UNCHECKED')}"
+            out[unit][e] = status
     return out
 
 
@@ -115,7 +131,7 @@ def coverage(results: list) -> dict:
             "code_relocations_in_proven_functions": covered_rel,
             "code_relocations": code_rel,
             "initialized_data_bytes": data_size,
-            "matching_data_bytes": 0,
+            "matching_data_bytes": sum(v.get(e, 0) for v in UNIT_DATA.values()),
             "bss_bytes": bss,
             "bss_owned_bytes": 0,
             "natural_link": "not attempted",
@@ -180,6 +196,9 @@ def main() -> int:
             failures.append("compiler rule register no longer reproduces: " + r.stdout[-800:])
     rs = recipes()
     srcs = {Path(v["source"]).as_posix() for v in rs.values()}
+    reg = LAYOUT / "unit-data.json"       # data fragments are proven by the unit data check
+    if reg.exists():
+        srcs |= {fr["file"] for u in load_json(reg).values() for fr in u.get("fragments", [])}
     for p in sorted(list(SRC.rglob("*.c")) + list(SRC.rglob("*.asm"))):
         rel = p.relative_to(ROOT).as_posix()
         if rel not in srcs:
@@ -191,7 +210,8 @@ def main() -> int:
     print(f"recipes: {sum(r['ok'] for r in results)}/{len(results)} re-proven fresh")
     units = check_units()
     for u, eps in units.items():
-        print(f"unit {u}: " + ", ".join(f"{e} {s}" for e, s in eps.items()))
+        print(f"unit {u}: " + ", ".join(f"{e} {s}" for e, s in eps.items())
+              + (f"; data proven {UNIT_DATA[u]}" if u in UNIT_DATA else ""))
         failures += [f"unit {u} {e}: {s}" for e, s in eps.items() if s not in ("EQUAL", "INCOMPLETE")]
     cov = coverage(results)
     for e in EPISODES:

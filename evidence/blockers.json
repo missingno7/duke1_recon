@@ -190,10 +190,10 @@
    "mechanism": "REGISTER_ALLOCATION_SWAP",
    "next_experiment": "Try a source shape with a meaningful char far * bitmap local initialized from d_637a plus the row offset, while keeping x directly represented as a register parameter; check whether Turbo C places the computed bitmap offset in SI and BP+8 in DI without adding frame locals.",
    "reporter": "luna-g1_7dff",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (rolling batch)",
+   "resolved": 1791923170.5882277,
    "scope": "g1_7dff",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -229,10 +229,10 @@
    "mechanism": "NESTED_REGISTER_ALLOCATION",
    "next_experiment": "Make only the outer index register-qualified and the inner counter automatic, then measure whether Turbo C uses DI for the inner counter without enlarging the six-byte frame.",
    "reporter": "luna-g1_3a98",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: label loops (register priority weighting), blockers 18/32/40)",
+   "resolved": 1791923636.2781816,
    "scope": "g1_3a98",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -307,10 +307,10 @@
    "mechanism": "TC20_CONTROL_FLOW_CANONICALIZATION",
    "next_experiment": "Change only the final g1_3513/state-range guard to nested if statements and compare its emitted tail against the original staged test sequence.",
    "reporter": "luna-g1_5f0c",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: plain for loop; g1_3714 call outside the state<3 block (blocker 38))",
+   "resolved": 1791923125.7986712,
    "scope": "g1_5f0c",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -385,10 +385,10 @@
    "mechanism": "TC20_SHORT_BRANCH_EXPANSION",
    "next_experiment": "Reorder the timer and state-dispatch blocks so the even-tick path falls through and its conditional target remains within 127 bytes, then measure whether Turbo C emits the original short branch and reduces the extent.",
    "reporter": "luna-g1_049f",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (label-level match; structuring backlog)",
+   "resolved": 1791924052.2283194,
    "scope": "g1_049f",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -398,10 +398,10 @@
    "mechanism": "REPEATED_INDEX_CODEGEN",
    "next_experiment": "Test a C expression that computes one near base pointer into the existing 4-byte local storage, then reads its adjacent words in argument order; measure whether Turbo C keeps the base in BX without adding an SI save or changing the frame.",
    "reporter": "luna-g1_e655",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: far pointer table argument g1_e3e0(d_03a4[d_02fa]); no inner else (blockers 31/39))",
+   "resolved": 1791923343.5372486,
    "scope": "g1_e655",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -411,10 +411,10 @@
    "mechanism": "NESTED_REGISTER_ALLOCATION",
    "next_experiment": "Keep only the outer counter register-qualified and make the inner counter automatic; measure whether the compiler assigns the outer counter to SI and whether the six-byte frame grows.",
    "reporter": "luna-g1_3a98",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: label loops (register priority weighting), blockers 18/32/40)",
+   "resolved": 1791923636.2781816,
    "scope": "g1_3a98",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -424,10 +424,10 @@
    "mechanism": "TC20_CONTROL_FLOW_CANONICALIZATION",
    "next_experiment": "Keep the final guard fixed and restructure only the state-1/state-2 movement and shared draw selection under an outer (state == 1 || state == 2) branch, with state 3 in its else-if branch; compare the resulting tail and extent.",
    "reporter": "luna-g1_5f0c",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: plain for loop; g1_3714 call outside the state<3 block (blocker 38))",
+   "resolved": 1791923125.7986712,
    "scope": "g1_5f0c",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -489,9 +489,113 @@
    "mechanism": "TC20_CONTROL_FLOW_CANONICALIZATION",
    "next_experiment": "If reopened, test the distinct loop form for (i = 1; i < d_05b6; ++i) while holding the state branches and final guard fixed, to check whether direct loop initialization removes the remaining two-byte extent.",
    "reporter": "luna-g1_5f0c",
+   "resolution": "accepted (supervisor: plain for loop; g1_3714 call outside the state<3 block (blocker 38))",
+   "resolved": 1791923125.7986712,
+   "scope": "g1_5f0c",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791923140.5786643,
+   "evidence": "Original code computes BX = zero-extended d_02fa * 4 once, then pushes [BX+0x3a6] and [BX+0x3a4]. Direct separate-array indexing emits 500 bytes versus 489 (+11). A two-dimensional array, explicit Pair array, and near-qualified Pair array each emit the same 515-byte code (three hypotheses). A near Pair pointer and flat near int pointer emit the same 494-byte code, still +5; all episodes agree on these sizes.",
+   "id": 39,
+   "mechanism": "REPEATED_INDEX_CODEGEN",
+   "next_experiment": "Try the near record pointer as a separate two-byte local beside the saved long, without union slot reuse, to determine whether the union affects address retention; inspect whether a source form can keep the scaled index in BX and both field offsets as displacements without materializing the full near pointer.",
+   "reporter": "luna-g1_e655",
+   "resolution": "accepted (supervisor: far pointer table argument g1_e3e0(d_03a4[d_02fa]); no inner else (blockers 31/39))",
+   "resolved": 1791923343.5372486,
+   "scope": "g1_e655",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791923140.7445257,
+   "evidence": "With both counters register, cand20 has 11 outer-index uses (two assignments, loop test, table subscript, four indexed state reads, two indexed y arguments, increment) versus four inner-counter uses, yet emits the outer in DI and inner in SI (650 bytes). Adding the meaningful d_c299[i].height read in cand21 raises the outer count to 12 and flips allocation to outer SI and inner DI, but emits 667 bytes. The closest candidate remains structured cand11 at 550/548 in all episodes, with the inner counter automatic.",
+   "id": 40,
+   "mechanism": "REGISTER_PRIORITY_REQUIRES_INDEXED_FIELD_USES",
+   "next_experiment": "Port cand21's 12-use field-indexing pattern onto cand11's do/continue loop and measure whether the target-like phase-reset branch layout survives while the outer remains in SI.",
+   "reporter": "luna-g1_3a98",
+   "resolution": "accepted (supervisor: label loops (register priority weighting), blockers 18/32/40)",
+   "resolved": 1791923636.2781816,
+   "scope": "g1_3a98",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "DECLARATION_VIEW",
+   "created": 1791923140.9069784,
+   "evidence": "The best mixed view declares d_0650 as int[], indexes the guard and first draw value as d_0650[a2*6], and accesses fields 1-5 through a typed six-int row expression. It emits 593/591 bytes in dn1, dn2, and dn3 (EXTENT_MISMATCH; diff_bytes 0, first_diff 23). The same 593-byte emission repeated for three distinct hypotheses: casting the array base, casting the address of d_0650[row*6], and rewriting the final && as nested ifs. The unqualified 2D and union views emit 614/591, with the word-array member still accessed through DS-to-ES and ES:[BX].",
+   "id": 41,
+   "mechanism": "MIXED_DS_ES_TABLE_ACCESS",
+   "next_experiment": "Recover d_0650's original declaration and qualifiers from data/source evidence, then test that exact declaration with the direct-word and typed-row expressions; further variants of the measured 593-byte mixed-view family are stopped by the three-hypothesis repeat rule.",
+   "reporter": "luna-g1_4d42",
    "resolution": null,
    "resolved": null,
-   "scope": "g1_5f0c",
+   "scope": "g1_4d42",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791923345.8324065,
+   "evidence": "The target is 612 bytes in dn1/dn2/dn3. cand21, cand22, and cand23 each emit 613 bytes in all three episodes; search.py reports identical emission for the three state-2 hypotheses. The structured OR gate in cand18 aligns the second result's JE directly to counter_done, and the nested state-1 tails in cand20 reduced the candidate from 623 to 621 bytes.",
+   "id": 42,
+   "mechanism": "TC20_STATE2_TAIL_CANONICALIZATION",
+   "next_experiment": "Starting from cand23, change only the state-1 A/B test from duplicated state=2 tails to a single structured condition (A == 0 || B != 0) with the same render tail; compare whether that removes the remaining byte.",
+   "reporter": "luna-g1_5b0b",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_5b0b",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791923359.95,
+   "evidence": "The explicit-goto candidate is 913 bytes in every episode but differs by 257/256/257 bytes; it emits JLE to common motion then reset, and search.py reports identical emission from three earlier hypotheses. Duplicated reset/no-reset tails emit JG reset; JMP motion but leave duplicate motion code (1281 bytes).",
+   "id": 43,
+   "mechanism": "TIMER_COMMON_BRANCH_LAYOUT",
+   "next_experiment": "Try an explicit else pair, if (d_0604 > d_060c) { goto motion_reset; } else { goto motion_common; }, with one common motion body; compare its lowering against the measured sequential-goto form.",
+   "reporter": "luna-g1_b595",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_b595",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791923990.3764844,
+   "evidence": "The full structured reconstruction includes both 14-entry dispatches and the late handlers. Its direct-switch form emits 2693 bytes in dn1, dn2, and dn3 versus the verified 2712-byte target. Adding explicit outer d_d144 range guards emits 2713 bytes, so that form adds 20 bytes and overshoots. The initial d_03a1 forward jump targets candidate offset 0x4e0 versus target offset 0x4e7. Annotated global and call reference counts otherwise match; extent mismatch prevents instruction-level comparison.",
+   "id": 44,
+   "mechanism": "NONLOCAL_CONTINUATION_JOIN",
+   "next_experiment": "Rewrite the d_0610/d_0439 guarded movement region from 0x1ead through 0x1f9f as nested structured if statements, compile the full candidate, and check whether the common-continuation jump reaches offset 0x4e7; once extents match, use --asm to localize the remaining bytes.",
+   "reporter": "luna-g1_1e77",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_1e77",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791923990.982236,
+   "evidence": "The best candidate is 7211 bytes versus 7071 in dn1/dn2/dn3. Table target offsets first diverge after the 0x3000 callback block by +3 bytes, and the drift grows by 3 at callback-bearing blocks. Three distinct callback argument forms (long cast, nested far-pointer cast, unsigned-long cast) emitted identical code; the no-cast form failed compilation.",
+   "id": 45,
+   "mechanism": "FAR_CALLBACK_LONG_CONVERSION",
+   "next_experiment": "Build the long callback value with the pinned Turbo C FP_SEG/FP_OFF macros and measure whether the segment word emits as push cs while retaining the accepted g1_c243(long) declaration.",
+   "reporter": "luna-g1_c287",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_c287",
+   "status": "OPEN"
+  },
+  {
+   "category": "SOURCE_SHAPE",
+   "created": 1791924267.250194,
+   "evidence": "The best candidate emits 3900 bytes versus the verified 3985-byte target in dn1, dn2, and dn3. Search recorded the same 3900-byte emission for three distinct source hashes while testing shared exit forms and grouped versus separate duplicate switch bodies. All episodes remain EXTENT_MISMATCH, so relocation bindings and byte diffs are not yet evaluated.",
+   "id": 46,
+   "mechanism": "TAIL_MERGE_LAYOUT_SATURATION",
+   "next_experiment": "Start a new control-flow family by auditing the post_mode branch against f9bc/f9ce and the fba5/fbf5 back-edges. Express the d_a0fa==0x44 fallback and common outer-loop decision as one structured if/else-if chain, then compile to test whether the remaining 85 bytes are in that join.",
+   "reporter": "luna-g1_ecf4",
+   "resolution": null,
+   "resolved": null,
+   "scope": "g1_ecf4",
    "status": "OPEN"
   }
  ],

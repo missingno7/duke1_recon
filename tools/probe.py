@@ -265,9 +265,15 @@ def check_register_priority(args: dict) -> dict:
     for r in rows:
         if r["asm"].startswith("mov si, word ptr [bp + 6]") or r["asm"].startswith("mov di, word ptr [bp + 6]"):
             first.setdefault(r["fn"], r["asm"].split()[1].rstrip(","))
+    init = {}
+    for r in rows:
+        if r["asm"] in ("xor si, si", "xor di, di"):
+            init.setdefault(r["fn"], r["asm"].split()[1].rstrip(","))
     facts = {"more_used_first_declared_gets_si": first.get("_a_more") == "si",
              "more_used_second_declared_gets_si": first.get("_b_more") == "di",
-             "tie_keeps_declaration_order": first.get("_tie") == "si"}
+             "tie_keeps_declaration_order": first.get("_tie") == "si",
+             "inner_for_counter_outranks_outer": init.get("_loops_for") == "di",
+             "label_loops_unweighted_declaration_order": init.get("_loops_label") == "si"}
     return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts, "x_register": first}
 
 

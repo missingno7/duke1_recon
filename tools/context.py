@@ -301,7 +301,7 @@ def skeleton(ctx: dict) -> str:
         if not n or n in seen:
             continue
         seen.add(n)
-        stub = c["kind"] == "pushcs_near"
+        stub = c["kind"] in ("pushcs_near", "fnptr_cs")   # same-segment: must be defined earlier
         if not n.startswith(("g1_", "g2_", "asm_")) and any(n.lstrip("_") in v for v in LIB_HEADERS.values()):
             continue          # declared by the included header
         if n in fns:

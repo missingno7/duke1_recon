@@ -164,7 +164,7 @@
   },
   {
    "id": "REGISTER-PRIORITY",
-   "statement": "Turbo C 2.0 assigns SI to the `register` variable (local or parameter) with the most uses and DI to the next; ties keep declaration order. Declaration order alone does not decide (g1_af06).",
+   "statement": "Turbo C 2.0 assigns SI to the `register` variable (local or parameter) with the highest weighted use count and DI to the next; each use counts 3x per enclosing for/while/do loop (label/goto loops are not weighted); ties keep declaration order. Declaration order alone does not decide (g1_af06, g1_3a98: label loops give the outer counter SI).",
    "check": "register_priority",
    "outcome": "CONFIRMED"
   },

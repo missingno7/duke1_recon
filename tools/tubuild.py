@@ -158,13 +158,19 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
     pubs = {symbols.norm(p["name"]): p["offset"] for p in module.publics if p["segment"] == seg}
     bad, layout = [], []
     static_bases = {}      # unit-local statics (unit_static bindings) must share one base per segment
+    own_base = None
+    if data:
+        out["data"] = check_data(module, ep, plan) if plan else {"status": "NO_PLAN"}
+        if out["data"]["status"] == "EQUAL":
+            # the unit's _DATA is the original range: own-data references bind to it
+            own_base = {"_DATA": int(plan["data_segment_range"][ep][0], 16)}
     for fid in a["order"]:
         loc = symbols.atlas()[fid]["locations"][ep]
         rel = loc["start"] - useg["start"]
         if pubs.get(fid) != rel:
             layout.append(f"{fid}: unit offset {pubs.get(fid)} vs original {rel}")
             continue
-        res = compare.compare_object(rec.obj, fid, ep)
+        res = compare.compare_object(rec.obj, fid, ep, own_data_base=own_base)
         if res.status != "EQUAL":
             bad.append(f"{fid}: {res.status} {res.detail[:2]}")
         for b in res.bound:
@@ -177,8 +183,6 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
                 "unit_static_bases": {k: sorted(v) for k, v in static_bases.items()}})
     out["status"] = "EQUAL" if not bad and not layout and seg_len == useg["size"] else "DIFFER"
     out["literal_pool"] = literal_pool(module, ep)
-    if data:
-        out["data"] = check_data(module, ep, plan) if plan else {"status": "NO_PLAN"}
     return out
 
 
