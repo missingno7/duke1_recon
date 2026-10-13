@@ -1,5 +1,5 @@
-struct g1_1b51_record { int used, arg0, arg1, marker; };
-extern struct g1_1b51_record d_52dd[];
+struct t_52dd { int used, x, y, marker; };
+extern struct t_52dd d_52dd[];
 extern int d_051c;
 /*@body*/
 void pascal g1_1b51(void)

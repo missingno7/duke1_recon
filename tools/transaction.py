@@ -88,14 +88,14 @@ def _check_path(rel: str) -> Path:
 
 
 def prepare(changes: dict) -> dict:
-    """changes: {relative path: new bytes}.  Returns the journal."""
+    """changes: {relative path: new bytes, or None to delete}.  Returns the journal."""
     entries = []
     for rel, data in sorted(changes.items()):
         p = _check_path(rel)
         before = p.read_bytes() if p.exists() else None
         entries.append({"path": rel,
                         "before": None if before is None else base64.b64encode(before).decode(),
-                        "after": base64.b64encode(data).decode()})
+                        "after": None if data is None else base64.b64encode(data).decode()})
     journal = {"pid": os.getpid(), "at": time.time(), "entries": entries}
     atomic_json(JOURNAL, journal)
     return journal
@@ -112,7 +112,12 @@ def apply(journal: dict) -> None:
         if cur != _b(e["before"]) and cur != _b(e["after"]):
             raise Conflict(f"{e['path']} changed since the publication was prepared")
     for e in journal["entries"]:
-        atomic_bytes(_check_path(e["path"]), _b(e["after"]))
+        p = _check_path(e["path"])
+        if e["after"] is None:
+            if p.exists():
+                p.unlink()
+        else:
+            atomic_bytes(p, _b(e["after"]))
 
 
 def rollback(journal: dict) -> list:
@@ -122,7 +127,8 @@ def rollback(journal: dict) -> list:
         cur = p.read_bytes() if p.exists() else None
         if cur == _b(e["after"]):
             if e["before"] is None:
-                p.unlink()
+                if p.exists():
+                    p.unlink()
             else:
                 atomic_bytes(p, _b(e["before"]))
             restored.append(e["path"])

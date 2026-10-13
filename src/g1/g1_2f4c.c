@@ -1,5 +1,5 @@
-struct g1_2f4c_record { int used, value1, value2; };
-extern struct g1_2f4c_record d_c8eb[];
+struct t_c8eb { int used, value1, value2; };
+extern struct t_c8eb d_c8eb[];
 extern int d_009d;
 extern int d_009f;
 extern int d_051e;
@@ -10,7 +10,7 @@ void asm_0424(char far *bitmap, int a0, int a1);
 void g1_2f4c(void)
 {
     register int i;
-    struct g1_2f4c_record far *p;
+    struct t_c8eb far *p;
 
     for (i = 0; i < d_051e; ++i) {
         p = &d_c8eb[i];

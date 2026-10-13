@@ -1,5 +1,5 @@
-struct g1_2bd9_record { int state; int x; int y; int kind; };
-extern struct g1_2bd9_record d_b63c[];
+struct t_b63c { int state, x, y, kind; };
+extern struct t_b63c d_b63c[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0522;
@@ -12,7 +12,7 @@ int g1_3513(int a0, int a1);
 void g1_2bd9(void)
 {
     register int i;
-    struct g1_2bd9_record far *p;
+    struct t_b63c far *p;
 
     for (i = 0; i < d_0522; ++i) {
         p = &d_b63c[i];

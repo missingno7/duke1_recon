@@ -1,10 +1,5 @@
-struct g1_c0c7_record {
-    int offset;
-    int x;
-    int y;
-    int alternate;
-};
-extern struct g1_c0c7_record d_b9de[];
+struct t_b9de { int offset, x, y, alternate; };
+extern struct t_b9de d_b9de[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0437;
@@ -17,7 +12,7 @@ char pascal g1_326e(int x, int y) { return 0; }
 void g1_c0c7(void)
 {
     register int i;
-    struct g1_c0c7_record far *p;
+    struct t_b9de far *p;
 
     for (i = 0; i < d_5319; ++i) {
         p = &d_b9de[i];

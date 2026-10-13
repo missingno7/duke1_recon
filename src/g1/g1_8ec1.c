@@ -1,5 +1,5 @@
-struct g1_8ec1_record { int x, y, used; };
-extern struct g1_8ec1_record d_b3d6[];
+struct t_b3d6 { int x, y, used; };
+extern struct t_b3d6 d_b3d6[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0437;

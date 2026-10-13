@@ -1,5 +1,5 @@
-struct g1_2eb1_record { int used, x, y; };
-extern struct g1_2eb1_record d_d1cf[];
+struct t_d1cf { int used, x, y; };
+extern struct t_d1cf d_d1cf[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0520;
@@ -10,7 +10,7 @@ void asm_0424(char far *bitmap, int row, int offset);
 void g1_2eb1(void)
 {
     register int i;
-    struct g1_2eb1_record far *p;
+    struct t_d1cf far *p;
 
     for (i = 0; i < d_0520; i++) {
         p = &d_d1cf[i];

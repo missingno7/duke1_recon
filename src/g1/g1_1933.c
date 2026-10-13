@@ -1,5 +1,5 @@
-struct g1_1933_record { int state, x, y, marker; };
-extern struct g1_1933_record d_cb6d[];
+struct t_cb6d { int state, x, y, marker; };
+extern struct t_cb6d d_cb6d[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0646;
@@ -14,7 +14,7 @@ void asm_0424(char far *a0, int a1, int a2);
 void g1_1933(void)
 {
     register int i;
-    struct g1_1933_record far *p;
+    struct t_cb6d far *p;
 
     d_0646 += 0xa0;
     if (d_0646 == 0x140)

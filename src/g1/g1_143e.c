@@ -6,7 +6,7 @@ extern int d_009b;
 extern int d_009d;
 extern int d_009f;
 extern unsigned int far *d_7729;
-extern unsigned char d_d576;
+extern char d_d576;
 /*@body*/
 char g1_143e(void)
 {

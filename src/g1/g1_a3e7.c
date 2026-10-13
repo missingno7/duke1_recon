@@ -11,8 +11,8 @@ extern int d_a0b9;
 extern char far *d_a0fb;
 extern int d_b3d4;
 extern char d_c68c;
-struct g1_a3e7_record { int field[2]; };
-extern struct g1_a3e7_record d_726b[];
+struct t_726b { int x, y; };
+extern struct t_726b d_726b[];
 char pascal g1_326e(int a0, int a1) {}
 int g1_3513(int a0, int a1) { return 0; }
 void pascal g1_0042(int a0) {}
@@ -52,7 +52,7 @@ void g1_a3e7(void)
 
     if (g1_3513(d_9d96, d_a0b9) != 0 && d_b3d4 != 0 && d_c68c != 0) {
         for (i = 0; i < d_05cc; ++i)
-            d_726b[i].field[2] = 0;
+            (&d_726b[i].x)[2] = 0;      /* the original clears the NEXT record's x */
 
         d_7f04 = 0;
         g2_3b79();

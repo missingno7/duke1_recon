@@ -1,5 +1,5 @@
-struct g1_314c_record { int f[15]; };
-extern struct g1_314c_record d_5320[];
+struct t_5320 { int f[15]; };
+extern struct t_5320 d_5320[];
 extern int d_043e;
 extern int d_064c;
 void pascal g1_0042(int a0) {}
@@ -7,7 +7,7 @@ void pascal g1_0042(int a0) {}
 void pascal g1_314c(int a0, int a1)
 {
     register int i;
-    struct g1_314c_record far *p;
+    struct t_5320 far *p;
 
     d_064c++;
     if (d_064c > 3)

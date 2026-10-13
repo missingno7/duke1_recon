@@ -61,10 +61,12 @@ def collect() -> dict:
         # the target's own definition header (statements are not declarations)
         defn = [m for m in FN.finditer(body) if m.group("name") == r["function"] and m.group("tail") == "{"][:1]
         for m in list(FN.finditer(prelude)) + defn:
-            ret = norm_type(re.sub(r"\b(static|far|extern)\b", "", m.group("ret")))
+            raw_ret = m.group("ret")
+            conv = (m.group("conv") or "").strip() or ("interrupt" if re.search(r"\binterrupt\b", raw_ret) else "cdecl")
+            ret = norm_type(re.sub(r"\b(static|far|extern|interrupt)\b", "", raw_ret))
             kind = "definition" if m in defn else ("stub" if m.group("tail") == "{" else "declaration")
             fviews[m.group("name")].append({"file": r["source"], "kind": kind, "ret": ret,
-                                            "conv": (m.group("conv") or "").strip() or "cdecl",
+                                            "conv": conv,
                                             "params": norm_params(m.group("params"))})
         for m in DATA.finditer(prelude):
             dviews[m.group("name")].append({"file": r["source"], "type": norm_type(m.group("type")),

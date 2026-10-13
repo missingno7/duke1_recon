@@ -9,8 +9,8 @@
 | Function boundary | `[start, next start)` per function | **verified** when recursive descent (with switch tables) covers the extent exactly; all 248 C functions per episode |
 | Cross-episode identity | one logical function, up to three locations | **evidence with confidence**: separate byte/shape/size/call/data signals; never proof by itself |
 | Function match (strict) | candidate C compiles to the original function in an episode | **proof**, per episode, relative to the symbol table (below) |
-| Translation unit (code) | one compile of a whole unit: every function EQUAL at its original offset, original segment length | **proven for G2** in DN1/DN2/DN3 (`tools/tubuild.py`); G1 incomplete |
-| Translation unit (data) | the unit's `_DATA`: initialised globals then its literal pool | not yet: G2's literal pool interleaves strings of initialised global tables, which are still extern |
+| Translation unit (code) | one compile of a whole unit: every function EQUAL at its original offset, original segment length | **proven for G2** and for the **assembly unit** (one TASM module, `src/asm/toolbox.asm`: its whole 1,082-byte `_TEXT` contribution, data tables included) in DN1/DN2/DN3 (`tools/tubuild.py`); G1 incomplete |
+| Translation unit (data) | the unit's `_DATA`: initialised globals then its literal pool | **proven for G2** (`tools/tubuild.py G2_TEXT --data`, `layout/unit-data.json`): the unit's 16 KB `_DATA` equals DGROUP 0x0b46..library start byte for byte in all episodes, every fixup bound, relocation set equal (one trailing alignment byte in DN1/DN3); G1 not yet |
 | Data ownership | which unit defines each DGROUP byte; BSS order | not yet attempted |
 | Natural link | real TLINK of C0 + asm + G1 + G2 + CL.LIB | not yet attempted |
 | Unpacked image equality | linked image == oracle image, relocation set equal | not yet |
@@ -38,6 +38,19 @@ For one candidate object and one episode:
 Promotion re-runs this on a fresh compile, re-proves every previously accepted
 recipe under the canonical lock, publishes through a journal and re-proves the
 published file. Validation re-proves everything from canonical inputs.
+
+## Unit-level bindings
+
+* A reference into the candidate's own `_BSS` (Turbo C's struct-return temporary,
+  a function-local static) binds as `unit_static`: all such references of a
+  function share one base, and no other original function touches the address.
+  The unit build requires one base per unit.
+* A reference into the candidate's own `_DATA` that lands on a public (a global
+  *defined* in the unit) binds by that global's name like an external; other own
+  `_DATA` references are string literals verified by content at the original
+  address.  Once the unit's `_DATA` is proven equal to its original range, the
+  unit build binds every own-data reference relationally to that range (stronger
+  than the content check).
 
 ## The symbol table assumption
 
@@ -74,9 +87,9 @@ conditionals; such sources are compiled once per episode with `-DEPISODE=n`.
 ## Not claimed
 
 * No hybrid image has been built, so nothing claims "complete source".
-* All nine hand-written assembly routines are proven individually (TASM 1.0); the
-  data bytes of the region (bitmask tables, the ProGraphx banner, the page variable)
-  and the game's C0 variant as one object are not yet reconstructed.
+* The assembly unit is reconstructed as one module including its data tables
+  (written as data definitions: bit masks, the ProGraphx banner, the page
+  variable); the game's C0 variant as one object is not yet reconstructed.
 * CL.LIB modules are identified by exact match outside fixups; they are not yet
   linked from the pinned library.
 * The runtime region is fully attributed: 65 CL.LIB modules (12,849 bytes; the

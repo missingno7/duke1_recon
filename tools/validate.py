@@ -73,10 +73,14 @@ def check_units(only: set | None = None) -> dict:
     otherwise its status is DATA_<data status>."""
     import tubuild
     out = {}
-    for unit in ("G1_TEXT", "G2_TEXT"):
+    for unit in ("ASM_TEXT", "G1_TEXT", "G2_TEXT"):
         if only is not None and unit not in only:
             continue
         out[unit] = {}
+        if unit == "ASM_TEXT":
+            for e in EPISODES:
+                out[unit][e] = tubuild.check(unit, e)["status"]
+            continue
         plan = tubuild.data_plan(unit)
         for e in EPISODES:
             a = tubuild.assemble(unit, e, plan=plan)
@@ -111,7 +115,8 @@ def coverage(results: list) -> dict:
         for r in results:
             if r["ok"] and e in r.get("claimed", []):
                 proven[r["function"]] = rs[r["function"]]["episodes"][e]
-        c_bytes = sum(v["size"] for v in proven.values())
+        c_bytes = sum(v["size"] for k, v in proven.items() if rs[k].get("language") != "asm")
+        asm_bytes = sum(v["size"] for k, v in proven.items() if rs[k].get("language") == "asm")
         rel_lin = sorted((s << 4) + o for s, o in relocs)
         covered_rel = sum(1 for a in rel_lin for v in proven.values() if v["start"] <= a < v["start"] + v["size"])
         code_rel = sum(1 for a in rel_lin if a < code_end)
@@ -120,14 +125,14 @@ def coverage(results: list) -> dict:
         out[e] = {
             "code_bytes": code_end,
             "matching_c_code": c_bytes,
-            "matching_c_functions": len(proven),
+            "matching_c_functions": sum(1 for k in proven if rs[k].get("language") != "asm"),
             "first_party_c_code": game,
             "first_party_c_functions": sum(1 for f in c["functions"] if f["segment"].startswith("G")),
-            "matching_asm_code": 0,
+            "matching_asm_code": asm_bytes,
             "asm_code": asm,
             "identified_runtime_code": startup + lib,
             "runtime_note": "C0L _TEXT and CL.LIB modules located by exact match outside fixups; identified, not yet linked",
-            "unresolved_code": code_end - c_bytes - startup - lib,
+            "unresolved_code": code_end - c_bytes - asm_bytes - startup - lib,
             "code_relocations_in_proven_functions": covered_rel,
             "code_relocations": code_rel,
             "initialized_data_bytes": data_size,
@@ -148,7 +153,7 @@ def progress_md(cov: dict, results: list) -> str:
              "| | DN1 | DN2 | DN3 |", "|---|---:|---:|---:|"]
     rows = [("Matching C functions", "matching_c_functions"), ("Matching C code bytes", "matching_c_code"),
             ("First-party C code bytes", "first_party_c_code"), ("First-party C functions", "first_party_c_functions"),
-            ("Matching ASM code bytes", "matching_asm_code"), ("ASM code bytes (unresolved)", "asm_code"),
+            ("Matching ASM code bytes", "matching_asm_code"), ("ASM code bytes", "asm_code"),
             ("Identified runtime code bytes (C0L + CL.LIB)", "identified_runtime_code"),
             ("Unresolved code bytes", "unresolved_code"),
             ("Code relocations inside proven functions", "code_relocations_in_proven_functions"),
@@ -216,6 +221,10 @@ def main() -> int:
     cov = coverage(results)
     for e in EPISODES:
         cov[e]["complete_units_equal"] = sorted(u for u, eps in units.items() if eps.get(e) == "EQUAL")
+        if units.get("ASM_TEXT", {}).get(e) == "EQUAL":
+            cov[e]["matching_asm_code"] = cov[e]["asm_code"]     # data tables in the segment included
+            cov[e]["unresolved_code"] = (cov[e]["code_bytes"] - cov[e]["matching_c_code"] - cov[e]["asm_code"]
+                                         - cov[e]["identified_runtime_code"])
     for e in EPISODES:
         c = cov[e]
         print(f"  {e}: C {c['matching_c_functions']}/{c['first_party_c_functions']} functions, "

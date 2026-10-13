@@ -1,5 +1,5 @@
-struct g1_32a5_record { int f[15]; };
-extern struct g1_32a5_record d_5320[];
+struct t_5320 { int f[15]; };
+extern struct t_5320 d_5320[];
 extern int d_009d;
 extern int d_009f;
 extern int d_043e;
@@ -18,7 +18,7 @@ void asm_0424(char far *bitmap, int row, int offset);
 void g1_32a5(void)
 {
     register int i;
-    struct g1_32a5_record far *p;
+    struct t_5320 far *p;
 
     for (i = 0; i < d_043e; ++i) {
         p = &d_5320[i];

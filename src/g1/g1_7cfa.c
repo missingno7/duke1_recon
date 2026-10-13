@@ -7,8 +7,8 @@ extern int d_06ef;
 extern char far *d_a0fb;
 extern char d_d13f;
 extern char d_d4c0;
-struct g1_7cfa_record { int x; int y; };
-extern struct g1_7cfa_record d_726b[];
+struct t_726b { int x, y; };
+extern struct t_726b d_726b[];
 void asm_0424(char far *bitmap, int x, int y);
 char pascal g1_326e(int a0, int a1) {}
 char pascal g1_3558(int a0, int a1) {}
@@ -20,7 +20,7 @@ void pascal g1_0042(int a0) {}
 void g1_7cfa(void)
 {
     register int i;
-    struct g1_7cfa_record far *p;
+    struct t_726b far *p;
 
     d_06ef += 0xa0;
     if (d_06ef == 0x280)

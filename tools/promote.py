@@ -183,7 +183,7 @@ def _close_blockers(functions, note) -> None:
                         (time.time(), f"accepted ({note or 'promotion'})", f))
 
 
-def promote_batch(items: list, note: str | None) -> list:
+def promote_batch(items: list, note: str | None, source_path: str | None = None) -> list:
     """items: [(function, candidate Path)].  Each candidate is verified fresh
     on its own; then ONE lock, ONE re-proof of all existing recipes, ONE
     journal for every file, a post-publication proof of each new recipe, and
@@ -221,7 +221,9 @@ def promote_batch(items: list, note: str | None) -> list:
         log = log_path.read_bytes() if log_path.exists() else b""
         changes = {}
         for function, candidate, raw, text, flags, profile, out, old in staged:
-            path = canonical_path(function, search.is_asm(candidate)) if not old else old["source"]
+            path = source_path or (canonical_path(function, search.is_asm(candidate)) if not old else old["source"])
+            if old and old["source"] != path:
+                changes[old["source"]] = None          # the function moved into a shared module source
             recipe = build_recipe(function, path, text, flags, profile, None, out)
             rpath = RECIPES / f"{function}.json"
             changes[path] = raw
@@ -268,6 +270,8 @@ def main() -> int:
     ap.add_argument("--note")
     ap.add_argument("--recover", action="store_true")
     ap.add_argument("--batch", help="file with lines 'FUNCTION CANDIDATE'")
+    ap.add_argument("--source-path", help="with --batch: publish every candidate as this one shared source "
+                                          "(e.g. a whole assembly module); the functions' old sources are removed")
     a = ap.parse_args()
     if a.recover:
         print("rolled back:", transaction.recover())
@@ -279,7 +283,7 @@ def main() -> int:
                 fn, cand = line.split()
                 items.append((fn, Path(cand)))
         try:
-            res = promote_batch(items, a.note)
+            res = promote_batch(items, a.note, a.source_path)
         except (PromotionError, transaction.Conflict, transaction.LockBusy) as exc:
             print(f"BATCH PROMOTION REFUSED: {exc}")
             return 1

@@ -33,13 +33,29 @@ def key(i) -> str:
     txt = re.sub(r"0x[0-9a-f]+|\b[0-9]+\b", "N", txt)
     if i.size >= 4 and re.search(r"\[(bx|si|di)\]", txt):
         txt = re.sub(r"\[(bx|si|di)\]", r"[\1 + N]", txt)      # disp16 holding a fixup value
+    txt = txt.replace(" - N]", " + N]")                            # sign of a 16-bit displacement
     return f"{txt} /{i.size}"
 
 
-def listing(buf: bytes, a: int, end: int) -> list:
+def listing(buf: bytes, a: int, end: int, tables: list | None = None, base: int = 0) -> list:
+    """tables: [(start, end)] absolute ranges to emit as one 'table' token; if None,
+    tables are found from `jmp word ptr cs:[bx + T]` (T relative to `base`) and
+    sized by the queue `table_sizes` attribute."""
     out = []
+    pending = list(listing.table_sizes) if tables is None else []
+    found = []
     while a < end:
+        rng = next((r for r in (tables or found) if r[0] <= a < r[1]), None)
+        if rng:
+            out.append((a, f"table /{rng[1] - rng[0]}"))
+            a = rng[1]
+            continue
         i = disasm.decode(buf, a, 0)
+        if tables is None and i is not None and i.mnem == "jmp" and "cs:[bx" in i.ops and pending:
+            m = re.search(r"cs:\[bx \+ (0x[0-9a-f]+)\]", i.ops)
+            if m:
+                st = base + int(m.group(1), 16)
+                found.append((st, st + pending.pop(0)))
         if i is None:
             out.append((a, "db /1"))
             a += 1
@@ -71,8 +87,12 @@ def main() -> int:
     end = min([o for o in pubs if o > pub] + [m.segment_lengths[seg]])
     img, _ = oracle.load_image(a.episode)
     loc = symbols.atlas()[a.function]["locations"][a.episode]
-    A = listing(t, pub, end)
-    B = listing(img, loc["start"], loc["start"] + loc["size"])
+    census = symbols.census(a.episode)
+    f = next(x for x in census["functions"] if x["start"] == loc["start"])
+    otables = [tuple(r) for r in f.get("tables", [])]
+    listing.table_sizes = [e - s for s, e in otables]
+    A = listing(t, pub, end, None, 0)
+    B = listing(img, loc["start"], loc["start"] + loc["size"], otables)
     sm = difflib.SequenceMatcher(None, [x[1] for x in A], [x[1] for x in B], autojunk=False)
     shown = 0
     for tag, i1, i2, j1, j2 in sm.get_opcodes():

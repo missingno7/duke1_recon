@@ -1,5 +1,5 @@
-struct g1_74c2_record { int x; int y; int used; };
-extern struct g1_74c2_record d_b3d6[];
+struct t_b3d6 { int x, y, used; };
+extern struct t_b3d6 d_b3d6[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0437;
@@ -17,7 +17,7 @@ int g1_3513(int a0, int a1) {}
 void g1_74c2(void)
 {
     register int i;
-    struct g1_74c2_record far *p;
+    struct t_b3d6 far *p;
 
     d_06ed += 0xa0;
     if (d_06ed == 0x280)

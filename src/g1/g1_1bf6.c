@@ -1,7 +1,7 @@
 /* goto kept: success_update and clear_record are shared targets reached from both state
    branches; the structured forms tried by the worker emitted different sizes. */
-struct g1_1bf6_record { int used, arg0, arg1, marker; };
-extern struct g1_1bf6_record d_52dd[];
+struct t_52dd { int used, x, y, marker; };
+extern struct t_52dd d_52dd[];
 extern int d_0099;
 extern int d_009d;
 extern int d_009f;
@@ -20,7 +20,7 @@ char g1_1247(void) { return 0; }
 void g1_1bf6(void)
 {
     register int i;
-    struct g1_1bf6_record far *p;
+    struct t_52dd far *p;
 
     d_0648 += 0xa0;
     if (d_0648 == 0x140)
@@ -32,7 +32,7 @@ void g1_1bf6(void)
             continue;
 
         if (p->used == 1) {
-            if (g1_3513(p->arg0, p->arg1)) {
+            if (g1_3513(p->x, p->y)) {
                 if (d_6379 != 0)
                     goto success_update;
                 if (d_d4bf != 0)
@@ -42,21 +42,21 @@ void g1_1bf6(void)
                 --d_0099;
                 goto success_update;
             } else {
-                --p->arg0;
-                if (g1_367e(p->arg0, p->arg1) != 0)
+                --p->x;
+                if (g1_367e(p->x, p->y) != 0)
                     goto clear_record;
-                if (g1_367e(p->arg0, p->arg1 + 0x40) != 0)
+                if (g1_367e(p->x, p->y + 0x40) != 0)
                     goto clear_record;
-                if (g1_326e(p->arg0, p->arg1) == 0) {
+                if (g1_326e(p->x, p->y) == 0) {
                     if (p->marker != 0) {
                         p->marker = 0;
                         asm_0424(d_a0fb + 0x1e00,
-                                 p->arg0 - d_009d,
-                                 ((p->arg1 - d_009f) >> 3) + 0x13);
+                                 p->x - d_009d,
+                                 ((p->y - d_009f) >> 3) + 0x13);
                     } else {
                         asm_0424(d_a0fb + d_0648 + 0x1860,
-                                 p->arg0 - d_009d,
-                                 ((p->arg1 - d_009f) >> 3) + 0x13);
+                                 p->x - d_009d,
+                                 ((p->y - d_009f) >> 3) + 0x13);
                     }
                 } else {
                     p->used = 0;
@@ -65,29 +65,29 @@ void g1_1bf6(void)
         }
 
         if (p->used == 2) {
-            if (g1_3513(p->arg0, p->arg1)) {
+            if (g1_3513(p->x, p->y)) {
                 if (d_6379 == 0 && d_d4bf == 0 && g1_12ce())
                     ++d_0099;
 success_update:
                 p->used = 0;
                 d_6379 = 1;
             } else {
-                ++p->arg0;
-                if (g1_367e(p->arg0 + 1, p->arg1) != 0)
+                ++p->x;
+                if (g1_367e(p->x + 1, p->y) != 0)
                     goto clear_record;
-                if (g1_367e(p->arg0 + 1, p->arg1 + 0x40) != 0)
+                if (g1_367e(p->x + 1, p->y + 0x40) != 0)
                     goto clear_record;
-                if (g1_326e(p->arg0, p->arg1) != 0)
+                if (g1_326e(p->x, p->y) != 0)
                     goto clear_record;
                 if (p->marker != 0) {
                     p->marker = 0;
                     asm_0424(d_a0fb + 0x1ea0,
-                             p->arg0 - d_009d,
-                             ((p->arg1 - d_009f) >> 3) + 0x13);
+                             p->x - d_009d,
+                             ((p->y - d_009f) >> 3) + 0x13);
                 } else {
                     asm_0424(d_a0fb + d_0648 + 0x19a0,
-                             p->arg0 - d_009d,
-                             ((p->arg1 - d_009f) >> 3) + 0x13);
+                             p->x - d_009d,
+                             ((p->y - d_009f) >> 3) + 0x13);
                 }
             }
         }

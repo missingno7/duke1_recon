@@ -1,19 +1,19 @@
-struct s8 { int a, b, c, d; };
-extern struct s8 d_b63c[];
+struct t_b63c { int state, x, y, kind; };
+extern struct t_b63c d_b63c[];
 extern int d_0522;
 /*@body*/
 void pascal g1_2b86(register int a0, int a1, int a2)
 {
     register int i;
-    struct s8 far *p;
+    struct t_b63c far *p;
 
     for (i = 0; i < d_0522; i++) {
         p = &d_b63c[i];
-        if (p->a == 0) {
-            p->a = 1;
-            p->b = a1;
-            p->c = a2;
-            p->d = a0;
+        if (p->state == 0) {
+            p->state = 1;
+            p->x = a1;
+            p->y = a2;
+            p->kind = a0;
             break;
         }
     }

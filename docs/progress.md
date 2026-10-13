@@ -5,18 +5,18 @@ every recipe. Numbers are per episode; nothing here counts original bytes as sou
 
 | | DN1 | DN2 | DN3 |
 |---|---:|---:|---:|
-| Matching C functions | 31 | 31 | 31 |
-| Matching C code bytes | 4586 | 4586 | 4552 |
+| Matching C functions | 245 | 245 | 245 |
+| Matching C code bytes | 69678 | 69741 | 69771 |
 | First-party C code bytes | 83446 | 83509 | 83539 |
 | First-party C functions | 248 | 248 | 248 |
-| Matching ASM code bytes | 0 | 0 | 0 |
-| ASM code bytes (unresolved) | 1082 | 1082 | 1082 |
+| Matching ASM code bytes | 1082 | 1082 | 1082 |
+| ASM code bytes | 1082 | 1082 | 1082 |
 | Identified runtime code bytes (C0L + CL.LIB) | 13306 | 13306 | 13306 |
-| Unresolved code bytes | 79948 | 80012 | 80078 |
-| Code relocations inside proven functions | 77 | 77 | 77 |
+| Unresolved code bytes | 13774 | 13775 | 13777 |
+| Code relocations inside proven functions | 1237 | 1240 | 1242 |
 | Code relocations | 1455 | 1458 | 1460 |
 | Initialized DGROUP bytes | 20170 | 20386 | 19894 |
-| Matching data bytes | 0 | 0 | 0 |
+| Matching data bytes | 16100 | 16316 | 15824 |
 | BSS bytes | 35042 | 35042 | 35042 |
 | BSS bytes with proven ownership | 0 | 0 | 0 |
 
@@ -29,34 +29,257 @@ so only the relocation *set* can be compared.
 
 | Function | Episodes proven |
 |---|---|
+| `asm_0258` | dn1, dn2, dn3 |
+| `asm_029d` | dn1, dn2, dn3 |
+| `asm_02ad` | dn1, dn2, dn3 |
+| `asm_0315` | dn1, dn2, dn3 |
+| `asm_0424` | dn1, dn2, dn3 |
+| `asm_04c5` | dn1, dn2, dn3 |
+| `asm_053c` | dn1, dn2, dn3 |
+| `asm_05eb` | dn1, dn2, dn3 |
+| `asm_05f7` | dn1, dn2, dn3 |
+| `g1_0008` | dn1, dn2, dn3 |
 | `g1_0042` | dn1, dn2, dn3 |
 | `g1_006f` | dn1, dn2, dn3 |
+| `g1_008a` | dn1, dn2, dn3 |
+| `g1_0126` | dn1, dn2, dn3 |
 | `g1_0151` | dn1, dn2, dn3 |
+| `g1_0351` | dn1, dn2, dn3 |
+| `g1_037e` | dn1, dn2, dn3 |
+| `g1_049f` | dn1, dn2, dn3 |
+| `g1_0874` | dn1, dn2, dn3 |
+| `g1_0928` | dn1, dn2, dn3 |
+| `g1_0a0e` | dn1, dn2, dn3 |
 | `g1_0acc` | dn1, dn2, dn3 |
+| `g1_0adc` | dn1, dn2, dn3 |
 | `g1_0b85` | dn1, dn2, dn3 |
+| `g1_0c52` | dn1, dn2, dn3 |
+| `g1_0e30` | dn1, dn2, dn3 |
 | `g1_1053` | dn1, dn2, dn3 |
+| `g1_1076` | dn1, dn2, dn3 |
+| `g1_10a5` | dn1, dn2, dn3 |
+| `g1_10fb` | dn1, dn2, dn3 |
 | `g1_1247` | dn1, dn2, dn3 |
 | `g1_12ce` | dn1, dn2, dn3 |
+| `g1_1352` | dn1, dn2, dn3 |
+| `g1_143e` | dn1, dn2, dn3 |
+| `g1_14af` | dn1, dn2, dn3 |
 | `g1_15f4` | dn1, dn2, dn3 |
+| `g1_17f5` | dn1, dn2, dn3 |
+| `g1_18d4` | dn1, dn2, dn3 |
+| `g1_1933` | dn1, dn2, dn3 |
+| `g1_1b51` | dn1, dn2, dn3 |
 | `g1_1b8a` | dn1, dn2, dn3 |
+| `g1_1bf6` | dn1, dn2, dn3 |
+| `g1_290f` | dn1, dn2, dn3 |
+| `g1_295e` | dn1, dn2, dn3 |
+| `g1_29d0` | dn1, dn2, dn3 |
 | `g1_2a1d` | dn1, dn2, dn3 |
 | `g1_2a40` | dn1, dn2, dn3 |
+| `g1_2a93` | dn1, dn2, dn3 |
 | `g1_2b86` | dn1, dn2, dn3 |
+| `g1_2bd9` | dn1, dn2, dn3 |
 | `g1_2e64` | dn1, dn2, dn3 |
+| `g1_2eb1` | dn1, dn2, dn3 |
+| `g1_2f4c` | dn1, dn2, dn3 |
+| `g1_2fe7` | dn1, dn2, dn3 |
+| `g1_3034` | dn1, dn2, dn3 |
+| `g1_30c9` | dn1, dn2, dn3 |
 | `g1_314c` | dn1, dn2, dn3 |
 | `g1_326e` | dn1, dn2, dn3 |
+| `g1_32a5` | dn1, dn2, dn3 |
 | `g1_3513` | dn1, dn2, dn3 |
 | `g1_3558` | dn1, dn2, dn3 |
+| `g1_35ee` | dn1, dn2, dn3 |
+| `g1_363b` | dn1, dn2, dn3 |
 | `g1_367e` | dn1, dn2, dn3 |
 | `g1_3714` | dn1, dn2, dn3 |
+| `g1_376f` | dn1, dn2, dn3 |
+| `g1_3882` | dn1, dn2, dn3 |
+| `g1_3a98` | dn1, dn2, dn3 |
+| `g1_3cbc` | dn1, dn2, dn3 |
+| `g1_3e06` | dn1, dn2, dn3 |
+| `g1_42b8` | dn1, dn2, dn3 |
+| `g1_43fa` | dn1, dn2, dn3 |
+| `g1_4638` | dn1, dn2, dn3 |
+| `g1_4874` | dn1, dn2, dn3 |
+| `g1_4d42` | dn1, dn2, dn3 |
+| `g1_4f91` | dn1, dn2, dn3 |
+| `g1_5427` | dn1, dn2, dn3 |
+| `g1_54e1` | dn1, dn2, dn3 |
+| `g1_573d` | dn1, dn2, dn3 |
+| `g1_5887` | dn1, dn2, dn3 |
+| `g1_59cf` | dn1, dn2, dn3 |
+| `g1_5b0b` | dn1, dn2, dn3 |
+| `g1_5d6f` | dn1, dn2, dn3 |
+| `g1_5f0c` | dn1, dn2, dn3 |
+| `g1_6183` | dn1, dn2, dn3 |
 | `g1_6292` | dn1, dn2, dn3 |
+| `g1_6445` | dn1, dn2, dn3 |
+| `g1_6947` | dn1, dn2, dn3 |
+| `g1_6afd` | dn1, dn2, dn3 |
+| `g1_6b82` | dn1, dn2, dn3 |
+| `g1_6e71` | dn1, dn2, dn3 |
+| `g1_7163` | dn1, dn2, dn3 |
+| `g1_73d3` | dn1, dn2, dn3 |
+| `g1_74c2` | dn1, dn2, dn3 |
+| `g1_75b9` | dn1, dn2, dn3 |
+| `g1_7647` | dn1, dn2, dn3 |
+| `g1_784b` | dn1, dn2, dn3 |
+| `g1_79d9` | dn1, dn2, dn3 |
+| `g1_7b68` | dn1, dn2, dn3 |
+| `g1_7cfa` | dn1, dn2, dn3 |
+| `g1_7dff` | dn1, dn2, dn3 |
+| `g1_7f4a` | dn1, dn2, dn3 |
+| `g1_8069` | dn1, dn2, dn3 |
+| `g1_8506` | dn1, dn2, dn3 |
+| `g1_87bf` | dn1, dn2, dn3 |
+| `g1_892b` | dn1, dn2, dn3 |
+| `g1_899e` | dn1, dn2, dn3 |
+| `g1_8b5b` | dn1, dn2, dn3 |
+| `g1_8ec1` | dn1, dn2, dn3 |
+| `g1_9698` | dn1, dn2, dn3 |
+| `g1_9757` | dn1, dn2, dn3 |
+| `g1_9986` | dn1, dn2, dn3 |
+| `g1_9bb5` | dn1, dn2, dn3 |
+| `g1_a032` | dn1, dn2, dn3 |
+| `g1_a125` | dn1, dn2, dn3 |
+| `g1_a218` | dn1, dn2, dn3 |
+| `g1_a30a` | dn1, dn2, dn3 |
+| `g1_a3e7` | dn1, dn2, dn3 |
+| `g1_a53a` | dn1, dn2, dn3 |
+| `g1_a6f4` | dn1, dn2, dn3 |
+| `g1_a75c` | dn1, dn2, dn3 |
+| `g1_aa1b` | dn1, dn2, dn3 |
+| `g1_aac2` | dn1, dn2, dn3 |
+| `g1_af06` | dn1, dn2, dn3 |
+| `g1_af94` | dn1, dn2, dn3 |
+| `g1_b118` | dn1, dn2, dn3 |
+| `g1_b1fd` | dn1, dn2, dn3 |
+| `g1_b292` | dn1, dn2, dn3 |
+| `g1_b595` | dn1, dn2, dn3 |
+| `g1_b926` | dn1, dn2, dn3 |
+| `g1_ba39` | dn1, dn2, dn3 |
+| `g1_bb9f` | dn1, dn2, dn3 |
+| `g1_bccb` | dn1, dn2, dn3 |
+| `g1_bdd9` | dn1, dn2, dn3 |
+| `g1_c0c7` | dn1, dn2, dn3 |
+| `g1_c1b2` | dn1, dn2, dn3 |
+| `g1_c243` | dn1, dn2, dn3 |
+| `g1_de26` | dn1, dn2, dn3 |
+| `g1_de71` | dn1, dn2, dn3 |
+| `g1_dee9` | dn1, dn2, dn3 |
+| `g1_df57` | dn1, dn2, dn3 |
+| `g1_dfb2` | dn1, dn2, dn3 |
+| `g1_e00d` | dn1, dn2, dn3 |
+| `g1_e3e0` | dn1, dn2, dn3 |
+| `g1_e655` | dn1, dn2, dn3 |
+| `g1_e83e` | dn1, dn2, dn3 |
+| `g1_e89d` | dn1, dn2, dn3 |
+| `g1_e8ed` | dn1, dn2, dn3 |
 | `g1_e92e` | dn1, dn2, dn3 |
+| `g1_e947` | dn1, dn2, dn3 |
+| `g1_ec3d` | dn1, dn2, dn3 |
+| `g1_fc85` | dn1, dn2, dn3 |
+| `g1_fc9c` | dn1, dn2, dn3 |
+| `g1_fd15` | dn1, dn2, dn3 |
+| `g1_ff16` | dn1, dn2, dn3 |
+| `g2_0009` | dn1, dn2, dn3 |
+| `g2_0036` | dn1, dn2, dn3 |
 | `g2_01a9` | dn1, dn2, dn3 |
 | `g2_01d5` | dn1, dn2, dn3 |
+| `g2_01f5` | dn1, dn2, dn3 |
+| `g2_0286` | dn1, dn2, dn3 |
+| `g2_02f4` | dn1, dn2, dn3 |
+| `g2_0491` | dn1, dn2, dn3 |
+| `g2_062c` | dn1, dn2, dn3 |
+| `g2_0d39` | dn1, dn2, dn3 |
+| `g2_0d97` | dn1, dn2, dn3 |
+| `g2_0e19` | dn1, dn2, dn3 |
+| `g2_0e98` | dn1, dn2, dn3 |
+| `g2_0f2a` | dn1, dn2, dn3 |
+| `g2_0fc1` | dn1, dn2, dn3 |
+| `g2_1058` | dn1, dn2, dn3 |
+| `g2_10f0` | dn1, dn2, dn3 |
+| `g2_11f2` | dn1, dn2, dn3 |
+| `g2_1241` | dn1, dn2, dn3 |
+| `g2_12ad` | dn1, dn2, dn3 |
+| `g2_1319` | dn1, dn2, dn3 |
+| `g2_1340` | dn1, dn2, dn3 |
+| `g2_1454` | dn1, dn2, dn3 |
+| `g2_148f` | dn1, dn2, dn3 |
+| `g2_14e6` | dn1, dn2, dn3 |
+| `g2_1534` | dn1, dn2, dn3 |
+| `g2_15c9` | dn1, dn2, dn3 |
+| `g2_165e` | dn1, dn2, dn3 |
+| `g2_16f3` | dn1, dn2, dn3 |
+| `g2_178a` | dn1, dn2, dn3 |
+| `g2_1821` | dn1, dn2, dn3 |
+| `g2_18b8` | dn1, dn2, dn3 |
+| `g2_194d` | dn1, dn2, dn3 |
+| `g2_1a0d` | dn1, dn2, dn3 |
+| `g2_1a82` | dn1, dn2, dn3 |
+| `g2_1b19` | dn1, dn2, dn3 |
+| `g2_1bb0` | dn1, dn2, dn3 |
+| `g2_1bfb` | dn1, dn2, dn3 |
+| `g2_1d40` | dn1, dn2, dn3 |
+| `g2_1e1b` | dn1, dn2, dn3 |
+| `g2_1e97` | dn1, dn2, dn3 |
+| `g2_1ee1` | dn1, dn2, dn3 |
+| `g2_1f24` | dn1, dn2, dn3 |
+| `g2_1f5a` | dn1, dn2, dn3 |
+| `g2_1f9c` | dn1, dn2, dn3 |
+| `g2_1ffa` | dn1, dn2, dn3 |
+| `g2_205f` | dn1, dn2, dn3 |
+| `g2_2104` | dn1, dn2, dn3 |
+| `g2_219d` | dn1, dn2, dn3 |
+| `g2_23f7` | dn1, dn2, dn3 |
+| `g2_2473` | dn1, dn2, dn3 |
+| `g2_24b1` | dn1, dn2, dn3 |
+| `g2_25cd` | dn1, dn2, dn3 |
+| `g2_25fc` | dn1, dn2, dn3 |
+| `g2_26d5` | dn1, dn2, dn3 |
 | `g2_276f` | dn1, dn2, dn3 |
+| `g2_2789` | dn1, dn2, dn3 |
 | `g2_2870` | dn1, dn2, dn3 |
+| `g2_29a2` | dn1, dn2, dn3 |
+| `g2_2ab9` | dn1, dn2, dn3 |
+| `g2_2d58` | dn1, dn2, dn3 |
+| `g2_2e8c` | dn1, dn2, dn3 |
+| `g2_2f04` | dn1, dn2, dn3 |
+| `g2_30b0` | dn1, dn2, dn3 |
 | `g2_3114` | dn1, dn2, dn3 |
+| `g2_315d` | dn1, dn2, dn3 |
+| `g2_3252` | dn1, dn2, dn3 |
+| `g2_32b6` | dn1, dn2, dn3 |
+| `g2_33ab` | dn1, dn2, dn3 |
+| `g2_340f` | dn1, dn2, dn3 |
+| `g2_3504` | dn1, dn2, dn3 |
+| `g2_3568` | dn1, dn2, dn3 |
+| `g2_365d` | dn1, dn2, dn3 |
+| `g2_36c1` | dn1, dn2, dn3 |
 | `g2_37b6` | dn1, dn2, dn3 |
+| `g2_385b` | dn1, dn2, dn3 |
+| `g2_38be` | dn1, dn2, dn3 |
+| `g2_3980` | dn1, dn2, dn3 |
+| `g2_3a38` | dn1, dn2, dn3 |
+| `g2_3af3` | dn1, dn2, dn3 |
+| `g2_3b79` | dn1, dn2, dn3 |
 | `g2_3bd7` | dn1, dn2, dn3 |
+| `g2_3c38` | dn1, dn2, dn3 |
+| `g2_3c9a` | dn1, dn2, dn3 |
+| `g2_3cdc` | dn1, dn2, dn3 |
+| `g2_3d1e` | dn1, dn2, dn3 |
 | `g2_3d8c` | dn1, dn2, dn3 |
+| `g2_3f68` | dn1, dn2, dn3 |
+| `g2_3fe1` | dn1, dn2, dn3 |
+| `g2_3fed` | dn1, dn2, dn3 |
+| `g2_4009` | dn1, dn2, dn3 |
+| `g2_42a3` | dn1, dn2, dn3 |
 | `g2_4334` | dn1, dn2, dn3 |
+| `g2_4394` | dn1, dn2, dn3 |
+| `g2_43f5` | dn1, dn2, dn3 |
+| `g2_4444` | dn1, dn2, dn3 |
+| `g2_44a5` | dn1, dn2, dn3 |
+| `g2_44f5` | dn1, dn2, dn3 |
+| `g2_452b` | dn1, dn2, dn3 |

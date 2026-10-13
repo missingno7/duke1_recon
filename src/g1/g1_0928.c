@@ -8,7 +8,7 @@ extern char d_5008[10][11];
 void pascal g2_3d8c(int a0, int a1, int a2);
 void g2_23f7(void);
 void pascal g1_0042(int a0) {}
-void pascal g1_0874(int a0, int a1, char far *a2) {}
+void pascal g1_0874(volatile int a0, volatile int a1, char far *a2) {}
 /*@body*/
 void g1_0928(void)
 {

@@ -131,8 +131,101 @@ def assemble(unit: str, ep: str, override: Path | None = None, plan: dict | None
             "episode_dependent": episode_dependent}
 
 
+def check_asm_unit(ep: str, source: Path | None = None) -> dict:
+    """The assembly unit (ASM_TEXT) is ONE module (layout/asm-unit.json): its
+    code segment, data tables in it included, must equal the original range
+    byte for byte; own-segment offsets bind relative to the unit's position in
+    _TEXT, externals through tools/symbols.py, segment words to the original
+    MZ relocations; and every procedure must be EQUAL on its own."""
+    import struct
+    import oracle
+    reg = load_json(LAYOUT / "asm-unit.json") if (LAYOUT / "asm-unit.json").exists() else {}
+    src = Path(source) if source else (ROOT / reg["source"] if reg.get("source") else None)
+    out = {"unit": "ASM_TEXT", "episode": ep}
+    if src is None or not src.exists():
+        out["status"] = "INCOMPLETE"
+        return out
+    rec = tcc.assemble(src.read_text("latin-1"), ["/MX"])
+    if not rec.ok:
+        out["status"] = "ASSEMBLY_ERROR"
+        out["log"] = rec.log.strip().splitlines()[-12:]
+        return out
+    module = omf.OmfReader().read(rec.obj)
+    seg = next(s["name"] for s in module.segment_defs if s["class"] == "CODE")
+    code = module.segments[seg]
+    census = symbols.census(ep)
+    useg = next(s for s in census["segments"] if s["name"] == "ASM_TEXT")
+    frame = 0                                  # the unit's _TEXT combines with C0's: frame 0
+    base = useg["start"] - (frame << 4)        # offset of the unit inside that frame
+    img, relocs = oracle.load_image(ep)
+    orig = img[useg["start"]:useg["start"] + useg["size"]]
+    out["bytes"] = [len(code), len(orig)]
+    if len(code) != len(orig):
+        out["status"] = "LENGTH_MISMATCH"
+        return out
+    errors, covered, segwords = [], set(), set()
+    for fx in module.linker_fixups:
+        if fx["segment"] != seg:
+            continue
+        at, loc = fx["offset"], fx["loc"]
+        addend = (fx["displacement"] + int.from_bytes(code[at:at + 2], "little")) & 0xFFFF
+        got = struct.unpack_from("<H", orig, at)[0]
+        try:
+            if fx["target_kind"] == "segment" and fx["target"] == seg:
+                exp_off, exp_seg = (base + addend) & 0xFFFF, frame
+            elif fx["target_kind"] == "external":
+                t = symbols.resolve(fx["target"], ep)
+                if t["kind"] == "data":
+                    exp_off, exp_seg = (t["dgroup_offset"] + addend) & 0xFFFF, census["dgroup_frame"]
+                else:
+                    exp_off, exp_seg = (t["offset"] + addend) & 0xFFFF, t["frame"]
+            elif fx["target_kind"] in ("segment", "group") and fx["target"] in ("_DATA", "DGROUP", "_BSS"):
+                exp_off, exp_seg = None, census["dgroup_frame"]
+            else:
+                raise symbols.SymbolError(f"unsupported target {fx['target_kind']} {fx['target']}")
+        except symbols.SymbolError as exc:
+            errors.append(f"+{at:#x} {fx['target']}: {exc}")
+            continue
+        if loc == "offset16":
+            if exp_off is None or got != exp_off:
+                errors.append(f"+{at:#x} offset {fx['target']}+{addend:#x}: original {got:#06x}, binding {exp_off}")
+                continue
+            covered.update(range(at, at + 2))
+        elif loc == "base16":
+            if got != exp_seg:
+                errors.append(f"+{at:#x} segment {fx['target']}: original {got:#06x}, binding {exp_seg:#06x}")
+                continue
+            covered.update(range(at, at + 2))
+            segwords.add(at)
+        elif loc == "pointer32":
+            gs = struct.unpack_from("<H", orig, at + 2)[0]
+            if (got, gs) != (exp_off, exp_seg):
+                errors.append(f"+{at:#x} far {fx['target']}: original {gs:04X}:{got:04X}")
+                continue
+            covered.update(range(at, at + 4))
+            segwords.add(at + 2)
+        else:
+            errors.append(f"+{at:#x} unsupported fixup location {loc}")
+    diffs = [i for i in range(len(code)) if i not in covered and code[i] != orig[i]]
+    orig_relocs = {(s << 4) + o - useg["start"] for s, o in relocs}
+    orig_relocs = {r for r in orig_relocs if 0 <= r < len(orig)}
+    if orig_relocs != segwords:
+        errors.append(f"relocation set differs: missing {sorted(orig_relocs - segwords)[:6]}, extra {sorted(segwords - orig_relocs)[:6]}")
+    fails = []
+    for fid in unit_functions("ASM_TEXT", ep):
+        res = compare.compare_object(rec.obj, fid, ep)
+        if res.status != "EQUAL":
+            fails.append(f"{fid}: {res.status} {res.detail[:2]}")
+    out.update({"binding_errors": errors[:12], "differing_bytes": len(diffs),
+                "first_diff": hex(diffs[0]) if diffs else None, "function_failures": fails})
+    out["status"] = "EQUAL" if not errors and not diffs and not fails else "DIFFER"
+    return out
+
+
 def check(unit: str, ep: str, write: Path | None = None, override: Path | None = None,
           plan=None, data: bool = False) -> dict:
+    if unit == "ASM_TEXT":
+        return check_asm_unit(ep, override)
     plan = data_plan(unit, plan)
     a = assemble(unit, ep, override, plan)
     out = {"unit": unit, "episode": ep, "functions": len(a["order"]), "missing": a["missing"],
@@ -302,6 +395,10 @@ def main() -> int:
         res = check(a.unit, ep, Path(a.write.replace("{ep}", ep)) if a.write else None,
                     Path(a.override) if a.override else None, plan=a.data_plan, data=a.data)
         atomic_json(BUILD / "tu" / f"{a.unit}-{ep}.json", res)
+        if a.unit == "ASM_TEXT":
+            print(f"{a.unit} {ep}: {res['status']}  " + str({k: v for k, v in res.items() if k not in ('unit', 'episode', 'status')}))
+            rc |= res["status"] != "EQUAL"
+            continue
         print(f"{a.unit} {ep}: {res['status']}  functions {res['functions']}, missing {len(res['missing'])}")
         if res.get("literal_pool"):
             print(f"   literal pool: {res['literal_pool']}")

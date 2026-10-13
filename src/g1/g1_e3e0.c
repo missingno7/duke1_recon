@@ -92,7 +92,7 @@ extern int d_c688;      /* accepted type */
 extern int d_c8e9;      /* BSS, accessed as [2] byte(s) */
 extern int d_d139;      /* accepted type */
 extern int d_d13b;      /* accepted type */
-extern int d_d144;      /* BSS, accessed as [2] byte(s) */
+extern unsigned int d_d144;      /* BSS, accessed as [2] byte(s) */
 extern int d_d247;      /* BSS, accessed as [2] byte(s) */
 extern char d_d4bf;      /* accepted type */
 extern int d_d56e;      /* BSS, accessed as [2] byte(s) */

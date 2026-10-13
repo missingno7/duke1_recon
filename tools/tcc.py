@@ -111,14 +111,17 @@ def _load_cached(key: str) -> Receipt | None:
 
 
 def compile_c(source: str, flags: list, *, extra_files: dict | None = None,
-              fresh: bool = False, timeout: int = 300) -> Receipt:
-    """Compile `source` as UNIT.C with TCC `flags` (without -c/-I, added here)."""
-    staged = {"UNIT.C": dos_text(source)}
-    for name, data in _stage_headers().items():
-        staged[name] = data
-    for name, data in (extra_files or {}).items():
-        staged[name.upper()] = data if isinstance(data, bytes) else dos_text(data)
-    argv = ["-c", "-IINCLUDE", *flags, "UNIT.C"]
+              fresh: bool = False, timeout: int = 300, name: str = "UNIT.C") -> Receipt:
+    """Compile `source` as `name` (default UNIT.C) with TCC `flags` (without -c/-I,
+    added here).  In the large model the code segment is named after the file
+    (G1.C -> G1_TEXT), which matters when several units are linked together."""
+    src_name = name.upper()
+    staged = {src_name: dos_text(source)}
+    for hname, data in _stage_headers().items():
+        staged[hname] = data
+    for xname, data in (extra_files or {}).items():
+        staged[xname.upper()] = data if isinstance(data, bytes) else dos_text(data)
+    argv = ["-c", "-IINCLUDE", *flags, src_name]
     request = {"kind": "tcc", "argv": argv,
                "inputs": {k: sha256(v) for k, v in sorted(staged.items())},
                "toolchain": toolchain.identity(), "wrapper": SELF_SHA}
@@ -169,16 +172,18 @@ def compile_c(source: str, flags: list, *, extra_files: dict | None = None,
         rc, out, cmd = toolchain.run_dos("BIN/TCC.EXE", argv, work, timeout=timeout)
         (work / "compiler.log").write_bytes(out)
         obj_path = work / "UNIT.OBJ"
+        produced = work / (src_name.rsplit(".", 1)[0] + ".OBJ")
+        if produced != obj_path and produced.exists():
+            produced.replace(obj_path)          # the cache always holds UNIT.OBJ
         ok = rc == 0 and obj_path.exists()
         data = {"key": key, "request": request, "ok": ok, "returncode": rc,
                 "host_argv": [Path(cmd[0]).name, *cmd[1:2], "TCC.EXE", *argv],
                 "object_sha256": sha256_file(obj_path) if ok else None,
                 "log_sha256": sha256(out)}
         atomic_json(work / "receipt.json", data)
-        for name in list(staged):
-            if name != "UNIT.C":
-                p = work / name
-                p.unlink()
+        for sname in list(staged):
+            if sname != src_name:
+                (work / sname).unlink()
         shutil.rmtree(work / "INCLUDE", ignore_errors=True)
         dest = CACHE / key[:2] / key
         dest.parent.mkdir(parents=True, exist_ok=True)
