@@ -294,10 +294,10 @@
    "mechanism": "MIXED_DS_ES_TABLE_ACCESS",
    "next_experiment": "Confirm the original d_0650 declaration or an approved typed alias from source/data evidence, then test its native representation for the mixed near-word and far-record accesses.",
    "reporter": "luna-g1_4d42",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: tail is (probe(x+1,y) || probe(x+1,y-128)); worker's mixed table view (blockers 23/29/41))",
+   "resolved": 1791924468.9712946,
    "scope": "g1_4d42",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -372,10 +372,10 @@
    "mechanism": "MIXED_DS_ES_TABLE_ACCESS",
    "next_experiment": "Express the guard and first draw value as direct int-array elements while expressing fields 1-5 through a typed six-word row record for the same table; measure whether Turbo C emits the required DS direct access and ES record-field accesses together.",
    "reporter": "luna-g1_4d42",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: tail is (probe(x+1,y) || probe(x+1,y-128)); worker's mixed table view (blockers 23/29/41))",
+   "resolved": 1791924468.9712946,
    "scope": "g1_4d42",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -437,10 +437,10 @@
    "mechanism": "TC20_GATE_CANONICALIZATION",
    "next_experiment": "Resume only with a different, evidence-backed gate source shape; the smallest discriminating test is a source form that makes the second result branch directly to counter_done without compiling to the repeated JNE-plus-JMP sequence.",
    "reporter": "luna-g1_5b0b",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: || gates and tail-merged g1_59cf draws (rule TAIL-MERGE))",
+   "resolved": 1791924621.9435503,
    "scope": "g1_5b0b",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -450,10 +450,10 @@
    "mechanism": "TIMER_COMMON_BRANCH_LAYOUT",
    "next_experiment": "Try a structured source form that places the common motion block after both timer outcomes without duplicating it; measure whether it emits the original JG reset branch and the two reset-arm jumps to the shared block.",
    "reporter": "luna-g1_b595",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: if/else motion state machine; d_d142 decrement inside the hit branch (blockers 35/43))",
+   "resolved": 1791924864.5286808,
    "scope": "g1_b595",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -528,10 +528,10 @@
    "mechanism": "MIXED_DS_ES_TABLE_ACCESS",
    "next_experiment": "Recover d_0650's original declaration and qualifiers from data/source evidence, then test that exact declaration with the direct-word and typed-row expressions; further variants of the measured 593-byte mixed-view family are stopped by the three-hypothesis repeat rule.",
    "reporter": "luna-g1_4d42",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: tail is (probe(x+1,y) || probe(x+1,y-128)); worker's mixed table view (blockers 23/29/41))",
+   "resolved": 1791924468.9712946,
    "scope": "g1_4d42",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -541,10 +541,10 @@
    "mechanism": "TC20_STATE2_TAIL_CANONICALIZATION",
    "next_experiment": "Starting from cand23, change only the state-1 A/B test from duplicated state=2 tails to a single structured condition (A == 0 || B != 0) with the same render tail; compare whether that removes the remaining byte.",
    "reporter": "luna-g1_5b0b",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: || gates and tail-merged g1_59cf draws (rule TAIL-MERGE))",
+   "resolved": 1791924621.9435503,
    "scope": "g1_5b0b",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",
@@ -554,10 +554,10 @@
    "mechanism": "TIMER_COMMON_BRANCH_LAYOUT",
    "next_experiment": "Try an explicit else pair, if (d_0604 > d_060c) { goto motion_reset; } else { goto motion_common; }, with one common motion body; compare its lowering against the measured sequential-goto form.",
    "reporter": "luna-g1_b595",
-   "resolution": null,
-   "resolved": null,
+   "resolution": "accepted (supervisor: if/else motion state machine; d_d142 decrement inside the hit branch (blockers 35/43))",
+   "resolved": 1791924864.5286808,
    "scope": "g1_b595",
-   "status": "OPEN"
+   "status": "RESOLVED"
   },
   {
    "category": "SOURCE_SHAPE",

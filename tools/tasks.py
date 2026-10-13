@@ -231,6 +231,9 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
 - Lazy cleanup (rule LAZY-CLEANUP): in a function with a BP frame but no locals and no saved
   SI/DI, every cdecl call (even without arguments) is followed by `mov sp,bp`.  If the original
   has no such cleanup after a zero-argument call there, the callee is `pascal`.
+- `python tools/asmdiff.py CAND.c FUNCTION` aligns your instructions with the original's (ignoring
+  relocated operands and jump targets) and prints WHERE the code shape first differs; use it
+  whenever search.py reports EXTENT_MISMATCH or a long diff.
 - A conditional jump BACKWARDS (marked BACK-EDGE in context.txt) is a loop condition, e.g.
   `do { r = g(); } while (r.b == 1 || r.c == 1);`, not an early exit.
   An unused parameter changes nothing in the callee but breaks callers: if every caller passes
