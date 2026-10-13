@@ -38,7 +38,7 @@ class LinkError(RuntimeError):
     pass
 
 
-def build_objects(ep: str) -> dict:
+def build_objects(ep: str, allow_incomplete: bool = False) -> dict:
     objs = {}
     extra = {n: toolchain.tool(f"STARTUP/{n}").read_bytes() for n in ("RULES.ASI", "EMUVARS.ASI")}
     r = tcc.assemble(toolchain.tool("STARTUP/C0.ASM").read_text("latin-1"), ["/D__LARGE__", "/MX"],
@@ -54,7 +54,7 @@ def build_objects(ep: str) -> dict:
     profile = load_json(LAYOUT / "profiles.json")["default"]
     for unit, fname in (("G1_TEXT", "G1.C"), ("G2_TEXT", "G2.C")):
         a = tubuild.assemble(unit, ep, plan=tubuild.data_plan(unit))
-        if a["missing"]:
+        if a["missing"] and not allow_incomplete:
             raise LinkError(f"{unit} incomplete: {len(a['missing'])} functions missing ({a['missing'][:5]})")
         flags = tcc.profile_flags(profile) + ([f"-DEPISODE={ep[-1]}"] if a["episode_dependent"] else [])
         r = tcc.compile_c(a["source"], flags, name=fname)
@@ -64,14 +64,14 @@ def build_objects(ep: str) -> dict:
     return objs
 
 
-def link(objs: dict, work: Path) -> tuple:
+def link(objs: dict, work: Path, diagnostic: bool = False) -> tuple:
     work.mkdir(parents=True, exist_ok=True)
     for name, data in objs.items():
         (work / name).write_bytes(data)
     shutil.copy(toolchain.tool("LIB/CL.LIB"), work / "CL.LIB")
     args = ["/c", "/d", "/s", "C0L.OBJ", "TOOLBOX.OBJ", "G1.OBJ", "G2.OBJ,OUT.EXE,OUT.MAP,CL.LIB"]
     rc, out, _ = toolchain.run_dos("BIN/TLINK.EXE", args, work)
-    if rc != 0 or not (work / "OUT.EXE").exists():
+    if not (work / "OUT.EXE").exists() or (rc != 0 and not diagnostic):
         raise LinkError("TLINK failed: " + out.decode("latin-1")[-800:])
     return (work / "OUT.EXE").read_bytes(), (work / "OUT.MAP").read_text("latin-1"), out.decode("latin-1")
 
@@ -114,6 +114,11 @@ def compare(exe: bytes, mapfile: str, ep: str) -> dict:
     hdr_ok = all(x == y for x, y in out["header"].values())
     out["status"] = ("EQUAL" if not diffs and len(m.image) == len(img) and ours == theirs and hdr_ok
                      else "DIFFER")
+    out["segments"] = []
+    for a, b, nm in segs:
+        if b <= len(img) and a < b:
+            same = m.image[a:b] == img[a:b]
+            out["segments"].append((nm, hex(a), b - a, "same" if same else "differs"))
     return out
 
 
@@ -121,13 +126,19 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--episode", default=None)
     ap.add_argument("--keep", help="keep the link directory here")
+    ap.add_argument("--diagnostic", action="store_true",
+                    help="link even with missing functions (never a proof): compares the segments before the gap")
     a = ap.parse_args()
     rc = 0
     for ep in ([a.episode] if a.episode else ["dn1", "dn2", "dn3"]):
         work = Path(a.keep) / ep if a.keep else BUILD / "scratch" / "link" / uuid.uuid4().hex[:8]
         try:
-            exe, mapfile, log = link(build_objects(ep), work)
+            exe, mapfile, log = link(build_objects(ep, a.diagnostic), work, a.diagnostic)
             res = compare(exe, mapfile, ep)
+            undefined = [ln.split("'")[1] for ln in log.splitlines() if "Undefined symbol" in ln and "'" in ln]
+            if undefined:
+                res["undefined_symbols"] = len(undefined)
+                res["status"] = "DIAGNOSTIC_ONLY"
         except LinkError as exc:
             res = {"status": "LINK_ERROR", "error": str(exc)}
         res["episode"] = ep

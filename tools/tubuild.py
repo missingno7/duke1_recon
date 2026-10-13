@@ -48,7 +48,9 @@ import omf  # noqa: E402
 import symbols  # noqa: E402
 import tcc  # noqa: E402
 
-STUB = re.compile(r"(?ms)^([^\n;{}#]*\b(?:g[12]|asm)_[0-9a-f]{4}\s*\([^)]*\))\s*\{[^{}]*\}")
+# a stub definition `T f(params) {...}`; params may nest one level of
+# parentheses (function-pointer parameters: `void (far *fn)(void)`)
+STUB = re.compile(r"(?ms)^([^\n;{}#]*\b(?:g[12]|asm)_[0-9a-f]{4}\s*\((?:[^()]|\([^()]*\))*\))\s*\{[^{}]*\}")
 STRUCT = re.compile(r"(?ms)^\s*(?:typedef\s+)?struct\s+(\w+)\s*\{.*?\}\s*\w*\s*;")
 
 
@@ -64,6 +66,12 @@ def split(path: Path) -> tuple:
         raise ValueError(f"{path} has no /*@body*/ marker")
     pre, body = text.split("/*@body*/", 1)
     return pre, body
+
+
+def c_name(fid: str) -> str:
+    """The C name a function is defined under (recipe "name", e.g. main), else its logical id."""
+    rp = RECIPES / f"{fid}.json"
+    return (load_json(rp).get("name") or fid) if rp.exists() else fid
 
 
 def data_plan(unit: str, plan=None) -> dict | None:
@@ -264,10 +272,12 @@ def check(unit: str, ep: str, write: Path | None = None, override: Path | None =
     for fid in a["order"]:
         loc = symbols.atlas()[fid]["locations"][ep]
         rel = loc["start"] - useg["start"]
-        if pubs.get(fid) != rel:
-            layout.append(f"{fid}: unit offset {pubs.get(fid)} vs original {rel}")
+        cname = c_name(fid)
+        if pubs.get(cname) != rel:
+            layout.append(f"{fid}: unit offset {pubs.get(cname)} vs original {rel}")
             continue
-        res = compare.compare_object(rec.obj, fid, ep, own_data_base=own_base)
+        res = compare.compare_object(rec.obj, fid, ep, name=cname if cname != fid else None,
+                                     own_data_base=own_base)
         if res.status != "EQUAL":
             bad.append(f"{fid}: {res.status} {res.detail[:2]}")
         for b in res.bound:

@@ -6,7 +6,7 @@ void pascal g1_ec3d(void) {}
 void pascal g1_fd15(void) {}
 void pascal g1_fc85(void) {}
 /*@body*/
-void g1_ff16(int argc, char **argv)      /* main */
+void main(int argc, char **argv)
 {
     if (argv[1][0] == 'a' && argv[1][1] == 's' && argv[1][2] == 'p') {
         d_0095 = 1;
