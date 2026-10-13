@@ -155,6 +155,14 @@ def main() -> int:
         print("atlas:", r.stdout.strip())
         if r.returncode:
             failures.append("evidence/atlas.json is stale")
+        r = subprocess.run([sys.executable, str(ROOT / "tools" / "tu.py"), "--check"], capture_output=True, text=True)
+        print("tu:", r.stdout.strip())
+        if r.returncode:
+            failures.append("evidence/tu-structure.json or layout/production-plan.json is stale")
+        r = subprocess.run([sys.executable, str(ROOT / "tools" / "probe.py")], capture_output=True, text=True)
+        print("probes:", "all rules reproduce" if r.returncode == 0 else "RULE OUTCOME CHANGED")
+        if r.returncode:
+            failures.append("compiler rule register no longer reproduces: " + r.stdout[-800:])
     rs = recipes()
     srcs = {Path(v["source"]).as_posix() for v in rs.values()}
     for p in sorted(SRC.rglob("*.c")):

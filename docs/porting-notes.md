@@ -23,7 +23,7 @@ recovered):
 | Second interrupt handler | `void interrupt` in G2, purpose not yet identified | `g2_25fc` |
 | Timer ticks | busy-wait on a counter incremented elsewhere | `g1_e92e` (`d_02fb`) |
 | Joystick | buttons from game port 0x201 | `g1_1053` |
-| EGA | sequencer/graphics controller writes via `outport(0x3C4/0x3CE, ...)`; page selection through asm routines | `g2_37b6` (text), `g2_01d5` → `asm_05eb`/`asm_05f7` |
+| EGA | sequencer/graphics controller writes via `outport(0x3C4/0x3CE, ...)`; page selection through asm routines | `g2_37b6` (apparently text drawing), `g2_01d5` → `asm_05eb`/`asm_05f7` |
 | Sound (apparent) | priority comparison and state update under cli/sti, called from 66 sites | `g1_0042` |
 | Files | CL.LIB stdio (`fopen`, `fread`, `fscanf`, ...) on `*.DN?` data files | various |
 

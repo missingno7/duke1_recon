@@ -6,6 +6,7 @@
     python tools/tasks.py wave N [--route GRINDABLE_C] [--dry-run]   packets + launch commands
     python tools/tasks.py intake [WORKER_DIR ...]  validate results, re-verify claims fresh, record
     python tools/tasks.py status
+    python tools/tasks.py release FUNCTION         reopen a leased task (dead or cancelled worker)
 
 The supervisor owns canonical integration: intake never promotes, it prints
 the promote command for each re-verified EQUAL candidate.  Packets are
@@ -344,6 +345,8 @@ def main() -> int:
     i = sub.add_parser("intake")
     i.add_argument("dirs", nargs="*")
     sub.add_parser("status")
+    rl = sub.add_parser("release")
+    rl.add_argument("function")
     a = ap.parse_args()
     if a.cmd == "plan":
         doc = plan()
@@ -361,6 +364,13 @@ def main() -> int:
     elif a.cmd == "intake":
         for o in intake([Path(x) for x in a.dirs]):
             print(json.dumps(o))
+    elif a.cmd == "release":
+        import db
+        con = _db()
+        with db.tx(con):
+            con.execute("UPDATE tasks SET status='OPEN', worker=NULL, packet=NULL, updated=? WHERE id=?",
+                        (time.time(), f"fn-{a.function}"))
+        print(f"fn-{a.function} released")
     elif a.cmd == "status":
         con = _db()
         for r in con.execute("SELECT route, status, COUNT(*) n FROM tasks GROUP BY route, status ORDER BY route"):

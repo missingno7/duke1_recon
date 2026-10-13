@@ -8,11 +8,15 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import sys
 import tempfile
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+_VENDOR = ROOT / "build" / "python"          # tools/setup_env.py: pinned capstone/unicorn
+if _VENDOR.is_dir() and str(_VENDOR) not in sys.path:
+    sys.path.insert(0, str(_VENDOR))
 TOOLS = ROOT / "tools"
 LAYOUT = ROOT / "layout"
 EVIDENCE = ROOT / "evidence"

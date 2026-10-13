@@ -33,10 +33,10 @@ the lock; `--write-lock` refuses to overwrite an existing lock.
 |---|---|---:|---|
 | C0_TEXT | 0x00000 | 457 | Turbo C 2.0 C0L startup (incl. `DGROUP@`) |
 | ASM_TEXT | 0x001C9 | 1,082 | hand-written assembly appended to C0's `_TEXT`; byte-identical in all episodes |
-| CL.LIB `_TEXT` modules | 0x00603 | 885 | SETARGV … SCOPY |
+| CL.LIB `_TEXT` modules | 0x00603 | 885 | SETARGV … SCOPY (881 B matched + 4 unattributed bytes at 0x805) |
 | G1_TEXT | 0x00978 | 65,393 | first-party C unit 1, frame 0097; `main` at 0097:FF16 |
 | G2_TEXT | 0x108E9 | 18,053 / 18,116 / 18,146 | first-party C unit 2, frame 108E |
-| CL.LIB far modules | after G2 | 11,960 | IOERROR … UNGETC |
+| CL.LIB far modules | 0x14F6E (DN1) | 11,964 B matched | IOERROR … UNGETC, plus 2–5 zero bytes before DELAY_TEXT |
 | DGROUP | 0x17E30 / 0x17E70 / 0x17E90 | | initialised data 20,170 / 20,386 / 19,894 B; BSS 35,042 B in all |
 
 Episode data differs mostly by file-name extensions (`.DN1`/`.DN2`/`.DN3`) and

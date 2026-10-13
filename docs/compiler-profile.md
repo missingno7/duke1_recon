@@ -27,9 +27,14 @@ hypothesis and tested here. Every statement below is re-run by
 Consequences used by the tooling:
 
 * In the originals there are **0 backward far calls** inside G1/G2 and all
-  backward intra-segment calls are `push cs; call near`: consistent with one
-  translation unit per segment. The **197 forward `push cs; call near`** in G1 are
-  evidence of `static` functions.
+  backward intra-segment calls are `push cs; call near` (G1: 1,061; G2: 196–197):
+  consistent with one translation unit per segment
+  ([evidence/tu-structure.json](../evidence/tu-structure.json), `tools/tu.py`).
+  There are **0 forward `push cs; call near`**, so no `static` function is
+  evidenced; 21 functions are proven non-static (called forward with a far call),
+  the rest are undetermined (both storage classes compile identically for them).
+  (An early raw byte-pattern scan reported 197 forward near calls; those were
+  false matches inside other instructions.)
 * G1 is 65,393 bytes, at the 64 KB per-segment limit, and identical in shape in
   all three episodes; G2 carries most episode differences.
 * `-f-` (no floating point) and `-a` (alignment) are not yet discriminated;

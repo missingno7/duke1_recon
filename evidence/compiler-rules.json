@@ -69,7 +69,7 @@
   },
   {
    "id": "CALL-FORMS",
-   "statement": "Large model, one translation unit: calls to externals are relocated far calls (EXTDEF fixup); calls to functions defined earlier, and to static functions even when only forward-declared, are 'push cs; call near' resolved at compile time (no fixup); calls to public functions defined later are far calls with an own-segment fixup. Consequence: in the original, backward far calls inside one segment never occur (verified: 0 in G1 and G2) and forward 'push cs; call near' (197 in G1) indicate static functions.",
+   "statement": "Large model, one translation unit: calls to externals are relocated far calls (EXTDEF fixup); calls to functions defined earlier, and to static functions even when only forward-declared, are 'push cs; call near' resolved at compile time (no fixup); calls to public functions defined later are far calls with an own-segment fixup. Consequence (tools/tu.py, evidence/tu-structure.json): in the originals, backward far calls inside one segment never occur (0 in G1 and G2 in every episode), consistent with one translation unit per segment; there are also 0 forward 'push cs; call near', so no static function is evidenced yet (an earlier raw byte-pattern count of 197 was a false positive).",
    "check": "call_forms",
    "outcome": "CONFIRMED"
   },

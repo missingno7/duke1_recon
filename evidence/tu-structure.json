@@ -1,0 +1,837 @@
+{
+ "generated_by": "tools/tu.py (rule CALL-FORMS)",
+ "note": "Functions only ever called backward (or not at all) are UNDETERMINED: both storage classes compile identically for them.",
+ "storage_class_evidence": {
+  "g1_0008": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0042": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_006f": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_008a": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0126": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0151": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0351": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_037e": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_049f": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0874": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0928": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0a0e": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0acc": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0adc": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0b85": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0c52": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_0e30": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_10a5": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_10fb": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_1247": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_12ce": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_1352": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_143e": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_14af": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_15f4": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_17f5": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_18d4": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_1933": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_1b51": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_1b8a": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_1bf6": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_1e77": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_290f": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_295e": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_29d0": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_2a1d": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_2a40": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_2a93": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_2b86": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_2bd9": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_2e64": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_2eb1": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_2f4c": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_2fe7": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_3034": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_30c9": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_314c": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_326e": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_32a5": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_3513": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_3558": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_35ee": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_363b": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_367e": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_3714": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_376f": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_3882": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_3a98": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_3cbc": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_3e06": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_42b8": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_43fa": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_4638": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_4874": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_4d42": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_4f91": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_5427": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_54e1": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_573d": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_5887": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_59cf": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_5b0b": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_5d6f": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_5f0c": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_6183": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_6292": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_6445": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_6947": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_6afd": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_6b82": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_6e71": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_7163": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_73d3": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_74c2": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_75b9": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_7647": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_784b": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_79d9": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_7b68": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_7cfa": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_7dff": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_7f4a": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_8069": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_8506": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_87bf": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_892b": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_899e": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_8b5b": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_8ec1": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_9698": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_9757": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_9986": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_9bb5": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_a032": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_a125": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_a218": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_a30a": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_a3e7": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_a53a": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_a6f4": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_a75c": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_aa1b": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_aac2": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_af06": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_af94": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_b118": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_b1fd": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_b292": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_b595": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_b926": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_ba39": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_bb9f": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_bccb": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_bdd9": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g1_c0c7": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_c1b2": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_c243": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_c287": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_de26": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_de71": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_dee9": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_df57": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_dfb2": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e00d": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e3e0": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e655": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e83e": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e89d": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e8ed": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e92e": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_e947": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_ec3d": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_ecf4": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_fc85": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_fc9c": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g1_fd15": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_0036": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_01a9": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_01d5": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_0286": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_02f4": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_0491": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_194d": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_1bfb": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_26d5": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g2_276f": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_2870": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g2_29a2": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_2d58": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g2_2e8c": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_3114": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_37b6": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g2_385b": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_3d8c": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  },
+  "g2_3fe1": {
+   "episodes": [],
+   "storage": "UNDETERMINED"
+  },
+  "g2_42a3": {
+   "episodes": [
+    "dn1",
+    "dn2",
+    "dn3"
+   ],
+   "storage": "PUBLIC"
+  }
+ },
+ "storage_counts": {
+  "PUBLIC": 21,
+  "UNDETERMINED": 145
+ },
+ "units": {
+  "G1_TEXT": {
+   "episodes": {
+    "dn1": {
+     "call_forms": {
+      "backward_pushcs": 1061,
+      "fnptr_cs": 49,
+      "forward_far": 41,
+      "one_unit_consistent": true
+     },
+     "frame": 151,
+     "functions": 149,
+     "size": 65393,
+     "start": 2424
+    },
+    "dn2": {
+     "call_forms": {
+      "backward_pushcs": 1061,
+      "fnptr_cs": 49,
+      "forward_far": 41,
+      "one_unit_consistent": true
+     },
+     "frame": 151,
+     "functions": 149,
+     "size": 65393,
+     "start": 2424
+    },
+    "dn3": {
+     "call_forms": {
+      "backward_pushcs": 1061,
+      "fnptr_cs": 49,
+      "forward_far": 41,
+      "one_unit_consistent": true
+     },
+     "frame": 151,
+     "functions": 149,
+     "size": 65393,
+     "start": 2424
+    }
+   }
+  },
+  "G2_TEXT": {
+   "episodes": {
+    "dn1": {
+     "call_forms": {
+      "backward_pushcs": 196,
+      "forward_far": 346,
+      "one_unit_consistent": true
+     },
+     "frame": 4238,
+     "functions": 99,
+     "size": 18053,
+     "start": 67817
+    },
+    "dn2": {
+     "call_forms": {
+      "backward_pushcs": 197,
+      "forward_far": 349,
+      "one_unit_consistent": true
+     },
+     "frame": 4238,
+     "functions": 99,
+     "size": 18116,
+     "start": 67817
+    },
+    "dn3": {
+     "call_forms": {
+      "backward_pushcs": 196,
+      "forward_far": 351,
+      "one_unit_consistent": true
+     },
+     "frame": 4238,
+     "functions": 99,
+     "size": 18146,
+     "start": 67817
+    }
+   }
+  }
+ }
+}

@@ -50,7 +50,8 @@ def context_key() -> str:
     if (LAYOUT / "symbols.json").exists():
         files.append(LAYOUT / "symbols.json")
     files += [TOOLS / n for n in PROOF_TOOLS]
-    return tree_hash(files)
+    import capstone
+    return sha256((tree_hash(files) + f"|capstone {capstone.__version__}").encode())
 
 
 def lint(text: str) -> list:
