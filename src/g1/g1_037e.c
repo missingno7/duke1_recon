@@ -2,7 +2,7 @@
 extern char d_0094;
 extern char d_02fa;      /* accepted type */
 extern int d_02fb;       /* accepted type */
-extern char d_a0fa;      /* accepted type */
+extern char d_a0fa_;      /* accepted type */
 void pascal g2_3d8c(int a0, int a1, int a2);    /* accepted signature */
 void pascal g2_1a0d(int a0);    /* accepted signature */
 void pascal g2_2870(int a0, int a1);    /* accepted signature */
@@ -24,11 +24,11 @@ void pascal g1_037e(register int a0)
         delay(100);
         for (;;) {
             g2_2870(0x1a, 0x0c);
-            if (d_a0fa == 1 || d_a0fa == 0x39 || d_a0fa == 0x1c) {
+            if (d_a0fa_ == 1 || d_a0fa_ == 0x39 || d_a0fa_ == 0x1c) {
                 d_02fb = 0;
                 return;
             }
-            if (d_a0fa == 0x1f) {
+            if (d_a0fa_ == 0x1f) {
                 if (d_02fa % 2 == 0) {
                     g2_1bb0(a0);
                     d_02fb = 0;
@@ -42,30 +42,30 @@ void pascal g1_037e(register int a0)
                 g2_0d97();
                 break;
             }
-            if (d_a0fa == 0x23) {
+            if (d_a0fa_ == 0x23) {
                 g2_1d40(a0);
-                while (d_a0fa == 0x23)
+                while (d_a0fa_ == 0x23)
                     ;
                 g2_2870(a0 + 0x18, 0x14);
                 d_02fb = 0;
                 return;
             }
-            if (d_a0fa == 0x17) {
+            if (d_a0fa_ == 0x17) {
                 g2_1ee1(a0);
                 d_02fb = 0;
                 return;
             }
-            if (d_a0fa == 1 || d_a0fa == 0x10 || d_a0fa == 0x39) {
-                d_a0fa = 0;
+            if (d_a0fa_ == 1 || d_a0fa_ == 0x10 || d_a0fa_ == 0x39) {
+                d_a0fa_ = 0;
                 d_02fb = 0;
                 return;
             }
-            if (d_a0fa == 0x22) {
+            if (d_a0fa_ == 0x22) {
                 g1_008a(a0);
                 d_02fb = 0;
                 return;
             }
-            if (d_a0fa == 0x44) {
+            if (d_a0fa_ == 0x44) {
                 d_0094 = 1;
                 d_02fb = 0;
                 return;

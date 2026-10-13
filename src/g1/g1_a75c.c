@@ -1,14 +1,14 @@
 struct g1_a75c_record { int state, x, y, flag; };
-extern struct g1_a75c_record d_a0bf[];
+extern struct g1_a75c_record d_a0bf_[];
 extern int d_009d;
 extern int d_009f;
-extern int d_5309;
-extern int d_530c;
-extern char far *d_a0fb;
-extern int d_d149[];
-extern int d_d14b;
-extern int d_d14d;
-extern int d_d57a;
+extern int d_5309_;
+extern int d_530c_;
+extern char far *d_a0fb_;
+extern int d_d149_[];
+extern int d_d14b_;
+extern int d_d14d_;
+extern int d_d57a_;
 void asm_0424(char far *a0, int a1, int a2);
 char pascal g1_326e(int a0, int a1) { return 0; }
 int g1_3714(int a0, int a1) { return 0; }
@@ -24,8 +24,8 @@ void g1_a75c(void)
     register int i;
     struct g1_a75c_record far *p;
 
-    for (i = 0; i < d_5309; i++) {
-        p = &d_a0bf[i];
+    for (i = 0; i < d_5309_; i++) {
+        p = &d_a0bf_[i];
         if (p->state == 0)
             continue;
         if (g1_326e(p->x, p->y) != 0)
@@ -43,16 +43,16 @@ void g1_a75c(void)
         if (p->flag != 0) {
             if (g1_3513(p->x, p->y) != 0) {
                 if (p->state != 'E') {
-                    d_d149[d_d57a++] = p->state;
+                    d_d149_[d_d57a_++] = p->state;
                     g1_0b85(500L);
                     g1_2a40(0x280, p->x, p->y);
                     g1_0042(0x10);
-                } else if (d_d57a == 3 && d_d149[0] == 'D' &&
-                           d_d14b == 'U' && d_d14d == 'K') {
+                } else if (d_d57a_ == 3 && d_d149_[0] == 'D' &&
+                           d_d14b_ == 'U' && d_d14d_ == 'K') {
                     g1_0b85(10000L);
                     g1_2a40(0x780, p->x, p->y);
                     g1_0042(0x25);
-                    d_530c = 1;
+                    d_530c_ = 1;
                 } else {
                     g1_0b85(500L);
                     g1_2a40(0x280, p->x, p->y);
@@ -64,20 +64,20 @@ void g1_a75c(void)
         if (g1_326e(p->x, p->y) != 0)
             continue;
         if (p->flag == 0) {
-            asm_0424(d_a0fb, p->x - d_009d,
+            asm_0424(d_a0fb_, p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         } else {
             if (p->state == 'D')
-                asm_0424(d_a0fb + 0x49c0, p->x - d_009d,
+                asm_0424(d_a0fb_ + 0x49c0, p->x - d_009d,
                          ((p->y - d_009f) >> 3) + 0x10);
             if (p->state == 'U')
-                asm_0424(d_a0fb + 0x4a60, p->x - d_009d,
+                asm_0424(d_a0fb_ + 0x4a60, p->x - d_009d,
                          ((p->y - d_009f) >> 3) + 0x10);
             if (p->state == 'K')
-                asm_0424(d_a0fb + 0x4b00, p->x - d_009d,
+                asm_0424(d_a0fb_ + 0x4b00, p->x - d_009d,
                          ((p->y - d_009f) >> 3) + 0x10);
             if (p->state == 'E')
-                asm_0424(d_a0fb + 0x4ba0, p->x - d_009d,
+                asm_0424(d_a0fb_ + 0x4ba0, p->x - d_009d,
                          ((p->y - d_009f) >> 3) + 0x10);
         }
     }

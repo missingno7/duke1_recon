@@ -2,7 +2,7 @@
 extern int d_009d;
 extern int d_009f;
 extern int d_0437;
-extern unsigned int far* d_7729;
+extern unsigned int far* d_7729_;
 void asm_02ad(int a0, int a1);
 /*@body*/
 void g1_14af(void)
@@ -14,7 +14,7 @@ void g1_14af(void)
 
     si = 0x282 - (d_009d & 1);
     di = 0;
-    p = d_7729 + (d_009d >> 1) + d_009f;
+    p = d_7729_ + (d_009d >> 1) + d_009f;
     offset = 0x4000;
     outport(0x3ce, 0x105);
     d_0437 += 0x20;

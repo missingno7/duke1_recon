@@ -72,7 +72,10 @@ def runtime(ep: str) -> dict:
     return out
 
 
-_DATA = re.compile(r"^d_([0-9a-f]{4})$")
+# d_XXXX names a global by its DN1 DGROUP offset.  BSS globals carry a trailing
+# underscore (d_XXXX_): Turbo C orders a unit's _BSS by a hash of the name
+# (rule BSS-ORDER) and d_XXXX_ names all hash alike, so declaration order decides.
+_DATA = re.compile(r"^d_([0-9a-f]{4})_?$")
 _EPDATA = re.compile(r"^d_(dn[123])_([0-9a-f]{4})$")   # episode-only object, that episode's offset
 _CODEDATA = re.compile(r"^c_([0-9a-f]{4})$")            # data inside the shared startup/asm _TEXT
 

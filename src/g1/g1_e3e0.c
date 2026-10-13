@@ -60,47 +60,47 @@ extern int d_060c;      /* DATA, accessed as [2] byte(s) */
 extern int d_060e;      /* DATA, accessed as [2] byte(s) */
 extern char d_0644;      /* accepted type */
 extern char far *d_0b47[];
-extern int d_4ed2;      /* accepted type */
-extern int d_5002;      /* accepted type */
-extern int d_5004;      /* accepted type */
-extern int d_5307;      /* BSS, accessed as [2] byte(s) */
-extern int d_5309;      /* BSS, accessed as [2] byte(s) */
-extern int d_5312;      /* BSS, accessed as [2] byte(s) */
-extern int d_5314;      /* BSS, accessed as [2] byte(s) */
-extern int d_5316;      /* accepted type */
-extern int d_5319;      /* accepted type */
-extern int d_531e;      /* accepted type */
-extern int d_5548;      /* BSS, accessed as [2] byte(s) */
-extern int d_554a;      /* BSS, accessed as [2] byte(s) */
-extern int d_554d;      /* accepted type */
-extern char d_554f;      /* accepted type */
-extern char d_5550;      /* accepted type */
-extern char d_5551;      /* accepted type */
-extern char d_5552;      /* accepted type */
-extern char d_6379;      /* accepted type */
-extern int d_7f04;      /* accepted type */
-extern int d_a677;      /* accepted type */
-extern int d_a679;      /* BSS, accessed as [2] byte(s) */
-extern int d_b3d4;      /* accepted type */
-extern int d_b636;      /* BSS, accessed as [2] byte(s) */
-extern int d_b9dc;      /* BSS, accessed as [2] byte(s) */
-extern int d_c281;      /* accepted type */
-extern int d_c283;      /* BSS, accessed as [2] byte(s) */
-extern int d_c681;      /* BSS, accessed as [2] byte(s) */
-extern int d_c684;      /* accepted type */
-extern int d_c688;      /* accepted type */
-extern int d_c8e9;      /* BSS, accessed as [2] byte(s) */
-extern int d_d139;      /* accepted type */
-extern int d_d13b;      /* accepted type */
-extern unsigned int d_d144;      /* BSS, accessed as [2] byte(s) */
-extern int d_d247;      /* BSS, accessed as [2] byte(s) */
-extern char d_d4bf;      /* accepted type */
-extern int d_d56e;      /* BSS, accessed as [2] byte(s) */
-extern int d_d570;      /* accepted type */
-extern int d_d572;      /* BSS, accessed as [2] byte(s) */
-extern char d_d576;      /* BSS, accessed as [1] byte(s) */
-extern int d_d57a;      /* BSS, accessed as [2] byte(s) */
-extern int d_d70e;      /* accepted type */
+extern int d_4ed2_;      /* accepted type */
+extern int d_5002_;      /* accepted type */
+extern int d_5004_;      /* accepted type */
+extern int d_5307_;      /* BSS, accessed as [2] byte(s) */
+extern int d_5309_;      /* BSS, accessed as [2] byte(s) */
+extern int d_5312_;      /* BSS, accessed as [2] byte(s) */
+extern int d_5314_;      /* BSS, accessed as [2] byte(s) */
+extern int d_5316_;      /* accepted type */
+extern int d_5319_;      /* accepted type */
+extern int d_531e_;      /* accepted type */
+extern int d_5548_;      /* BSS, accessed as [2] byte(s) */
+extern int d_554a_;      /* BSS, accessed as [2] byte(s) */
+extern int d_554d_;      /* accepted type */
+extern char d_554f_;      /* accepted type */
+extern char d_5550_;      /* accepted type */
+extern char d_5551_;      /* accepted type */
+extern char d_5552_;      /* accepted type */
+extern char d_6379_;      /* accepted type */
+extern int d_7f04_;      /* accepted type */
+extern int d_a677_;      /* accepted type */
+extern int d_a679_;      /* BSS, accessed as [2] byte(s) */
+extern int d_b3d4_;      /* accepted type */
+extern int d_b636_;      /* BSS, accessed as [2] byte(s) */
+extern int d_b9dc_;      /* BSS, accessed as [2] byte(s) */
+extern int d_c281_;      /* accepted type */
+extern int d_c283_;      /* BSS, accessed as [2] byte(s) */
+extern int d_c681_;      /* BSS, accessed as [2] byte(s) */
+extern int d_c684_;      /* accepted type */
+extern int d_c688_;      /* accepted type */
+extern int d_c8e9_;      /* BSS, accessed as [2] byte(s) */
+extern int d_d139_;      /* accepted type */
+extern int d_d13b_;      /* accepted type */
+extern unsigned int d_d144_;      /* BSS, accessed as [2] byte(s) */
+extern int d_d247_;      /* BSS, accessed as [2] byte(s) */
+extern char d_d4bf_;      /* accepted type */
+extern int d_d56e_;      /* BSS, accessed as [2] byte(s) */
+extern int d_d570_;      /* accepted type */
+extern int d_d572_;      /* BSS, accessed as [2] byte(s) */
+extern char d_d576_;      /* BSS, accessed as [1] byte(s) */
+extern int d_d57a_;      /* BSS, accessed as [2] byte(s) */
+extern int d_d70e_;      /* accepted type */
 void pascal g1_1b51(void) {}    /* accepted signature; stub for push cs; call near */
 void g1_de26(char far* a0) {}    /* accepted signature; stub for push cs; call near */
 void pascal g1_10fb(char far* a0, int a1, int a2) {}    /* accepted signature; stub for push cs; call near */
@@ -117,7 +117,7 @@ void pascal g1_e3e0(char far *a0)
     d_0439 = 0;
     d_043a = 4;
     d_043b = 0;
-    d_d576 = 0;
+    d_d576_ = 0;
     d_043c = 0;
     d_043e = 12;
     d_051c = 3;
@@ -135,18 +135,18 @@ void pascal g1_e3e0(char far *a0)
     d_05aa = 0;
     d_05ac = 0;
     d_05b2 = 0;
-    d_554d = 0;
+    d_554d_ = 0;
     d_05b4 = 0;
     d_05b6 = 0;
-    d_4ed2 = 0;
-    d_d570 = 0;
+    d_4ed2_ = 0;
+    d_d570_ = 0;
     d_05b8 = 0;
-    d_b636 = 0;
+    d_b636_ = 0;
     d_05ba = 0;
     d_05bc = 0;
     d_05be = 0;
     d_05c0 = 0;
-    d_c281 = 0;
+    d_c281_ = 0;
     d_05c2 = 0;
     d_05c4 = 0;
     d_05c6 = 0;
@@ -160,20 +160,20 @@ void pascal g1_e3e0(char far *a0)
     d_05d6 = 0;
     d_05d8 = 0;
     d_05da = 0;
-    d_c8e9 = 1;
-    d_d572 = 0;
+    d_c8e9_ = 1;
+    d_d572_ = 0;
     d_05dc = 0;
     d_05de = 0;
-    d_05e0 = d_c688 = d_d13b = d_c684 = d_d139 = 0;
-    d_7f04 = -1;
-    d_c283 = d_c681 = d_a677 = d_05fe = d_0600 = d_d57a = d_5309 = d_5316 = d_5307 = 0;
-    d_6379 = 0;
-    d_d4bf = 0x15;
-    d_5314 = d_5319 = d_d70e = d_5548 = d_053c = d_b3d4 = 0;
-    d_d56e = 10;
-    d_060a = d_0608 = d_0606 = d_0604 = d_0602 = d_5004 = 0;
+    d_05e0 = d_c688_ = d_d13b_ = d_c684_ = d_d139_ = 0;
+    d_7f04_ = -1;
+    d_c283_ = d_c681_ = d_a677_ = d_05fe = d_0600 = d_d57a_ = d_5309_ = d_5316_ = d_5307_ = 0;
+    d_6379_ = 0;
+    d_d4bf_ = 0x15;
+    d_5314_ = d_5319_ = d_d70e_ = d_5548_ = d_053c = d_b3d4_ = 0;
+    d_d56e_ = 10;
+    d_060a = d_0608 = d_0606 = d_0604 = d_0602 = d_5004_ = 0;
     d_060c = 10;
-    d_554a = d_531e = d_b9dc = d_5002 = 0;
+    d_554a_ = d_531e_ = d_b9dc_ = d_5002_ = 0;
 
     g1_de26(a0);
     outport(0x3ce, 5);
@@ -186,18 +186,18 @@ void pascal g1_e3e0(char far *a0)
     }
 
     if (d_02fa % 2 == 0) {
-        d_d247 = 1;
-        d_5312 = 0;
+        d_d247_ = 1;
+        d_5312_ = 0;
         g1_2a1d();
     }
 
     g1_c287(0x5a);
     d_0644 = 1;
-    d_a679 = 0;
-    d_d144 = 0;
-    d_554f = 0;
-    d_5550 = 0;
-    d_5551 = 0;
-    d_5552 = 0;
+    d_a679_ = 0;
+    d_d144_ = 0;
+    d_554f_ = 0;
+    d_5550_ = 0;
+    d_5551_ = 0;
+    d_5552_ = 0;
     g1_bb9f();
 }

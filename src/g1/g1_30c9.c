@@ -1,5 +1,5 @@
 struct t_551e { int state, value1, value2; };
-extern struct t_551e d_551e[];
+extern struct t_551e d_551e_[];
 extern int d_0412[];
 extern int d_051a;
 void pascal g1_3034(int a0, int a1, int a2) {}
@@ -10,7 +10,7 @@ void g1_30c9(void)
     struct t_551e far *p;
 
     for (i = 0; i < d_051a; i++) {
-        p = &d_551e[i];
+        p = &d_551e_[i];
         if (p->state != 0) {
             p->state++;
             p->value2 += d_0412[p->state - 2];

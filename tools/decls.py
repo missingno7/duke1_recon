@@ -25,7 +25,7 @@ from common import BUILD, RECIPES, ROOT, atomic_json, load_json  # noqa: E402
 
 FN = re.compile(r"(?m)^\s*(?:extern\s+)?(?P<ret>[A-Za-z_][\w \t\*]*?)\s*\b(?P<conv>pascal\s+|cdecl\s+|interrupt\s+)?"
                 r"(?P<name>(?:g[12]|asm)_[0-9a-f]{4})\s*\((?P<params>[^)]*)\)\s*(?P<tail>;|\{)")
-DATA = re.compile(r"(?m)^\s*extern\s+(?P<type>[\w \t\*]+?)\s*\b(?P<name>d_(?:dn[123]_)?[0-9a-f]{4})\s*(?P<arr>\[[^\]]*\])?\s*;")
+DATA = re.compile(r"(?m)^\s*extern\s+(?P<type>[\w \t\*]+?)\s*\b(?P<name>d_(?:dn[123]_)?[0-9a-f]{4}_?)\s*(?P<arr>\[[^\]]*\])?\s*;")
 
 
 def norm_type(t: str) -> str:

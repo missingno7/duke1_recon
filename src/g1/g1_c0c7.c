@@ -1,11 +1,11 @@
 struct t_b9de { int offset, x, y, alternate; };
-extern struct t_b9de d_b9de[];
+extern struct t_b9de d_b9de_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0437;
-extern int d_5319;
-extern char far *d_a0fb;
-extern int d_a0fd;
+extern int d_5319_;
+extern char far *d_a0fb_;
+extern int d_a0fd_;
 void asm_0424(char far *bitmap, int x, int y);
 char pascal g1_326e(int x, int y) { return 0; }
 /*@body*/
@@ -14,8 +14,8 @@ void g1_c0c7(void)
     register int i;
     struct t_b9de far *p;
 
-    for (i = 0; i < d_5319; ++i) {
-        p = &d_b9de[i];
+    for (i = 0; i < d_5319_; ++i) {
+        p = &d_b9de_[i];
         if (p->offset != 0 && g1_326e(p->x, p->y) == 0) {
             if (p->alternate != 0) {
                 if (d_0437 == 0 || d_0437 == 0x40)
@@ -24,11 +24,11 @@ void g1_c0c7(void)
                     p->offset = 0;
                     continue;
                 }
-                asm_0424(d_a0fb + p->offset + 0x4f60,
+                asm_0424(d_a0fb_ + p->offset + 0x4f60,
                          p->x - d_009d,
                          ((p->y - d_009f) >> 3) + 0x10);
             } else {
-                asm_0424(d_a0fb + 0x5000,
+                asm_0424(d_a0fb_ + 0x5000,
                          p->x - d_009d,
                          ((p->y - d_009f) >> 3) + 0x10);
             }

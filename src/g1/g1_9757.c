@@ -1,11 +1,11 @@
 struct g1_9757_row { int state, x, y; };
-extern struct g1_9757_row d_c915[];
+extern struct g1_9757_row d_c915_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0437;
 extern int d_05dc;
 extern int d_06f9;
-extern char far *d_a0fb;
+extern char far *d_a0fb_;
 void asm_0424(char far *a0, int a1, int a2);
 char pascal g1_326e(int a0, int a1) { return 0; }
 int g1_3714(int a0, int a1) { return 0; }
@@ -25,7 +25,7 @@ void g1_9757(void)
     if (d_06f9 == 0x1e0)
         d_06f9 = 0;
     for (i = 0; i < d_05dc; i++) {
-        p = &d_c915[i];
+        p = &d_c915_[i];
         if (p->state == 0)
             continue;
         if (g1_326e(p->x, p->y) != 0)
@@ -66,11 +66,11 @@ void g1_9757(void)
             continue;
         }
         if (p->state == 1) {
-            asm_0424(d_a0fb + 0x3e80,
+            asm_0424(d_a0fb_ + 0x3e80,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         } else {
-            asm_0424(d_a0fb + d_06f9 + 0x3ca0,
+            asm_0424(d_a0fb_ + d_06f9 + 0x3ca0,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         }

@@ -1,5 +1,5 @@
 struct t_5320 { int f[15]; };
-extern struct t_5320 d_5320[];
+extern struct t_5320 d_5320_[];
 extern int d_043e;
 extern int d_064c;
 void pascal g1_0042(int a0) {}
@@ -13,7 +13,7 @@ void pascal g1_314c(int a0, int a1)
     if (d_064c > 3)
         d_064c = 0;
     for (i = 0; i < d_043e; i++) {
-        p = &d_5320[i];
+        p = &d_5320_[i];
         if (p->f[0] == 0) {
             p->f[0] = 1;
             p->f[1] = a0;

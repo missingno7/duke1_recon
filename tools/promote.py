@@ -193,15 +193,16 @@ def promote_batch(items: list, note: str | None, source_path: str | None = None)
         raw = candidate.read_bytes()
         text = raw.decode("latin-1")
         asm = search.is_asm(candidate)
-        check_text(text, function, None, asm)
+        rpath = RECIPES / f"{function}.json"
+        old = load_json(rpath) if rpath.exists() else None
+        cname = old.get("name") if old else None          # e.g. main: kept across replacements
+        check_text(text, function, cname, asm)
         profiles_doc = load_json(LAYOUT / "profiles.json")
         profile = profiles_doc.get("default_asm", "tasm10-mx") if asm else profiles_doc["default"]
         flags = tcc.profile_flags(profile)
-        out = verify(function, text, flags, profile, None, asm)
+        out = verify(function, text, flags, profile, cname, asm)
         if not out["equal"]:
             raise PromotionError(f"{function}: no episode is EQUAL")
-        rpath = RECIPES / f"{function}.json"
-        old = load_json(rpath) if rpath.exists() else None
         if old:
             lost = [e for e, v in old["episodes"].items() if v["status"] == "EQUAL" and e not in out["equal"]]
             if lost:
@@ -224,7 +225,7 @@ def promote_batch(items: list, note: str | None, source_path: str | None = None)
             path = source_path or (canonical_path(function, search.is_asm(candidate)) if not old else old["source"])
             if old and old["source"] != path:
                 changes[old["source"]] = None          # the function moved into a shared module source
-            recipe = build_recipe(function, path, text, flags, profile, None, out)
+            recipe = build_recipe(function, path, text, flags, profile, old.get("name") if old else None, out)
             rpath = RECIPES / f"{function}.json"
             changes[path] = raw
             changes[rel(rpath)] = canonical_json(recipe).encode()

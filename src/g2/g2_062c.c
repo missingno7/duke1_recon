@@ -1,6 +1,6 @@
 /* g2_062c candidate */
-extern char d_a0fa;
-extern char d_cc81;
+extern char d_a0fa_;
+extern char d_cc81_;
 void pascal g2_37b6(char far* a0, int a1, int a2);
 void pascal g2_2870(int a0, int a1);
 void g2_26d5(void);
@@ -33,8 +33,8 @@ void g2_062c(void)
     g2_37b6("        Earth is well underway...       ", 0, 19);
     g2_37b6("             Press any key.             ", 0, 24);
     g2_0036(0x14);
-    if (d_cc81 == 0)
-        while ((d_a0fa & 0x80) == 0)
+    if (d_cc81_ == 0)
+        while ((d_a0fa_ & 0x80) == 0)
             ;
     g2_2870(0x27, 0x18);
     g2_0286(0x1710);
@@ -48,8 +48,8 @@ void g2_062c(void)
     g2_37b6("  is the one person who might stand a   ", 0, 8);
     g2_37b6("            chance of success.          ", 0, 9);
     g2_26d5();
-    if (d_cc81 == 0)
-        while ((d_a0fa & 0x80) == 0)
+    if (d_cc81_ == 0)
+        while ((d_a0fa_ & 0x80) == 0)
             ;
     g2_2870(0x27, 0x18);
     g2_0286(0x1710);
@@ -78,8 +78,8 @@ void g2_062c(void)
     g2_37b6(" Keyboard controls can be altered       ", 0, 22);
     g2_37b6(" within the \"Game Setup\" menu option.   ", 0, 23);
     g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81 == 0)
-        while ((d_a0fa & 0x80) == 0)
+    if (d_cc81_ == 0)
+        while ((d_a0fa_ & 0x80) == 0)
             ;
     g2_2870(0x27, 0x18);
     g2_0286(0x1710);
@@ -103,8 +103,8 @@ void g2_062c(void)
     g2_37b6("higher, and extra pistols will increase ", 0, 21);
     g2_37b6("Duke's firepower. ", 0, 22);
     g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81 == 0)
-        while ((d_a0fa & 0x80) == 0)
+    if (d_cc81_ == 0)
+        while ((d_a0fa_ & 0x80) == 0)
             ;
     g2_2870(0x27, 0x18);
     g2_0286(0x1710);
@@ -129,8 +129,8 @@ void g2_062c(void)
     g2_37b6("levels.  Hint:  You should save after   ", 0, 21);
     g2_37b6("each level you complete.                ", 0, 22);
     g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81 == 0)
-        while ((d_a0fa & 0x80) == 0)
+    if (d_cc81_ == 0)
+        while ((d_a0fa_ & 0x80) == 0)
             ;
     g2_2870(0x27, 0x18);
     g2_01a9(10);

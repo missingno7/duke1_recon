@@ -74,7 +74,10 @@ def sig_hints(img: bytes, f: dict) -> dict:
 
 
 def data_name(off: int) -> str:
-    return f"d_{off:04x}"
+    """d_XXXX by DN1 DGROUP offset; BSS objects get a trailing underscore so that
+    all their names hash alike (rule BSS-ORDER)."""
+    c = symbols.census("dn1")["startup"]
+    return f"d_{off:04x}_" if c["bss_start"] <= off < c["bss_end"] else f"d_{off:04x}"
 
 
 def listing(ep: str, f: dict, img: bytes, relocset: set, dn1_names: dict) -> list:

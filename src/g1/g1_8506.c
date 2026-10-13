@@ -1,11 +1,11 @@
 struct g1_8506_record { int state, x, y; };
-extern struct g1_8506_record d_7cac[];
+extern struct g1_8506_record d_7cac_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_0437;
 extern int d_05d0;
 extern int d_06f3;
-extern char far *d_a0fb;
+extern char far *d_a0fb_;
 void asm_0424(char far *a0, int a1, int a2);
 int g1_3714(int a0, int a1) { return 0; }
 char pascal g1_3558(int a0, int a1) { return 0; }
@@ -23,7 +23,7 @@ void g1_8506(void)
     struct g1_8506_record far *p;
 
     for (i = 0; i < d_05d0; i++) {
-        p = &d_7cac[i];
+        p = &d_7cac_[i];
         if (p->state == 0)
             continue;
 
@@ -31,7 +31,7 @@ void g1_8506(void)
             if (g1_3714(p->x, p->y + 128) == 0)
                 p->y += 64;
             if (g1_326e(p->x, p->y) == 0) {
-                asm_0424(d_a0fb + 0x3e80,
+                asm_0424(d_a0fb_ + 0x3e80,
                          p->x - d_009d,
                          ((p->y - d_009f) >> 3) + 0x10);
                 if (g1_3558(p->x, p->y) != 0) {
@@ -55,7 +55,7 @@ void g1_8506(void)
             p->y -= 8;
         if (g1_3558(p->x, p->y - 128) != 0 || g1_3714(p->x, p->y - 128) != 0) {
             if (g1_326e(p->x, p->y - 128) == 0)
-                asm_0424(d_a0fb + 0x2da0,
+                asm_0424(d_a0fb_ + 0x2da0,
                          p->x - d_009d,
                          (p->y - d_009f) >> 3);
             p->state = 0;
@@ -63,11 +63,11 @@ void g1_8506(void)
             continue;
         }
         if (g1_326e(p->x, p->y - 128) == 0)
-            asm_0424(d_a0fb + 0x2b20,
+            asm_0424(d_a0fb_ + 0x2b20,
                      p->x - d_009d,
                      (p->y - d_009f) >> 3);
         if (g1_326e(p->x, p->y) == 0)
-            asm_0424(d_a0fb + d_06f3 + 0x2bc0,
+            asm_0424(d_a0fb_ + d_06f3 + 0x2bc0,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         if (g1_3513(p->x, p->y) != 0) {

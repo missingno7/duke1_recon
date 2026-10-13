@@ -33,7 +33,12 @@ outputs with `layout/oracle.lock.json`.
    on, refactoring is safe and mechanical to check.
 3. **Readability pass** (no change in emitted code, verified by phase 2 on every step):
    * semantic names through `layout/symbols.json` aliases (proposals with evidence
-     from `build/workers/luna-names/`, reviewed by the supervisor);
+     from `build/workers/luna-names/`, reviewed by the supervisor).  Names of
+     uninitialised globals are constrained: Turbo C orders a unit's `_BSS` by a hash
+     of the name (rule BSS-ORDER), so along each unit's BSS layout the keys
+     `(first + 4*last + 32*length) mod 1024` must not decrease (ties keep header
+     order).  A naming tool checks this; the matching phase uses `d_XXXX_` names,
+     which all hash alike;
    * one shared header replacing the per-function preludes and stubs (an artifact
      of proving one function at a time);
    * one source file per original translation unit, original order kept (Turbo C's

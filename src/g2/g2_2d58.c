@@ -1,5 +1,5 @@
 #include <dos.h>
-extern char d_6e0a;
+extern char d_6e0a_;
 void asm_05eb(int page);
 void asm_02ad(int source, int offset);
 /*@body*/
@@ -11,7 +11,7 @@ void pascal g2_2d58(int a0)
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
     if (a0 == 2)
-        asm_05eb(d_6e0a);
+        asm_05eb(d_6e0a_);
     else
         asm_05eb(0);
 

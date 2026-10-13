@@ -3,8 +3,8 @@ extern int d_009f;
 extern int d_0528;
 extern int d_052a;
 extern int d_052c;
-extern int d_798a;
-extern char far *d_a0fb;
+extern int d_798a_;
+extern char far *d_a0fb_;
 char pascal g1_326e(int a0, int a1) {}
 int g1_3714(int a0, int a1) {}
 int g1_3513(int a0, int a1) {}
@@ -18,7 +18,7 @@ void asm_0424(char far *bitmap, int x, int y);
 /*@body*/
 void g1_3cbc(void)
 {
-    if (d_798a != 0)
+    if (d_798a_ != 0)
         return;
 
     if (g1_326e(d_0528, d_052a) != 0)
@@ -28,10 +28,10 @@ void g1_3cbc(void)
         d_052a += 0x80;
 
     if (g1_3513(d_0528, d_052a) != 0 && d_052c != 0) {
-        d_798a = 1;
+        d_798a_ = 1;
         g1_2a40(0x3c0, d_0528, d_052a);
         g1_0b85(0x3e8L);
-        g2_1ffa(d_a0fb + 0x640);
+        g2_1ffa(d_a0fb_ + 0x640);
         g1_0042(0x0c);
         return;
     }
@@ -48,11 +48,11 @@ void g1_3cbc(void)
     }
 
     if (d_052c == 0) {
-        asm_0424(d_a0fb,
+        asm_0424(d_a0fb_,
                  d_0528 - d_009d,
                  ((d_052a - d_009f) >> 3) + 0x10);
     } else {
-        asm_0424(d_a0fb + 0x640,
+        asm_0424(d_a0fb_ + 0x640,
                  d_0528 - d_009d,
                  ((d_052a - d_009f) >> 3) + 0x10);
     }

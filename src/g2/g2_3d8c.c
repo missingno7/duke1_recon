@@ -1,7 +1,7 @@
 /* Apparently draws a framed box from border tiles (asm_02ad) at column a2, row a1
    (pascal; parameters are listed in declaration order a2, a1, a0). */
 #include <dos.h>
-extern char d_6e0a;
+extern char d_6e0a_;
 void asm_05eb(int page);
 void asm_02ad(int source, int offset);
 /*@body*/
@@ -13,7 +13,7 @@ void pascal g2_3d8c(int a2, int a1, int a0)
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
     if (a2 == 2)
-        asm_05eb(d_6e0a);
+        asm_05eb(d_6e0a_);
     else
         asm_05eb(0);
 

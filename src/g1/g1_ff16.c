@@ -1,6 +1,6 @@
 extern int d_0095;
 extern int d_039d;
-extern char d_5318;
+extern char d_5318_;
 void pascal g2_01a9(int a0);
 void pascal g1_ec3d(void) {}
 void pascal g1_fd15(void) {}
@@ -18,6 +18,6 @@ void main(int argc, char **argv)
         g1_fd15();
         g1_fc85();
         g2_01a9(15);
-        d_5318 = 0;
+        d_5318_ = 0;
     }
 }

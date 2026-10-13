@@ -179,6 +179,12 @@
    "statement": "In a function with a BP frame but no locals and no saved SI/DI, Turbo C 2.0 follows every cdecl call, even one without arguments, with `mov sp,bp`; pascal calls get no cleanup. A zero-argument callee called without that cleanup from such a caller is pascal (g1_ec3d, g1_fd15, g1_fc85 from main; g1_1b51, g1_2a1d, g1_bb9f from g1_e3e0).",
    "check": "lazy_cleanup",
    "outcome": "CONFIRMED"
+  },
+  {
+   "id": "BSS-ORDER",
+   "statement": "Turbo C 2.0 emits a unit's uninitialised globals (public and static) into _BSS sorted by the symbol hash (first char + 4*last char + 32*length) mod 1024, ties in order of the name's first appearance in the unit (an extern declaration or use counts). Declaration order alone does not decide; the original BSS layout encodes this property of the original names. Initialised data is NOT affected (definition order, rule DATA-LAYOUT).",
+   "check": "bss_order",
+   "outcome": "CONFIRMED"
   }
  ]
 }

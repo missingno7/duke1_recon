@@ -1,5 +1,5 @@
 #include <dos.h>
-extern char far *d_a0bb;
+extern char far *d_a0bb_;
 void asm_05eb(int page);
 void asm_05f7(int page);
 void g2_3114(void) {}
@@ -15,19 +15,19 @@ void g2_3568(void)
     asm_05f7(1);
     outport(0x3c4, 0x0102);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb[i];
+        video[i] = d_a0bb_[i];
     }
     outport(0x3c4, 0x0202);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb[i + 8000];
+        video[i] = d_a0bb_[i + 8000];
     }
     outport(0x3c4, 0x0402);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb[i + 16000];
+        video[i] = d_a0bb_[i + 16000];
     }
     outport(0x3c4, 0x0802);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb[i + 24000];
+        video[i] = d_a0bb_[i + 24000];
     }
     asm_05f7(0);
 }

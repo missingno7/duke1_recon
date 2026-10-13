@@ -120,7 +120,6 @@ def assemble(unit: str, ep: str, override: Path | None = None, plan: dict | None
         bodies.append((fid, body.strip("\n")))
     includes = [d for d in decls if d.lstrip().startswith("#")]
     others = [d for d in decls if not d.lstrip().startswith("#")]
-    text = "\n".join(includes + list(structs.values()) + others) + "\n\n"
 
     def fragments(key):
         nonlocal episode_dependent
@@ -130,6 +129,11 @@ def assemble(unit: str, ep: str, override: Path | None = None, plan: dict | None
             episode_dependent |= "EPISODE" in src
             out += f"/* data: {f.name} */\n{src.strip()}\n\n"
         return out
+    # "header" fragments come before every hoisted declaration (after includes
+    # and struct types): the first appearance of a name orders BSS ties (rule
+    # BSS-ORDER), so a unit's BSS definitions are listed there in address order.
+    text = "\n".join(includes + list(structs.values())) + "\n\n" + fragments("header") \
+        + "\n".join(others) + "\n\n"
     text += fragments("start")
     for fid, body in bodies:
         text += fragments(fid)

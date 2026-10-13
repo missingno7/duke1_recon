@@ -1,5 +1,5 @@
 struct g1_8069_record { int f0, f2, f4, f6, f8, fa; };
-extern struct g1_8069_record d_5ec9[];
+extern struct g1_8069_record d_5ec9_[];
 extern int d_0099;
 extern int d_009d;
 extern int d_0437;
@@ -24,7 +24,7 @@ void g1_8069(void)
 
     d_06f1 = !d_06f1;
     for (i = 0; i < d_05ce; i++) {
-        p = &d_5ec9[i];
+        p = &d_5ec9_[i];
         if (p->f0 == 0)
             continue;
 

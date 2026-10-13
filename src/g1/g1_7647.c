@@ -1,7 +1,7 @@
 extern int d_0099;
 extern int d_05c4;
 struct g1_7647_record { int state, value1, value2, count; };
-extern struct g1_7647_record d_798c[];
+extern struct g1_7647_record d_798c_[];
 char pascal g1_326e(int a0, int a1) { return 0; }
 char pascal g1_3558(int a0, int a1) { return 0; }
 void pascal g1_0b85(long a0) {}
@@ -18,7 +18,7 @@ void g1_7647(void)
     struct g1_7647_record far *p;
 
     for (i = 0; i < d_05c4; i++) {
-        p = &d_798c[i];
+        p = &d_798c_[i];
         if (p->state != 0 &&
             (p->state <= 3 || p->state == 5 || p->state == 9 ||
              p->state == 15 || p->state == 25))

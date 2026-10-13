@@ -1,5 +1,5 @@
-extern char d_a0fa;
-extern char d_cc81;
+extern char d_a0fa_;
+extern char d_cc81_;
 void pascal g2_37b6(char far *a0, int a1, int a2);
 void pascal g2_0286(int a0) {}
 /*@body*/
@@ -29,8 +29,8 @@ void g2_0491(void)
     g2_37b6("     cheat mode, and the hints and      ", 0, 21);
     g2_37b6("       tricks sheet.  Thank you!        ", 0, 22);
     g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81 == 0) {
-        while ((d_a0fa & 0x80) == 0) {
+    if (d_cc81_ == 0) {
+        while ((d_a0fa_ & 0x80) == 0) {
         }
     }
 }

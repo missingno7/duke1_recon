@@ -2,32 +2,32 @@
 extern char d_0097;
 extern int d_02fb;
 extern int d_0f2a;
-extern char d_530b;
-extern char d_531b;
-extern void interrupt far (*d_a0f4)(void);
-extern char d_a8d8;
-extern char far *d_cbb5[];
-extern char d_d579;
-extern int d_d718;
+extern char d_530b_;
+extern char d_531b_;
+extern void interrupt far (*d_a0f4_)(void);
+extern char d_a8d8_;
+extern char far *d_cbb5_[];
+extern char d_d579_;
+extern int d_d718_;
 /*@body*/
 void interrupt g2_25fc(void)
 {
     register unsigned int period;
 
-    if (d_530b != 0) {
-        d_530b = 0;
+    if (d_530b_ != 0) {
+        d_530b_ = 0;
         d_0f2a = 0;
-        d_a8d8 = 1;
+        d_a8d8_ = 1;
     }
 
-    if (((int far *)d_cbb5[(unsigned char)d_531b])[d_0f2a] == -1) {
-        d_a8d8 = 0;
-        d_d579 = 0;
+    if (((int far *)d_cbb5_[(unsigned char)d_531b_])[d_0f2a] == -1) {
+        d_a8d8_ = 0;
+        d_d579_ = 0;
         outportb(0x61, inportb(0x61) & 0xfd);
     }
 
-    if (d_a8d8 != 0) {
-        period = ((int far *)d_cbb5[(unsigned char)d_531b])[d_0f2a];
+    if (d_a8d8_ != 0) {
+        period = ((int far *)d_cbb5_[(unsigned char)d_531b_])[d_0f2a];
         if (period == 0 && d_0097 != 0) {
             outportb(0x61, inportb(0x61) & 0xfc);
         } else if (d_0097 != 0) {
@@ -42,10 +42,10 @@ void interrupt g2_25fc(void)
     }
 
     ++d_02fb;
-    ++d_d718;
-    if (d_d718 == 8) {
-        d_d718 = 0;
-        d_a0f4();
+    ++d_d718_;
+    if (d_d718_ == 8) {
+        d_d718_ = 0;
+        d_a0f4_();
     } else {
         outportb(0x20, 0x20);
     }

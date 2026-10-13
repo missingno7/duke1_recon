@@ -1,9 +1,9 @@
 struct g1_7b68_record { int state, x, y, flag; };
-extern struct g1_7b68_record d_9818[];
+extern struct g1_7b68_record d_9818_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_05ca;
-extern char far *d_a0fb;
+extern char far *d_a0fb_;
 void asm_0424(char far* a0, int a1, int a2);    /* accepted signature */
 char pascal g1_326e(int a0, int a1) { return 0; }    /* accepted signature; stub for push cs; call near */
 int g1_3714(int a0, int a1) { return 0; }    /* accepted signature; stub for push cs; call near */
@@ -20,7 +20,7 @@ void g1_7b68(void)
     struct g1_7b68_record far *p;
 
     for (i = 0; i < d_05ca; ++i) {
-        p = &d_9818[i];
+        p = &d_9818_[i];
         if (p->state == 0)
             continue;
         if (g1_326e(p->x, p->y) != 0)
@@ -43,11 +43,11 @@ void g1_7b68(void)
             p->flag = 1;
         }
         if (p->flag == 0)
-            asm_0424(d_a0fb + 0x3e80,
+            asm_0424(d_a0fb_ + 0x3e80,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         else
-            asm_0424(d_a0fb + 0x2580,
+            asm_0424(d_a0fb_ + 0x2580,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
     }

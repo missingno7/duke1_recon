@@ -1,10 +1,10 @@
 struct g1_7163_record { int state, x, y; };
-extern struct g1_7163_record d_c01e[];
+extern struct g1_7163_record d_c01e_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_05c0;
-extern char d_637e;
-extern char far *d_a0fb;
+extern char d_637e_;
+extern char far *d_a0fb_;
 void asm_0424(char far *a0, int a1, int a2);
 void g2_15c9(void);
 char pascal g1_326e(int a0, int a1) { return 0; }
@@ -23,7 +23,7 @@ void g1_7163(void)
     struct g1_7163_record far *p;
 
     for (i = 0; i < d_05c0; i++) {
-        p = &d_c01e[i];
+        p = &d_c01e_[i];
         if (p->state == 0)
             continue;
         if (g1_326e(p->x, p->y) != 0)
@@ -31,8 +31,8 @@ void g1_7163(void)
         if (g1_3714(p->x, p->y + 0x80) == 0)
             p->y += 0x80;
         if (g1_3513(p->x, p->y)) {
-            if (p->state > 1 && d_637e != 0) {
-                d_637e = 0;
+            if (p->state > 1 && d_637e_ != 0) {
+                d_637e_ = 0;
                 g2_15c9();
             }
             if (p->state == 2) {
@@ -65,17 +65,17 @@ void g1_7163(void)
                 p->state = 3;
         }
         if (p->state == 1) {
-            asm_0424(d_a0fb + 0x3f20, (p->x - d_009d), (((p->y - d_009f) >> 3) + 0x10));
+            asm_0424(d_a0fb_ + 0x3f20, (p->x - d_009d), (((p->y - d_009f) >> 3) + 0x10));
         } else {
             if (p->state == 2) {
-                asm_0424(d_a0fb + 0x1b80, (p->x - d_009d), (((p->y - d_009f) >> 3) + 0x10));
+                asm_0424(d_a0fb_ + 0x1b80, (p->x - d_009d), (((p->y - d_009f) >> 3) + 0x10));
             }
             if (p->state == 3) {
-                asm_0424(d_a0fb + 0x1c20, (p->x - d_009d), (((p->y - d_009f) >> 3) + 0x10));
+                asm_0424(d_a0fb_ + 0x1c20, (p->x - d_009d), (((p->y - d_009f) >> 3) + 0x10));
             }
         }
-        if (p->state > 1 && d_637e != 0 && g1_3513(p->x, p->y)) {
-            d_637e = 0;
+        if (p->state > 1 && d_637e_ != 0 && g1_3513(p->x, p->y)) {
+            d_637e_ = 0;
             g2_15c9();
         }
     }

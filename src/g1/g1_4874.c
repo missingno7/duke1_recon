@@ -12,10 +12,10 @@ extern int d_0576[];
 extern int d_0578[];
 extern int d_05a6;
 extern int d_05a8;
-extern char d_6379;
-extern char far *d_637a;
+extern char d_6379_;
+extern char far *d_637a_;
 struct G1_4874_item { int type; int x; int y; int step; };
-extern struct G1_4874_item d_637f[];
+extern struct G1_4874_item d_637f_[];
 void asm_0424(char far *a0, int a1, int a2);
 char pascal g1_326e(int a0, int a1) { return 0; }
 char pascal g1_3558(int a0, int a1) { return 0; }
@@ -43,7 +43,7 @@ void g1_4874(void)
         d_05a6 = 0;
 
     for (i = 0; i < d_0544; ++i) {
-        obj = &d_637f[i];
+        obj = &d_637f_[i];
         if (obj->type == 0xfe) {
             if (g1_3714(obj->x, obj->y + 128)) {
                 g1_314c(obj->x, obj->y);
@@ -62,10 +62,10 @@ void g1_4874(void)
                 obj->type = 0;
                 continue;
             }
-            asm_0424(d_637a + 0x3c0,
+            asm_0424(d_637a_ + 0x3c0,
                      obj->x - d_009d,
                      ((obj->y - d_009f) >> 3) + 16);
-            asm_0424(d_637a,
+            asm_0424(d_637a_,
                      obj->x - d_009d,
                      (obj->y - d_009f) >> 3);
         shared_animation_finish:
@@ -91,10 +91,10 @@ void g1_4874(void)
                 obj->type = 0;
                 continue;
             }
-            asm_0424(d_637a + 0x3c0,
+            asm_0424(d_637a_ + 0x3c0,
                      obj->x - d_009d,
                      ((obj->y - d_009f) >> 3) + 16);
-            asm_0424(d_637a + 0x320,
+            asm_0424(d_637a_ + 0x320,
                      obj->x - d_009d,
                      (obj->y - d_009f) >> 3);
             goto shared_animation_finish;
@@ -110,7 +110,7 @@ void g1_4874(void)
         if (g1_3558(obj->x, obj->y - 128) ||
             g1_3513(obj->x, obj->y - 128)) {
             if (g1_3513(obj->x, obj->y))
-                d_6379 = 1;
+                d_6379_ = 1;
             if (d_0437 == 0)
                 obj->type = 0xfe;
             else if (d_0437 == 0x20)
@@ -153,10 +153,10 @@ void g1_4874(void)
             }
         }
 
-        asm_0424(d_637a + d_05a6 + 0x3c0,
+        asm_0424(d_637a_ + d_05a6 + 0x3c0,
                  obj->x - d_009d,
                  ((obj->y - d_009f) >> 3) + 16);
-        asm_0424(d_637a + (obj->type - 1) * 0xa0,
+        asm_0424(d_637a_ + (obj->type - 1) * 0xa0,
                  obj->x - d_009d,
                  (obj->y - d_009f) >> 3);
     }

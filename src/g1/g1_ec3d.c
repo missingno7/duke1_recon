@@ -1,5 +1,5 @@
 #include <dos.h>
-extern void interrupt far (*d_5556)(void);
+extern void interrupt far (*d_5556_)(void);
 void g2_25cd(void);
 void asm_0258(int page);
 void asm_05eb(int page);
@@ -61,7 +61,7 @@ void pascal g1_ec3d(void)
     g2_30b0("credits.dn3");
 #endif
     disable();
-    d_5556 = getvect(9);
+    d_5556_ = getvect(9);
     setvect(9, g1_15f4);
     enable();
     g2_1e97();

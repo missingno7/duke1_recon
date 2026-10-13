@@ -1,6 +1,6 @@
 #include <stdio.h>
-extern long d_4fa2[];
-extern char d_5008[10][11];
+extern long d_4fa2_[];
+extern char d_5008_[10][11];
 /*@body*/
 void g2_1e1b(void)
 {
@@ -14,8 +14,8 @@ void g2_1e1b(void)
     stream = fopen("HIGHS.dn3", "w+");
 #endif
     for (i = 0; i < 10; i++) {
-        fprintf(stream, "%lu", d_4fa2[i]);
-        fprintf(stream, "%s\n", d_5008[i]);
+        fprintf(stream, "%lu", d_4fa2_[i]);
+        fprintf(stream, "%s\n", d_5008_[i]);
     }
     fclose(stream);
 }

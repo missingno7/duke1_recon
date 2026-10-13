@@ -1,6 +1,6 @@
 #include <stdlib.h>
-extern long d_4fa2[];
-extern char d_5008[10][11];
+extern long d_4fa2_[];
+extern char d_5008_[10][11];
 void pascal g2_2d58(int a0);
 void pascal g2_37b6(char far *a0, int a1, int a2);
 /*@body*/
@@ -15,8 +15,8 @@ void pascal g2_1d40(int a0)
         ltoa((long)i + 1L, buffer, 10);
         g2_37b6(buffer, a0 + 2, i * 2 + 5);
         g2_37b6(".", a0 + 3, i * 2 + 5);
-        ltoa(d_4fa2[i], buffer, 10);
+        ltoa(d_4fa2_[i], buffer, 10);
         g2_37b6(buffer, a0 + 6, i * 2 + 5);
-        g2_37b6(d_5008[i], a0 + 14, i * 2 + 5);
+        g2_37b6(d_5008_[i], a0 + 14, i * 2 + 5);
     }
 }

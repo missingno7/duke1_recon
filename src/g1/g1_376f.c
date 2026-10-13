@@ -1,9 +1,9 @@
 struct g1_376f_record { int state, x, y; };
-extern struct g1_376f_record d_669f[];
+extern struct g1_376f_record d_669f_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_043c;
-extern char far *d_a0fb;
+extern char far *d_a0fb_;
 char pascal g1_326e(int a0, int a1) {}
 int g1_3714(int a0, int a1) { return 0; }
 char pascal g1_3558(int a0, int a1) {}
@@ -18,7 +18,7 @@ void g1_376f(void)
     struct g1_376f_record far *p;
 
     for (i = 0; i < d_043c; ++i) {
-        p = &d_669f[i];
+        p = &d_669f_[i];
         if (p->state != 0) {
             if (g1_326e(p->x, p->y) == 0) {
                 if (g1_3714(p->x, p->y + 0x80) == 0)
@@ -31,7 +31,7 @@ void g1_376f(void)
                         g1_2a40(0x280, p->x, p->y);
                     }
                 } else if (g1_326e(p->x, p->y) == 0) {
-                    asm_0424(d_a0fb,
+                    asm_0424(d_a0fb_,
                              p->x - d_009d,
                              ((p->y - d_009f) >> 3) + 0x10);
                 }

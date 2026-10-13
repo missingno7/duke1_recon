@@ -1,11 +1,11 @@
 struct g1_4f91_record { int state, x, y, marker; };
-extern struct g1_4f91_record d_b6bc[];
+extern struct g1_4f91_record d_b6bc_[];
 extern int d_0099;
 extern int d_009d;
 extern int d_0437;
 extern int d_05aa;
 extern int d_0698[];
-extern int d_5081[];
+extern int d_5081_[];
 char pascal g1_326e(int a0, int a1) { return 0; }
 char pascal g1_3558(int a0, int a1) { return 0; }
 void pascal g1_2e64(int a0, int a1) {}
@@ -24,7 +24,7 @@ void g1_4f91(void)
     struct g1_4f91_record far *p;
 
     for (i = 0; i < d_05aa; ++i) {
-        p = &d_b6bc[i];
+        p = &d_b6bc_[i];
         if (g1_326e(p->x, p->y) == 0 && p->marker == 0)
             p->marker = 1;
         if (p->state == 0 || p->marker == 0)
@@ -33,8 +33,8 @@ void g1_4f91(void)
         while (1) {
             if (g1_3558(p->x + 1, p->y - 128) != 0 ||
                 g1_3558(p->x + 1, p->y) != 0)
-                ++d_5081[i];
-            if (d_5081[i] == 3) {
+                ++d_5081_[i];
+            if (d_5081_[i] == 3) {
                 g1_314c(p->x + 1, p->y - 256);
                 g1_314c(p->x, p->y - 128);
                 g1_314c(p->x + 2, p->y);
@@ -49,9 +49,9 @@ void g1_4f91(void)
                 break;
             }
 
-            if (d_5081[i] == 1 && d_0437 == 0)
+            if (d_5081_[i] == 1 && d_0437 == 0)
                 g1_2e64(p->x, p->y - 192);
-            if (d_5081[i] == 2 && d_0437 == 0) {
+            if (d_5081_[i] == 2 && d_0437 == 0) {
                 g1_2e64(p->x + 2, p->y - 192);
                 g1_2e64(p->x, p->y - 192);
             }

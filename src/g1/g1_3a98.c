@@ -9,13 +9,13 @@ struct Record {
     int height;
     int state;
 };
-extern struct Record d_c299[];
+extern struct Record d_c299_[];
 /* g1_3a98 translation-unit declarations from skeleton2.c */
 extern int d_0099;      /* accepted type */
 extern char d_0439;      /* accepted type */
 extern int d_0526;      /* DATA, accessed as [2] byte(s) */
 extern int d_064e;      /* DATA, accessed as [2] byte(s) */
-extern unsigned int far* d_7729;      /* accepted type */
+extern unsigned int far* d_7729_;      /* accepted type */
 int g1_35ee(int a0, int a1, int a2) { return 0; }    /* accepted signature; stub for push cs; call near */
 char g1_1247(void) { return 0; }    /* accepted signature; stub for push cs; call near */
 unsigned char g1_12ce(void) { return 0; }    /* accepted signature; stub for push cs; call near */
@@ -34,12 +34,12 @@ void g1_3a98(void)
     goto otest;
 obody:
     {
-        record = &d_c299[i];
+        record = &d_c299_[i];
         height = record->height;
         j = 0;
         goto test;
     body:
-        *(d_7729 + record->y + record->x + (j >> 1) - 2) =
+        *(d_7729_ + record->y + record->x + (j >> 1) - 2) =
             0x1c00 + ((d_064e & 1) << 5);
         ++j;
     test:
@@ -47,16 +47,16 @@ obody:
             goto body;
 
         if (record->state == 1) {
-            *(d_7729 + record->y + record->x - 2) =
+            *(d_7729_ + record->y + record->x - 2) =
                 0x1b80 + (d_064e << 5);
-            *(d_7729 + record->y + record->x + (height >> 1) - 2) =
+            *(d_7729_ + record->y + record->x + (height >> 1) - 2) =
                 0x1c40 + (d_064e << 5);
         }
 
         if (record->state == 0) {
-            *(d_7729 + record->y + record->x - 2) =
+            *(d_7729_ + record->y + record->x - 2) =
                 0x1be0 - (d_064e << 5);
-            *(d_7729 + record->y + record->x + (height >> 1) - 2) =
+            *(d_7729_ + record->y + record->x + (height >> 1) - 2) =
                 0x1ca0 - (d_064e << 5);
         }
 

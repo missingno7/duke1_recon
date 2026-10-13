@@ -6,12 +6,12 @@ struct g1_6445_record {
     int flag8;
     int flag10;
 };
-extern struct g1_6445_record d_555d[];
+extern struct g1_6445_record d_555d_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_05b8;
-extern char far *d_637a;
-extern char far *d_a0fb;
+extern char far *d_637a_;
+extern char far *d_a0fb_;
 int g1_3714(int a0, int a1) { return 0; }
 char pascal g1_3558(int a0, int a1) { return 0; }
 void pascal g1_314c(int a0, int a1) {}
@@ -29,7 +29,7 @@ void g1_6445(void)
     struct g1_6445_record far *p;
 
     for (i = 0; i < d_05b8; ++i) {
-        p = &d_555d[i];
+        p = &d_555d_[i];
         if (p->state != 0) {
             if (g1_3714(p->x, p->y + 0x80) == 0)
                 p->y += 0x80;
@@ -47,7 +47,7 @@ void g1_6445(void)
 
             if (p->kind == 0) {
                 if (g1_326e(p->x, p->y) == 0 && p->state < 0x0c) {
-                    asm_0424(d_a0fb,
+                    asm_0424(d_a0fb_,
                             p->x - d_009d,
                             ((p->y - d_009f) >> 3) + 0x10);
                     continue;
@@ -61,12 +61,12 @@ void g1_6445(void)
                 ++p->state;
                 if (g1_326e(p->x, p->y) == 0) {
                     if (p->state < 0x0c) {
-                        asm_0424(d_637a + 0x4600,
+                        asm_0424(d_637a_ + 0x4600,
                                 p->x - d_009d,
                                 ((p->y - d_009f) >> 3) + 0x10);
                     }
                     if (p->state % 2 != 0 && p->state < 0x0c) {
-                        asm_0424(d_637a + 0x46a0,
+                        asm_0424(d_637a_ + 0x46a0,
                                 p->x - d_009d,
                                 ((p->y - d_009f) >> 3) + 0x10);
                     }

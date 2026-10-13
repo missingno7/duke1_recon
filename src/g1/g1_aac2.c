@@ -1,9 +1,9 @@
 struct g1_aac2_record { int state, x, y, kind; };
-extern struct g1_aac2_record d_73fb[];
+extern struct g1_aac2_record d_73fb_[];
 extern int d_0437;
 extern int d_0600;
-extern int d_5312;
-extern char d_6379;
+extern int d_5312_;
+extern char d_6379_;
 int g1_3714(int a0, int a1) { return 0; }
 void pascal g1_aa1b(int a0, int a1, int a2) {}
 char pascal g1_3558(int a0, int a1) { return 0; }
@@ -19,13 +19,13 @@ void g1_aac2(void)
     register int i;
     struct g1_aac2_record far *p;
 
-    d_5312 = 1;
+    d_5312_ = 1;
     for (i = 0; i < d_0600; ++i) {
-        p = &d_73fb[i];
+        p = &d_73fb_[i];
         if (p->state == 0)
             continue;
 
-        d_5312 = 0;
+        d_5312_ = 0;
         if (p->state > 2) {
             switch (p->kind) {
             case 0:
@@ -124,7 +124,7 @@ void g1_aac2(void)
                 continue;
             }
             if (g1_3513(p->x, p->y)) {
-                d_6379 = 1;
+                d_6379_ = 1;
                 g1_0042(0x23);
                 p->state = 3;
                 p->kind = 0;

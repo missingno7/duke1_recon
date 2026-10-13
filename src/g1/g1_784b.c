@@ -1,9 +1,9 @@
 struct g1_784b_record { int active, x, y, state; };
-extern struct g1_784b_record d_9d99[];
+extern struct g1_784b_record d_9d99_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_05c6;
-extern char far *d_a0fb;
+extern char far *d_a0fb_;
 void asm_0424(char far *bitmap, int x, int y);
 char pascal g1_326e(int a0, int a1) {}
 int g1_3714(int a0, int a1) {}
@@ -20,7 +20,7 @@ void g1_784b(void)
     struct g1_784b_record far *p;
 
     for (i = 0; i < d_05c6; i++) {
-        p = &d_9d99[i];
+        p = &d_9d99_[i];
         if (p->active != 0) {
             if (g1_326e(p->x, p->y) == 0) {
                 if (g1_3714(p->x, p->y + 0x80) == 0)
@@ -41,11 +41,11 @@ void g1_784b(void)
                     }
                 }
                 if (p->state == 0) {
-                    asm_0424(d_a0fb + 0x3e80,
+                    asm_0424(d_a0fb_ + 0x3e80,
                              p->x - d_009d,
                              ((p->y - d_009f) >> 3) + 0x10);
                 } else {
-                    asm_0424(d_a0fb + 0x2440,
+                    asm_0424(d_a0fb_ + 0x2440,
                              p->x - d_009d,
                              ((p->y - d_009f) >> 3) + 0x10);
                 }

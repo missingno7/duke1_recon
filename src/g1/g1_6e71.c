@@ -1,12 +1,12 @@
 struct g1_6e71_record { int state, x, y; };
-extern struct g1_6e71_record d_d261[];
+extern struct g1_6e71_record d_d261_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_05be;
 extern int d_06e9;
 extern int d_06eb;
-extern char d_6379;
-extern char far *d_637a;
+extern char d_6379_;
+extern char far *d_637a_;
 void asm_0424(char far *a0, int a1, int a2);
 char pascal g1_326e(int a0, int a1) { return 0; }
 int g1_3714(int a0, int a1) { return 0; }
@@ -30,7 +30,7 @@ void g1_6e71(void)
         d_06e9 = 0;
 
     for (i = 0; i < d_05be; ++i) {
-        p = &d_d261[i];
+        p = &d_d261_[i];
         if (p->state == 0)
             continue;
         if (g1_326e(p->x, p->y) != 0)
@@ -38,7 +38,7 @@ void g1_6e71(void)
 
         if (p->state == 1) {
             p->y -= 8;
-            asm_0424(d_637a + d_06e9 + 0x5500,
+            asm_0424(d_637a_ + d_06e9 + 0x5500,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
             if (g1_3714(p->x - 2, p->y) == 0 ||
@@ -46,7 +46,7 @@ void g1_6e71(void)
                 p->state = 2;
         } else if (p->state == 2) {
             p->y += 8;
-            asm_0424(d_637a + d_06eb + 0x5500,
+            asm_0424(d_637a_ + d_06eb + 0x5500,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
             if (g1_3714(p->x - 2, p->y + 0x80) == 0 ||
@@ -54,7 +54,7 @@ void g1_6e71(void)
                 p->state = 1;
         } else if (p->state == 3) {
             p->y -= 8;
-            asm_0424(d_637a + d_06e9 + 0x5780,
+            asm_0424(d_637a_ + d_06e9 + 0x5780,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
             if (g1_3714(p->x + 2, p->y) == 0 ||
@@ -62,7 +62,7 @@ void g1_6e71(void)
                 p->state = 4;
         } else if (p->state == 4) {
             p->y += 8;
-            asm_0424(d_637a + d_06eb + 0x5780,
+            asm_0424(d_637a_ + d_06eb + 0x5780,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
             if (g1_3714(p->x + 2, p->y + 0x80) == 0 ||
@@ -78,6 +78,6 @@ void g1_6e71(void)
             p->state = 0;
         }
         if (p->state != 0 && g1_3513(p->x, p->y) != 0)
-            d_6379 = 1;
+            d_6379_ = 1;
     }
 }

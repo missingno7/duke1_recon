@@ -39,11 +39,11 @@
  "profile": "tc20-l-gzo",
  "proven_under": {
   "atlas_sha256": "16f2321f98447793fb35739d00b3eeb0ccc34455539992e2d3f16c34e7ea1a5d",
-  "context_key": "5fdeba640a7bd632ce836e3ec1bf07ba492649ff4b01bdccf2841497a3ab398c",
-  "emission_key": "a6cb693e3b5b4952af4f39f2b88d88e5383a1200dbcdf28af196b6353d5003d6",
+  "context_key": "0beb2e3a96abfd646717fb544908c9bae4beaaa2e9d6c8432f465e785c9b8f42",
+  "emission_key": "eb3b8f67460d91721b07a7f8074ac4c0a916630217b3e8e2008319f978bb7b2e",
   "oracle_lock_sha256": "56e7bc0d0b23a678199ccd7d152ee72a0a96114de02dae56e08e5ad9b8b4b2ec"
  },
  "source": "src/g1/g1_af06.c",
- "source_sha256": "93da7e3ee99e0dd0757a762211b8958e5d144076c8b5c5b6f0ac23929e032c6d",
+ "source_sha256": "cbae9f9a1822766bbbff3931355726e7f5198d930d1df320100e93c6e0d9c178",
  "unit": "G1_TEXT"
 }

@@ -297,11 +297,21 @@ def check_lazy_cleanup(args: dict) -> dict:
     return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts, "after_call": after}
 
 
+def check_bss_order(args: dict) -> dict:
+    r = tcc.compile_c((ROOT / "probes/bss_order.c").read_text("latin-1"), tcc.profile_flags("tc20-l-gzo"))
+    o = omf.OmfReader().read(r.obj)
+    got = [p["name"].lstrip("_") for p in sorted(o.publics, key=lambda p: p["offset"]) if p["segment"] == "_BSS"]
+    want = ["axxxxxxxxxxxxxxxxxb", "ab", "azb", "axb", "ayb", "zz"]
+    key = lambda n: (ord(n[0]) + 4 * ord(n[-1]) + 32 * len(n)) % 1024
+    facts = {"order_equal": got == want, "keys_non_decreasing": [key(n) for n in got] == sorted(key(n) for n in got)}
+    return {"outcome": "CONFIRMED" if all(facts.values()) else "FALSIFIED", "facts": facts, "order": got}
+
+
 CHECKS = {"flag": check_flag, "link_path": check_link_path, "repack": check_repack,
           "data_layout": check_data_layout, "g2_no_merge": check_g2_no_merge, "variant": check_variant, "call_forms": check_call_forms,
           "z_effect": check_z_effect, "startup_model": check_startup_model,
           "c0_reassembly": check_c0_reassembly, "runtime": check_runtime, "relocs_sorted": check_relocs_sorted,
-          "register_priority": check_register_priority, "tail_merge": check_tail_merge, "lazy_cleanup": check_lazy_cleanup}
+          "register_priority": check_register_priority, "tail_merge": check_tail_merge, "lazy_cleanup": check_lazy_cleanup, "bss_order": check_bss_order}
 
 
 def run_rule(rule: dict) -> dict:

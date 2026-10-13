@@ -1,9 +1,9 @@
 extern int d_009d;
 extern int d_009f;
 extern int d_05c8;
-extern char far *d_a0fb;
+extern char far *d_a0fb_;
 struct g1_79d9_record { int state, x, y, flag; };
-extern struct g1_79d9_record d_a357[];
+extern struct g1_79d9_record d_a357_[];
 void asm_0424(char far *bitmap, int row, int offset);
 char pascal g1_326e(int a0, int a1) {}
 int g1_3714(int a0, int a1) {}
@@ -20,7 +20,7 @@ void g1_79d9(void)
     struct g1_79d9_record far *p;
 
     for (i = 0; i < d_05c8; ++i) {
-        p = &d_a357[i];
+        p = &d_a357_[i];
         if (p->state == 0)
             continue;
         if (g1_326e(p->x, p->y) != 0)
@@ -43,11 +43,11 @@ void g1_79d9(void)
             }
         }
         if (p->flag == 0)
-            asm_0424(d_a0fb + 0x3e80,
+            asm_0424(d_a0fb_ + 0x3e80,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         else
-            asm_0424(d_a0fb + 0x24e0,
+            asm_0424(d_a0fb_ + 0x24e0,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
     }

@@ -1,5 +1,5 @@
 struct t_52dd { int used, x, y, marker; };
-extern struct t_52dd d_52dd[];
+extern struct t_52dd d_52dd_[];
 extern int d_051c;
 char pascal g1_326e(int a0, int a1);
 void pascal g1_0042(int a0) {}
@@ -9,7 +9,7 @@ void pascal g1_1b8a(register int a0, int a1, int a2)
     register int i;
     struct t_52dd far *p;
     for (i = 0; i < d_051c; ++i) {
-        p = &d_52dd[i];
+        p = &d_52dd_[i];
         if (p->used == 0) {
             p->used = a0;
             p->x = a1;

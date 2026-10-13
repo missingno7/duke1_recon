@@ -1,5 +1,5 @@
-extern char d_a0fa;
-extern char d_cc81;
+extern char d_a0fa_;
+extern char d_cc81_;
 void pascal g1_0042(int a0);
 void g2_3114(void) {}
 void pascal g2_3d8c(int a0, int a1, int a2) {}
@@ -67,8 +67,8 @@ void pascal g2_452b(register int a0)
     g2_37b6(" Thank you for playing! ", a0 + 1, 22);
 #endif
     g2_0036(0xf);
-    if (d_cc81 == 0) {
-        while ((d_a0fa & 0x80) == 0) {
+    if (d_cc81_ == 0) {
+        while ((d_a0fa_ & 0x80) == 0) {
         }
     }
 #if EPISODE == 3

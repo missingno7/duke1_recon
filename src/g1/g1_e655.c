@@ -26,28 +26,28 @@ extern int d_05b0;      /* DATA, accessed as [2] byte(s) */
 extern char d_0610;      /* DATA, accessed as [1] byte(s) */
 extern char d_0611;      /* accepted type */
 extern char d_0612;      /* DATA, accessed as [1] byte(s) */
-extern int d_4ed4;      /* accepted type */
-extern int d_4ed6;      /* accepted type */
-extern int d_5006;      /* BSS, accessed as [2] byte(s) */
-extern int d_530c;      /* BSS, accessed as [2] byte(s) */
-extern int d_5310;      /* BSS, accessed as [2] byte(s) */
-extern char d_5318;      /* accepted type */
-extern int d_531c;      /* BSS, accessed as [2] byte(s) */
-extern char d_554c;      /* accepted type */
-extern long d_68f8;      /* accepted type */
-/* d_68fa is byte 2 of accepted d_68f8 (long): use d_68f8 */
-extern int d_798a;      /* accepted type */
-extern int d_9682;      /* BSS, accessed as [2] byte(s) */
-extern int d_9b38;      /* accepted type */
-extern int d_a0f8;      /* accepted type */
-extern char far* d_a0fb;      /* accepted type */
-/* d_a0fd is byte 2 of accepted d_a0fb (char far*): use d_a0fb */
-extern int d_b3d4;      /* accepted type */
-extern int d_c295;      /* accepted type */
-extern char d_c683;      /* accepted type */
-extern int d_cc82;      /* accepted type */
-extern char d_d576;      /* BSS, accessed as [1] byte(s) */
-extern int d_d57c;      /* BSS, accessed as [2] byte(s) */
+extern int d_4ed4_;      /* accepted type */
+extern int d_4ed6_;      /* accepted type */
+extern int d_5006_;      /* BSS, accessed as [2] byte(s) */
+extern int d_530c_;      /* BSS, accessed as [2] byte(s) */
+extern int d_5310_;      /* BSS, accessed as [2] byte(s) */
+extern char d_5318_;      /* accepted type */
+extern int d_531c_;      /* BSS, accessed as [2] byte(s) */
+extern char d_554c_;      /* accepted type */
+extern long d_68f8_;      /* accepted type */
+/* d_68fa_ is byte 2 of accepted d_68f8_ (long): use d_68f8_ */
+extern int d_798a_;      /* accepted type */
+extern int d_9682_;      /* BSS, accessed as [2] byte(s) */
+extern int d_9b38_;      /* accepted type */
+extern int d_a0f8_;      /* accepted type */
+extern char far* d_a0fb_;      /* accepted type */
+/* d_a0fd_ is byte 2 of accepted d_a0fb_ (char far*): use d_a0fb_ */
+extern int d_b3d4_;      /* accepted type */
+extern int d_c295_;      /* accepted type */
+extern char d_c683_;      /* accepted type */
+extern int d_cc82_;      /* accepted type */
+extern char d_d576_;      /* BSS, accessed as [1] byte(s) */
+extern int d_d57c_;      /* BSS, accessed as [2] byte(s) */
 void pascal g2_219d(char a0);    /* accepted signature */
 void pascal g2_0009(int a0);    /* accepted signature */
 void g2_3114(void);    /* accepted signature */
@@ -69,27 +69,27 @@ void g1_e655(void)
     d_05b0 = 0;
     d_043a = 4;
     d_043b = 0;
-    d_d576 = 0;
+    d_d576_ = 0;
     d_0528 = 0;
     d_052a = 0;
-    d_798a = 0;
+    d_798a_ = 0;
     d_052c = 0;
     d_052e = 0;
-    d_a0f8 = 0;
+    d_a0f8_ = 0;
     d_0530 = 0;
     d_0532 = 0;
-    d_cc82 = 0;
+    d_cc82_ = 0;
     d_0534 = 0;
     d_0536 = 0;
     d_0538 = 0;
-    d_b3d4 = 0;
+    d_b3d4_ = 0;
     d_053a = 0;
-    d_9682 = 0;
-    d_9b38 = 0;
-    d_5310 = 0;
-    d_530c = 0;
-    d_c295 = 1;
-    d_5006 = 0;
+    d_9682_ = 0;
+    d_9b38_ = 0;
+    d_5310_ = 0;
+    d_530c_ = 0;
+    d_c295_ = 1;
+    d_5006_ = 0;
     d_0610 = 1;
     d_0611 = 0;
     d_0612 = 0;
@@ -97,29 +97,29 @@ void g1_e655(void)
     d_009b = 0x30;
     d_009d = 0;
     d_009f = 0;
-    d_68f8 = 0L;
-    d_d57c = 0;
-    d_4ed6 = 0;
-    d_531c = 0;
+    d_68f8_ = 0L;
+    d_d57c_ = 0;
+    d_4ed6_ = 0;
+    d_531c_ = 0;
     d_02fa = 0;
-    d_4ed4 = 9;
+    d_4ed4_ = 9;
 
     if (d_03a3) {
-        g2_219d(d_554c);
-        if (d_5318) {
+        g2_219d(d_554c_);
+        if (d_5318_) {
             return;
         }
         g2_0009(0x14);
         g2_3114();
         d_03a3 = 0;
-        if (d_798a) {
-            g2_1ffa(d_a0fb + 0x640);
+        if (d_798a_) {
+            g2_1ffa(d_a0fb_ + 0x640);
         }
-        if (d_a0f8) {
-            g2_1ffa(d_a0fb + 0xb40);
+        if (d_a0f8_) {
+            g2_1ffa(d_a0fb_ + 0xb40);
         }
-        if (d_cc82) {
-            g2_1ffa(d_a0fb + 0x2760);
+        if (d_cc82_) {
+            g2_1ffa(d_a0fb_ + 0x2760);
         }
     } else {
         g2_3114();
@@ -130,14 +130,14 @@ void g1_e655(void)
     g2_29a2();
     g2_0036(0x14);
 
-    if (d_0098 == 2 || d_c683 == 2) {
+    if (d_0098 == 2 || d_c683_ == 2) {
         d_02fa = 0x14;
     }
     g1_e3e0(d_03a4[d_02fa]);
-    saved = d_68f8;
-    d_68f8 = 0L;
+    saved = d_68f8_;
+    d_68f8_ = 0L;
     g1_0b85(0L);
-    d_68f8 = saved;
+    d_68f8_ = saved;
     g1_0b85(0L);
     g1_0adc();
     g1_0a0e();

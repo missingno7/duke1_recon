@@ -1,5 +1,5 @@
 #include <dos.h>
-extern char far *d_6b54;
+extern char far *d_6b54_;
 void asm_04c5(char far *a0, int a1, int a2);
 /*@body*/
 void pascal g2_37b6(char far *text, register int x, int y)
@@ -10,10 +10,10 @@ void pascal g2_37b6(char far *text, register int x, int y)
     outport(0x3ce, 5);
     for (; text[i] != 0; ++i) {
         if (text[i] >= 'a') {
-            asm_04c5(d_6b54 + (text[i] - 'a') * 40 + 0xac8,
+            asm_04c5(d_6b54_ + (text[i] - 'a') * 40 + 0xac8,
                      x + i, y * 8);
         } else {
-            asm_04c5(d_6b54 + (text[i] - ' ') * 40 + 0x190,
+            asm_04c5(d_6b54_ + (text[i] - ' ') * 40 + 0x190,
                      x + i, y * 8);
         }
     }

@@ -1,12 +1,12 @@
 struct g1_899e_record { int state, x; unsigned int y; };
-extern struct g1_899e_record d_7063[];
+extern struct g1_899e_record d_7063_[];
 extern int d_009d;
 extern int d_009f;
 extern int d_05d6;
 extern int d_06f5;
-extern int d_4ed4;
-extern char d_5ec8;
-extern char far *d_a0fb;
+extern int d_4ed4_;
+extern char d_5ec8_;
+extern char far *d_a0fb_;
 void g2_165e(void);
 void asm_0424(char far *bitmap, int row, int offset);
 char pascal g1_326e(int a0, int a1) { return 0; }
@@ -29,7 +29,7 @@ void g1_899e(void)
         d_06f5 = 0;
 
     for (si = 0; si < d_05d6; ++si) {
-        p = &d_7063[si];
+        p = &d_7063_[si];
         if (p->state == 0)
             continue;
         if (g1_326e(p->x, p->y) != 0)
@@ -50,24 +50,24 @@ void g1_899e(void)
 
         if (p->state == 2 && g1_3513(p->x, p->y) != 0) {
             p->state = 0;
-            d_4ed4 = 9;
+            d_4ed4_ = 9;
             g1_0b85(1000L);
             g1_2a40(0x3c0, p->x, p->y);
             g1_0a0e();
             g1_0042(4);
-            if (d_5ec8 != 0) {
-                d_5ec8 = 0;
+            if (d_5ec8_ != 0) {
+                d_5ec8_ = 0;
                 g2_165e();
             }
             continue;
         }
 
         if (p->state == 1) {
-            asm_0424(d_a0fb,
+            asm_0424(d_a0fb_,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         } else {
-            asm_0424(d_a0fb + d_06f5 + 0x2e40,
+            asm_0424(d_a0fb_ + d_06f5 + 0x2e40,
                      p->x - d_009d,
                      ((p->y - d_009f) >> 3) + 0x10);
         }

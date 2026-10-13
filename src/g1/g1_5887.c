@@ -4,8 +4,8 @@ extern int d_0536;
 extern int d_0538;
 extern int d_053a;
 extern int d_053c;
-extern char far *d_a0fb;
-extern int d_b3d4;
+extern char far *d_a0fb_;
+extern int d_b3d4_;
 
 extern void g2_1f9c(void);
 extern void asm_0424(char far *bitmap, int row, int offset);
@@ -22,7 +22,7 @@ void pascal g1_314c(int a0, int a1) {}
 /*@body*/
 void g1_5887(void)
 {
-    if (d_b3d4 != 0)
+    if (d_b3d4_ != 0)
         return;
     if (d_053c == 0)
         return;
@@ -33,7 +33,7 @@ void g1_5887(void)
         d_0538 += 0x80;
 
     if (g1_3513(d_0536, d_0538) != 0 && d_053a != 0) {
-        d_b3d4 = 1;
+        d_b3d4_ = 1;
         g1_2a40(0x3c0, d_0536, d_0538);
         g1_0b85(1000L);
         g2_1f9c();
@@ -53,11 +53,11 @@ void g1_5887(void)
     }
 
     if (d_053a == 0) {
-        asm_0424(d_a0fb,
+        asm_0424(d_a0fb_,
                  d_0536 - d_009d,
                  ((d_0538 - d_009f) >> 3) + 0x10);
     } else {
-        asm_0424(d_a0fb + 0x2800,
+        asm_0424(d_a0fb_ + 0x2800,
                  d_0536 - d_009d,
                  ((d_0538 - d_009f) >> 3) + 0x10);
     }

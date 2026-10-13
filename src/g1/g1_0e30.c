@@ -1,12 +1,12 @@
 struct reading { int a; int b; int c; };
-extern int d_771c[];
-extern int d_7722[];
-extern int d_9676[];
-extern int d_967c[];
-extern char d_a0fa;
-extern int d_c297;
-extern char d_cc81;
-extern char d_d56b;
+extern int d_771c_[];
+extern int d_7722_[];
+extern int d_9676_[];
+extern int d_967c_[];
+extern char d_a0fa_;
+extern int d_c297_;
+extern char d_cc81_;
+extern char d_d56b_;
 void pascal g2_44f5(int a0);
 void pascal g2_01f5(int a0, int far* a1, int far* a2);
 void pascal g2_1340(int a0, int a1);
@@ -26,7 +26,7 @@ void g1_0e30(register int a0, int a1)
             text = g1_0c52(a0);
         } while (text.b == 1 || text.c == 1);
         g2_44f5(a1);
-        while (d_a0fa == 0x24) {
+        while (d_a0fa_ == 0x24) {
         }
         i = 0x0f;
         do {
@@ -35,7 +35,7 @@ void g1_0e30(register int a0, int a1)
             g2_01f5(a0, &x1, &y1);
             text = g1_0c52(a0);
             g2_1340(a1 + 9, 0x0b);
-            if (d_a0fa != 0)
+            if (d_a0fa_ != 0)
                 return;
         } while (text.b != 1 && text.c != 1);
         do {
@@ -50,7 +50,7 @@ void g1_0e30(register int a0, int a1)
             g2_01f5(a0, &x2, &y2);
             text = g1_0c52(a0);
             g2_1340(a1 + 9, 0x0f);
-            if (d_a0fa != 0)
+            if (d_a0fa_ != 0)
                 return;
         } while (text.b != 1 && text.c != 1);
         do {
@@ -58,22 +58,22 @@ void g1_0e30(register int a0, int a1)
         } while (text.b == 1 || text.c == 1);
         dx = (x2 - x1) / 6;
         dy = (y2 - y1) / 6;
-        d_9676[a0] = x1 + dx;
-        d_771c[a0] = x2 - dx;
-        d_967c[a0] = y1 + dy;
-        d_7722[a0] = y2 - dy;
+        d_9676_[a0] = x1 + dx;
+        d_771c_[a0] = x2 - dx;
+        d_967c_[a0] = y1 + dy;
+        d_7722_[a0] = y2 - dy;
         g2_37b6(" Should button 1 (S)hoot", a1, 0x11);
         g2_37b6(" or (J)ump?", a1, 0x12);
         g2_2870(a1 + 0x0c, 0x12);
-        if (d_a0fa == 1)
+        if (d_a0fa_ == 1)
             return;
-        if (d_a0fa == 0x1f)
-            d_c297 = 1;
+        if (d_a0fa_ == 0x1f)
+            d_c297_ = 1;
         else
-            d_c297 = 0;
-        d_cc81 = 1;
-        d_d56b = 1;
-        while (d_a0fa == 0x1f || d_a0fa == 0x24) {
+            d_c297_ = 0;
+        d_cc81_ = 1;
+        d_d56b_ = 1;
+        while (d_a0fa_ == 0x1f || d_a0fa_ == 0x24) {
         }
         return;
     }

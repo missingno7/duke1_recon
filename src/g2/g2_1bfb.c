@@ -1,4 +1,4 @@
-extern char d_a0fa;
+extern char d_a0fa_;
 void pascal g2_37b6(char far *a0, int a1, int a2);    /* accepted signature */
 /*@body*/
 void pascal g2_1bfb(register int a0)
@@ -20,6 +20,6 @@ void pascal g2_1bfb(register int a0)
     g2_37b6("  \">\" - Increase Speed  ", a0 + 1, 18);
     g2_37b6("                        ", a0 + 1, 19);
     g2_37b6("     Press any key.     ", a0 + 1, 20);
-    while ((d_a0fa & 0x80) == 0)
+    while ((d_a0fa_ & 0x80) == 0)
         ;
 }
