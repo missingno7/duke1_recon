@@ -2,6 +2,7 @@
 
     python tools/promote.py FUNCTION CANDIDATE.c [--profile P] [--name C_NAME]
                             [--receipt R.json] [--verify-only] [--note TEXT]
+    python tools/promote.py --batch LIST.txt [--note TEXT]   (lines: FUNCTION CANDIDATE)
     python tools/promote.py --recover
 
 Rules enforced here:
@@ -153,6 +154,71 @@ def promote(function: str, candidate: Path, profile: str | None, flags: list | N
     return summary
 
 
+def promote_batch(items: list, note: str | None) -> list:
+    """items: [(function, candidate Path)].  Each candidate is verified fresh
+    on its own; then ONE lock, ONE re-proof of all existing recipes, ONE
+    journal for every file, a post-publication proof of each new recipe, and
+    a rollback of the whole batch on any failure."""
+    staged = []
+    for function, candidate in items:
+        raw = candidate.read_bytes()
+        text = raw.decode("latin-1")
+        check_text(text, function, None)
+        profile = load_json(LAYOUT / "profiles.json")["default"]
+        flags = tcc.profile_flags(profile)
+        out = verify(function, text, flags, profile, None)
+        if not out["equal"]:
+            raise PromotionError(f"{function}: no episode is EQUAL")
+        rpath = RECIPES / f"{function}.json"
+        old = load_json(rpath) if rpath.exists() else None
+        if old:
+            lost = [e for e, v in old["episodes"].items() if v["status"] == "EQUAL" and e not in out["equal"]]
+            if lost:
+                raise PromotionError(f"{function}: regression, loses {lost}")
+        staged.append((function, candidate, raw, text, flags, profile, out, old))
+    if len({f for f, *_ in staged}) != len(staged):
+        raise PromotionError("a batch may contain each function once")
+    import validate
+    with transaction.exclusive(owner=f"promote batch of {len(staged)}"):
+        for function, candidate, raw, *_ in staged:
+            if candidate.read_bytes() != raw:
+                raise PromotionError(f"{function}: candidate changed during verification")
+        broken = [r for r in validate.check_recipes(fresh=True) if not r["ok"]]
+        if broken:
+            raise PromotionError(f"canonical state does not validate; refusing to publish: {broken[:3]}")
+        log_path = EVIDENCE / "promotions.jsonl"
+        log = log_path.read_bytes() if log_path.exists() else b""
+        changes = {}
+        for function, candidate, raw, text, flags, profile, out, old in staged:
+            path = canonical_path(function) if not old else old["source"]
+            recipe = build_recipe(function, path, text, flags, profile, None, out)
+            rpath = RECIPES / f"{function}.json"
+            changes[path] = raw
+            changes[rel(rpath)] = canonical_json(recipe).encode()
+            entry = {"function": function, "episodes": out["equal"], "source_sha256": recipe["source_sha256"],
+                     "recipe_sha256": sha256(canonical_json(recipe).encode()), "replaced": bool(old),
+                     "at": time.strftime("%Y-%m-%dT%H:%M:%S"), "note": note}
+            log += (json.dumps(entry, sort_keys=True) + "\n").encode()
+        changes["evidence/promotions.jsonl"] = log
+        journal = transaction.prepare(changes)
+        try:
+            transaction.apply(journal)
+            post = validate.check_recipes(fresh=True, only={f for f, *_ in staged})
+            bad = [r for r in post if not r["ok"]]
+            if bad:
+                raise PromotionError(f"post-publication proof failed: {bad}")
+            transaction.finish()
+        except BaseException:
+            transaction.rollback(journal)
+            raise
+    try:
+        import db
+        db.rebuild(db.connect())
+    except Exception as exc:
+        print(f"[db] rebuild skipped: {exc}")
+    return [{"function": f, "equal": out["equal"]} for f, _, _, _, _, _, out, _ in staged]
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("function", nargs="?")
@@ -164,9 +230,23 @@ def main() -> int:
     ap.add_argument("--verify-only", action="store_true")
     ap.add_argument("--note")
     ap.add_argument("--recover", action="store_true")
+    ap.add_argument("--batch", help="file with lines 'FUNCTION CANDIDATE'")
     a = ap.parse_args()
     if a.recover:
         print("rolled back:", transaction.recover())
+        return 0
+    if a.batch:
+        items = []
+        for line in Path(a.batch).read_text().splitlines():
+            if line.strip() and not line.startswith("#"):
+                fn, cand = line.split()
+                items.append((fn, Path(cand)))
+        try:
+            res = promote_batch(items, a.note)
+        except (PromotionError, transaction.Conflict, transaction.LockBusy) as exc:
+            print(f"BATCH PROMOTION REFUSED: {exc}")
+            return 1
+        print(json.dumps(res, indent=1))
         return 0
     if not a.function or not a.candidate:
         ap.error("FUNCTION and CANDIDATE are required")

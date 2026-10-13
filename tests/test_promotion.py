@@ -152,6 +152,18 @@ print('RECOVERED', transaction.recover(), q.exists())
         r = subprocess.run([sys.executable, "-c", code], cwd=self.sb.dir, capture_output=True, text=True)
         self.assertIn("REFUSED", r.stdout)
 
+    def test_10_batch_is_all_or_nothing(self):
+        good = self.write("g.c", CANDIDATE.replace("/* sandbox candidate */", "/* batch good */"))
+        bad = self.write("h.c", NEW_FN.replace("d_d4c3[i].a = 0;", "d_d4c3[i].b = 0;"))
+        lst = self.work / "batch.txt"
+        lst.write_text(f"g1_e92e {good}\ng1_2a1d {bad}\n")
+        before = (self.sb.dir / "src" / "g1" / "g1_e92e.c").read_bytes()
+        r = self.sb.run("promote.py", "--batch", str(lst))
+        self.assertIn("REFUSED", r.stdout, r.stdout + r.stderr)
+        self.assertEqual((self.sb.dir / "src" / "g1" / "g1_e92e.c").read_bytes(), before)
+        lst.write_text(f"g1_e92e {good}\ng1_e92e {good}\n")
+        self.assertIn("each function once", self.sb.run("promote.py", "--batch", str(lst)).stdout)
+
     def test_9_losing_database_keeps_proofs(self):
         db = self.sb.dir / "state" / "research.sqlite"
         for suffix in ("", "-wal", "-shm"):

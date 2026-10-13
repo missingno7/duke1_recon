@@ -105,6 +105,7 @@ def run(source_text: str, function: str, *, flags: list, profile: str | None, ep
     emis = None
     diffs = {}
     objects = {}
+    emis_parts = {}
     for e in eps:
         fk = tuple(compiles[e])
         if fk not in objects:      # one compile per distinct flag set
@@ -118,8 +119,12 @@ def run(source_text: str, function: str, *, flags: list, profile: str | None, ep
         results[e] = res.summary()
         if res.status != "EQUAL" and res.cand:
             diffs[e] = compare.instruction_diff(res)
-        if emis is None and res.cand:
-            emis = emission_key(res, r.obj)
+        if res.cand:
+            emis_parts[e] = emission_key(res, r.obj)
+    if emis_parts:
+        # identity of everything emitted for the target across the compared
+        # episodes (a per-episode source can differ in one episode only)
+        emis = content_key(sorted(emis_parts.items()))
     order = ["EQUAL", "BINDING_ERROR", "DIFFER", "EXTENT_MISMATCH", "NO_SYMBOL", "OBJECT_ERROR", "COMPILE_ERROR"]
     statuses = [v["status"] for v in results.values()]
     best = min(statuses, key=order.index) if statuses else "NO_EPISODE"

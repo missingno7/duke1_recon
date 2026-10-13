@@ -46,8 +46,11 @@ class Intake(unittest.TestCase):
     def test_false_equal_claim_rejected(self):
         (self.dir / "cand.c").write_text("/*@body*/\nvoid pascal g1_0042(int a) { }\n")
         self.result()
+        canon = lambda: {p: p.read_bytes() for d in ("recipes", "src", "evidence")  # noqa: E731
+                         for p in (self.sb.dir / d).rglob("*") if p.is_file()}
+        before = canon()
         self.assertEqual(self.intake()["outcome"], "EQUAL_CLAIM_REJECTED")
-        self.assertFalse((self.sb.dir / "recipes" / "g1_0042.json").exists())
+        self.assertEqual(before, canon(), "intake must never touch canonical files")
 
     def test_malformed_status(self):
         (self.dir / "cand.c").write_text("/*@body*/\nvoid pascal g1_0042(int a) { }\n")

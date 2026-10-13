@@ -6,6 +6,8 @@ that episode's original code must contain:
   g1_XXXX / g2_XXXX / asm_XXXX   logical function (evidence/atlas.json)
   d_XXXX                         logical DGROUP object named by its dn1 offset;
                                  other episodes via tools/datamap.py
+  d_dnN_XXXX                     object that exists only in episode N, at that
+                                 episode's DGROUP offset (use under #if EPISODE)
   library / startup publics      CL.LIB / C0L.OBJ publics located by the census
   aliases                        layout/symbols.json {"alias": "logical name"}
 
@@ -71,6 +73,7 @@ def runtime(ep: str) -> dict:
 
 
 _DATA = re.compile(r"^d_([0-9a-f]{4})$")
+_EPDATA = re.compile(r"^d_(dn[123])_([0-9a-f]{4})$")   # episode-only object, that episode's offset
 
 
 def resolve(name: str, ep: str) -> dict:
@@ -91,6 +94,12 @@ def resolve(name: str, ep: str) -> dict:
             raise SymbolError(f"{key} has no mapped DGROUP offset in {ep}")
         return {"kind": "data", "logical": key, "dgroup_offset": off,
                 "provenance": datamap.provenance(ep, ref)}
+    m = _EPDATA.match(key)
+    if m:
+        if m.group(1) != ep:
+            raise SymbolError(f"{key} exists only in {m.group(1)}; guard its use with #if EPISODE")
+        return {"kind": "data", "logical": key, "dgroup_offset": int(m.group(2), 16),
+                "provenance": "episode-only"}
     rt = runtime(ep)
     if key in rt:
         return {**rt[key], "logical": key}

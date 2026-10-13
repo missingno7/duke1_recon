@@ -5,15 +5,15 @@ every recipe. Numbers are per episode; nothing here counts original bytes as sou
 
 | | DN1 | DN2 | DN3 |
 |---|---:|---:|---:|
-| Matching C functions | 6 | 6 | 6 |
-| Matching C code bytes | 161 | 161 | 161 |
+| Matching C functions | 19 | 19 | 19 |
+| Matching C code bytes | 1159 | 1159 | 1125 |
 | First-party C code bytes | 83446 | 83509 | 83539 |
 | First-party C functions | 248 | 248 | 248 |
 | Matching ASM code bytes | 0 | 0 | 0 |
 | ASM code bytes (unresolved) | 1082 | 1082 | 1082 |
 | Identified runtime code bytes (C0L + CL.LIB) | 13302 | 13302 | 13302 |
-| Unresolved code bytes | 84377 | 84441 | 84473 |
-| Code relocations inside proven functions | 4 | 4 | 4 |
+| Unresolved code bytes | 83379 | 83443 | 83509 |
+| Code relocations inside proven functions | 12 | 12 | 12 |
 | Code relocations | 1455 | 1458 | 1460 |
 | Initialized DGROUP bytes | 20170 | 20386 | 19894 |
 | Matching data bytes | 0 | 0 | 0 |
@@ -29,9 +29,22 @@ so only the relocation *set* can be compared.
 
 | Function | Episodes proven |
 |---|---|
+| `g1_0042` | dn1, dn2, dn3 |
 | `g1_006f` | dn1, dn2, dn3 |
 | `g1_0acc` | dn1, dn2, dn3 |
 | `g1_1053` | dn1, dn2, dn3 |
+| `g1_2a1d` | dn1, dn2, dn3 |
+| `g1_2a40` | dn1, dn2, dn3 |
+| `g1_2b86` | dn1, dn2, dn3 |
+| `g1_2e64` | dn1, dn2, dn3 |
+| `g1_326e` | dn1, dn2, dn3 |
+| `g1_3513` | dn1, dn2, dn3 |
+| `g1_3558` | dn1, dn2, dn3 |
+| `g1_3714` | dn1, dn2, dn3 |
 | `g1_e92e` | dn1, dn2, dn3 |
+| `g2_01a9` | dn1, dn2, dn3 |
 | `g2_01d5` | dn1, dn2, dn3 |
 | `g2_276f` | dn1, dn2, dn3 |
+| `g2_3114` | dn1, dn2, dn3 |
+| `g2_3bd7` | dn1, dn2, dn3 |
+| `g2_4334` | dn1, dn2, dn3 |

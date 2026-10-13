@@ -142,7 +142,10 @@ Measured rules for this toolchain (evidence/compiler-rules.json, re-run by tools
 - `inportb/outportb/disable/enable` from <dos.h> are inline intrinsics (IN/OUT/CLI/STI).
 - Globals are named by their DN1 DGROUP offset: `extern int d_4ed4;`.  Other functions are
   named by logical id (g1_XXXX, g2_XXXX, asm_XXXX).  Library functions use their real names.
-- String literals in your file are verified by content at the address the original uses.
+- String literals in your file are verified by content at the address the original uses; prefer
+  literals for text.  Data that exists only in one episode is named d_dnN_XXXX (that episode's
+  DGROUP offset) and used under #if EPISODE.  Never address an object as an offset from an
+  unrelated symbol (e.g. `(char *)&d_4713 + 0x19`): supervisor review rejects it.
 """
 
 RULES = """\
