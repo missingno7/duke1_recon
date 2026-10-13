@@ -74,6 +74,7 @@ def runtime(ep: str) -> dict:
 
 _DATA = re.compile(r"^d_([0-9a-f]{4})$")
 _EPDATA = re.compile(r"^d_(dn[123])_([0-9a-f]{4})$")   # episode-only object, that episode's offset
+_CODEDATA = re.compile(r"^c_([0-9a-f]{4})$")            # data inside the shared startup/asm _TEXT
 
 
 def resolve(name: str, ep: str) -> dict:
@@ -94,6 +95,13 @@ def resolve(name: str, ep: str) -> dict:
             raise SymbolError(f"{key} has no mapped DGROUP offset in {ep}")
         return {"kind": "data", "logical": key, "dgroup_offset": off,
                 "provenance": datamap.provenance(ep, ref)}
+    m = _CODEDATA.match(key)
+    if m:
+        off = int(m.group(1), 16)
+        segs = {s["name"]: s for s in census(ep)["segments"]}
+        if not (segs["C0_TEXT"]["start"] <= off < segs["ASM_TEXT"]["start"] + segs["ASM_TEXT"]["size"]):
+            raise SymbolError(f"{key} is outside the startup/assembly _TEXT region")
+        return {"kind": "code_data", "logical": key, "linear": off, "frame": 0, "offset": off}
     m = _EPDATA.match(key)
     if m:
         if m.group(1) != ep:

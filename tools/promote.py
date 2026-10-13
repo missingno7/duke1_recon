@@ -43,12 +43,20 @@ class PromotionError(RuntimeError):
     pass
 
 
-def canonical_path(function: str) -> str:
+def canonical_path(function: str, asm: bool = False) -> str:
     unit = symbols.atlas()[function]["segment"].split("_")[0].lower()
-    return f"src/{unit}/{function}.c"
+    return f"src/{unit}/{function}.{'asm' if asm else 'c'}"
 
 
-def check_text(text: str, function: str, name: str | None) -> None:
+def check_text(text: str, function: str, name: str | None, asm: bool = False) -> None:
+    if asm:
+        target = (name or function).lstrip("_")
+        if not re.search(r"(?im)^\s*_?" + re.escape(target) + r"\s+proc\b", text):
+            raise PromotionError(f"the assembly source does not define a PROC {target}")
+        problems = search.lint_asm(text)
+        if problems:
+            raise PromotionError("lint: " + "; ".join(problems))
+        return
     if text.count(MARKER) != 1:
         raise PromotionError(f"candidate needs exactly one {MARKER} marker before the function definition")
     body = text.split(MARKER, 1)[1]
@@ -60,9 +68,10 @@ def check_text(text: str, function: str, name: str | None) -> None:
         raise PromotionError("lint: " + "; ".join(problems))
 
 
-def verify(function: str, text: str, flags: list, profile: str | None, name: str | None) -> dict:
+def verify(function: str, text: str, flags: list, profile: str | None, name: str | None,
+           asm: bool = False) -> dict:
     out = search.run(text, function, flags=flags, profile=profile, name=name, fresh=True,
-                     fresh_compile=True, worker="promote", note="promotion verification")
+                     fresh_compile=True, worker="promote", note="promotion verification", asm=asm)
     equal = [e for e, v in out["results"].items() if v["status"] == "EQUAL"]
     out["equal"] = equal
     return out
@@ -79,6 +88,7 @@ def build_recipe(function, path, text, flags, profile, name, out) -> dict:
         "function": function, "unit": entry["segment"], "class": entry["class"], "source": path,
         "source_sha256": sha256(text.encode("latin-1")), "profile": profile, "flags": flags, "name": name,
         "per_episode_compile": bool(re.search(r"\bEPISODE\b", text)),
+        "language": "asm" if path.endswith(".asm") else "c",
         "episodes": eps,
         "proven_under": {"context_key": out["context_key"],
                          "oracle_lock_sha256": sha256((LAYOUT / "oracle.lock.json").read_bytes()),
@@ -93,8 +103,10 @@ def promote(function: str, candidate: Path, profile: str | None, flags: list | N
         raise PromotionError(f"unknown function {function}")
     raw = candidate.read_bytes()
     text = raw.decode("latin-1")
-    check_text(text, function, name)
-    profile = profile or load_json(LAYOUT / "profiles.json")["default"]
+    asm = search.is_asm(candidate)
+    check_text(text, function, name, asm)
+    profiles_doc = load_json(LAYOUT / "profiles.json")
+    profile = profile or (profiles_doc.get("default_asm", "tasm10-mx") if asm else profiles_doc["default"])
     flags = flags or tcc.profile_flags(profile)
     if receipt:
         rc = load_json(receipt)
@@ -104,7 +116,7 @@ def promote(function: str, candidate: Path, profile: str | None, flags: list | N
             raise PromotionError("stale receipt: candidate changed after the receipt was produced")
         if rc.get("function") != function:
             raise PromotionError("receipt is for a different function")
-    out = verify(function, text, flags, profile, name)
+    out = verify(function, text, flags, profile, name, asm)
     if not out["equal"]:
         raise PromotionError(f"no episode is EQUAL: { {e: v['status'] for e, v in out['results'].items()} }")
     rpath = RECIPES / f"{function}.json"
@@ -118,7 +130,7 @@ def promote(function: str, candidate: Path, profile: str | None, flags: list | N
     if verify_only:
         summary["verify_only"] = True
         return summary
-    path = canonical_path(function) if not old else old["source"]
+    path = canonical_path(function, asm) if not old else old["source"]
     import validate
     with transaction.exclusive(owner=f"promote {function}"):
         if candidate.read_bytes() != raw:
@@ -163,10 +175,12 @@ def promote_batch(items: list, note: str | None) -> list:
     for function, candidate in items:
         raw = candidate.read_bytes()
         text = raw.decode("latin-1")
-        check_text(text, function, None)
-        profile = load_json(LAYOUT / "profiles.json")["default"]
+        asm = search.is_asm(candidate)
+        check_text(text, function, None, asm)
+        profiles_doc = load_json(LAYOUT / "profiles.json")
+        profile = profiles_doc.get("default_asm", "tasm10-mx") if asm else profiles_doc["default"]
         flags = tcc.profile_flags(profile)
-        out = verify(function, text, flags, profile, None)
+        out = verify(function, text, flags, profile, None, asm)
         if not out["equal"]:
             raise PromotionError(f"{function}: no episode is EQUAL")
         rpath = RECIPES / f"{function}.json"
@@ -190,7 +204,7 @@ def promote_batch(items: list, note: str | None) -> list:
         log = log_path.read_bytes() if log_path.exists() else b""
         changes = {}
         for function, candidate, raw, text, flags, profile, out, old in staged:
-            path = canonical_path(function) if not old else old["source"]
+            path = canonical_path(function, search.is_asm(candidate)) if not old else old["source"]
             recipe = build_recipe(function, path, text, flags, profile, None, out)
             rpath = RECIPES / f"{function}.json"
             changes[path] = raw

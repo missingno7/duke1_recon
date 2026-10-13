@@ -60,6 +60,26 @@ def lint(text: str) -> list:
     return [msg for rx, msg in FORBIDDEN if rx.search(stripped)]
 
 
+def lint_asm(text: str) -> list:
+    """Assembly may define data, but never emit instruction bytes as data:
+    db/dw/dd inside a PROC ... ENDP block are refused."""
+    problems = []
+    inproc = False
+    for n, line in enumerate(text.splitlines(), 1):
+        code = line.split(";", 1)[0].strip().lower()
+        if re.search(r"\bproc\b", code) and not code.startswith("endp"):
+            inproc = True
+        elif re.search(r"\bendp\b", code):
+            inproc = False
+        elif inproc and re.match(r"(\w+\s+)?d[bwd]\b", code):
+            problems.append(f"line {n}: data directive inside a procedure (byte emission)")
+    return problems
+
+
+def is_asm(path_or_text: str) -> bool:
+    return str(path_or_text).lower().endswith(".asm")
+
+
 def emission_key(res: compare.Result, obj: bytes) -> str | None:
     """Identity of what the compiler emitted for the target: extent bytes plus
     the ordered fixup list (relative positions, kinds, targets)."""
@@ -74,20 +94,21 @@ def emission_key(res: compare.Result, obj: bytes) -> str | None:
 
 def run(source_text: str, function: str, *, flags: list, profile: str | None, episodes: list | None = None,
         name: str | None = None, fresh: bool = False, worker: str | None = None, note: str | None = None,
-        record: bool = True, fresh_compile: bool = False) -> dict:
+        record: bool = True, fresh_compile: bool = False, asm: bool = False) -> dict:
     entry = symbols.atlas().get(function)
     if entry is None:
         raise SystemExit(f"unknown function {function}; see evidence/atlas.json")
     eps = [e for e in (episodes or EPISODES) if e in entry["locations"]]
-    problems = lint(source_text)
+    problems = lint_asm(source_text) if asm else lint(source_text)
     per_episode = bool(re.search(r"\bEPISODE\b", source_text))
     ctx = context_key()
     compiles = {}
     for e in eps:
-        fl = list(flags) + ([f"-DEPISODE={e[-1]}"] if per_episode else [])
+        define = (f"/DEPISODE={e[-1]}" if asm else f"-DEPISODE={e[-1]}")
+        fl = list(flags) + ([define] if per_episode else [])
         compiles[e] = fl
     req = {"function": function, "name": name, "flags": compiles, "source": sha256(source_text.encode("latin-1")),
-           "context": ctx}
+           "context": ctx, **({"language": "asm"} if asm else {})}
     key = content_key(req)
     con = None
     if record:
@@ -109,7 +130,8 @@ def run(source_text: str, function: str, *, flags: list, profile: str | None, ep
     for e in eps:
         fk = tuple(compiles[e])
         if fk not in objects:      # one compile per distinct flag set
-            objects[fk] = tcc.compile_c(source_text, compiles[e], fresh=fresh_compile)
+            build = tcc.assemble if asm else tcc.compile_c
+            objects[fk] = build(source_text, compiles[e], fresh=fresh_compile)
         r = objects[fk]
         receipts[e] = r.key
         if not r.ok:
@@ -170,11 +192,13 @@ def main() -> int:
     ap.add_argument("--no-record", action="store_true")
     a = ap.parse_args()
     text = Path(a.source).read_text("latin-1")
-    profile = a.profile or json.loads((LAYOUT / "profiles.json").read_text())["default"]
+    asm = is_asm(a.source)
+    profiles_doc = json.loads((LAYOUT / "profiles.json").read_text())
+    profile = a.profile or (profiles_doc.get("default_asm", "tasm10-mx") if asm else profiles_doc["default"])
     flags = a.flags if a.flags else tcc.profile_flags(profile)
     out = run(text, a.function, flags=flags, profile=None if a.flags else profile,
               episodes=a.episodes.split(",") if a.episodes else None, name=a.name, fresh=a.fresh,
-              worker=a.worker, note=a.note, record=not a.no_record)
+              worker=a.worker, note=a.note, record=not a.no_record, asm=asm)
     if a.receipt:
         atomic_json(Path(a.receipt), {k: v for k, v in out.items() if k != "diffs"})
     if a.json:

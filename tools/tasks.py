@@ -267,6 +267,44 @@ episode separately.  A per-episode partial result (e.g. dn1+dn2 EQUAL, dn3 not) 
 report it as PARTIAL_EQUAL with the episodes listed.
 """
     import db as _db_mod
+    if fid.startswith("asm_"):
+        prompt = f"""# Task {task}: recover `{fid}` as Turbo Assembler 1.0 source
+
+You are an independent worker in the duke1_recon matching-decompilation project (repository root:
+{ROOT}).  `{fid}` is a routine in the hand-written assembly region (ASM_TEXT) that sits in the same
+_TEXT segment as the Turbo C startup code and is byte-identical in all three episodes.  Goal: an
+.ASM source whose pinned TASM 1.0 (/MX) assembly is byte-for-byte identical to the original routine,
+with all relocations and symbol bindings correct.
+
+Read first: {rel(d)}/context.txt (annotated original code; boundary status
+{ctx['locations']['dn1']['boundary']}), {rel(d)}/task.json, and the accepted example
+src/asm/asm_05eb.asm.  AGENTS.md explains the project rules.
+
+## Rules
+{RULES.format(dir=rel(d), fid=fid, worker=worker).replace('CAND.c', 'cand.asm')}
+- Assembly may define data, but `db`/`dw`/`dd` inside a PROC ... ENDP are refused (no byte
+  emission of instructions).  Write real mnemonics; TASM must choose the original encodings.
+
+## Assembly facts
+- One source file: `_TEXT SEGMENT BYTE PUBLIC 'CODE'`, `ASSUME CS:_TEXT`, `PUBLIC _{fid}`,
+  `_{fid} PROC FAR` ... `ENDP`, `_TEXT ENDS`, `END`.  Turbo C callers name it `_{fid}`.
+- Data stored in the code segment of this region (e.g. `cs:[0247h]`) is named `c_XXXX` (its offset
+  in _TEXT) and declared `EXTRN c_XXXX:WORD` (or BYTE); DGROUP globals are `d_XXXX` (EXTRN, used
+  with DS); other routines are `EXTRN _asm_XXXX:FAR` / `_g1_XXXX:FAR`.
+- TASM 1.0 pitfalls (empires_reconstruction): `jmp near ptr x` still becomes a short jump when it
+  fits; `[1234h]` without a segment override assembles as an immediate, write `ds:[1234h]`;
+  `extrn a,b:near` applies NEAR only to b; TASM prefers `83 /x ib` for small immediates.
+- Labels inside the routine are bound relationally; data mixed into the routine (if the
+  boundary is GAP) may have to be expressed as labelled data after the code.
+
+## Result
+{SCHEMA.format(dir=rel(d), task=task, fid=fid, cats=', '.join(_db_mod.BLOCKER_CATEGORIES))}
+""".replace(".c file", ".asm file")
+        (d / "PROMPT.md").write_text(prompt)
+        with db.tx(con):
+            con.execute("UPDATE tasks SET status='LEASED', worker=?, packet=?, updated=? WHERE id=?",
+                        (worker, rel(d), time.time(), task))
+        return d
     prompt = f"""# Task {task}: recover `{fid}` as Turbo C 2.0 source
 
 You are an independent worker in the duke1_recon matching-decompilation project (repository root:

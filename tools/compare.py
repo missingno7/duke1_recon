@@ -263,7 +263,7 @@ def compare_object(obj: bytes, function_id: str, ep: str, name: str | None = Non
                     errors.append(f"+{at:#x} literal {lit[:24]!r} not found at original DGROUP:{got:04X}")
                     continue
                 res.bound.append({"at": at, "kind": "literal", "dgroup_offset": got, "length": len(lit)})
-            elif tgt["kind"] in ("function", "library", "startup"):
+            elif tgt["kind"] in ("function", "library", "startup", "code_data"):
                 exp = (tgt["offset"] + addend) & 0xFFFF
                 if got != exp:
                     errors.append(f"+{at:#x} offset of {tname}: original {got:#06x}, binding {exp:#06x}")

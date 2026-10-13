@@ -42,7 +42,7 @@ def prove_recipe(rid: str, r: dict, fresh: bool = True) -> dict:
         problems.append("source hash differs from recipe")
     flags = r["flags"]
     out = search.run(text, rid, flags=flags, profile=r.get("profile"), name=r.get("name"),
-                     record=False, fresh_compile=fresh)
+                     record=False, fresh_compile=fresh, asm=r.get("language") == "asm")
     claimed = [e for e, v in r["episodes"].items() if v["status"] == "EQUAL"]
     for e in claimed:
         got = out["results"].get(e, {}).get("status")
@@ -165,7 +165,7 @@ def main() -> int:
             failures.append("compiler rule register no longer reproduces: " + r.stdout[-800:])
     rs = recipes()
     srcs = {Path(v["source"]).as_posix() for v in rs.values()}
-    for p in sorted(SRC.rglob("*.c")):
+    for p in sorted(list(SRC.rglob("*.c")) + list(SRC.rglob("*.asm"))):
         rel = p.relative_to(ROOT).as_posix()
         if rel not in srcs:
             failures.append(f"orphan canonical source without recipe: {rel}")
