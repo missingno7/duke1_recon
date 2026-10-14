@@ -49,6 +49,26 @@ TOOLBOX_NAMES = {
     "show_video_page",
 }
 
+# These conditions are waits on state changed by asynchronous hardware: they must yield even
+# when their source body also polls the keyboard controller or game port. Empty loop bodies
+# are instrumented generically; the two title-menu counter sites are named below because the
+# number of iterations is itself the original game's delay mechanism.
+SPIN_CONDITION_NAMES = {
+    "last_keyboard_scan_code",
+    "timer_tick_counter",
+    "joystick_button_1_state",
+    "joystick_button_2_state",
+    "joystick_button_1",
+    "joystick_button_2",
+    "button_1_state",
+    "button_2_state",
+    "x_axis_pressed",
+    "y_axis_pressed",
+}
+SPIN_LABELS = {
+    "title_screen_and_menu": {"L_0652"},
+}
+
 TOKEN_RE = re.compile(
     r"(?P<space>\s+)"
     r"|(?P<line>//[^\r\n]*)"
@@ -292,6 +312,151 @@ def replace_overrides(source: str, source_path: Path, override_dir: Path) -> str
     return source
 
 
+def inject_pc_spin(source: str) -> str:
+    """Insert a yield into empty loops and loops polling asynchronous input/timer state."""
+    tokens = lex(source)
+    definitions = function_definitions(source)
+    insertions: list[tuple[int, str]] = []
+    consumed_do_whiles: set[int] = set()
+
+    def function_at(offset: int) -> str | None:
+        return next((name for name, start, end in definitions if start <= offset < end), None)
+
+    def next_sig(index: int) -> int | None:
+        return significant(tokens, index)
+
+    def matching(index: int, left: str, right: str) -> int | None:
+        if index >= len(tokens) or tokens[index].text != left:
+            return None
+        depth = 1
+        current = index + 1
+        while current < len(tokens):
+            token = tokens[current]
+            if token.kind not in {"string", "char", "line", "block"}:
+                if token.text == left:
+                    depth += 1
+                elif token.text == right:
+                    depth -= 1
+                    if depth == 0:
+                        return current
+            current += 1
+        return None
+
+    def statement_end(index: int) -> int | None:
+        """Return the exclusive token end for a loop body statement."""
+        index = next_sig(index) if index is not None else None
+        if index is None:
+            return None
+        if tokens[index].text == "{":
+            close = matching(index, "{", "}")
+            return close + 1 if close is not None else None
+        parens = brackets = braces = 0
+        current = index
+        while current < len(tokens):
+            token = tokens[current]
+            if token.kind not in {"string", "char", "line", "block"}:
+                if token.text == "(": parens += 1
+                elif token.text == ")": parens -= 1
+                elif token.text == "[": brackets += 1
+                elif token.text == "]": brackets -= 1
+                elif token.text == "{": braces += 1
+                elif token.text == "}":
+                    if braces == 0:
+                        return current
+                    braces -= 1
+                elif token.text == ";" and parens == brackets == braces == 0:
+                    return current + 1
+            current += 1
+        return None
+
+    def loop_parts(keyword_index: int, *, is_do: bool = False):
+        if is_do:
+            body_start = next_sig(keyword_index + 1)
+            body_end = statement_end(body_start) if body_start is not None else None
+            if body_end is None:
+                return None
+            tail = next_sig(body_end)
+            if tail is None or tokens[tail].text != "while":
+                return None
+            open_paren = next_sig(tail + 1)
+            close_paren = matching(open_paren, "(", ")") if open_paren is not None else None
+            if close_paren is None:
+                return None
+            semicolon = next_sig(close_paren + 1)
+            if semicolon is not None and tokens[semicolon].text == ";":
+                consumed_do_whiles.add(tail)
+            condition_indexes = range(open_paren + 1, close_paren)
+            return body_start, body_end, condition_indexes
+        open_paren = next_sig(keyword_index + 1)
+        close_paren = matching(open_paren, "(", ")") if open_paren is not None else None
+        if close_paren is None:
+            return None
+        body_start = next_sig(close_paren + 1)
+        body_end = statement_end(body_start) if body_start is not None else None
+        if body_start is None or body_end is None:
+            return None
+        return body_start, body_end, range(open_paren + 1, close_paren)
+
+    loop_records: list[tuple[int, int, int, set[str], str | None]] = []
+    index = 0
+    while index < len(tokens):
+        token = tokens[index]
+        if token.kind != "ident" or token.text not in {"while", "for", "do"}:
+            index += 1
+            continue
+        if index in consumed_do_whiles:
+            index += 1
+            continue
+        parts = loop_parts(index, is_do=token.text == "do")
+        if parts is None:
+            index += 1
+            continue
+        body_start, body_end, cond_indexes = parts
+        condition_names = {
+            tokens[pos].text for pos in cond_indexes
+            if tokens[pos].kind == "ident"
+        }
+        owner = function_at(token.start)
+        body_first = next_sig(body_start + 1) if tokens[body_start].text == "{" else body_start
+        empty = False
+        if body_first is not None:
+            if tokens[body_start].text == "{":
+                empty = body_first is not None and body_first < body_end and tokens[body_first].text == "}"
+            else:
+                empty = tokens[body_start].text == ";"
+        loop_records.append((index, body_start, body_end, condition_names, owner))
+        is_async_wait = bool(condition_names & SPIN_CONDITION_NAMES)
+        if empty or is_async_wait:
+            if tokens[body_start].text == "{":
+                insert_at = tokens[body_start].end
+                if empty:
+                    insertions.append((insert_at, "\n            pc_spin();"))
+                elif not any(
+                    tokens[p].kind == "ident" and tokens[p].text == "pc_spin"
+                    for p in range(body_start + 1, body_end - 1)
+                ):
+                    insertions.append((insert_at, "\n            pc_spin();"))
+            elif tokens[body_start].text == ";":
+                insertions.append((tokens[body_start].start, "{ pc_spin(); }"))
+            else:
+                body_text = source[tokens[body_start].start : tokens[body_end - 1].end]
+                insertions.append((tokens[body_end - 1].end, " }"))
+                insertions.append((tokens[body_start].start, "{ pc_spin(); "))
+        index += 1
+
+    # The second title-screen timeout counter advances at a label rather than a loop header.
+    for index, token in enumerate(tokens[:-1]):
+        if token.kind != "ident" or token.text != "L_0652":
+            continue
+        colon = next_sig(index + 1)
+        if colon is not None and tokens[colon].text == ":" and function_at(token.start) == "title_screen_and_menu":
+            insertions.append((tokens[colon].end, " pc_spin();"))
+
+    for position, text in sorted(insertions, reverse=True):
+        source = source[:position] + text + source[position:]
+    return source
+
+
 def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
     header_path = source_dir / "DUKE.H"
     game_paths = [source_dir / "GAME1.C", source_dir / "GAME2.C"]
@@ -334,6 +499,7 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
                     raise ValueError(f"override {override} expects one game definition named {override.stem}, found {count}")
         for source_path in game_paths:
             raw = replace_overrides(raw_units[source_path], source_path, override_dir)
+            raw = inject_pc_spin(raw)
             translated = translate(raw, episode, prefixes)
             (ep_dir / source_path.name).write_text(translated, encoding="latin1", newline="\n")
 

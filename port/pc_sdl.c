@@ -1,7 +1,9 @@
 #include "pc_internal.h"
+#include <ctype.h>
 #include <stdarg.h>
 #include <setjmp.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 unsigned pc_trace_flags;
@@ -20,6 +22,31 @@ static uint8_t launcher_keys[64];
 static unsigned launcher_key_read;
 static unsigned launcher_key_write;
 static _Thread_local jmp_buf *game_exit_target;
+static SDL_AtomicInt episode_exit_requested;
+
+enum script_action { SCRIPT_KEY, SCRIPT_KEYDOWN, SCRIPT_KEYUP, SCRIPT_SHOT, SCRIPT_QUIT };
+struct script_event {
+    uint64_t at_ms;
+    unsigned order;
+    enum script_action action;
+    SDL_Scancode key;
+    int extended;
+    char argument[4096];
+};
+struct scripted_release {
+    uint64_t at_ms;
+    SDL_Scancode key;
+    int extended;
+    int active;
+};
+static struct script_event *script_events;
+static size_t script_event_count;
+static size_t script_event_cursor;
+static struct scripted_release scripted_releases[64];
+static uint64_t script_origin;
+static unsigned pc_spin_iterations;
+
+#define PC_SPIN_BATCH 440u
 
 void pc_trace(unsigned category, const char *format, ...) {
     va_list args;
@@ -32,6 +59,15 @@ void pc_trace(unsigned category, const char *format, ...) {
     va_end(args);
     fflush(stderr);
     if (trace_mutex) SDL_UnlockMutex(trace_mutex);
+}
+
+void pc_spin(void) {
+    /* One millisecond sleeps can round to a longer Windows timer quantum. A 440-pass batch
+       amortizes that yield while matching the fixed-cycle 386 reference's menu transitions. */
+    if (++pc_spin_iterations >= PC_SPIN_BATCH) {
+        pc_spin_iterations = 0;
+        SDL_Delay(1);
+    }
 }
 
 int pc_is_game_thread(void) {
@@ -128,6 +164,274 @@ static int xt_scancode(SDL_Scancode key, uint8_t *code, int *extended) {
     return 1;
 }
 
+static SDL_Scancode script_scancode(const char *name) {
+    char normalized[64];
+    size_t n = strlen(name);
+    if (!n || n >= sizeof(normalized)) return SDL_SCANCODE_UNKNOWN;
+    for (size_t i = 0; i <= n; ++i) normalized[i] = (char)tolower((unsigned char)name[i]);
+    if (!strcmp(normalized, "esc")) return SDL_SCANCODE_ESCAPE;
+    if (!strcmp(normalized, "enter")) return SDL_SCANCODE_RETURN;
+    if (!strcmp(normalized, "ctrl")) return SDL_SCANCODE_LCTRL;
+    if (!strcmp(normalized, "alt")) return SDL_SCANCODE_LALT;
+    if (!strcmp(normalized, "shift")) return SDL_SCANCODE_LSHIFT;
+    if (strlen(normalized) == 1 && normalized[0] >= 'a' && normalized[0] <= 'z')
+        return (SDL_Scancode)(SDL_SCANCODE_A + (normalized[0] - 'a'));
+    if (strlen(normalized) == 2 && normalized[0] == 'f' && normalized[1] >= '1' && normalized[1] <= '9')
+        return (SDL_Scancode)(SDL_SCANCODE_F1 + (normalized[1] - '1'));
+    if (!strcmp(normalized, "f10")) return SDL_SCANCODE_F10;
+    if (!strcmp(normalized, "f11")) return SDL_SCANCODE_F11;
+    if (!strcmp(normalized, "f12")) return SDL_SCANCODE_F12;
+    return SDL_GetScancodeFromName(name);
+}
+
+static uint64_t script_now_ms(void) {
+    uint64_t now = SDL_GetPerformanceCounter();
+    uint64_t frequency = SDL_GetPerformanceFrequency();
+    if (!frequency || now < script_origin) return 0;
+    return (now - script_origin) * 1000u / frequency;
+}
+
+static void send_script_key(SDL_Scancode key, int down, int extended) {
+    uint8_t code;
+    int ignored_extended;
+    if (!xt_scancode(key, &code, &ignored_extended)) return;
+    if (!down) code |= 0x80u;
+    if (SDL_GetAtomicInt(&game_thread_started)) {
+        send_xt_code(code, extended);
+    } else {
+        if (extended) push_launcher_key(0xe0);
+        push_launcher_key(code);
+    }
+}
+
+static void schedule_script_release(SDL_Scancode key, int extended, uint64_t at_ms) {
+    for (size_t i = 0; i < sizeof(scripted_releases) / sizeof(scripted_releases[0]); ++i) {
+        if (!scripted_releases[i].active) {
+            scripted_releases[i].active = 1;
+            scripted_releases[i].key = key;
+            scripted_releases[i].extended = extended;
+            scripted_releases[i].at_ms = at_ms + 45;
+            return;
+        }
+    }
+    send_script_key(key, 0, extended);
+}
+
+static uint32_t png_crc_update(uint32_t crc, const uint8_t *data, size_t length) {
+    for (size_t i = 0; i < length; ++i) {
+        crc ^= data[i];
+        for (unsigned bit = 0; bit < 8; ++bit)
+            crc = (crc >> 1) ^ (0xedb88320u & (uint32_t)-(int32_t)(crc & 1u));
+    }
+    return crc;
+}
+
+static int write_png_chunk(FILE *file, const char type[4], const uint8_t *data, uint32_t length) {
+    uint8_t head[8];
+    uint8_t crc_bytes[4];
+    uint32_t crc;
+    head[0] = (uint8_t)(length >> 24); head[1] = (uint8_t)(length >> 16);
+    head[2] = (uint8_t)(length >> 8); head[3] = (uint8_t)length;
+    memcpy(head + 4, type, 4);
+    crc = png_crc_update(0xffffffffu, (const uint8_t *)type, 4);
+    if (length) crc = png_crc_update(crc, data, length);
+    crc = ~crc;
+    crc_bytes[0] = (uint8_t)(crc >> 24); crc_bytes[1] = (uint8_t)(crc >> 16);
+    crc_bytes[2] = (uint8_t)(crc >> 8); crc_bytes[3] = (uint8_t)crc;
+    return fwrite(head, 1, sizeof(head), file) == sizeof(head) &&
+           (!length || fwrite(data, 1, length, file) == length) &&
+           fwrite(crc_bytes, 1, sizeof(crc_bytes), file) == sizeof(crc_bytes);
+}
+
+static int save_rgb_png(const char *path) {
+    static const uint8_t signature[8] = { 137, 80, 78, 71, 13, 10, 26, 10 };
+    uint8_t ihdr[13] = { 0, 0, 1, 64, 0, 0, 0, 200, 8, 2, 0, 0, 0 };
+    const size_t raw_size = 200u * (1u + 320u * 3u);
+    const size_t blocks = (raw_size + 65534u) / 65535u;
+    const size_t z_size = 2u + raw_size + blocks * 5u + 4u;
+    uint8_t *raw = (uint8_t *)malloc(raw_size);
+    uint8_t *zdata = (uint8_t *)malloc(z_size);
+    FILE *file;
+    size_t out = 0, source = 0;
+    uint32_t adler_a = 1, adler_b = 0;
+    int ok = 0;
+    if (!raw || !zdata) goto done;
+    vga_render_rgb(rgba_frame);
+    for (unsigned y = 0; y < 200; ++y) {
+        raw[out++] = 0;
+        for (unsigned x = 0; x < 320; ++x) {
+            uint32_t pixel = rgba_frame[source++];
+            raw[out++] = (uint8_t)(pixel >> 16);
+            raw[out++] = (uint8_t)(pixel >> 8);
+            raw[out++] = (uint8_t)pixel;
+        }
+    }
+    zdata[0] = 0x78; zdata[1] = 0x01;
+    out = 2;
+    for (size_t consumed = 0; consumed < raw_size;) {
+        uint16_t count = (uint16_t)((raw_size - consumed) > 65535u ? 65535u : raw_size - consumed);
+        uint16_t inverse = (uint16_t)~count;
+        zdata[out++] = consumed + count == raw_size ? 1 : 0;
+        zdata[out++] = (uint8_t)count; zdata[out++] = (uint8_t)(count >> 8);
+        zdata[out++] = (uint8_t)inverse; zdata[out++] = (uint8_t)(inverse >> 8);
+        memcpy(zdata + out, raw + consumed, count);
+        out += count;
+        consumed += count;
+    }
+    for (size_t i = 0; i < raw_size; ++i) {
+        adler_a = (adler_a + raw[i]) % 65521u;
+        adler_b = (adler_b + adler_a) % 65521u;
+    }
+    zdata[out++] = (uint8_t)(adler_b >> 8); zdata[out++] = (uint8_t)adler_b;
+    zdata[out++] = (uint8_t)(adler_a >> 8); zdata[out++] = (uint8_t)adler_a;
+    file = fopen(path, "wb");
+    if (!file) goto done;
+    ok = fwrite(signature, 1, sizeof(signature), file) == sizeof(signature) &&
+         write_png_chunk(file, "IHDR", ihdr, sizeof(ihdr)) &&
+         write_png_chunk(file, "IDAT", zdata, (uint32_t)out) &&
+         write_png_chunk(file, "IEND", NULL, 0);
+    fclose(file);
+done:
+    free(raw);
+    free(zdata);
+    return ok;
+}
+
+static int event_compare(const void *left, const void *right) {
+    const struct script_event *a = (const struct script_event *)left;
+    const struct script_event *b = (const struct script_event *)right;
+    if (a->at_ms < b->at_ms) return -1;
+    if (a->at_ms > b->at_ms) return 1;
+    return a->order < b->order ? -1 : (a->order > b->order ? 1 : 0);
+}
+
+int platform_set_script(const char *path) {
+    char line[8192];
+    FILE *file;
+    unsigned order = 0;
+    if (!path || !*path) return 1;
+    file = fopen(path, "r");
+    if (!file) {
+        fprintf(stderr, "Could not read script %s\n", path);
+        return 0;
+    }
+    while (fgets(line, sizeof(line), file)) {
+        unsigned long long at_ms;
+        char action[32], argument[4096] = "";
+        char *cursor = line;
+        struct script_event event;
+        while (isspace((unsigned char)*cursor)) ++cursor;
+        if (!*cursor || *cursor == '#') continue;
+        if (sscanf(cursor, "%llu %31s %4095s", &at_ms, action, argument) < 2) {
+            fprintf(stderr, "Malformed script line: %s", line);
+            fclose(file);
+            return 0;
+        }
+        memset(&event, 0, sizeof(event));
+        event.at_ms = (uint64_t)at_ms;
+        event.order = order++;
+        if (!SDL_strcasecmp(action, "key")) event.action = SCRIPT_KEY;
+        else if (!SDL_strcasecmp(action, "keydown")) event.action = SCRIPT_KEYDOWN;
+        else if (!SDL_strcasecmp(action, "keyup")) event.action = SCRIPT_KEYUP;
+        else if (!SDL_strcasecmp(action, "shot")) event.action = SCRIPT_SHOT;
+        else if (!SDL_strcasecmp(action, "quit")) event.action = SCRIPT_QUIT;
+        else {
+            fprintf(stderr, "Unknown script action: %s\n", action);
+            fclose(file);
+            return 0;
+        }
+        if (event.action == SCRIPT_KEY || event.action == SCRIPT_KEYDOWN || event.action == SCRIPT_KEYUP) {
+            uint8_t code;
+            int extended;
+            event.key = script_scancode(argument);
+            if (!argument[0] || event.key == SDL_SCANCODE_UNKNOWN || !xt_scancode(event.key, &code, &extended)) {
+                fprintf(stderr, "Unknown script key: %s\n", argument);
+                fclose(file);
+                return 0;
+            }
+            event.extended = extended;
+        } else if (event.action == SCRIPT_SHOT) {
+            if (!argument[0]) {
+                fprintf(stderr, "Shot event needs a PNG path\n");
+                fclose(file);
+                return 0;
+            }
+            if (!(argument[0] == '/' || argument[0] == '\\' ||
+                  (argument[0] && argument[1] == ':'))) {
+                char script_dir[4096];
+                const char *last_slash = strrchr(path, '/');
+                const char *last_backslash = strrchr(path, '\\');
+                const char *last = last_slash;
+                if (!last || (last_backslash && last_backslash > last)) last = last_backslash;
+                size_t dir_length = last ? (size_t)(last - path + 1) : 0;
+                if (dir_length >= sizeof(script_dir)) dir_length = 0;
+                memcpy(script_dir, path, dir_length);
+                script_dir[dir_length] = 0;
+                if (snprintf(event.argument, sizeof(event.argument), "%s%s", script_dir, argument) >= (int)sizeof(event.argument)) {
+                    fprintf(stderr, "Shot path is too long\n");
+                    fclose(file);
+                    return 0;
+                }
+            } else if (snprintf(event.argument, sizeof(event.argument), "%s", argument) >= (int)sizeof(event.argument)) {
+                fprintf(stderr, "Shot path is too long\n");
+                fclose(file);
+                return 0;
+            }
+        }
+        if (script_event_count >= 4096) {
+            fprintf(stderr, "Script has too many events\n");
+            fclose(file);
+            return 0;
+        }
+        struct script_event *new_events = (struct script_event *)realloc(script_events, (script_event_count + 1) * sizeof(*new_events));
+        if (!new_events) {
+            fclose(file);
+            return 0;
+        }
+        script_events = new_events;
+        script_events[script_event_count++] = event;
+    }
+    fclose(file);
+    qsort(script_events, script_event_count, sizeof(*script_events), event_compare);
+    memset(scripted_releases, 0, sizeof(scripted_releases));
+    script_event_cursor = 0;
+    script_origin = SDL_GetPerformanceCounter();
+    return 1;
+}
+
+static void process_script_events(void) {
+    uint64_t now = script_now_ms();
+    for (size_t i = 0; i < sizeof(scripted_releases) / sizeof(scripted_releases[0]); ++i) {
+        if (scripted_releases[i].active && now >= scripted_releases[i].at_ms) {
+            send_script_key(scripted_releases[i].key, 0, scripted_releases[i].extended);
+            scripted_releases[i].active = 0;
+        }
+    }
+    while (script_event_cursor < script_event_count && script_events[script_event_cursor].at_ms <= now) {
+        struct script_event *event = &script_events[script_event_cursor++];
+        switch (event->action) {
+        case SCRIPT_KEY:
+            send_script_key(event->key, 1, event->extended);
+            schedule_script_release(event->key, event->extended, now);
+            break;
+        case SCRIPT_KEYDOWN:
+            send_script_key(event->key, 1, event->extended);
+            break;
+        case SCRIPT_KEYUP:
+            send_script_key(event->key, 0, event->extended);
+            break;
+        case SCRIPT_SHOT:
+            if (!save_rgb_png(event->argument)) fprintf(stderr, "Could not write script shot %s\n", event->argument);
+            else fprintf(stderr, "[port] shot %s\n", event->argument);
+            break;
+        case SCRIPT_QUIT:
+            if (SDL_GetAtomicInt(&game_thread_started)) pc_set_quit_hint();
+            else push_launcher_key(0x01);
+            break;
+        }
+    }
+}
+
 static void render_frame(void) {
     int out_w = 0, out_h = 0;
     SDL_FRect destination;
@@ -154,7 +458,8 @@ static void handle_event(const SDL_Event *event) {
     if (event->type == SDL_EVENT_QUIT || event->type == SDL_EVENT_WINDOW_CLOSE_REQUESTED) {
         if (window_open) {
             window_open = 0;
-            pc_set_quit_hint();
+            if (SDL_GetAtomicInt(&game_thread_started)) pc_set_quit_hint();
+            else push_launcher_key(0x01);
         }
         return;
     }
@@ -216,6 +521,7 @@ int platform_init(const char *data_dir) {
         return 0;
     }
     pc_interrupt_start_timer();
+    SDL_SetAtomicInt(&episode_exit_requested, 0);
     window_open = 1;
     return 1;
 }
@@ -237,6 +543,7 @@ static int game_thread_main(void *opaque) {
 void pc_exit(int status) {
     if (pc_is_game_thread() && game_exit_target) {
         SDL_SetAtomicInt(&game_status, status);
+        SDL_SetAtomicInt(&episode_exit_requested, 1);
         longjmp(*game_exit_target, 1);
     }
     pc_set_quit_hint();
@@ -251,6 +558,8 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
     call.argv = argv;
     SDL_SetAtomicInt(&game_finished, 0);
     SDL_SetAtomicInt(&game_status, 0);
+    SDL_SetAtomicInt(&episode_exit_requested, 0);
+    pc_spin_iterations = 0;
     thread = SDL_CreateThread(game_thread_main, "duke-game", &call);
     if (!thread) {
         fprintf(stderr, "Could not start episode thread: %s\n", SDL_GetError());
@@ -260,6 +569,7 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
     uint64_t frequency = SDL_GetPerformanceFrequency();
     while (!SDL_GetAtomicInt(&game_finished)) {
         SDL_Event event;
+        process_script_events();
         while (SDL_PollEvent(&event)) handle_event(&event);
         uint64_t now = SDL_GetPerformanceCounter();
         if (window_open && (double)(now - last_frame) * 70.0 >= (double)frequency) {
@@ -283,14 +593,29 @@ void platform_shutdown(void) {
     renderer = NULL;
     window = NULL;
     trace_mutex = NULL;
+    free(script_events);
+    script_events = NULL;
+    script_event_count = script_event_cursor = 0;
     SDL_Quit();
 }
 
 int platform_poll_key(void) {
     SDL_Event event;
+    process_script_events();
     while (SDL_PollEvent(&event)) handle_event(&event);
-    if (launcher_key_read == launcher_key_write) return 0;
+    if (launcher_key_read == launcher_key_write) {
+        SDL_Delay(1);
+        return 0;
+    }
     int key = launcher_keys[launcher_key_read];
     launcher_key_read = (launcher_key_read + 1) % (unsigned)sizeof(launcher_keys);
     return key;
+}
+
+int platform_episode_exit_requested(void) {
+    return SDL_GetAtomicInt(&episode_exit_requested);
+}
+
+void platform_present_frame(void) {
+    if (window_open) render_frame();
 }

@@ -43,6 +43,14 @@ void   pc_setvect(int vector, pc_isr handler);
 void   pc_disable(void);
 void   pc_enable(void);
 
+/* ---- CPU-speed-dependent waits ----
+   The generator inserts pc_spin() once per pass of empty hardware/key/timer waits and of the
+   title-menu iteration counters. The SDL backend batches 440 passes per 1 ms yield, calibrated
+   against DOSBox-X cputype=386, cycles=fixed 20000. Timer-based delays still use the PIT counter
+   unchanged. Calls are also present in key/tick polling loops so they yield instead of burning
+   a core while their event/tick condition is pending. */
+void   pc_spin(void);
+
 /* ---- memory ----
    Real-mode addresses the game forms with MK_FP.  B800:xxxx (text screen) returns a pointer
    into the emulated text buffer.  A000:xxxx is planar video memory and cannot be a plain
@@ -83,6 +91,10 @@ const uint8_t *vga_palette_registers(void);
 uint32_t vga_colour_rgb(uint8_t register_value);
 void     vga_render_rgb(uint32_t *out_320x200);
 void     vga_vertical_retrace_wait(void);              /* blocks until the next display refresh */
+/* Change a text span's stored palette index in the visible planar page. Text coordinates are
+   the game's 40-column by 25-row grid; the launcher uses this to dim unavailable episodes. */
+void     vga_replace_colour_in_text_span(uint8_t from, uint8_t to, int x, int y,
+                                          int columns, int rows);
 
 /* ---- video BIOS (INT 10h) ---- */
 void bios_set_mode(uint8_t mode);                      /* 0x0D graphics, 0x03 text */
@@ -103,7 +115,10 @@ typedef int (*episode_main)(int argc, char **argv);
 int  platform_init(const char *data_dir);              /* SDL, window, audio; 0 on success */
 int  platform_run_episode(episode_main entry, int argc, char **argv);   /* game thread */
 void platform_shutdown(void);
-int  platform_poll_key(void);                          /* launcher dialogs: next XT scan code, 0 if none */
+int  platform_poll_key(void);                          /* launcher dialogs: next XT scan code, 0 if none; yields while idle */
+int  platform_set_script(const char *path);             /* ms-from-start key/keydown/keyup/shot/quit events */
+int  platform_episode_exit_requested(void);             /* pc_exit was called from the episode */
+void platform_present_frame(void);                       /* present one launcher/dialog frame */
 
 #ifdef __cplusplus
 }

@@ -40,6 +40,38 @@ about 70 Hz, scales it to 4:3, and toggles fullscreen with Alt+Enter. Escape/F10
 window-close event feed Escape followed by the game's affirmative quit response so the game
 thread follows its own shutdown path.
 
+## Automation and CPU-speed timing
+
+The launcher also accepts `--script FILE`. Each line is `<ms> key|keydown|keyup <name>`,
+`<ms> shot <file.png>`, or `<ms> quit`; key names use the DOSBox-X mapper spelling (`space`,
+`enter`, `esc`, `f1`, `up`, `a`, and so on). Times are measured from SDL/platform startup.
+`key` makes a 45 ms tap; `keydown` and `keyup` control the scan-code state separately. A `shot`
+is saved directly from the VGA backend's 320x200 RGB output, without window scaling or capture.
+The same key script can be passed to `tools/dosref.py`; `tools/portcompare.py` pairs named
+screens and emits per-frame sheets and pixel differences under `build/`.
+
+`tools/dosref.py` was measured on the pinned DOSBox-X acceptance build with DN1 copied into
+`build/scratch/dosref/`. On `cputype=386`, `cycles=fixed 20000`, the title had reached credits
+by 6 seconds, ordering by 10 seconds, and the demo playfield by 14 seconds. The port uses that
+386/20,000-cycle run as its speed reference. `pc_spin()` is inserted once per instrumented loop
+pass and the SDL backend yields after 440 calls; the measured port run showed credits by 6
+seconds, ordering by 10 seconds, and the demo-start message by 15 seconds. The acceptance
+build's `cycles=auto` run was substantially slower on this host (credits at 18 seconds and
+ordering by 30 seconds), so it is recorded as a secondary timing observation rather than the
+calibration target. Delays and PIT tick waits retain their original timer logic.
+
+With multiple episode file sets present, the launcher displays a game-font episode dialog.
+`--select` forces it for capture; missing entries are dimmed. After an episode exits via the
+game's normal quit path, the launcher starts a fresh process with `--select` so all
+episode-prefixed globals return to their initial state. `--no-restart` disables that return
+path for test harnesses.
+
+The step-2 reference comparisons are recorded in `port/COMPARISON.md`; PNG sheets and
+per-frame differences stay under `build/scratch/`. Two port-only fixes were required for the
+route: `draw_ega_glyph` now consumes the row mask byte used by the original `TOOLBOX.ASM`, and
+the save-slot override uses a writable local filename because the recovered game code changes
+one character of its string literal.
+
 ## Validation notes
 
 - MinGW configure and build succeeded; nm found ep1_main, ep2_main, and ep3_main in the same

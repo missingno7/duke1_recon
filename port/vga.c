@@ -354,6 +354,38 @@ void vga_vertical_retrace_wait(void)
     } while ((status & 0x08u) == 0);
 }
 
+void vga_replace_colour_in_text_span(uint8_t from, uint8_t to, int x, int y,
+                                     int columns, int rows)
+{
+    uint16_t page_start;
+    int first_scanline, last_scanline, first_byte, last_byte;
+    if (from > 15 || to > 15 || columns <= 0 || rows <= 0 ||
+        x < 0 || y < 0 || x + columns > 40 || y + rows > 25)
+        return;
+    lock_vga();
+    page_start = current_display_start();
+    first_scanline = y * 8;
+    last_scanline = (y + rows) * 8;
+    first_byte = x;
+    last_byte = x + columns;
+    for (int scanline = first_scanline; scanline < last_scanline; ++scanline) {
+        for (int column = first_byte; column < last_byte; ++column) {
+            uint16_t offset = (uint16_t)(page_start + scanline * 40 + column);
+            uint8_t matches = 0xff;
+            for (unsigned plane = 0; plane < 4; ++plane) {
+                uint8_t bits = planes[plane][offset];
+                matches &= (from & (1u << plane)) ? bits : (uint8_t)~bits;
+            }
+            if (!matches) continue;
+            for (unsigned plane = 0; plane < 4; ++plane) {
+                if (to & (1u << plane)) planes[plane][offset] |= matches;
+                else planes[plane][offset] &= (uint8_t)~matches;
+            }
+        }
+    }
+    unlock_vga();
+}
+
 void bios_set_mode(uint8_t mode)
 {
     lock_vga();

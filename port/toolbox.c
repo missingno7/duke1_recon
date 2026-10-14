@@ -131,6 +131,8 @@ int16_t draw_ega_glyph(char *src, int16_t x, int16_t y)
     outb(0x3c4, 2);
     for (row = 0; row < 8; ++row) {
         unsigned plane;
+        uint8_t mask = src_byte(src, source++);
+        outw(0x3ce, (uint16_t)((uint16_t)mask << 8 | 8u));
         for (plane = 0; plane < 4; ++plane) {
             outb(0x3c5, (uint8_t)(1u << plane));
             xchg_vram(dst, src_byte(src, source++));
