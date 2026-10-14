@@ -79,7 +79,7 @@ foreach(ep RANGE 1 3)
     PROPERTIES
       LANGUAGE C
       COMPILE_DEFINITIONS "EPISODE=${ep}"
-      COMPILE_OPTIONS "-O0;-fwrapv;-fno-strict-aliasing;-x;c")
+      COMPILE_OPTIONS "-O0;-fwrapv;-fno-strict-aliasing;-funsigned-char;-x;c")
 endforeach()
 set_source_files_properties(${GENERATED_FILES} PROPERTIES GENERATED TRUE)
 
@@ -91,7 +91,7 @@ set(PLATFORM_SOURCES
   "${CMAKE_CURRENT_SOURCE_DIR}/launcher.c"
   ${PORT_VIDEO_SOURCES})
 set_source_files_properties(${PLATFORM_SOURCES}
-  PROPERTIES COMPILE_OPTIONS "-O2;-fwrapv;-fno-strict-aliasing")
+  PROPERTIES COMPILE_OPTIONS "-O2;-fwrapv;-fno-strict-aliasing;-funsigned-char")
 
 add_executable(duke1
   ${EPISODE_SOURCES}

@@ -36,6 +36,8 @@ RUNTIME_NAMES = {
     "putw": "pc_putw",
     "ltoa": "pc_ltoa",
     "ultoa": "pc_ultoa",
+    "malloc": "pc_malloc",
+    "free": "pc_free",
 }
 TOOLBOX_NAMES = {
     "set_video_mode",

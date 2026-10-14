@@ -57,6 +57,10 @@ void   pc_spin(void);
    pointer: the functions that write it are replaced in port/override/ and use vga_* below;
    pc_mk_fp aborts with a message for it. */
 void *pc_mk_fp(uint16_t segment, uint16_t offset);
+/* malloc/free of the game: every block is a 64 KB segment whose offset arithmetic wraps
+   like a large-model far pointer's (p + (int16_t)x == p + (uint16_t)x).  At most 64 KB. */
+void *pc_malloc(size_t size);
+void  pc_free(void *block);
 
 /* ---- EGA/VGA (mode 0Dh, 320x200, 16 colours) ----
    Four 64 KB planes.  vga_cpu_write / vga_cpu_read are a CPU access to A000:offset with the

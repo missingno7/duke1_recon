@@ -12,6 +12,51 @@ void pc_delay(unsigned milliseconds) { SDL_Delay(milliseconds); }
 
 uint32_t pc_coreleft(void) { return 2u * 1024u * 1024u; }
 
+/* Far data in Turbo C's large model: a far pointer is segment:offset, and adding an int
+   changes only the 16-bit offset, which wraps inside the 64 KB segment.  The game relies on
+   it - e.g. sprite_graphics_buffer + offset with an int offset of 0x80C0 (-32576) means
+   0x80C0 bytes forward.  So every block the game allocates gets its own 64 KB segment,
+   mapped three times in a row (alias, segment, alias): p + (int16_t)x then lands where the
+   wrapped offset would, for any expression, without touching the game source. */
+#define SEGMENT_SIZE 0x10000u
+
+void *pc_malloc(size_t size)
+{
+    HANDLE section;
+    if (size == 0 || size > SEGMENT_SIZE)
+        return NULL;
+    section = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, SEGMENT_SIZE, NULL);
+    if (!section)
+        return NULL;
+    for (int attempt = 0; attempt < 64; ++attempt) {
+        uint8_t *base = (uint8_t *)VirtualAlloc(NULL, 3u * SEGMENT_SIZE, MEM_RESERVE, PAGE_NOACCESS);
+        if (!base)
+            break;
+        VirtualFree(base, 0, MEM_RELEASE);          /* the address range is known free; claim it with views */
+        uint8_t *v0 = MapViewOfFileEx(section, FILE_MAP_ALL_ACCESS, 0, 0, SEGMENT_SIZE, base);
+        uint8_t *v1 = v0 ? MapViewOfFileEx(section, FILE_MAP_ALL_ACCESS, 0, 0, SEGMENT_SIZE, base + SEGMENT_SIZE) : NULL;
+        uint8_t *v2 = v1 ? MapViewOfFileEx(section, FILE_MAP_ALL_ACCESS, 0, 0, SEGMENT_SIZE, base + 2u * SEGMENT_SIZE) : NULL;
+        if (v0 && v1 && v2) {
+            CloseHandle(section);                     /* the views keep the section alive */
+            return v1;
+        }
+        if (v0) UnmapViewOfFile(v0);
+        if (v1) UnmapViewOfFile(v1);                 /* another thread took part of the range: retry */
+    }
+    CloseHandle(section);
+    return NULL;
+}
+
+void pc_free(void *block)
+{
+    uint8_t *segment = (uint8_t *)block;
+    if (!segment)
+        return;
+    UnmapViewOfFile(segment - SEGMENT_SIZE);
+    UnmapViewOfFile(segment);
+    UnmapViewOfFile(segment + SEGMENT_SIZE);
+}
+
 void pc_textmode(int mode) { bios_set_mode((uint8_t)mode); }
 
 static int join_data_path(char *out, size_t capacity, const char *name) {
