@@ -13,6 +13,9 @@
 void ep1_main(int16_t argc, char **argv);
 void ep2_main(int16_t argc, char **argv);
 void ep3_main(int16_t argc, char **argv);
+extern unsigned char ep1_state_begin, ep1_state_end;
+extern unsigned char ep2_state_begin, ep2_state_end;
+extern unsigned char ep3_state_begin, ep3_state_end;
 static int episode_one(int argc, char **argv) { ep1_main((int16_t)argc, argv); return 0; }
 static int episode_two(int argc, char **argv) { ep2_main((int16_t)argc, argv); return 0; }
 static int episode_three(int argc, char **argv) { ep3_main((int16_t)argc, argv); return 0; }
@@ -305,30 +308,31 @@ static int find_first_episode(const int present[4]) {
     return 0;
 }
 
-static int spawn_selector(const char *data_dir, const char *argv0) {
-    char executable[4096];
-#ifdef _WIN32
-    DWORD length = GetModuleFileNameA(NULL, executable, (DWORD)sizeof(executable));
-    if (!length || length >= sizeof(executable))
-        snprintf(executable, sizeof(executable), "%s", argv0 ? argv0 : "duke1.exe");
-#else
-    snprintf(executable, sizeof(executable), "%s", argv0 ? argv0 : "duke1");
-#endif
-    const char *arguments[] = { executable, "--data", data_dir, "--select", NULL };
-    SDL_Process *child = SDL_CreateProcess(arguments, false);
-    if (!child) {
-        fprintf(stderr, "Could not return to the episode selector: %s\n", SDL_GetError());
-        return 0;
-    }
-    SDL_DestroyProcess(child);
-    return 1;
-}
-
 static void run_episode(int episode, char **game_argv, int *result) {
+#ifdef _WIN32
+    fprintf(stderr, "[port] episode %d start pid=%lu\n", episode,
+            (unsigned long)GetCurrentProcessId());
+#else
+    fprintf(stderr, "[port] episode %d start\n", episode);
+#endif
+    /* The selector key also enters the emulated keyboard queue. Discard it
+       before the game installs its keyboard handler so Enter cannot select a
+       menu action inside the episode. */
+    pc_interrupt_reset();
+    pc_io_reset();
     switch (episode) {
-    case 1: *result = platform_run_episode(episode_one, 1, game_argv); break;
-    case 2: *result = platform_run_episode(episode_two, 1, game_argv); break;
-    default: *result = platform_run_episode(episode_three, 1, game_argv); break;
+    case 1:
+        platform_prepare_episode_state(1, &ep1_state_begin, &ep1_state_end + 1);
+        *result = platform_run_episode(episode_one, 1, game_argv);
+        break;
+    case 2:
+        platform_prepare_episode_state(2, &ep2_state_begin, &ep2_state_end + 1);
+        *result = platform_run_episode(episode_two, 1, game_argv);
+        break;
+    default:
+        platform_prepare_episode_state(3, &ep3_state_begin, &ep3_state_end + 1);
+        *result = platform_run_episode(episode_three, 1, game_argv);
+        break;
     }
 }
 
@@ -347,7 +351,6 @@ int main(int argc, char **argv) {
     int present[4] = { 0, 0, 0, 0 };
     int trace = 0;
     int force_select = 0;
-    int no_restart = 0;
     for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "--data") == 0 && i + 1 < argc) {
             data_dir = argv[++i];
@@ -358,7 +361,7 @@ int main(int argc, char **argv) {
         } else if (strcmp(argv[i], "--select") == 0) {
             force_select = 1;
         } else if (strcmp(argv[i], "--no-restart") == 0) {
-            no_restart = 1;
+            /* Kept as a no-op for scripts written before episodes returned in-process. */
         } else if (strcmp(argv[i], "--renderer") == 0 && i + 1 < argc) {
             ++i;                                   /* read by the platform (pc_sdl.c) */
         } else if (strcmp(argv[i], "--verify-native") == 0 || strcmp(argv[i], "--stereo") == 0) {
@@ -448,10 +451,18 @@ int main(int argc, char **argv) {
     /* GAME1.C reads argv[1] unconditionally even when argc is one. */
     char *game_argv[] = { "duke1", "", "", NULL };
     int result = 0;
-    run_episode(selected_episode, game_argv, &result);
-    int restart = platform_episode_exit_requested() && !no_restart;
-    int spawned = restart ? spawn_selector(data_dir ? data_dir : pc_data_directory, argv[0]) : 0;
+    for (;;) {
+        run_episode(selected_episode, game_argv, &result);
+        if (!platform_episode_exit_requested()) break;
+        platform_reset_episode();
+        episode_dialog_graphics_loaded = 0;
+        dialog_episode = 0;
+        selected_episode = show_episode_dialog(present, first_episode);
+        if (selected_episode <= 0) {
+            result = selected_episode == 0 ? 0 : 1;
+            break;
+        }
+    }
     platform_shutdown();
-    if (restart && spawned) return 0;
     return result;
 }

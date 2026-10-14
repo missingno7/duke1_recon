@@ -1,4 +1,4 @@
-#include "pc_internal.h"
+﻿#include "pc_internal.h"
 #include <string.h>
 
 #define PC_VECTOR_COUNT 256
@@ -34,7 +34,7 @@ int pc_interrupt_init(void) {
     return 1;
 }
 
-pc_isr pc_getvect(int vector) {
+pc_isr pc_getvect(int16_t vector) {
     pc_isr result = pc_noop_isr;
     if (vector < 0 || vector >= PC_VECTOR_COUNT) return result;
     if (pc_irq_mutex) SDL_LockMutex(pc_irq_mutex);
@@ -43,7 +43,20 @@ pc_isr pc_getvect(int vector) {
     return result;
 }
 
-void pc_setvect(int vector, pc_isr handler) {
+void pc_interrupt_reset(void)
+{
+    if (pc_irq_mutex) SDL_LockMutex(pc_irq_mutex);
+    memset(vectors, 0, sizeof(vectors));
+    memset(delivery_counts, 0, sizeof(delivery_counts));
+    pending_read = pending_write = 0;
+    pc_interrupts_disabled = 0;
+    pc_active_interrupts = 0;
+    SDL_SetAtomicInt(&timer_running, 1);
+    if (pc_irq_condition) SDL_BroadcastCondition(pc_irq_condition);
+    if (pc_irq_mutex) SDL_UnlockMutex(pc_irq_mutex);
+}
+
+void pc_setvect(int16_t vector, pc_isr handler) {
     if (vector < 0 || vector >= PC_VECTOR_COUNT) return;
     if (pc_irq_mutex) SDL_LockMutex(pc_irq_mutex);
     vectors[vector] = handler;
@@ -77,6 +90,19 @@ static int invoke_vector(int vector) {
     SDL_BroadcastCondition(pc_irq_condition);
     SDL_UnlockMutex(pc_irq_mutex);
     return 1;
+}
+
+void pc_halt(void)
+{
+    if (!pc_irq_mutex || !pc_irq_condition) {
+        SDL_Delay(1);
+        return;
+    }
+    SDL_LockMutex(pc_irq_mutex);
+    /* Interrupt delivery and STI both broadcast this condition.  The short timeout
+       bounds latency if a signal races the wait or an emulated device is idle. */
+    (void)SDL_WaitConditionTimeout(pc_irq_condition, pc_irq_mutex, 4);
+    SDL_UnlockMutex(pc_irq_mutex);
 }
 
 static void dispatch_pending_keys(void) {

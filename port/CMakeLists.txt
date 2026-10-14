@@ -57,6 +57,7 @@ set(PLATFORM_SOURCES
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_sdl.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_interrupt.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_io.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/pc_capture_hooks.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_speaker.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_dos.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/vga.c"

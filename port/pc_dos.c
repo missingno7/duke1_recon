@@ -8,7 +8,7 @@
 
 char pc_data_directory[4096];
 
-void pc_delay(unsigned milliseconds) { SDL_Delay(milliseconds); }
+void pc_delay(uint16_t milliseconds) { SDL_Delay(milliseconds); }
 
 uint32_t pc_coreleft(void) { return 2u * 1024u * 1024u; }
 
@@ -20,7 +20,23 @@ uint32_t pc_coreleft(void) { return 2u * 1024u * 1024u; }
    wrapped offset would, for any expression, without touching the game source. */
 #define SEGMENT_SIZE 0x10000u
 
-void *pc_malloc(size_t size)
+typedef struct pc_allocation {
+    uint8_t *segment;
+    int episode_owned;
+    struct pc_allocation *next;
+} pc_allocation;
+
+static pc_allocation *pc_allocations;
+static int pc_episode_allocation_mode;
+
+static void unmap_segment(uint8_t *segment)
+{
+    UnmapViewOfFile(segment - SEGMENT_SIZE);
+    UnmapViewOfFile(segment);
+    UnmapViewOfFile(segment + SEGMENT_SIZE);
+}
+
+void *pc_malloc(uint16_t size)
 {
     HANDLE section;
     if (size == 0 || size > SEGMENT_SIZE)
@@ -37,7 +53,17 @@ void *pc_malloc(size_t size)
         uint8_t *v1 = v0 ? MapViewOfFileEx(section, FILE_MAP_ALL_ACCESS, 0, 0, SEGMENT_SIZE, base + SEGMENT_SIZE) : NULL;
         uint8_t *v2 = v1 ? MapViewOfFileEx(section, FILE_MAP_ALL_ACCESS, 0, 0, SEGMENT_SIZE, base + 2u * SEGMENT_SIZE) : NULL;
         if (v0 && v1 && v2) {
+            pc_allocation *allocation = (pc_allocation *)malloc(sizeof(*allocation));
+            if (!allocation) {
+                unmap_segment(v1);
+                CloseHandle(section);
+                return NULL;
+            }
             CloseHandle(section);                     /* the views keep the section alive */
+            allocation->segment = v1;
+            allocation->episode_owned = pc_episode_allocation_mode;
+            allocation->next = pc_allocations;
+            pc_allocations = allocation;
             return v1;
         }
         if (v0) UnmapViewOfFile(v0);
@@ -50,14 +76,56 @@ void *pc_malloc(size_t size)
 void pc_free(void *block)
 {
     uint8_t *segment = (uint8_t *)block;
+    pc_allocation **link = &pc_allocations;
     if (!segment)
         return;
-    UnmapViewOfFile(segment - SEGMENT_SIZE);
-    UnmapViewOfFile(segment);
-    UnmapViewOfFile(segment + SEGMENT_SIZE);
+    while (*link) {
+        pc_allocation *allocation = *link;
+        if (allocation->segment == segment) {
+            *link = allocation->next;
+            free(allocation);
+            break;
+        }
+        link = &allocation->next;
+    }
+    unmap_segment(segment);
 }
 
-void pc_textmode(int mode) { bios_set_mode((uint8_t)mode); }
+void pc_episode_allocations_begin(void)
+{
+    pc_episode_allocation_mode = 1;
+}
+
+void pc_episode_allocations_release(void)
+{
+    pc_allocation **link = &pc_allocations;
+    pc_episode_allocation_mode = 0;
+    while (*link) {
+        pc_allocation *allocation = *link;
+        if (allocation->episode_owned) {
+            *link = allocation->next;
+            unmap_segment(allocation->segment);
+            free(allocation);
+        } else {
+            link = &allocation->next;
+        }
+    }
+}
+
+void pc_release_all_allocations(void)
+{
+    pc_allocation *allocation = pc_allocations;
+    pc_episode_allocation_mode = 0;
+    pc_allocations = NULL;
+    while (allocation) {
+        pc_allocation *next = allocation->next;
+        unmap_segment(allocation->segment);
+        free(allocation);
+        allocation = next;
+    }
+}
+
+void pc_textmode(int16_t mode) { bios_set_mode((uint8_t)mode); }
 
 static int join_data_path(char *out, size_t capacity, const char *name) {
     WIN32_FIND_DATAA entry;
@@ -129,12 +197,12 @@ static char *pc_utoa_base(uint32_t value, char *buffer, int base, int negative) 
     return buffer;
 }
 
-char *pc_ltoa(int32_t value, char *buffer, int base) {
+char *pc_ltoa(int32_t value, char *buffer, int16_t base) {
     uint32_t magnitude = value < 0 ? (uint32_t)(-(int64_t)value) : (uint32_t)value;
     return pc_utoa_base(magnitude, buffer, base, value < 0 && base == 10);
 }
 
-char *pc_ultoa(uint32_t value, char *buffer, int base) {
+char *pc_ultoa(uint32_t value, char *buffer, int16_t base) {
     return pc_utoa_base(value, buffer, base, 0);
 }
 

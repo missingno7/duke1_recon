@@ -1,6 +1,4 @@
 /* Port replacement for GAME1.C's A000:4000 planar image loader. */
-void vga_cpu_write(unsigned int offset, unsigned char value);
-
 void pascal load_planar_image_file(char far *filename, register int offset, int count)
 {
     FILE *stream;

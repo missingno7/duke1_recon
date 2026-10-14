@@ -44,9 +44,13 @@ static uint64_t verify_mismatch_counts[4];
 static uint8_t launcher_keys[64];
 static unsigned launcher_key_read;
 static unsigned launcher_key_write;
+static uint8_t keyboard_game_route[256];
 static SDL_AtomicInt modal_keyboard_capture;
 static _Thread_local jmp_buf *game_exit_target;
 static SDL_AtomicInt episode_exit_requested;
+static unsigned char *episode_state_begin[4];
+static size_t episode_state_size[4];
+static unsigned char *episode_state_snapshot[4];
 
 enum script_action { SCRIPT_KEY, SCRIPT_KEYDOWN, SCRIPT_KEYUP, SCRIPT_SHOT, SCRIPT_QUIT };
 struct script_event {
@@ -61,6 +65,7 @@ struct scripted_release {
     uint64_t at_ms;
     SDL_Scancode key;
     int extended;
+    int game_input;
     int active;
 };
 static struct script_event *script_events;
@@ -157,8 +162,18 @@ static void push_launcher_key(uint8_t scan_code) {
 }
 
 static void send_xt_code(uint8_t scan_code, int extended) {
+    unsigned key_index = (extended ? 128u : 0u) + (scan_code & 0x7fu);
+    int game_input;
+    if (scan_code & 0x80u) {
+        game_input = keyboard_game_route[key_index];
+        keyboard_game_route[key_index] = 0;
+    } else {
+        game_input = !SDL_GetAtomicInt(&modal_keyboard_capture) &&
+                     SDL_GetAtomicInt(&game_thread_started);
+        keyboard_game_route[key_index] = (uint8_t)game_input;
+    }
     if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
-    if (!SDL_GetAtomicInt(&modal_keyboard_capture)) {
+    if (game_input) {
         if (extended) pc_keyboard_scancode(0xe0);
         pc_keyboard_scancode(scan_code);
     }
@@ -273,12 +288,12 @@ static uint64_t script_now_ms(void) {
     return (now - script_origin) * 1000u / frequency;
 }
 
-static void send_script_key(SDL_Scancode key, int down, int extended) {
+static void send_script_key_routed(SDL_Scancode key, int down, int extended, int game_input) {
     uint8_t code;
     int ignored_extended;
     if (!xt_scancode(key, &code, &ignored_extended)) return;
     if (!down) code |= 0x80u;
-    if (SDL_GetAtomicInt(&game_thread_started)) {
+    if (game_input) {
         send_xt_code(code, extended);
     } else {
         if (extended) push_launcher_key(0xe0);
@@ -286,17 +301,22 @@ static void send_script_key(SDL_Scancode key, int down, int extended) {
     }
 }
 
-static void schedule_script_release(SDL_Scancode key, int extended, uint64_t at_ms) {
+static void send_script_key(SDL_Scancode key, int down, int extended) {
+    send_script_key_routed(key, down, extended, SDL_GetAtomicInt(&game_thread_started));
+}
+
+static void schedule_script_release(SDL_Scancode key, int extended, int game_input, uint64_t at_ms) {
     for (size_t i = 0; i < sizeof(scripted_releases) / sizeof(scripted_releases[0]); ++i) {
         if (!scripted_releases[i].active) {
             scripted_releases[i].active = 1;
             scripted_releases[i].key = key;
             scripted_releases[i].extended = extended;
+            scripted_releases[i].game_input = game_input;
             scripted_releases[i].at_ms = at_ms + 45;
             return;
         }
     }
-    send_script_key(key, 0, extended);
+    send_script_key_routed(key, 0, extended, game_input);
 }
 
 static uint32_t png_crc_update(uint32_t crc, const uint8_t *data, size_t length) {
@@ -506,7 +526,9 @@ static void process_script_events(void) {
     uint64_t now = script_now_ms();
     for (size_t i = 0; i < sizeof(scripted_releases) / sizeof(scripted_releases[0]); ++i) {
         if (scripted_releases[i].active && now >= scripted_releases[i].at_ms) {
-            send_script_key(scripted_releases[i].key, 0, scripted_releases[i].extended);
+            send_script_key_routed(scripted_releases[i].key, 0,
+                                   scripted_releases[i].extended,
+                                   scripted_releases[i].game_input);
             scripted_releases[i].active = 0;
         }
     }
@@ -514,8 +536,11 @@ static void process_script_events(void) {
         struct script_event *event = &script_events[script_event_cursor++];
         switch (event->action) {
         case SCRIPT_KEY:
-            send_script_key(event->key, 1, event->extended);
-            schedule_script_release(event->key, event->extended, now);
+            {
+                int game_input = SDL_GetAtomicInt(&game_thread_started);
+                send_script_key_routed(event->key, 1, event->extended, game_input);
+                schedule_script_release(event->key, event->extended, game_input, now);
+            }
             break;
         case SCRIPT_KEYDOWN:
             send_script_key(event->key, 1, event->extended);
@@ -984,7 +1009,7 @@ static int game_thread_main(void *opaque) {
     return SDL_GetAtomicInt(&game_status);
 }
 
-void pc_exit(int status) {
+void pc_exit(int16_t status) {
     if (pc_is_game_thread() && game_exit_target) {
         SDL_SetAtomicInt(&game_status, status);
         SDL_SetAtomicInt(&episode_exit_requested, 1);
@@ -1008,9 +1033,11 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
     SDL_SetAtomicInt(&episode_exit_requested, 0);
     SDL_SetAtomicInt(&window_settings_requested, 0);
     pc_spin_iterations = 0;
+    pc_episode_allocations_begin();
     thread = SDL_CreateThread(game_thread_main, "duke-game", &call);
     if (!thread) {
         fprintf(stderr, "Could not start episode thread: %s\n", SDL_GetError());
+        pc_episode_allocations_release();
         return -1;
     }
     uint64_t last_frame = SDL_GetPerformanceCounter();
@@ -1032,7 +1059,68 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
     }
     int thread_status = 0;
     SDL_WaitThread(thread, &thread_status);
+    pc_episode_allocations_release();
     return thread_status;
+}
+
+void platform_prepare_episode_state(int16_t episode, unsigned char *begin,
+                                    unsigned char *end)
+{
+    size_t size;
+    if (episode < 1 || episode > 3 || !begin || !end || end <= begin) {
+        fprintf(stderr, "[port] invalid episode %d state block\n", (int)episode);
+        return;
+    }
+    size = (size_t)(end - begin);
+    if (episode_state_begin[episode] &&
+        (episode_state_begin[episode] != begin || episode_state_size[episode] != size)) {
+        fprintf(stderr, "[port] episode %d state block changed bounds\n", (int)episode);
+        return;
+    }
+    episode_state_begin[episode] = begin;
+    episode_state_size[episode] = size;
+    if (!episode_state_snapshot[episode]) {
+        episode_state_snapshot[episode] = (unsigned char *)malloc(size);
+        if (!episode_state_snapshot[episode]) {
+            fprintf(stderr, "[port] could not allocate episode %d state snapshot (%zu bytes)\n",
+                    (int)episode, size);
+            return;
+        }
+        memcpy(episode_state_snapshot[episode], begin, size);
+        fprintf(stderr, "[port] episode %d state snapshot: %zu bytes\n",
+                (int)episode, size);
+    } else {
+        memcpy(begin, episode_state_snapshot[episode], size);
+        fprintf(stderr, "[port] episode %d state restored: %zu bytes\n",
+                (int)episode, size);
+    }
+}
+
+void platform_reset_episode(void)
+{
+    pc_interrupt_reset();
+    pc_io_reset();
+    pc_speaker_reset();
+    memset(keyboard_game_route, 0, sizeof(keyboard_game_route));
+    bios_set_mode(0x0d);
+
+    native_renderer_shutdown();
+    capture_shutdown();
+    if (!capture_init())
+        fprintf(stderr, "[port] could not reset frame capture synchronization\n");
+    capture_set_enhanced(renderer_is_enhanced());
+    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
+                              pc_settings.wide_activity);
+    if (!native_renderer_init(renderer))
+        fprintf(stderr, "[port] could not reset native renderer: %s\n", SDL_GetError());
+
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    launcher_key_read = launcher_key_write = 0;
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+    SDL_SetAtomicInt(&modal_keyboard_capture, 0);
+    SDL_SetAtomicInt(&episode_exit_requested, 0);
+    SDL_SetAtomicInt(&window_settings_requested, 0);
+    pc_spin_iterations = 0;
 }
 
 void platform_shutdown(void) {
@@ -1047,6 +1135,7 @@ void platform_shutdown(void) {
     }
     native_renderer_shutdown();
     capture_shutdown();
+    pc_release_all_allocations();
     if (sharp_texture) SDL_DestroyTexture(sharp_texture);
     if (screen_texture) SDL_DestroyTexture(screen_texture);
     if (renderer) SDL_DestroyRenderer(renderer);
@@ -1062,6 +1151,12 @@ void platform_shutdown(void) {
     free(script_events);
     script_events = NULL;
     script_event_count = script_event_cursor = 0;
+    for (int episode = 1; episode <= 3; ++episode) {
+        free(episode_state_snapshot[episode]);
+        episode_state_snapshot[episode] = NULL;
+        episode_state_begin[episode] = NULL;
+        episode_state_size[episode] = 0;
+    }
     SDL_Quit();
 }
 

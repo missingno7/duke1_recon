@@ -1,7 +1,4 @@
-/* Port replacement: preserve the DOS timer/sound handler and expose frame boundaries. */
-void pc_speaker_note_game_tick(int tick_counter);
-void pc_speaker_begin_sound(void);
-
+/* Port replacement: preserve the DOS timer/sound handler. */
 void interrupt timer_sound_interrupt_handler(void)
 {
     register unsigned int period;
@@ -36,7 +33,6 @@ void interrupt timer_sound_interrupt_handler(void)
     }
 
     ++timer_tick_counter;
-    pc_speaker_note_game_tick(timer_tick_counter);
     ++bios_timer_chain_divider;
     if (bios_timer_chain_divider == 8) {
         bios_timer_chain_divider = 0;

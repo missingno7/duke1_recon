@@ -20,6 +20,22 @@ static int is_vga_port(uint16_t port) {
     return (port >= 0x3b0 && port <= 0x3df);
 }
 
+void pc_io_reset(void)
+{
+    keyboard_data_latch = 0;
+    speaker_control = 0x0c;
+    game_port_latch = 0xf0;
+    pit0_low_byte = 0;
+    pit0_write_phase = 0;
+    pit0_access_mode = 3;
+    pit2_low_byte = 0;
+    pit2_write_phase = 0;
+    pit2_access_mode = 3;
+    pit_control = 0;
+    memset(text_video_memory, 0, sizeof(text_video_memory));
+    atomic_store(&pc_pit0_divisor, 65536u);
+}
+
 uint8_t pc_inportb(uint16_t port) {
     uint8_t value = 0xff;
     if (is_vga_port(port)) {

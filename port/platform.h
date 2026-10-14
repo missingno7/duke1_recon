@@ -17,6 +17,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include "game_hooks.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,40 +28,18 @@ extern "C" {
    OUT DX, AX does.  Emulated: 0x3C4/0x3C5 sequencer, 0x3CE/0x3CF graphics controller,
    0x3D4/0x3D5 CRTC (start address), 0x3DA input status (retrace), 0x40-0x43 PIT,
    0x60/0x61 keyboard controller and speaker gate, 0x20 PIC (EOI), 0x201 game port. */
-uint8_t  pc_inportb(uint16_t port);
-uint16_t pc_inport(uint16_t port);
-void     pc_outportb(uint16_t port, uint8_t value);
-void     pc_outport(uint16_t port, uint16_t value);
-
 /* ---- interrupts ----
    Vectors 8 (timer) and 9 (keyboard) can be hooked with pc_setvect; the platform calls the
    handler asynchronously (from its own thread) at the PIT rate / on each key event, never
    between pc_disable() and pc_enable().  pc_getvect returns a callable no-op for vectors
    the game did not set (the BIOS handlers it chains to). */
-typedef void (*pc_isr)(void);
-pc_isr pc_getvect(int vector);
-void   pc_setvect(int vector, pc_isr handler);
-void   pc_disable(void);
-void   pc_enable(void);
-
-/* ---- CPU-speed-dependent waits ----
-   The generator inserts pc_spin() once per pass of empty hardware/key/timer waits and of the
-   title-menu iteration counters. The SDL backend batches 440 passes per 1 ms yield, calibrated
-   against DOSBox-X cputype=386, cycles=fixed 20000. Timer-based delays still use the PIT counter
-   unchanged. Calls are also present in key/tick polling loops so they yield instead of burning
-   a core while their event/tick condition is pending. */
-void   pc_spin(void);
-
 /* ---- memory ----
    Real-mode addresses the game forms with MK_FP.  B800:xxxx (text screen) returns a pointer
    into the emulated text buffer.  A000:xxxx is planar video memory and cannot be a plain
    pointer: the functions that write it are replaced in port/override/ and use vga_* below;
    pc_mk_fp aborts with a message for it. */
-void *pc_mk_fp(uint16_t segment, uint16_t offset);
 /* malloc/free of the game: every block is a 64 KB segment whose offset arithmetic wraps
    like a large-model far pointer's (p + (int16_t)x == p + (uint16_t)x).  At most 64 KB. */
-void *pc_malloc(size_t size);
-void  pc_free(void *block);
 
 /* ---- EGA/VGA (mode 0Dh, 320x200, 16 colours) ----
    Four 64 KB planes.  vga_cpu_write / vga_cpu_read are a CPU access to A000:offset with the
@@ -82,7 +61,6 @@ static inline uint8_t vga_port_read_value(uint16_t port)
 #define vga_port_read(...) \
     VGA_PORT_READ_SELECT(__VA_ARGS__, vga_port_read, vga_port_read_value)(__VA_ARGS__)
 void     vga_set_palette_entry(uint8_t index, uint8_t colour);
-void     vga_cpu_write(uint16_t offset, uint8_t value);
 uint8_t  vga_cpu_read(uint16_t offset);
 void     vga_set_display_start(uint16_t offset);       /* CRTC start address, in bytes */
 uint16_t vga_display_start(void);
@@ -101,33 +79,12 @@ void     vga_vertical_retrace_wait(void);              /* blocks until the next 
 void     vga_replace_colour_in_text_span(uint8_t from, uint8_t to, int x, int y,
                                           int columns, int rows);
 
-/* Enhanced renderer capture hooks.  Game-call instrumentation is generated into the build
-   tree; the canonical DOS sources and their prototypes remain untouched. */
-void     capture_begin_gameplay_frame(int16_t scroll_x, int16_t map_y_offset);
-void     capture_publish_intermediate_gameplay_frame(int16_t drawing_page);
-void     capture_set_modal_capture_active(int active);
-void     capture_snapshot_wide_tiles(const uint16_t *tile_map, int16_t map_y_offset,
-                                    uint16_t animation_phase);
-void     capture_end_tile_strip(void);
-int      port_is_world_position_outside_wide_view(int world_x, int world_y,
-                                                   int original_result);
-int      port_is_world_position_outside_wide_if_active(int world_x, int world_y,
-                                                        int original_result);
-int16_t  blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t y);
-
 /* ---- video BIOS (INT 10h) ---- */
 void bios_set_mode(uint8_t mode);                      /* 0x0D graphics, 0x03 text */
 void bios_set_palette_register(uint8_t index, uint8_t colour);   /* AX=1000h */
 void bios_set_active_page(uint8_t page);               /* AH=05h: start = page * 0x2000 */
 
 /* ---- DOS and Turbo C runtime services ---- */
-void     pc_delay(unsigned milliseconds);
-uint32_t pc_coreleft(void);
-void     pc_textmode(int mode);
-void     pc_exit(int status);                          /* ends the episode, back to the launcher */
-FILE    *pc_fopen(const char *name, const char *mode); /* data directory, case-insensitive */
-int16_t  pc_getw(FILE *stream);                        /* 16-bit little-endian word */
-int16_t  pc_putw(int16_t word, FILE *stream);
 
 /* ---- launcher side ---- */
 typedef int (*episode_main)(int argc, char **argv);
@@ -138,11 +95,13 @@ int  platform_poll_key(void);                          /* launcher dialogs: next
 int  platform_poll_modal_key(void);                    /* in-game dialog: queued XT scan code, no SDL event pumping */
 void platform_begin_modal_keyboard_capture(void);      /* route key events to the modal queue only */
 void platform_end_modal_keyboard_capture(void);
-void platform_show_port_settings_dialog(int16_t episode);
 void platform_apply_port_setting(int row);
 int  platform_set_script(const char *path);             /* ms-from-start key/keydown/keyup/shot/quit events */
 int  platform_episode_exit_requested(void);             /* pc_exit was called from the episode */
 void platform_present_frame(void);                       /* present one launcher/dialog frame */
+void platform_prepare_episode_state(int16_t episode, unsigned char *begin,
+                                    unsigned char *end);
+void platform_reset_episode(void);
 
 #ifdef __cplusplus
 }

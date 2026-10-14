@@ -1,6 +1,4 @@
 /* Port replacement for GAME2.C's A000:0000 planar bitmap copy. */
-void vga_cpu_write(unsigned int offset, unsigned char value);
-
 void display_title_screen(void)
 {
     register int byte_offset;

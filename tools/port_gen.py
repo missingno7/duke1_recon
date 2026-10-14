@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 import sys
 from dataclasses import dataclass
@@ -65,6 +66,9 @@ SPIN_CONDITION_NAMES = {
     "joystick_button_2",
     "button_1_state",
     "button_2_state",
+    "keyboard_backspace_pressed",
+    "keyboard_interrupt_state",
+    "keyboard_key_g_pressed",
     "x_axis_pressed",
     "y_axis_pressed",
 }
@@ -183,7 +187,9 @@ def defined_objects(text: str) -> set[str]:
     def declarators(words: list[str]) -> None:
         if not words or words[0] in {"typedef", "extern"}:
             return
-        fp = re.search(r"\(\s*\*\s*([A-Za-z_]\w*)\s*\)", " ".join(words))
+        fp = re.search(r"\(\s*(?:(?:far|near|huge|pascal|cdecl|interrupt)\s+)*"
+                       r"\*\s*([A-Za-z_]\w*)\s*(?:\[[^\]]*\]\s*)*\)",
+                       " ".join(words))
         if fp:                                             # function pointer variable
             names.add(fp.group(1))
             return
@@ -341,6 +347,104 @@ def translate(text: str, episode: int, prefixes: set[str], *, remove_abs: bool =
     return out
 
 
+def call_bounds(tokens: list[Token], opening: int) -> int | None:
+    """Return the closing parenthesis token for a call beginning at opening."""
+    if opening >= len(tokens) or tokens[opening].text != "(":
+        return None
+    depth = 1
+    for pos in range(opening + 1, len(tokens)):
+        token = tokens[pos]
+        if token.kind in {"string", "char", "line", "block"}:
+            continue
+        if token.text == "(": depth += 1
+        elif token.text == ")":
+            depth -= 1
+            if depth == 0: return pos
+    return None
+
+
+def split_call_args(source: str, tokens: list[Token], opening: int, closing: int) -> list[str]:
+    """Split call arguments at commas outside nested delimiters."""
+    args: list[str] = []
+    start = tokens[opening].end
+    parens = brackets = braces = 0
+    for pos in range(opening + 1, closing):
+        token = tokens[pos]
+        if token.kind in {"string", "char", "line", "block"}:
+            continue
+        if token.text == "(": parens += 1
+        elif token.text == ")": parens -= 1
+        elif token.text == "[": brackets += 1
+        elif token.text == "]": brackets -= 1
+        elif token.text == "{": braces += 1
+        elif token.text == "}": braces -= 1
+        elif token.text == "," and parens == brackets == braces == 0:
+            args.append(source[start:token.start].strip())
+            start = token.end
+    final = source[start:tokens[closing].start].strip()
+    if final or args:
+        args.append(final)
+    return args
+
+
+def rewrite_sound_requests(source: str, source_name: str, sound_sites: dict,
+                           report: list[dict[str, str]]) -> str:
+    """Attach each request to the statically reviewed world-x expression."""
+    scan_source = re.sub(r"(?m)^[ \t]*#.*$", lambda m: re.sub(r"[^\r\n]", " ", m.group()), source)
+    tokens = lex(scan_source)
+    definitions = function_definitions(source)
+    occurrences: dict[str, int] = {}
+    edits: list[tuple[int, int, str]] = []
+    used: set[str] = set()
+    for pos, token in enumerate(tokens):
+        if token.kind != "ident" or token.text != "request_priority_sound_effect":
+            continue
+        opening = significant(tokens, pos + 1)
+        if opening is None or tokens[opening].text != "(":
+            continue
+        closing = call_bounds(tokens, opening)
+        if closing is None:
+            continue
+        after = significant(tokens, closing + 1)
+        if after is not None and tokens[after].text == "{":
+            continue                         # the original definition, replaced later
+        owner = next((name for name, start, end in definitions
+                      if start <= token.start < end), None)
+        if owner is None:
+            raise ValueError(f"sound request at {source_name}:{source.count(chr(10), 0, token.start) + 1} has no function")
+        occurrence = occurrences.get(owner, 0) + 1
+        occurrences[owner] = occurrence
+        key = f"{source_name}:{owner}#{occurrence}"
+        entry = sound_sites.get(key)
+        if not entry:
+            raise ValueError(f"missing sound source attribution for {key}")
+        source_x = entry["x"]
+        if source_x == "player":
+            expression = "player_screen_x + level_scroll_x"
+        elif source_x == "centre":
+            expression = "PC_SOUND_SOURCE_CENTRE"
+        else:
+            expression = source_x
+        args = split_call_args(source, tokens, opening, closing)
+        if len(args) != 1:
+            raise ValueError(f"expected one sound id in {key}, found {len(args)} arguments")
+        replacement = ("request_priority_sound_effect(" + args[0] +
+                      ", (int16_t)(" + expression + "))")
+        edits.append((token.start, tokens[closing].end, replacement))
+        used.add(key)
+        line = str(source.count("\n", 0, token.start) + 1)
+        report.append({"source": source_name, "line": line, "function": owner,
+                       "occurrence": str(occurrence), "x": source_x,
+                       "reason": entry["reason"]})
+    expected = {key for key in sound_sites if key.startswith(source_name + ":")}
+    missing = expected - used
+    if missing:
+        raise ValueError("sound source table has sites absent from source: " + ", ".join(sorted(missing)))
+    for start, end, replacement in sorted(edits, reverse=True):
+        source = source[:start] + replacement + source[end:]
+    return source
+
+
 def replace_overrides(source: str, source_path: Path, override_dir: Path) -> str:
     overrides = {p.stem: p for p in sorted(override_dir.glob("*.c"))} if override_dir.exists() else {}
     if not overrides:
@@ -366,8 +470,89 @@ def replace_overrides(source: str, source_path: Path, override_dir: Path) -> str
     return source
 
 
-def inject_pc_spin(source: str) -> str:
-    """Insert a yield into empty loops and loops polling asynchronous input/timer state."""
+def normalized_hook_signature(signature: str, name: str) -> tuple[str, tuple[str, ...]]:
+    signature = re.sub(r"/\*[\s\S]*?\*/|//[^\r\n]*", " ", signature)
+    match = re.search(rf"([A-Za-z_][\w\s*]*?)\b{name}\s*\((.*?)\)\s*;?\s*$", signature, re.S)
+    if not match:
+        raise ValueError(f"cannot parse hook signature for {name}: {signature.strip()!r}")
+    result = " ".join(match.group(1).split())
+    result = re.sub(r"\b(?:extern|static|inline)\b", "", result)
+    result = " ".join(result.split())
+    params_text = match.group(2).strip()
+    if not params_text or params_text == "void":
+        params: tuple[str, ...] = ()
+    else:
+        parts: list[str] = []
+        start = 0
+        depth = 0
+        for pos, char in enumerate(params_text):
+            if char in "([": depth += 1
+            elif char in ")]": depth -= 1
+            elif char == "," and depth == 0:
+                parts.append(params_text[start:pos].strip()); start = pos + 1
+        parts.append(params_text[start:].strip())
+        clean_parts = []
+        for part in parts:
+            words = re.findall(r"[A-Za-z_]\w*|\*|\[|\]", part)
+            if len(words) >= 2 and re.match(r"[A-Za-z_]\w*$", words[-1]) and words[-1] not in {"const", "volatile"}:
+                words = words[:-1]
+            clean_parts.append(" ".join(words))
+        params = tuple(clean_parts)
+    return result, params
+
+
+def check_game_hooks(port_dir: Path, override_dir: Path) -> None:
+    """Reject private override prototypes and compare every hook with its definition."""
+    hooks_path = port_dir / "game_hooks.h"
+    header = hooks_path.read_text(encoding="utf-8")
+    declarations: dict[str, str] = {}
+    for match in re.finditer(
+        r"(?m)^\s*([A-Za-z_][\w\s*]*?)\b([A-Za-z_]\w*)\s*\(([^;{}]*)\)\s*;",
+        re.sub(r"/\*[\s\S]*?\*/|//[^\r\n]*", " ", header),
+    ):
+        name = match.group(2)
+        if name in {"void", "if", "while", "switch", "for"} or match.group(1).strip() == "typedef":
+            continue
+        declarations[name] = match.group(0).strip()
+    if not declarations:
+        raise ValueError("game_hooks.h contains no platform hooks")
+
+    for path in sorted(override_dir.glob("*.c")):
+        clean = re.sub(r"/\*[\s\S]*?\*/|//[^\r\n]*", " ",
+                       path.read_text(encoding="latin1"))
+        for name in declarations:
+            if re.search(rf"(?m)^\s*(?:extern\s+)?[A-Za-z_][\w\s*]*\b{name}\s*\([^;{{}}]*\)\s*;", clean):
+                raise ValueError(f"override {path} declares platform hook {name}; use game_hooks.h")
+
+    definitions: dict[str, list[str]] = {name: [] for name in declarations}
+    cmake_path = port_dir / "CMakeLists.txt"
+    cmake_text = cmake_path.read_text(encoding="utf-8") if cmake_path.exists() else ""
+    source_block = re.search(r"(?s)set\(PLATFORM_SOURCES(.*?)\)", cmake_text)
+    if source_block:
+        source_names = {Path(name).name for name in
+                        re.findall(r'"([^"\n]+\.c)"', source_block.group(1))}
+        platform_sources = [path for path in port_dir.rglob("*.c")
+                            if path.name in source_names]
+    else:
+        platform_sources = [path for path in port_dir.rglob("*.c")
+                            if "build" not in path.parts and "tests" not in path.parts]
+    for path in platform_sources:
+        raw = path.read_text(encoding="latin1", errors="replace")
+        for name, start, end in function_definitions(raw):
+            if name in definitions:
+                opening = raw.find("{", start, end)
+                definitions[name].append(raw[start:opening].strip())
+    for name, declaration in declarations.items():
+        found = definitions[name]
+        if len(found) != 1:
+            raise ValueError(f"hook {name} has {len(found)} platform definitions (expected one)")
+        if normalized_hook_signature(declaration, name) != normalized_hook_signature(found[0], name):
+            raise ValueError(f"hook declaration/definition disagree for {name}: {declaration} vs {found[0]}")
+
+
+def inject_pc_spin(source: str, source_name: str,
+                   report: list[dict[str, str]]) -> str:
+    """Insert pc_halt in interrupt waits and retain pc_spin for pass-count pacing."""
     tokens = lex(source)
     definitions = function_definitions(source)
     insertions: list[tuple[int, str]] = []
@@ -479,23 +664,45 @@ def inject_pc_spin(source: str) -> str:
             else:
                 empty = tokens[body_start].text == ";"
         loop_records.append((index, body_start, body_end, condition_names, owner))
-        is_async_wait = bool(condition_names & SPIN_CONDITION_NAMES)
+        async_names = condition_names & SPIN_CONDITION_NAMES
+        body_tokens = [tokens[p] for p in range(body_start + 1, body_end - 1)
+                       if tokens[p].kind not in {"space", "line", "block"}]
+        writes = set()
+        for body_pos, body_token in enumerate(body_tokens):
+            if body_token.kind != "ident" or body_token.text not in condition_names:
+                continue
+            prev = body_tokens[body_pos - 1].text if body_pos else ""
+            nxt = body_tokens[body_pos + 1].text if body_pos + 1 < len(body_tokens) else ""
+            if nxt in {"=", "++", "--", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^="} or prev in {"++", "--"}:
+                writes.add(body_token.text)
+        # Conditions may also include stable local thresholds (target_ticks), or globals such as
+        # game_speed_setting that this loop does not modify.  Once an interrupt/port value is a
+        # condition dependency, the loop can halt as long as its body writes none of the values
+        # that the condition reads.
+        is_async_wait = bool(async_names) and not writes
         if empty or is_async_wait:
+            kind = "WAIT" if is_async_wait else "COUNTING"
+            yield_call = "pc_halt" if is_async_wait else "pc_spin"
+            reason = ("condition depends on interrupt/port state; body writes none of its condition values"
+                      if is_async_wait else "empty/pass-count loop retains CPU pacing")
+            report.append({"source": source_name,
+                           "line": str(source.count("\n", 0, token.start) + 1),
+                           "function": owner or "<unknown>", "classification": kind,
+                           "condition": " ".join(sorted(condition_names)), "reason": reason})
             if tokens[body_start].text == "{":
                 insert_at = tokens[body_start].end
                 if empty:
-                    insertions.append((insert_at, "\n            pc_spin();"))
+                    insertions.append((insert_at, f"\n            {yield_call}();"))
                 elif not any(
-                    tokens[p].kind == "ident" and tokens[p].text == "pc_spin"
+                    tokens[p].kind == "ident" and tokens[p].text in {"pc_spin", "pc_halt"}
                     for p in range(body_start + 1, body_end - 1)
                 ):
-                    insertions.append((insert_at, "\n            pc_spin();"))
+                    insertions.append((insert_at, f"\n            {yield_call}();"))
             elif tokens[body_start].text == ";":
-                insertions.append((tokens[body_start].start, "{ pc_spin(); }"))
+                insertions.append((tokens[body_start].start, f"{{ {yield_call}(); }}"))
             else:
-                body_text = source[tokens[body_start].start : tokens[body_end - 1].end]
                 insertions.append((tokens[body_end - 1].end, " }"))
-                insertions.append((tokens[body_start].start, "{ pc_spin(); "))
+                insertions.append((tokens[body_start].start, f"{{ {yield_call}(); "))
         index += 1
 
     # The second title-screen timeout counter advances at a label rather than a loop header.
@@ -505,9 +712,132 @@ def inject_pc_spin(source: str) -> str:
         colon = next_sig(index + 1)
         if colon is not None and tokens[colon].text == ":" and function_at(token.start) == "title_screen_and_menu":
             insertions.append((tokens[colon].end, " pc_spin();"))
+            report.append({"source": source_name,
+                           "line": str(source.count("\n", 0, token.start) + 1),
+                           "function": "title_screen_and_menu", "classification": "COUNTING",
+                           "condition": "label L_0652", "reason": "title-menu pass counter is its delay mechanism"})
 
     for position, text in sorted(insertions, reverse=True):
         source = source[:position] + text + source[position:]
+    return source
+
+
+def instrument_episode_state(source: str, episode: int, source_name: str,
+                             report: list[dict[str, str]]) -> str:
+    """Place mutable file and function statics in ordered per-episode PE sections."""
+    scan_source = re.sub(r"(?m)^[ \t]*#.*$", lambda m: re.sub(r"[^\r\n]", " ", m.group()), source)
+    tokens = lex(scan_source)
+    definitions = function_definitions(source)
+    function_starts: dict[int, tuple[str, int]] = {}
+    for name, start, end in definitions:
+        index = next((i for i, token in enumerate(tokens)
+                      if token.start >= start and token.start < end), None)
+        if index is not None:
+            function_starts[index] = (name, end)
+
+    insertions: list[tuple[int, str]] = []
+    file_objects: set[str] = set()
+    sectioned_file_objects: set[str] = set()
+    depth = 0
+    statement_start = 0
+    index = 0
+    while index < len(tokens):
+        if index in function_starts:
+            _, end = function_starts[index]
+            index = next((i for i in range(index + 1, len(tokens))
+                          if tokens[i].start >= end), len(tokens))
+            statement_start = index
+            depth = 0
+            continue
+        token = tokens[index]
+        if token.kind in {"space", "line", "block"}:
+            index += 1
+            continue
+        if token.text == "{":
+            depth += 1
+        elif token.text == "}":
+            depth = max(0, depth - 1)
+        elif token.text == ";" and depth == 0:
+            start_index = next((i for i in range(statement_start, index)
+                                if tokens[i].kind not in {"space", "line", "block"}), None)
+            if start_index is not None:
+                statement = source[tokens[start_index].start:token.end]
+                names = defined_objects(statement)
+                if names:
+                    file_objects.update(names)
+                    clean_tokens = [tokens[i].text for i in range(start_index, index)
+                                    if tokens[i].kind not in {"space", "line", "block"}]
+                    is_const = "const" in clean_tokens
+                    initialized = "=" in clean_tokens
+                    suffix = "r" if is_const else ("m" if initialized else "b")
+                    attribute = f'__attribute__((section(".ep{episode}${suffix}"), used)) '
+                    insertions.append((tokens[start_index].start, attribute))
+                    sectioned_file_objects.update(names)
+                    for name in sorted(names):
+                        report.append({"episode": str(episode), "source": source_name,
+                                       "function": "<file-scope>", "variable": name,
+                                       "section": f".ep{episode}${suffix}",
+                                       "storage": "const" if is_const else
+                                                 ("initialized" if initialized else "uninitialized")})
+            statement_start = index + 1
+        index += 1
+
+    if file_objects != sectioned_file_objects:
+        missing = sorted(file_objects - sectioned_file_objects)
+        raise ValueError(f"episode {episode} {source_name} file-scope objects escaped state sections: {missing}")
+
+    # Function-local statics have their own storage and are not returned by defined_objects
+    # at file scope. Add the same section attribute to each local static declaration.
+    for function, start, end in definitions:
+        first = next((i for i, token in enumerate(tokens)
+                      if token.start >= start and token.start < end), None)
+        if first is None:
+            continue
+        for i in range(first, len(tokens)):
+            if tokens[i].start >= end:
+                break
+            if tokens[i].kind != "ident" or tokens[i].text != "static":
+                continue
+            parens = brackets = braces = 0
+            semi = None
+            for j in range(i + 1, len(tokens)):
+                t = tokens[j]
+                if t.kind in {"space", "line", "block", "string", "char"}:
+                    continue
+                if t.text == "(": parens += 1
+                elif t.text == ")": parens -= 1
+                elif t.text == "[": brackets += 1
+                elif t.text == "]": brackets -= 1
+                elif t.text == "{": braces += 1
+                elif t.text == "}":
+                    if braces == 0: break
+                    braces -= 1
+                elif t.text == ";" and parens == brackets == braces == 0:
+                    semi = j
+                    break
+            if semi is None:
+                continue
+            declaration = source[tokens[i].start:tokens[semi].end]
+            names = defined_objects(declaration)
+            if not names:
+                continue
+            clean_tokens = [tokens[j].text for j in range(i, semi)
+                            if tokens[j].kind not in {"space", "line", "block"}]
+            is_const = "const" in clean_tokens
+            initialized = "=" in clean_tokens
+            suffix = "r" if is_const else ("m" if initialized else "b")
+            attribute = f'__attribute__((section(".ep{episode}${suffix}"), used)) '
+            insertions.append((tokens[i].start, attribute))
+            for name in sorted(names):
+                report.append({"episode": str(episode), "source": source_name,
+                               "function": function, "variable": name,
+                               "section": f".ep{episode}${suffix}",
+                               "storage": "function-static-const" if is_const else
+                                         ("function-static-initialized" if initialized else
+                                          "function-static-uninitialized")})
+
+    for position, attribute in sorted(insertions, reverse=True):
+        source = source[:position] + attribute + source[position:]
     return source
 
 
@@ -528,7 +858,6 @@ def tag_sprite_draw_calls(source: str, first_site: int) -> tuple[str, int]:
     for start, end, replacement in sorted(edits, reverse=True):
         source = source[:start] + replacement + source[end:]
     return source, next_site - first_site
-
 
 def instrument_gameplay_capture(source: str) -> str:
     """Open a frame capture at the one routine that draws the gameplay tile strip."""
@@ -571,7 +900,7 @@ def instrument_modal_capture(source: str) -> str:
     if opening_brace < 0:
         raise ValueError("wait_input_animated_sprite has no body")
     source = (source[:opening_brace + 1] +
-              "\n    capture_set_modal_capture_active(1);" +
+              "\n    pc_capture_set_modal_capture_active(1);" +
               source[opening_brace + 1:])
     definition = next(item for item in function_definitions(source)
                       if item[0] == "wait_input_animated_sprite")
@@ -613,7 +942,7 @@ def instrument_modal_capture(source: str) -> str:
             raise ValueError("wait_input_animated_sprite has no closing brace")
         return (source[:closing_brace] +
                 "    capture_publish_intermediate_gameplay_frame(draw_page_index);\n"
-                "    capture_set_modal_capture_active(0);\n" + source[closing_brace:])
+                "    pc_capture_set_modal_capture_active(0);\n" + source[closing_brace:])
     raise ValueError("could not find the animated input loop for interim gameplay capture")
 
 
@@ -733,14 +1062,14 @@ def classify_view_test_calls(source: str, source_name: str) -> tuple[str, list[d
         if kind == "draw":
             args = source[tokens[opening].end:tokens[closing].start]
             calls.append((token.start, tokens[closing].end,
-                          "port_is_world_position_outside_wide_view(" + args +
+                          "pc_capture_is_world_position_outside_wide_view(" + args +
                           ", is_world_position_outside_view(" + args + "))"))
         else:
             # Keep the original test available as the fallback result; the helper substitutes
             # the wide bounds only when wide_activity is enabled.
             args = source[tokens[opening].end:tokens[closing].start]
             calls.append((token.start, tokens[closing].end,
-                          "port_is_world_position_outside_wide_if_active(" + args +
+                          "pc_capture_is_world_position_outside_wide_if_active(" + args +
                           ", is_world_position_outside_view(" + args + "))"))
 
     for start, end, replacement in sorted(calls, reverse=True):
@@ -748,12 +1077,19 @@ def classify_view_test_calls(source: str, source_name: str) -> tuple[str, list[d
     return source, report
 
 
-def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
+def generate(source_dir: Path, output_dir: Path, override_dir: Path,
+             port_dir: Path | None = None) -> None:
+    port_dir = port_dir or Path(__file__).resolve().parents[1] / "port"
+    check_game_hooks(port_dir, override_dir)
     header_path = source_dir / "DUKE.H"
     game_paths = [source_dir / "GAME1.C", source_dir / "GAME2.C"]
     header = header_path.read_text(encoding="latin1")
     functions, globals_ = header_symbols(header)
     raw_units = {p: p.read_text(encoding="latin1") for p in game_paths}
+    sound_doc = json.loads((port_dir / "sound_sources.json").read_text(encoding="utf-8"))
+    if sound_doc.get("version") != 1 or not isinstance(sound_doc.get("sites"), dict):
+        raise ValueError("port/sound_sources.json must contain version 1 and a sites object")
+    sound_sites = sound_doc["sites"]
     for p, raw in raw_units.items():
         functions.update(name for name, _, _ in function_definitions(raw))
         globals_.update(defined_objects(raw))
@@ -763,6 +1099,9 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
     prefixes = functions | globals_
 
     view_test_report: list[dict[str, str]] = []
+    sound_site_report: list[dict[str, str]] = []
+    spin_loop_report: list[dict[str, str]] = []
+    episode_state_report: list[dict[str, str]] = []
     for episode in (1, 2, 3):
         ep_dir = output_dir / f"ep{episode}"
         ep_dir.mkdir(parents=True, exist_ok=True)
@@ -773,8 +1112,14 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
             generated_header,
         )
         generated_header = generated_header.replace(
-            "#define DUKE_H\n", "#define DUKE_H\n\n#include <stdint.h>\n#include \"platform.h\"\n", 1
+            "#define DUKE_H\n", "#define DUKE_H\n\n#include <stdint.h>\n#include \"game_hooks.h\"\n#include \"platform.h\"\n", 1
         )
+        generated_header = re.sub(
+            rf"(ep{episode}_request_priority_sound_effect\s*\(\s*int16_t\s+sound_effect_id)\s*\)",
+            r"\1, int16_t sound_source_x)", generated_header,
+        )
+        if f"ep{episode}_request_priority_sound_effect(int16_t sound_effect_id, int16_t sound_source_x)" not in generated_header:
+            raise ValueError("could not widen the generated sound-request declaration")
         generated_header = generated_header.replace(
             "/* ---- data structures ---- */", "#pragma pack(push, 1)\n\n/* ---- data structures ---- */", 1
         )
@@ -797,22 +1142,51 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
             if episode == 1:
                 view_test_report.extend(classified)
             raw = instrument_modal_capture(raw)
-            raw = inject_pc_spin(raw)
+            raw = inject_pc_spin(raw, source_path.name,
+                                 spin_loop_report if episode == 1 else [])
+            raw = instrument_episode_state(raw, episode, source_path.name,
+                                           episode_state_report if episode == 1 else [])
+            raw = rewrite_sound_requests(raw, source_path.name, sound_sites,
+                                         sound_site_report if episode == 1 else [])
             raw, site_count = tag_sprite_draw_calls(raw, sprite_site)
             sprite_site += site_count
             if source_path.name.upper() == "GAME1.C":
                 raw = instrument_gameplay_capture(raw)
             translated = translate(raw, episode, prefixes)
+            if source_path.name.upper() == "GAME1.C":
+                translated += (
+                    f"\n__attribute__((section(\".ep{episode}$a\"), used)) "
+                    f"unsigned char ep{episode}_state_begin = 0;\n"
+                    f"__attribute__((section(\".ep{episode}$z\"), used)) "
+                    f"unsigned char ep{episode}_state_end = 0;\n"
+                )
             (ep_dir / source_path.name).write_text(translated, encoding="latin1", newline="\n")
 
     review_dir = output_dir.parent / "workers" / "luna-wide"
     review_dir.mkdir(parents=True, exist_ok=True)
-    report_path = review_dir / "view-test-classification.csv"
-    with report_path.open("w", encoding="utf-8", newline="") as report_file:
-        writer = csv.DictWriter(report_file,
-                                fieldnames=["source", "line", "column", "function", "classification", "reason"])
-        writer.writeheader()
-        writer.writerows(view_test_report)
+    reports = [
+        ("view-test-classification.csv", view_test_report,
+         ["source", "line", "column", "function", "classification", "reason"]),
+    ]
+    for filename, rows, columns in reports:
+        with (review_dir / filename).open("w", encoding="utf-8", newline="") as report_file:
+            writer = csv.DictWriter(report_file, fieldnames=columns)
+            writer.writeheader()
+            writer.writerows(rows)
+    flow_report_dir = output_dir.parent / "workers" / "luna-flow"
+    flow_report_dir.mkdir(parents=True, exist_ok=True)
+    for filename, rows, columns in [
+        ("sound-sites.csv", sound_site_report,
+         ["source", "line", "function", "occurrence", "x", "reason"]),
+        ("spin-loops.csv", spin_loop_report,
+         ["source", "line", "function", "classification", "condition", "reason"]),
+        ("episode-state-layout.csv", episode_state_report,
+         ["episode", "source", "function", "variable", "section", "storage"]),
+    ]:
+        with (flow_report_dir / filename).open("w", encoding="utf-8", newline="") as report_file:
+            writer = csv.DictWriter(report_file, fieldnames=columns)
+            writer.writeheader()
+            writer.writerows(rows)
 
 
 def main() -> int:

@@ -87,9 +87,24 @@ uint8_t *vga_plane(int plane)
     return planes[plane];
 }
 
+/* Writes per memory region (page 0, page 1, the tile cache above), for the native scene:
+   it notices drawing that bypassed the toolbox (the full-screen pictures). */
+static uint32_t region_writes[3];
+
+uint32_t vga_region_write_count(int region)
+{
+    return region >= 0 && region < 3 ? region_writes[region] : 0;
+}
+
+uint8_t vga_graphics_register(uint8_t index)
+{
+    return gc_regs[index & 15u];
+}
+
 void vga_cpu_write(uint16_t offset, uint8_t value)
 {
     unsigned plane;
+    ++region_writes[offset < 0x2000u ? 0 : offset < 0x4000u ? 1 : 2];
     unsigned mode;
     uint8_t rotated;
     uint8_t bit_mask;

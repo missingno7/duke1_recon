@@ -1,0 +1,377 @@
+{
+  "version": 1,
+  "sites": {
+    "GAME1.C:insert_score_into_high_scores#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME1.C:test_player_head_clearance#1": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:test_player_head_clearance#2": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:test_player_head_clearance#3": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:spawn_world_actor#1": {
+      "x": "player",
+      "reason": "player projectile/actor spawn is attributed to Duke per the player-spawn rule."
+    },
+    "GAME1.C:spawn_projectile#1": {
+      "x": "projectile_record->world_x",
+      "reason": "the newly allocated projectile record owns the sound source."
+    },
+    "GAME1.C:update_player_and_level_state#1": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#2": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#3": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#4": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#5": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#6": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#7": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#8": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:update_player_and_level_state#9": {
+      "x": "player",
+      "reason": "player collision or movement sound follows the player."
+    },
+    "GAME1.C:spawn_contact_flash_effect#1": {
+      "x": "world_x",
+      "reason": "the effect is created at the supplied world position."
+    },
+    "GAME1.C:test_level_tile_special_state#1": {
+      "x": "world_x",
+      "reason": "the changed tile and pickup are at this supplied world position."
+    },
+    "GAME1.C:update_elevator#1": {
+      "x": "actor->world_x",
+      "reason": "the updated actor record owns this sound."
+    },
+    "GAME1.C:update_jump_boots_box#1": {
+      "x": "jump_boots_box_world_x",
+      "reason": "the jump-boots object is stored at these world coordinates."
+    },
+    "GAME1.C:update_rocket#1": {
+      "x": "actor->world_x",
+      "reason": "the updated actor record owns this sound."
+    },
+    "GAME1.C:update_right_flame_turret#1": {
+      "x": "actor->world_x",
+      "reason": "the turret actor record owns this sound."
+    },
+    "GAME1.C:update_left_flame_turret#1": {
+      "x": "actor->world_x",
+      "reason": "the turret actor record owns this sound."
+    },
+    "GAME1.C:update_flying_techbot#1": {
+      "x": "actor->world_x",
+      "reason": "the updated actor record owns this sound."
+    },
+    "GAME1.C:update_wheeled_techbot#1": {
+      "x": "actor->world_x",
+      "reason": "the updated actor record owns this sound."
+    },
+    "GAME1.C:update_robohand_box#1": {
+      "x": "robohand_box_world_x",
+      "reason": "the robohand pickup uses its own world coordinates."
+    },
+    "GAME1.C:update_access_card_box#1": {
+      "x": "access_card_box_world_x",
+      "reason": "the access-card pickup uses its own world coordinates."
+    },
+    "GAME1.C:update_ammo_box#1": {
+      "x": "actor->world_x",
+      "reason": "the ammo-box record being updated owns this sound."
+    },
+    "GAME1.C:update_robot_techbot#1": {
+      "x": "actor->world_x",
+      "reason": "the updated actor record owns this sound."
+    },
+    "GAME1.C:handle_door_and_key_interaction#1": {
+      "x": "door_lock_world_x",
+      "reason": "the interacted lock global identifies the world source."
+    },
+    "GAME1.C:handle_door_and_key_interaction#2": {
+      "x": "door_lock_world_x",
+      "reason": "the interacted lock global identifies the world source."
+    },
+    "GAME1.C:update_dynamite_box#1": {
+      "x": "actor->world_x",
+      "reason": "the updated actor record owns this sound."
+    },
+    "GAME1.C:update_snake_techbot#1": {
+      "x": "formation_object_x_positions[i]",
+      "reason": "the active formation member being processed owns this sound."
+    },
+    "GAME1.C:update_soda_can_bonus#1": {
+      "x": "actor->world_x",
+      "reason": "the soda-can actor record owns this sound."
+    },
+    "GAME1.C:update_soda_can_bonus#2": {
+      "x": "actor->world_x",
+      "reason": "the soda-can actor record owns this sound."
+    },
+    "GAME1.C:update_soda_can_bonus#3": {
+      "x": "actor->world_x",
+      "reason": "the soda-can actor record owns this sound."
+    },
+    "GAME1.C:update_wallcrawler#1": {
+      "x": "actor_record->world_x",
+      "reason": "the updated actor record owns this sound."
+    },
+    "GAME1.C:update_turkey_bonus#1": {
+      "x": "actor_record->world_x",
+      "reason": "the turkey actor record owns this sound."
+    },
+    "GAME1.C:update_turkey_bonus#2": {
+      "x": "actor_record->world_x",
+      "reason": "the turkey actor record owns this sound."
+    },
+    "GAME1.C:update_horizontal_force_field#1": {
+      "x": "p->world_x",
+      "reason": "the updated field record owns this sound."
+    },
+    "GAME1.C:update_rotating_fan#1": {
+      "x": "p->world_x",
+      "reason": "the updated fan record owns this sound."
+    },
+    "GAME1.C:update_football_box#1": {
+      "x": "p->world_x",
+      "reason": "the updated pickup record owns this sound."
+    },
+    "GAME1.C:update_joystick_box#1": {
+      "x": "p->world_x",
+      "reason": "the updated pickup record owns this sound."
+    },
+    "GAME1.C:update_floppy_disk_box#1": {
+      "x": "p->world_x",
+      "reason": "the updated pickup record owns this sound."
+    },
+    "GAME1.C:update_vertical_force_field#1": {
+      "x": "actor_record->world_x",
+      "reason": "the updated field actor record owns this sound."
+    },
+    "GAME1.C:draw_helicopter_wide_sprite#1": {
+      "x": "x",
+      "reason": "the draw routine receives the helicopter world x coordinate."
+    },
+    "GAME1.C:update_balloon_bonus#1": {
+      "x": "actor_record->world_x",
+      "reason": "the updated balloon record owns this sound."
+    },
+    "GAME1.C:update_security_camera#1": {
+      "x": "actor_record->world_x",
+      "reason": "the updated camera record owns this sound."
+    },
+    "GAME1.C:update_molecule_bonus_box#1": {
+      "x": "actor_record->world_x",
+      "reason": "the updated pickup record owns this sound."
+    },
+    "GAME1.C:update_falling_sign#1": {
+      "x": "p->world_x",
+      "reason": "the updated sign record owns this sound."
+    },
+    "GAME1.C:update_reactor#1": {
+      "x": "reactor_world_x",
+      "reason": "the reactor globals locate the source."
+    },
+    "GAME1.C:update_reactor#2": {
+      "x": "reactor_world_x",
+      "reason": "the reactor globals locate the source."
+    },
+    "GAME1.C:update_reactor#3": {
+      "x": "reactor_world_x",
+      "reason": "the reactor globals locate the source."
+    },
+    "GAME1.C:update_reactor#4": {
+      "x": "reactor_world_x",
+      "reason": "the reactor globals locate the source."
+    },
+    "GAME1.C:update_reactor#5": {
+      "x": "reactor_world_x",
+      "reason": "the reactor globals locate the source."
+    },
+    "GAME1.C:update_magenta_flag_box#1": {
+      "x": "p->world_x",
+      "reason": "the updated pickup record owns this sound."
+    },
+    "GAME1.C:update_radio_box#1": {
+      "x": "p->world_x",
+      "reason": "the updated pickup record owns this sound."
+    },
+    "GAME1.C:activate_teleporter_entry#1": {
+      "x": "teleporter_entry_world_x",
+      "reason": "the entry endpoint emits this interaction sound."
+    },
+    "GAME1.C:activate_teleporter_exit#1": {
+      "x": "teleporter_exit_world_x",
+      "reason": "the exit endpoint emits this interaction sound."
+    },
+    "GAME1.C:update_red_bomb#1": {
+      "x": "actor_record->world_x",
+      "reason": "the updated bomb record owns this sound."
+    },
+    "GAME1.C:update_stationary_bomb_hazards#1": {
+      "x": "p->world_x",
+      "reason": "the updated hazard record owns this sound."
+    },
+    "GAME1.C:update_access_card_reader#1": {
+      "x": "access_card_reader_world_x",
+      "reason": "the access-card reader global locates the source."
+    },
+    "GAME1.C:update_robohand_switch#1": {
+      "x": "robohand_switch_world_x",
+      "reason": "the switch global locates the source."
+    },
+    "GAME1.C:update_letter_bonus#1": {
+      "x": "actor_record->world_x",
+      "reason": "the updated letter record owns this sound."
+    },
+    "GAME1.C:update_letter_bonus#2": {
+      "x": "actor_record->world_x",
+      "reason": "the updated letter record owns this sound."
+    },
+    "GAME1.C:update_letter_bonus#3": {
+      "x": "actor_record->world_x",
+      "reason": "the updated letter record owns this sound."
+    },
+    "GAME1.C:update_rabbit_bonus#1": {
+      "x": "p->world_x",
+      "reason": "the updated rabbit record owns this sound."
+    },
+    "GAME1.C:update_rabbit_bonus#2": {
+      "x": "p->world_x",
+      "reason": "the updated rabbit record owns this sound."
+    },
+    "GAME1.C:update_message_sign#1": {
+      "x": "message_sign_world_x",
+      "reason": "the message-sign global locates the source."
+    },
+    "GAME1.C:update_dr_proton#1": {
+      "x": "dr_proton_world_x",
+      "reason": "the boss global locates the source."
+    },
+    "GAME1.C:update_dr_proton#2": {
+      "x": "dr_proton_world_x",
+      "reason": "the boss global locates the source."
+    },
+    "GAME1.C:update_level_lock_or_exit#1": {
+      "x": "proton_display_world_x",
+      "reason": "the exit display global locates the source."
+    },
+    "GAME1.C:update_level_lock_or_exit#2": {
+      "x": "proton_display_world_x",
+      "reason": "the exit display global locates the source."
+    },
+    "GAME1.C:update_level_lock_or_exit#3": {
+      "x": "proton_display_world_x",
+      "reason": "the exit display global locates the source."
+    },
+    "GAME1.C:update_door_keys#1": {
+      "x": "actor_record->world_x",
+      "reason": "the key actor record owns this sound."
+    },
+    "GAME1.C:update_door_locks#1": {
+      "x": "marker_record->world_x",
+      "reason": "the updated lock marker owns this sound."
+    },
+    "GAME1.C:run_game_loop#1": {
+      "x": "centre",
+      "reason": "the cheat-mode dialog is UI feedback."
+    },
+    "GAME1.C:run_game_loop#2": {
+      "x": "player",
+      "reason": "the respawn/contact animation follows Duke."
+    },
+    "GAME1.C:run_game_loop#3": {
+      "x": "centre",
+      "reason": "the player-death confirmation is a dialog."
+    },
+    "GAME1.C:run_game_loop#4": {
+      "x": "centre",
+      "reason": "quit/high-score transition feedback is UI audio."
+    },
+    "GAME1.C:run_title_and_main_menu#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_card_key#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_read_notes#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_elevator#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_soda#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_turkey#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_nuclear#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_open_door#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_robohand#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_access_card#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_transporter#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_insert_card#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_secret_tip_lock_key#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    },
+    "GAME2.C:show_next_episode_promotion#1": {
+      "x": "centre",
+      "reason": "menu, high-score, dialog, or episode transition sound is centred."
+    }
+  }
+}

@@ -6,6 +6,7 @@
    instead of being rounded to audio buffer boundaries. */
 
 #include "pc_internal.h"
+#include "capture.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,15 +49,6 @@ static uint32_t wav_samples;
 static uint16_t wav_channels = 1;
 static SDL_AtomicInt stereo_enabled;
 static SDL_AtomicInt wav_recording;
-static SDL_AtomicInt game_frame;
-static SDL_SpinLock game_frame_lock;
-static int last_timer_counter;
-static int have_timer_counter;
-static int tested_frame;
-static uint64_t tested_time_ns;
-static int tested_position_valid;
-static int tested_world_x;
-static int tested_scroll_x;
 static float requested_pan;
 static float state_pan;
 
@@ -80,51 +72,48 @@ void pc_speaker_set_stereo(int on)
     }
 }
 
-static void observe_game_counter(int tick_counter)
+void pc_speaker_set_source_world_x(int16_t world_x, int16_t scroll_x)
 {
-    SDL_LockSpinlock(&game_frame_lock);
-    if (have_timer_counter && tick_counter < last_timer_counter)
-        SDL_SetAtomicInt(&game_frame, SDL_GetAtomicInt(&game_frame) + 1);
-    last_timer_counter = tick_counter;
-    have_timer_counter = 1;
-    SDL_UnlockSpinlock(&game_frame_lock);
-}
-
-void pc_speaker_note_game_tick(int tick_counter)
-{
-    observe_game_counter(tick_counter);
-}
-
-void pc_speaker_note_view_test(int world_x, int scroll_x, int tick_counter)
-{
-    observe_game_counter(tick_counter);
-    tested_world_x = world_x;
-    tested_scroll_x = scroll_x;
-    tested_frame = SDL_GetAtomicInt(&game_frame);
-    tested_time_ns = SDL_GetTicksNS();
-    tested_position_valid = 1;
-}
-
-float pc_speaker_view_pan(int tick_counter)
-{
-    observe_game_counter(tick_counter);
-    /* An actor's view test and its sound request are microseconds apart: use a test only if it
-       is that fresh, and only once.  (Menus and intros never reset the tick counter, so the
-       frame number alone would let a test from earlier gameplay pan their sounds.) */
-    if (!tested_position_valid || tested_frame != SDL_GetAtomicInt(&game_frame)
-            || SDL_GetTicksNS() - tested_time_ns > 20000000ull)
-        return 0.0f;
-    tested_position_valid = 0;
-    /* is_world_position_outside_view admits [scroll, scroll + 29); pan around
-       that original view's centre, not the widescreen renderer's camera. */
-    return clamp_pan(((float)tested_world_x - (float)tested_scroll_x - 14.5f) / 14.5f);
-}
-
-void pc_speaker_set_next_pan(float pan)
-{
+    float left = (float)scroll_x;
+    float width = 28.0f;
+    float pan = 0.0f;
+    if (world_x != PC_SOUND_SOURCE_CENTRE) {
+        int canvas_width = capture_wide_canvas_width();
+        if (capture_enhanced() && canvas_width > 335) {
+            int gameplay = 0;
+            const CaptureFrame *frame = capture_acquire_latest(&gameplay);
+            if (frame && gameplay) {
+                left = (float)capture_wide_camera_left(frame, canvas_width) / 8.0f;
+                width = (float)(canvas_width - 111) / 8.0f;
+            }
+            if (frame) capture_release_latest();
+        }
+        if (width > 0.0f)
+            pan = ((float)world_x - left - width * 0.5f) / (width * 0.5f);
+    }
     SDL_LockSpinlock(&event_lock);
     requested_pan = clamp_pan(pan);
     SDL_UnlockSpinlock(&event_lock);
+}
+
+void pc_speaker_reset(void)
+{
+    SDL_LockSpinlock(&event_lock);
+    memset(events, 0, sizeof(events));
+    SDL_SetAtomicInt(&event_write, 0);
+    event_read = 0;
+    state_divisor = 0x1000;
+    state_gate = 0;
+    requested_pan = state_pan = 0.0f;
+    SDL_UnlockSpinlock(&event_lock);
+    playhead_ns = 0;
+    play_divisor = 0x1000;
+    play_gate = 0;
+    play_pan = 0.0f;
+    play_left_gain = play_right_gain = 1.0f;
+    phase = 0.0;
+    filtered = 0.0f;
+    if (stream) (void)SDL_ClearAudioStream(stream);
 }
 
 void pc_speaker_begin_sound(void)

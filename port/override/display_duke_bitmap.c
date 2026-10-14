@@ -1,6 +1,4 @@
 /* Port replacement for GAME2.C's A000:0000 planar bitmap copy. */
-void vga_cpu_write(unsigned int offset, unsigned char value);
-
 void display_duke_bitmap(void)
 {
     register int i;
