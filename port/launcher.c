@@ -125,7 +125,7 @@ static void render_episode_dialog(const int present[4], int selected) {
     static const char *const subtitles[4] = {
         "", "   Shrapnel City", "   Mission: Moonbase", "   Trapped in Future"
     };
-    draw_dialog_frame(dialog_episode, 2, 10);
+    draw_dialog_frame(dialog_episode, 1, 10);    /* rows of 16 lines: border at 16..31, bottom at 176..191 */
     draw_dialog_text(dialog_episode, "DUKE NUKUM  v2.0", 12, 6);
     for (int episode = 1; episode <= 3; ++episode) {
         draw_dialog_text(dialog_episode, titles[episode], 9, row_y[episode]);
@@ -222,6 +222,13 @@ static void run_episode(int episode, char **game_argv, int *result) {
 }
 
 int main(int argc, char **argv) {
+#ifdef _WIN32
+    /* A window application has no console: keep the messages in duke1.log instead. */
+    if (GetStdHandle(STD_ERROR_HANDLE) == NULL || GetStdHandle(STD_ERROR_HANDLE) == INVALID_HANDLE_VALUE) {
+        (void)freopen("duke1.log", "w", stderr);
+        (void)freopen("duke1.log", "a", stdout);
+    }
+#endif
     const char *data_dir = NULL;
     const char *script_path = NULL;
     int requested_episode = 0;

@@ -106,6 +106,11 @@ target_include_directories(duke1 PRIVATE
   "${PORT_GEN_DIR}/ep2"
   "${PORT_GEN_DIR}/ep3")
 target_link_libraries(duke1 PRIVATE SDL3::SDL3)
+if(MINGW)
+  # A drop-in build: only SDL3.dll next to duke1.exe (no MinGW runtime DLLs), and a window
+  # application (no console); --trace output goes to duke1.log.
+  target_link_options(duke1 PRIVATE -mwindows -static)
+endif()
 set_target_properties(duke1 PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
 add_custom_command(TARGET duke1 POST_BUILD
