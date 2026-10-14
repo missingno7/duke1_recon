@@ -85,13 +85,16 @@ void pc_outportb(uint16_t port, uint8_t value) {
         if (pit2_access_mode == 1) {
             pit2_low_byte = value;
             pit2_write_phase = 0;
+            pc_speaker_set_divisor(value);
         } else if (pit2_access_mode == 2) {
             pit2_write_phase = 0;
+            pc_speaker_set_divisor((uint32_t)value << 8);
         } else if (pit2_write_phase == 0) {
             pit2_low_byte = value;
             pit2_write_phase = 1;
         } else {
             pit2_write_phase = 0;
+            pc_speaker_set_divisor((uint32_t)pit2_low_byte | ((uint32_t)value << 8));
         }
         break;
     case 0x43:
@@ -109,6 +112,7 @@ void pc_outportb(uint16_t port, uint8_t value) {
         break;
     case 0x61:
         speaker_control = value;
+        pc_speaker_set_gate(value);
         break;
     case 0x201:
         game_port_latch = value;

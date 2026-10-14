@@ -13,6 +13,12 @@
 extern unsigned pc_trace_flags;
 extern char pc_data_directory[4096];
 extern _Atomic uint32_t pc_pit0_divisor;
+
+/* pc_speaker.c */
+int  pc_speaker_init(void);
+void pc_speaker_shutdown(void);
+void pc_speaker_set_divisor(uint32_t divisor);
+void pc_speaker_set_gate(uint8_t port61);
 extern SDL_Mutex *pc_irq_mutex;
 extern SDL_Condition *pc_irq_condition;
 extern unsigned pc_interrupts_disabled;

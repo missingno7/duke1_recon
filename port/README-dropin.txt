@@ -12,6 +12,7 @@ written in the game folder, compatible with the DOS version).
 
 Keys: as in the original (arrows to move, Ctrl jump, Alt fire, F1 help; redefinable
 in the game setup menu).
+Sound: the original PC speaker effects (S toggles sound in the game, as in DOS).
 Alt+Enter: fullscreen.  Q)uit in the main menu returns to the episode dialog, where
 Esc ends the program; closing the window ends it at once.
 
@@ -22,7 +23,6 @@ Options:
   --trace         log hardware/file activity to duke1.log
 
 This is a work-in-progress build:
-  - no sound yet (PC speaker emulation is being added)
   - no joystick yet
   - only the start-up screens, menus and the start of play have been compared with
     the original so far; report anything that looks or behaves differently.

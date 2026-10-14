@@ -494,6 +494,8 @@ int platform_init(const char *data_dir) {
         return 0;
     }
     trace_mutex = SDL_CreateMutex();
+    if (!pc_speaker_init())                         /* no sound device: play silently */
+        fprintf(stderr, "PC speaker: no audio output (%s)\n", SDL_GetError());
     if (!trace_mutex) return 0;
     if (data_dir && *data_dir) {
         if (snprintf(pc_data_directory, sizeof(pc_data_directory), "%s", data_dir) >= (int)sizeof(pc_data_directory)) return 0;
@@ -587,6 +589,7 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
 
 void platform_shutdown(void) {
     pc_interrupt_shutdown();
+    pc_speaker_shutdown();
     if (screen_texture) SDL_DestroyTexture(screen_texture);
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
