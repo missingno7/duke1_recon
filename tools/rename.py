@@ -38,7 +38,8 @@ IDENT = re.compile(r"[A-Za-z_]\w*$")
 KEYWORDS = set("""auto break case char const continue default do double else enum extern float for goto if int
 long register return short signed sizeof static struct switch typedef union unsigned void volatile while
 far near huge pascal cdecl interrupt asm _cs _ds _es _ss main""".split())
-CRLF, LF = chr(13) + chr(10), chr(10)       # the tree has DOS line endings
+CRLF, LF = chr(13) + chr(10), chr(10)
+REGISTRY = ROOT / "layout" / "game-names.json"       # the tree has DOS line endings
 
 
 def flat(m: dict) -> dict:
@@ -262,26 +263,41 @@ def wrap_comment(text: str, indent: str = "", width: int = 100) -> list:
     return [f"{indent}/* {lines[0]}"] + [f"{indent}   {ln}" for ln in lines[1:-1]] + [f"{indent}   {lines[-1]} */"]
 
 
-def add_docs(text: str, docs: dict, header: bool) -> str:
+def add_docs(text: str, docs: dict, header: bool, old_docs: dict = None) -> str:
     """Put each description above its function definition or struct definition;
-    in the header, beside (or above) the global's declaration."""
+    in the header, beside (or above) the global's declaration.  A description
+    previously written for the same object (old_docs) is replaced, not stacked."""
+    old_docs = old_docs or {}
     out = []
     lines = text.split(LF)
+
+    def drop_above(name):
+        old = old_docs.get(name)
+        if old:
+            block = wrap_comment(old)
+            if out[-len(block):] == block:
+                del out[-len(block):]
+
     for i, ln in enumerate(lines):
-        doc = None
+        doc = key = None
         m = re.match(r"^[A-Za-z_][^;=()]*?\b(\w+)\s*\([^;]*$", ln)
         if m and not header and m.group(1) in docs and not ln.startswith(("#", "extern")):
-            doc = docs[m.group(1)]
+            key = m.group(1)
         m = re.match(r"^struct\s+(\w+)\s*\{", ln)
         if m and f"struct {m.group(1)}" in docs:
-            doc = docs[f"struct {m.group(1)}"]
-        if doc and not (out and out[-1].startswith("/*") and doc[:30] in out[-1]):
-            out += wrap_comment(doc)
+            key = f"struct {m.group(1)}"
+        if key:
+            doc = docs[key]
+            drop_above(key)
+            if not (out and out[-1].startswith("/*") and doc[:30] in out[-1]):
+                out += wrap_comment(doc)
         if header:
-            g = re.match(r"^extern\b[^(]*?\b(\w+)\s*(\[[^\]]*\])*\s*;$", ln) or \
-                re.match(r"^extern\b.*\(\s*(?:far\s*)?\*\s*(\w+)\s*\).*;$", ln)
+            g = re.match(r"^extern\b[^(]*?\b(\w+)\s*(\[[^\]]*\])*\s*;", ln) or                 re.match(r"^extern\b.*\(\s*(?:far\s*)?\*\s*(\w+)\s*\).*;", ln)
             if g and g.group(1) in docs:
-                d = docs[g.group(1)].replace("*/", "* /")
+                name = g.group(1)
+                ln = re.sub(r"\s*/\*.*\*/\s*$", "", ln)            # the old trailing description
+                drop_above(name)
+                d = docs[name].replace("*/", "* /")
                 if len(ln) + len(d) + 7 <= 120:
                     ln = f"{ln:<44} /* {d} */" if len(ln) < 44 and 44 + len(d) + 7 <= 120 else f"{ln}  /* {d} */"
                 else:
@@ -311,7 +327,10 @@ def main() -> int:
     ap.add_argument("map")
     ap.add_argument("--dir", default=str(ROOT / "game"))
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--record", action="store_true",
+                    help="also update layout/game-names.json (names and descriptions by logical id)")
     a = ap.parse_args()
+    registry = json.loads(REGISTRY.read_text(encoding="utf-8")) if REGISTRY.exists() else {}
     m = json.loads(Path(a.map).read_text(encoding="utf-8-sig"))
     d = Path(a.dir)
     files = {p.name: p.read_bytes().decode("latin-1").replace(CRLF, LF)
@@ -325,6 +344,7 @@ def main() -> int:
     aliases = {o: n for o, n in glob.items() if BSS_NAME.match(o) and o in present}
     news = list(glob.values()) + list(tags.values())
     dup = {n for n in news if news.count(n) > 1}
+    dup |= {n for n in news if n in present and n not in glob and n not in tags}      # an existing name
     if dup:
         print("name collisions:", sorted(dup)[:20])
         return 1
@@ -390,14 +410,57 @@ def main() -> int:
     # 5. one-line descriptions
     if m.get("docs"):
         new_name = {**glob, **{f"struct {k}": f"struct {v}" for k, v in tags.items()}}
+        current = {**registry.get("functions", {}), **registry.get("globals", {}),
+                   **{f"struct {k}": "struct " + (v["name"] if isinstance(v, dict) else v)
+                      for k, v in registry.get("structs", {}).items()}}
+
+        def final(k):                                 # a logical id or a current name -> the name after this run
+            cur = current.get(k, k)
+            return new_name.get(cur, cur)
+        docs = {final(k): v for k, v in m["docs"].items() if v}
+        old_docs = {final(k): v for k, v in registry.get("docs", {}).items() if v and k in m["docs"]}
         for n in csrc:
-            files[n] = add_docs(files[n], {new_name.get(k, k): v for k, v in m["docs"].items() if v}, n == "DUKE.H")
+            files[n] = add_docs(files[n], docs, n == "DUKE.H", old_docs)
     if a.dry_run:
         return 0
     for name, text in files.items():
         (d / name).write_bytes(text.replace(LF, CRLF).encode("latin-1"))      # DOS line endings
     print(f"renamed {len(mapping)} identifiers in {len(files)} files")
+    if a.record and registry:
+        record(registry, glob, tags, fmaps, m)
     return 0
+
+
+def record(registry: dict, glob: dict, tags: dict, fmaps: dict, m: dict) -> None:
+    """Compose this run's renames into layout/game-names.json (logical id -> name)."""
+    for sec in ("functions", "globals"):
+        for k, v in registry.get(sec, {}).items():
+            registry[sec][k] = glob.get(v, v)
+    for k, v in registry.get("structs", {}).items():
+        cur = v["name"] if isinstance(v, dict) else v
+        if isinstance(v, dict):
+            v["name"] = tags.get(cur, cur)
+            fm = fmaps.get(cur, {})
+            v["fields"] = {f: fm.get(n, n) for f, n in (v.get("fields") or {}).items()}
+        else:
+            registry["structs"][k] = tags.get(cur, cur)
+    params = registry.setdefault("params", {})
+    for f in list(params):
+        if f in glob:
+            params[glob[f]] = params.pop(f)
+    for f, pm in (m.get("params") or {}).items():
+        f = glob.get(f, f)
+        cur = params.setdefault(f, {})
+        inv = {n: o for o, n in cur.items()}
+        for o, n in flat(pm).items():
+            cur[inv.get(o, o)] = n
+    current = {**{v: k for k, v in registry.get("functions", {}).items()},
+               **{v: k for k, v in registry.get("globals", {}).items()}}
+    for k, v in (m.get("docs") or {}).items():
+        lid = k if k in registry.get("functions", {}) or k in registry.get("globals", {}) or k.startswith("struct ")             else current.get(glob.get(k, k), k)
+        registry.setdefault("docs", {})[lid] = v
+    REGISTRY.write_text(json.dumps(registry, indent=1, sort_keys=True), encoding="utf-8")
+    print("recorded in", REGISTRY.relative_to(ROOT))
 
 
 if __name__ == "__main__":
