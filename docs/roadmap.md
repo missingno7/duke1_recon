@@ -40,11 +40,14 @@ outputs with `layout/oracle.lock.json`.
      continuation lines and writes one-line descriptions).  Uninitialised globals keep
      hash-neutral storage names `d_XXXX_` behind `#define` names, since Turbo C orders a
      unit's `_BSS` by a hash of the name (rule BSS-ORDER);
-   * open: parameter and local names (`a0`, `p1`), low-confidence names
-     (`update_actor_30XX` once each actor is identified), subsystem section comments,
-     and the remaining matching-era forms (documented `goto`s, shift chains in the sound
-     bank loaders, casts over byte buffers, the out-of-record store in
-     `actor_3021_records`).
+   * done 2026-10-14: parameter and local names (six workers, maps in
+     `layout/game-names.json` "params"); demo buffers typed `char far *`;
+   * open: low-confidence names (`update_actor_30XX` once each actor is identified, see
+     the confidence column in `build/workers/luna-names2/names.json`), subsystem section
+     comments, and the matching-era forms that were tried and must stay (documented
+     `goto`s in ten functions, shift chains in the sound bank loaders, the flat
+     `ACTOR_TILE_OFFSETS` view, the out-of-record store in `actor_3021_records`, far
+     pointer additions on video memory): each carries a comment saying why.
 4. **Standalone tree** (generated and proven 2026-10-14: `game/`, `python tools/standalone.py build`,
    re-run by `tools/validate.py`): `BUILD.BAT` + host check script.  `game/` is now the source
    that is edited; `src/` + `recipes/` stay frozen as the per-function matching record.
