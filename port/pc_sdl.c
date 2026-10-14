@@ -1,26 +1,47 @@
 #include "pc_internal.h"
+#include "config.h"
+#include "capture.h"
+#include "renderer.h"
 #include <ctype.h>
+#include <math.h>
 #include <stdarg.h>
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
 
 unsigned pc_trace_flags;
 
 static SDL_Window *window;
 static SDL_Renderer *renderer;
 static SDL_Texture *screen_texture;
+static SDL_Texture *sharp_texture;
+static int sharp_width;
+static int sharp_height;
 static SDL_Mutex *trace_mutex;
+static SDL_Mutex *launcher_key_mutex;
 static SDL_AtomicInt game_finished;
 static SDL_AtomicInt game_status;
 static SDL_AtomicInt game_thread_started;
+static SDL_AtomicInt window_settings_requested;
 static int fullscreen;
 static int window_open;
 static uint32_t rgba_frame[320u * 200u];
+static uint32_t native_readback[320u * 200u];
+static int renderer_override = -1;
+static int verify_native;
+static int verify_episode;
+static uint64_t last_verified_sequence;
+static uint64_t verify_frame_counts[4];
+static uint64_t verify_mismatch_counts[4];
 static uint8_t launcher_keys[64];
 static unsigned launcher_key_read;
 static unsigned launcher_key_write;
+static SDL_AtomicInt modal_keyboard_capture;
 static _Thread_local jmp_buf *game_exit_target;
 static SDL_AtomicInt episode_exit_requested;
 
@@ -45,6 +66,7 @@ static size_t script_event_cursor;
 static struct scripted_release scripted_releases[64];
 static uint64_t script_origin;
 static unsigned pc_spin_iterations;
+static void save_windowed_size(void);
 
 #define PC_SPIN_BATCH 440u
 
@@ -70,21 +92,72 @@ void pc_spin(void) {
     }
 }
 
+static int command_token(const char *command, const char *name, const char **after)
+{
+    size_t length = strlen(name);
+    const char *at = command;
+    while ((at = strstr(at, name)) != NULL) {
+        if ((at == command || isspace((unsigned char)at[-1])) &&
+            (at[length] == '\0' || isspace((unsigned char)at[length]) || at[length] == '=')) {
+            if (after) *after = at + length;
+            return 1;
+        }
+        at += length;
+    }
+    return 0;
+}
+
+static void read_native_command_options(void)
+{
+#ifdef _WIN32
+    const char *command = GetCommandLineA();
+    const char *after = NULL;
+    if (command_token(command, "--verify-native", NULL))
+        verify_native = 1;
+    if (command_token(command, "--episode", &after)) {
+        while (*after == ' ' || *after == '\t') ++after;
+        verify_episode = (int)strtol(after, NULL, 10);
+        if (verify_episode < 0 || verify_episode > 3) verify_episode = 0;
+    }
+    if (command_token(command, "--renderer", &after)) {
+        while (*after == ' ' || *after == '\t') ++after;
+        if (*after == '=') ++after;
+        if (_strnicmp(after, "enhanced", 8) == 0 &&
+            (after[8] == '\0' || isspace((unsigned char)after[8])))
+            renderer_override = 1;
+        else if (_strnicmp(after, "classic", 7) == 0 &&
+                 (after[7] == '\0' || isspace((unsigned char)after[7])))
+            renderer_override = 0;
+    }
+    if (command_token(command, "--stereo", NULL)) pc_settings.stereo = 1;
+#endif
+}
+
 int pc_is_game_thread(void) {
     return SDL_GetAtomicInt(&game_thread_started) && pc_game_thread_id == SDL_GetCurrentThreadID();
 }
 
-static void push_launcher_key(uint8_t scan_code) {
+static void push_launcher_key_unlocked(uint8_t scan_code) {
     unsigned next = (launcher_key_write + 1) % (unsigned)sizeof(launcher_keys);
     if (next == launcher_key_read) return;
     launcher_keys[launcher_key_write] = scan_code;
     launcher_key_write = next;
 }
 
+static void push_launcher_key(uint8_t scan_code) {
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    push_launcher_key_unlocked(scan_code);
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+}
+
 static void send_xt_code(uint8_t scan_code, int extended) {
-    if (extended) pc_keyboard_scancode(0xe0);
-    pc_keyboard_scancode(scan_code);
-    if (window_open) push_launcher_key(scan_code);
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    if (!SDL_GetAtomicInt(&modal_keyboard_capture)) {
+        if (extended) pc_keyboard_scancode(0xe0);
+        pc_keyboard_scancode(scan_code);
+    }
+    if (window_open) push_launcher_key_unlocked(scan_code);
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
 }
 
 void pc_set_quit_hint(void) {
@@ -246,7 +319,7 @@ static int write_png_chunk(FILE *file, const char type[4], const uint8_t *data, 
            fwrite(crc_bytes, 1, sizeof(crc_bytes), file) == sizeof(crc_bytes);
 }
 
-static int save_rgb_png(const char *path) {
+static int save_rgb_png_pixels(const char *path, const uint32_t *pixels) {
     static const uint8_t signature[8] = { 137, 80, 78, 71, 13, 10, 26, 10 };
     uint8_t ihdr[13] = { 0, 0, 1, 64, 0, 0, 0, 200, 8, 2, 0, 0, 0 };
     const size_t raw_size = 200u * (1u + 320u * 3u);
@@ -258,12 +331,11 @@ static int save_rgb_png(const char *path) {
     size_t out = 0, source = 0;
     uint32_t adler_a = 1, adler_b = 0;
     int ok = 0;
-    if (!raw || !zdata) goto done;
-    vga_render_rgb(rgba_frame);
+    if (!raw || !zdata || !pixels) goto done;
     for (unsigned y = 0; y < 200; ++y) {
         raw[out++] = 0;
         for (unsigned x = 0; x < 320; ++x) {
-            uint32_t pixel = rgba_frame[source++];
+            uint32_t pixel = pixels[source++];
             raw[out++] = (uint8_t)(pixel >> 16);
             raw[out++] = (uint8_t)(pixel >> 8);
             raw[out++] = (uint8_t)pixel;
@@ -298,6 +370,11 @@ done:
     free(raw);
     free(zdata);
     return ok;
+}
+
+static int save_rgb_png(const char *path) {
+    vga_render_rgb(rgba_frame);
+    return save_rgb_png_pixels(path, rgba_frame);
 }
 
 static int event_compare(const void *left, const void *right) {
@@ -428,6 +505,7 @@ static void process_script_events(void) {
             else fprintf(stderr, "[port] shot %s\n", event->argument);
             break;
         case SCRIPT_QUIT:
+            save_windowed_size();
             fflush(NULL);
             SDL_Quit();
             _Exit(0);
@@ -435,26 +513,197 @@ static void process_script_events(void) {
     }
 }
 
-static void render_frame(void) {
+static int classic_canvas_height(void) {
+    return pc_settings.pixel_aspect == PC_PIXEL_ASPECT_SQUARE ? 200 : 240;
+}
+
+static void classic_presentation_rect(int out_w, int out_h, SDL_FRect *destination) {
+    int canvas_h = classic_canvas_height();
+    float width, height;
+    if (out_w <= 0 || out_h <= 0) {
+        *destination = (SDL_FRect){ 0, 0, 0, 0 };
+        return;
+    }
+    width = (float)out_w;
+    height = width * (float)canvas_h / 320.0f;
+    if (height > (float)out_h) {
+        height = (float)out_h;
+        width = height * 320.0f / (float)canvas_h;
+    }
+    if (pc_settings.integer_scale) {
+        int scale_x = out_w / 320;
+        int scale_y = out_h / canvas_h;
+        int scale = scale_x < scale_y ? scale_x : scale_y;
+        if (scale >= 1) {
+            width = (float)(320 * scale);
+            height = (float)(canvas_h * scale);
+        }
+    }
+    destination->x = ((float)out_w - width) * 0.5f;
+    destination->y = ((float)out_h - height) * 0.5f;
+    destination->w = width;
+    destination->h = height;
+}
+
+static int ensure_sharp_texture(int width, int height) {
+    if (sharp_texture && sharp_width == width && sharp_height == height) return 1;
+    if (sharp_texture) SDL_DestroyTexture(sharp_texture);
+    sharp_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
+                                     SDL_TEXTUREACCESS_TARGET, width, height);
+    sharp_width = sharp_texture ? width : 0;
+    sharp_height = sharp_texture ? height : 0;
+    if (!sharp_texture) fprintf(stderr, "Could not create sharp-filter target: %s\n", SDL_GetError());
+    return sharp_texture != NULL;
+}
+
+static void render_classic_picture(void) {
     int out_w = 0, out_h = 0;
     SDL_FRect destination;
     vga_render_rgb(rgba_frame);         /* palette decoded the way the current mode shows it */
     (void)SDL_UpdateTexture(screen_texture, NULL, rgba_frame, 320 * (int)sizeof(uint32_t));
     (void)SDL_GetRenderOutputSize(renderer, &out_w, &out_h);
-    float width = (float)out_w;
-    float height = width * 3.0f / 4.0f;
-    if (height > (float)out_h) {
-        height = (float)out_h;
-        width = height * 4.0f / 3.0f;
-    }
-    destination.x = ((float)out_w - width) * 0.5f;
-    destination.y = ((float)out_h - height) * 0.5f;
-    destination.w = width;
-    destination.h = height;
+    classic_presentation_rect(out_w, out_h, &destination);
     (void)SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     (void)SDL_RenderClear(renderer);
-    (void)SDL_RenderTexture(renderer, screen_texture, NULL, &destination);
+    if (pc_settings.filter == PC_FILTER_SHARP) {
+        int canvas_h = classic_canvas_height();
+        int scale_x = (int)(destination.w / 320.0f);
+        int scale_y = (int)(destination.h / (float)canvas_h);
+        int scale = scale_x < scale_y ? scale_x : scale_y;
+        if (scale < 1) scale = 1;
+        if (ensure_sharp_texture(320 * scale, canvas_h * scale)) {
+            SDL_FRect target = { 0, 0, (float)(320 * scale), (float)(canvas_h * scale) };
+            (void)SDL_SetTextureScaleMode(screen_texture, SDL_SCALEMODE_NEAREST);
+            (void)SDL_SetRenderTarget(renderer, sharp_texture);
+            (void)SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            (void)SDL_RenderClear(renderer);
+            (void)SDL_RenderTexture(renderer, screen_texture, NULL, &target);
+            (void)SDL_SetRenderTarget(renderer, NULL);
+            (void)SDL_SetTextureScaleMode(sharp_texture, SDL_SCALEMODE_LINEAR);
+            (void)SDL_RenderTexture(renderer, sharp_texture, NULL, &destination);
+        } else {
+            (void)SDL_SetTextureScaleMode(screen_texture, SDL_SCALEMODE_NEAREST);
+            (void)SDL_RenderTexture(renderer, screen_texture, NULL, &destination);
+        }
+    } else {
+        (void)SDL_SetTextureScaleMode(screen_texture,
+            pc_settings.filter == PC_FILTER_LINEAR ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
+        (void)SDL_RenderTexture(renderer, screen_texture, NULL, &destination);
+    }
     (void)SDL_RenderPresent(renderer);
+}
+
+static int renderer_is_enhanced(void) {
+    if (renderer_override >= 0)
+        return renderer_override;
+    return pc_settings.renderer == PC_RENDERER_ENHANCED;
+}
+
+static void verify_native_frame(const CaptureFrame *frame) {
+    unsigned differing = 0;
+    unsigned i;
+    int episode = verify_episode;
+    const char *base_path = SDL_GetBasePath();
+    const char *output_prefix = base_path ? base_path : "";
+    char ega_path[160], native_path[160];
+    if (!frame || frame->sequence == last_verified_sequence)
+        return;
+    last_verified_sequence = frame->sequence;
+    if (episode < 0 || episode > 3)
+        episode = 0;
+    ++verify_frame_counts[episode];
+    for (i = 0; i < 320u * 200u; ++i)
+        if (native_readback[i] != frame->ega_rgba[i])
+            ++differing;
+    fprintf(stderr, "[native] episode %d frame %llu: %u differing pixels\n",
+            episode, (unsigned long long)frame->sequence, differing);
+    if (!differing)
+        return;
+    ++verify_mismatch_counts[episode];
+    snprintf(ega_path, sizeof(ega_path), "%s../native-e%d-%06llu-ega.png", output_prefix, episode,
+             (unsigned long long)frame->sequence);
+    snprintf(native_path, sizeof(native_path), "%s../native-e%d-%06llu-native.png", output_prefix, episode,
+             (unsigned long long)frame->sequence);
+    if (!save_rgb_png_pixels(ega_path, frame->ega_rgba))
+        fprintf(stderr, "[native] could not save %s\n", ega_path);
+    if (!save_rgb_png_pixels(native_path, native_readback))
+        fprintf(stderr, "[native] could not save %s\n", native_path);
+}
+
+static void render_enhanced_picture(void) {
+    int current_frame_is_gameplay = 0;
+    const CaptureFrame *frame = capture_acquire_latest(&current_frame_is_gameplay);
+    SDL_Texture *picture = NULL;
+    int have_frame = frame != NULL;
+    if (frame && current_frame_is_gameplay)
+        picture = native_renderer_render(frame, verify_native ? native_readback : NULL);
+    if (verify_native && picture && frame && current_frame_is_gameplay)
+        verify_native_frame(frame);
+    if (have_frame)
+        capture_release_latest();
+    if (!picture) {
+        render_classic_picture();
+        return;
+    }
+
+    int out_w = 0, out_h = 0;
+    SDL_FRect destination;
+    (void)SDL_GetRenderOutputSize(renderer, &out_w, &out_h);
+    classic_presentation_rect(out_w, out_h, &destination);
+    (void)SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    (void)SDL_RenderClear(renderer);
+    (void)SDL_SetTextureScaleMode(picture,
+        pc_settings.filter == PC_FILTER_LINEAR ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
+    (void)SDL_RenderTexture(renderer, picture, NULL, &destination);
+    (void)SDL_RenderPresent(renderer);
+}
+
+static void render_frame(void) {
+    if (renderer_is_enhanced())
+        render_enhanced_picture();
+    else
+        render_classic_picture();
+}
+
+static void remember_windowed_size(void) {
+    if (window && !fullscreen) {
+        int width = 0, height = 0;
+        SDL_GetWindowSize(window, &width, &height);
+        if (width >= 320 && width <= 7680) pc_settings.window_width = width;
+        if (height >= 200 && height <= 4320) pc_settings.window_height = height;
+    }
+}
+
+void platform_apply_window_settings(void) {
+    int requested_fullscreen = pc_settings.fullscreen != 0;
+    if (!window) return;
+    if (pc_is_game_thread()) {
+        SDL_SetAtomicInt(&window_settings_requested, 1);
+        return;
+    }
+    if (requested_fullscreen != fullscreen) {
+        if (requested_fullscreen) remember_windowed_size();
+        if (SDL_SetWindowFullscreen(window, requested_fullscreen)) fullscreen = requested_fullscreen;
+        else {
+            fprintf(stderr, "Could not change fullscreen state: %s\n", SDL_GetError());
+            pc_settings.fullscreen = fullscreen;
+        }
+    }
+    if (!fullscreen)
+        (void)SDL_SetWindowSize(window, pc_settings.window_width, pc_settings.window_height);
+}
+
+static void toggle_fullscreen(void) {
+    pc_settings.fullscreen = !fullscreen;
+    platform_apply_window_settings();
+    pc_config_save();
+}
+
+static void save_windowed_size(void) {
+    if (window && !fullscreen) {
+        remember_windowed_size();
+        pc_config_save();
+    }
 }
 
 static void handle_event(const SDL_Event *event) {
@@ -464,6 +713,7 @@ static void handle_event(const SDL_Event *event) {
         if (window_open) {
             window_open = 0;
             if (SDL_GetAtomicInt(&game_thread_started)) {
+                save_windowed_size();
                 fflush(NULL);
                 SDL_Quit();
                 _Exit(0);
@@ -474,9 +724,8 @@ static void handle_event(const SDL_Event *event) {
     }
     if (event->type == SDL_EVENT_KEY_DOWN || event->type == SDL_EVENT_KEY_UP) {
         int down = event->type == SDL_EVENT_KEY_DOWN;
-        if (down && event->key.scancode == SDL_SCANCODE_RETURN && (event->key.mod & SDL_KMOD_ALT)) {
-            fullscreen = !fullscreen;
-            (void)SDL_SetWindowFullscreen(window, fullscreen);
+        if (down && !event->key.repeat && event->key.scancode == SDL_SCANCODE_RETURN && (event->key.mod & SDL_KMOD_ALT)) {
+            toggle_fullscreen();
             return;
         }
         uint8_t code;
@@ -494,9 +743,12 @@ int platform_init(const char *data_dir) {
         return 0;
     }
     trace_mutex = SDL_CreateMutex();
+    launcher_key_mutex = SDL_CreateMutex();
+    launcher_key_read = launcher_key_write = 0;
+    SDL_SetAtomicInt(&modal_keyboard_capture, 0);
     if (!pc_speaker_init())                         /* no sound device: play silently */
         fprintf(stderr, "PC speaker: no audio output (%s)\n", SDL_GetError());
-    if (!trace_mutex) return 0;
+    if (!trace_mutex || !launcher_key_mutex) return 0;
     if (data_dir && *data_dir) {
         if (snprintf(pc_data_directory, sizeof(pc_data_directory), "%s", data_dir) >= (int)sizeof(pc_data_directory)) return 0;
     } else {
@@ -504,11 +756,22 @@ int platform_init(const char *data_dir) {
         if (!base_path || snprintf(pc_data_directory, sizeof(pc_data_directory), "%s", base_path) >= (int)sizeof(pc_data_directory))
             return 0;
     }
-    window = SDL_CreateWindow("Duke Nukum v2.0", 960, 720, SDL_WINDOW_RESIZABLE);
+    pc_config_load();
+    read_native_command_options();
+    if (!capture_init()) {
+        fprintf(stderr, "Could not create frame-capture synchronization.\n");
+        return 0;
+    }
+    capture_set_enhanced(renderer_is_enhanced());
+    pc_speaker_set_stereo(pc_settings.stereo);
+    window = SDL_CreateWindow("Duke Nukum v2.0", pc_settings.window_width, pc_settings.window_height, SDL_WINDOW_RESIZABLE);
     if (!window) {
         fprintf(stderr, "SDL_CreateWindow failed: %s\n", SDL_GetError());
         return 0;
     }
+    (void)SDL_SetWindowMinimumSize(window, 320, 240);
+    fullscreen = 0;
+    platform_apply_window_settings();
     renderer = SDL_CreateRenderer(window, NULL);
     if (!renderer) {
         fprintf(stderr, "SDL_CreateRenderer failed: %s\n", SDL_GetError());
@@ -520,12 +783,15 @@ int platform_init(const char *data_dir) {
         return 0;
     }
     (void)SDL_SetTextureScaleMode(screen_texture, SDL_SCALEMODE_NEAREST);
+    if (!native_renderer_init(renderer))
+        fprintf(stderr, "Native renderer unavailable: %s\n", SDL_GetError());
     if (!pc_interrupt_init()) {
         fprintf(stderr, "Could not create interrupt synchronization primitives.\n");
         return 0;
     }
     pc_interrupt_start_timer();
     SDL_SetAtomicInt(&episode_exit_requested, 0);
+    SDL_SetAtomicInt(&window_settings_requested, 0);
     window_open = 1;
     return 1;
 }
@@ -557,12 +823,14 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
     struct game_call { episode_main entry; int argc; char **argv; } call;
     SDL_Thread *thread;
     if (!entry) return -1;
+    capture_set_enhanced(renderer_is_enhanced());
     call.entry = entry;
     call.argc = argc;
     call.argv = argv;
     SDL_SetAtomicInt(&game_finished, 0);
     SDL_SetAtomicInt(&game_status, 0);
     SDL_SetAtomicInt(&episode_exit_requested, 0);
+    SDL_SetAtomicInt(&window_settings_requested, 0);
     pc_spin_iterations = 0;
     thread = SDL_CreateThread(game_thread_main, "duke-game", &call);
     if (!thread) {
@@ -575,6 +843,10 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
         SDL_Event event;
         process_script_events();
         while (SDL_PollEvent(&event)) handle_event(&event);
+        if (SDL_GetAtomicInt(&window_settings_requested)) {
+            SDL_SetAtomicInt(&window_settings_requested, 0);
+            platform_apply_window_settings();
+        }
         uint64_t now = SDL_GetPerformanceCounter();
         if (window_open && (double)(now - last_frame) * 70.0 >= (double)frequency) {
             render_frame();
@@ -588,16 +860,29 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
 }
 
 void platform_shutdown(void) {
+    save_windowed_size();
     pc_interrupt_shutdown();
     pc_speaker_shutdown();
+    if (verify_native) {
+        for (int episode = 0; episode <= 3; ++episode)
+            fprintf(stderr, "[native] episode %d summary: %llu frames, %llu mismatching frames\n",
+                    episode, (unsigned long long)verify_frame_counts[episode],
+                    (unsigned long long)verify_mismatch_counts[episode]);
+    }
+    native_renderer_shutdown();
+    capture_shutdown();
+    if (sharp_texture) SDL_DestroyTexture(sharp_texture);
     if (screen_texture) SDL_DestroyTexture(screen_texture);
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
+    if (launcher_key_mutex) SDL_DestroyMutex(launcher_key_mutex);
     if (trace_mutex) SDL_DestroyMutex(trace_mutex);
     screen_texture = NULL;
+    sharp_texture = NULL;
     renderer = NULL;
     window = NULL;
     trace_mutex = NULL;
+    launcher_key_mutex = NULL;
     free(script_events);
     script_events = NULL;
     script_event_count = script_event_cursor = 0;
@@ -608,13 +893,41 @@ int platform_poll_key(void) {
     SDL_Event event;
     process_script_events();
     while (SDL_PollEvent(&event)) handle_event(&event);
-    if (launcher_key_read == launcher_key_write) {
-        SDL_Delay(1);
-        return 0;
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    int key = 0;
+    if (launcher_key_read != launcher_key_write) {
+        key = launcher_keys[launcher_key_read];
+        launcher_key_read = (launcher_key_read + 1) % (unsigned)sizeof(launcher_keys);
     }
-    int key = launcher_keys[launcher_key_read];
-    launcher_key_read = (launcher_key_read + 1) % (unsigned)sizeof(launcher_keys);
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+    if (!key) SDL_Delay(1);
     return key;
+}
+
+int platform_poll_modal_key(void) {
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    int key = 0;
+    if (launcher_key_read != launcher_key_write) {
+        key = launcher_keys[launcher_key_read];
+        launcher_key_read = (launcher_key_read + 1) % (unsigned)sizeof(launcher_keys);
+    }
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+    if (!key) SDL_Delay(1);
+    return key;
+}
+
+void platform_begin_modal_keyboard_capture(void) {
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    SDL_SetAtomicInt(&modal_keyboard_capture, 1);
+    launcher_key_read = launcher_key_write;
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+}
+
+void platform_end_modal_keyboard_capture(void) {
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    launcher_key_read = launcher_key_write;
+    SDL_SetAtomicInt(&modal_keyboard_capture, 0);
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
 }
 
 int platform_episode_exit_requested(void) {

@@ -53,13 +53,16 @@ add_custom_target(port_sources DEPENDS ${GENERATED_FILES})
 # ---- the emulated PC ----
 set(PLATFORM_SOURCES
   "${CMAKE_CURRENT_SOURCE_DIR}/launcher.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/config.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_sdl.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_interrupt.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_io.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_speaker.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_dos.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/vga.c"
-  "${CMAKE_CURRENT_SOURCE_DIR}/toolbox.c")
+  "${CMAKE_CURRENT_SOURCE_DIR}/toolbox.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/capture.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/renderer.c")
 set_source_files_properties(${PLATFORM_SOURCES}
   PROPERTIES COMPILE_OPTIONS "-O2;-fwrapv;-fno-strict-aliasing;-funsigned-char")
 
@@ -79,8 +82,10 @@ add_custom_command(TARGET duke1 POST_BUILD
 
 # ---- the EGA self-test (tools/validate.py runs it) ----
 add_executable(vga_selftest "${CMAKE_CURRENT_SOURCE_DIR}/tests/vga_selftest.c"
-                            "${CMAKE_CURRENT_SOURCE_DIR}/vga.c" "${CMAKE_CURRENT_SOURCE_DIR}/toolbox.c")
+                            "${CMAKE_CURRENT_SOURCE_DIR}/vga.c" "${CMAKE_CURRENT_SOURCE_DIR}/toolbox.c"
+                            "${CMAKE_CURRENT_SOURCE_DIR}/capture.c")
 target_include_directories(vga_selftest PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(vga_selftest PRIVATE SDL3::SDL3)
 set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/tests/vga_selftest.c"
   PROPERTIES COMPILE_OPTIONS "-O2;-funsigned-char")
 set_target_properties(vga_selftest PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")

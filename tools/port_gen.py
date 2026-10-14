@@ -510,6 +510,40 @@ def inject_pc_spin(source: str) -> str:
     return source
 
 
+def tag_sprite_draw_calls(source: str, first_site: int) -> tuple[str, int]:
+    """Give every game sprite draw call a stable source-order identity."""
+    tokens = lex(source)
+    edits: list[tuple[int, int, str]] = []
+    next_site = first_site
+    for index, token in enumerate(tokens):
+        if token.kind != "ident" or token.text != "blit_planar_sprite_rows":
+            continue
+        open_index = significant(tokens, index + 1)
+        if open_index is None or tokens[open_index].text != "(":
+            continue
+        edits.append((token.start, token.end, "blit_planar_sprite_rows_at"))
+        edits.append((tokens[open_index].end, tokens[open_index].end, f"{next_site}, "))
+        next_site += 1
+    for start, end, replacement in sorted(edits, reverse=True):
+        source = source[:start] + replacement + source[end:]
+    return source, next_site - first_site
+
+
+def instrument_gameplay_capture(source: str) -> str:
+    """Open a frame capture at the one routine that draws the gameplay tile strip."""
+    definitions = function_definitions(source)
+    match = next((item for item in definitions if item[0] == "draw_animated_level_strip"), None)
+    if match is None:
+        raise ValueError("could not find draw_animated_level_strip for frame capture")
+    _, start, end = match
+    opening = source.find("{", start, end)
+    if opening < 0:
+        raise ValueError("draw_animated_level_strip has no body")
+    return (source[:opening + 1] +
+            "\n    capture_begin_gameplay_frame(level_scroll_x, level_map_y_offset);" +
+            source[opening + 1:])
+
+
 def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
     header_path = source_dir / "DUKE.H"
     game_paths = [source_dir / "GAME1.C", source_dir / "GAME2.C"]
@@ -551,9 +585,14 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
                 count = all_defs.count(override.stem)
                 if count != 1:
                     raise ValueError(f"override {override} expects one game definition named {override.stem}, found {count}")
+        sprite_site = 1
         for source_path in game_paths:
             raw = replace_overrides(raw_units[source_path], source_path, override_dir)
             raw = inject_pc_spin(raw)
+            raw, site_count = tag_sprite_draw_calls(raw, sprite_site)
+            sprite_site += site_count
+            if source_path.name.upper() == "GAME1.C":
+                raw = instrument_gameplay_capture(raw)
             translated = translate(raw, episode, prefixes)
             (ep_dir / source_path.name).write_text(translated, encoding="latin1", newline="\n")
 

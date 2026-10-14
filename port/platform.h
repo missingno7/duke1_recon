@@ -100,6 +100,11 @@ void     vga_vertical_retrace_wait(void);              /* blocks until the next 
 void     vga_replace_colour_in_text_span(uint8_t from, uint8_t to, int x, int y,
                                           int columns, int rows);
 
+/* Enhanced renderer capture hooks.  Game-call instrumentation is generated into the build
+   tree; the canonical DOS sources and their prototypes remain untouched. */
+void     capture_begin_gameplay_frame(int16_t scroll_x, int16_t map_y_offset);
+int16_t  blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t y);
+
 /* ---- video BIOS (INT 10h) ---- */
 void bios_set_mode(uint8_t mode);                      /* 0x0D graphics, 0x03 text */
 void bios_set_palette_register(uint8_t index, uint8_t colour);   /* AX=1000h */
@@ -120,6 +125,11 @@ int  platform_init(const char *data_dir);              /* SDL, window, audio; 0 
 int  platform_run_episode(episode_main entry, int argc, char **argv);   /* game thread */
 void platform_shutdown(void);
 int  platform_poll_key(void);                          /* launcher dialogs: next XT scan code, 0 if none; yields while idle */
+int  platform_poll_modal_key(void);                    /* in-game dialog: queued XT scan code, no SDL event pumping */
+void platform_begin_modal_keyboard_capture(void);      /* route key events to the modal queue only */
+void platform_end_modal_keyboard_capture(void);
+void platform_show_port_settings_dialog(int16_t episode);
+void platform_apply_port_setting(int row);
 int  platform_set_script(const char *path);             /* ms-from-start key/keydown/keyup/shot/quit events */
 int  platform_episode_exit_requested(void);             /* pc_exit was called from the episode */
 void platform_present_frame(void);                       /* present one launcher/dialog frame */

@@ -1,6 +1,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include "platform.h"
+#include "capture.h"
 #include "pc_internal.h"
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -109,12 +111,16 @@ static void draw_dialog_text(int episode, const char *text, int x, int y) {
     }
 }
 
-static void draw_dialog_frame(int episode, int top, int height) {
+static void draw_dialog_frame_at(int episode, int left, int top, int height) {
     switch (episode) {
-    case 1: ep1_draw_framed_dialog_box(7, (int16_t)top, (int16_t)height); break;
-    case 2: ep2_draw_framed_dialog_box(7, (int16_t)top, (int16_t)height); break;
-    default: ep3_draw_framed_dialog_box(7, (int16_t)top, (int16_t)height); break;
+    case 1: ep1_draw_framed_dialog_box((int16_t)left, (int16_t)top, (int16_t)height); break;
+    case 2: ep2_draw_framed_dialog_box((int16_t)left, (int16_t)top, (int16_t)height); break;
+    default: ep3_draw_framed_dialog_box((int16_t)left, (int16_t)top, (int16_t)height); break;
     }
+}
+
+static void draw_dialog_frame(int episode, int top, int height) {
+    draw_dialog_frame_at(episode, 7, top, height);
 }
 
 static void render_episode_dialog(const int present[4], int selected) {
@@ -137,12 +143,110 @@ static void render_episode_dialog(const int present[4], int selected) {
             }
         }
     }
+    draw_dialog_text(dialog_episode, "S  Port settings", 9, 14);
     draw_dialog_text(dialog_episode, "Arrows + Enter: Select", 9, 16);
     draw_dialog_text(dialog_episode, "Esc  Quit", 9, 18);
     if (selected >= 1 && selected <= 3)
         draw_dialog_text(dialog_episode, ">", 8, row_y[selected]);
+    else if (selected == 4)
+        draw_dialog_text(dialog_episode, ">", 8, 14);
     (void)show_video_page(0);
     platform_present_frame();
+}
+
+static void render_settings_dialog(int episode, int selected, int in_game) {
+    const int first_visible = selected < 11 ? 0 : selected - 10;
+    const int base_x = 9;
+    draw_dialog_frame(episode, 1, 10);
+    draw_dialog_text(episode, "PORT SETTINGS", 13, 4);
+    if (first_visible > 0) draw_dialog_text(episode, "^", 28, 5);
+    for (int slot = 0; slot < 11; ++slot) {
+        int row = first_visible + slot;
+        int y = 6 + slot;
+        if (row >= pc_config_count()) break;
+        draw_dialog_text(episode, "                    ", base_x, y);
+        if (pc_config_is_section(row)) {
+            draw_dialog_text(episode, pc_config_label(row), base_x + 2, y);
+        } else {
+            char value[32];
+            draw_dialog_text(episode, pc_config_label(row), base_x + 2, y);
+            pc_config_value_text(row, value, sizeof(value));
+            draw_dialog_text(episode, value, base_x + 12, y);
+        }
+        if (row == selected) draw_dialog_text(episode, ">", base_x, y);
+    }
+    if (first_visible + 11 < pc_config_count()) draw_dialog_text(episode, "v", 28, 17);
+    draw_dialog_text(episode, "UP/DOWN MOVE", 9, 19);
+    draw_dialog_text(episode, "L/R OR ENTER CHANGE", 9, 20);
+    draw_dialog_text(episode, "ESC RETURN", 9, 21);
+    (void)show_video_page(0);
+    if (!in_game) platform_present_frame();
+}
+
+void platform_apply_port_setting(int row) {
+    if (row == PC_SETTING_FULLSCREEN)
+        platform_apply_window_settings();
+    if (row == PC_SETTING_VOLUME) pc_speaker_set_volume(pc_settings.volume);
+    if (row == PC_SETTING_STEREO) pc_speaker_set_stereo(pc_settings.stereo);
+    if (row == PC_SETTING_RENDERER) capture_set_enhanced(pc_settings.renderer == PC_RENDERER_ENHANCED);
+    pc_config_save();
+}
+
+static int next_setting_row(int selected, int direction) {
+    int count = pc_config_count();
+    for (int tried = 0; tried < count; ++tried) {
+        selected = (selected + direction + count) % count;
+        if (!pc_config_is_section(selected)) return selected;
+    }
+    return 0;
+}
+
+static void show_port_settings_dialog(int episode, int in_game) {
+    int selected = 0;
+    int closing = 0;
+    if (in_game) platform_begin_modal_keyboard_capture();
+    render_settings_dialog(episode, selected, in_game);
+    for (;;) {
+        int key = in_game ? platform_poll_modal_key() : platform_poll_key();
+        if (!key || key == 0xe0) continue;
+        if (in_game && closing) {
+            if (key == 0x81) {
+                pc_config_save();
+                platform_end_modal_keyboard_capture();
+                return;
+            }
+            continue;
+        }
+        if (key & 0x80) continue;
+        if (key == 0x01) {
+            pc_config_save();
+            if (in_game) closing = 1;
+            else return;
+        }
+        else if (key == 0x48) selected = next_setting_row(selected, -1);
+        else if (key == 0x50) selected = next_setting_row(selected, 1);
+        else if (key == 0x4b || key == 0x4d || key == 0x1c) {
+            int direction = key == 0x4b ? -1 : 1;
+            if (!pc_config_is_section(selected)) {
+                pc_config_change(selected, direction);
+                platform_apply_port_setting(selected);
+            }
+        } else continue;
+        if (!closing) render_settings_dialog(episode, selected, in_game);
+    }
+}
+
+void platform_show_port_settings_dialog(int16_t episode) {
+    show_port_settings_dialog(episode, 1);
+}
+
+static int move_episode_selection(const int present[4], int selected, int direction) {
+    do {
+        selected += direction;
+        if (selected < 1) selected = 4;
+        if (selected > 4) selected = 1;
+    } while (selected != 4 && !present[selected]);
+    return selected;
 }
 
 static int show_episode_dialog(const int present[4], int first_episode) {
@@ -154,16 +258,19 @@ static int show_episode_dialog(const int present[4], int first_episode) {
         key = platform_poll_key();
         if (!key || (key & 0x80) || key == 0xe0) continue;
         if (key == 0x01) return 0;
-        if (key == 0x48 || key == 0x4b) {
-            do { selected = selected == 1 ? 3 : selected - 1; } while (!present[selected]);
+        if (key == 0x1f) {
+            show_port_settings_dialog(dialog_episode, 0);
+        } else if (key == 0x48 || key == 0x4b) {
+            selected = move_episode_selection(present, selected, -1);
         } else if (key == 0x50 || key == 0x4d) {
-            do { selected = selected == 3 ? 1 : selected + 1; } while (!present[selected]);
+            selected = move_episode_selection(present, selected, 1);
         } else if (key >= 0x02 && key <= 0x04) {
             int choice = key - 1;
             if (present[choice]) return choice;
             continue;
         } else if (key == 0x1c) {
-            return selected;
+            if (selected == 4) show_port_settings_dialog(dialog_episode, 0);
+            else return selected;
         } else {
             continue;
         }
@@ -248,6 +355,10 @@ int main(int argc, char **argv) {
             force_select = 1;
         } else if (strcmp(argv[i], "--no-restart") == 0) {
             no_restart = 1;
+        } else if (strcmp(argv[i], "--renderer") == 0 && i + 1 < argc) {
+            ++i;                                   /* read by the platform (pc_sdl.c) */
+        } else if (strcmp(argv[i], "--verify-native") == 0 || strcmp(argv[i], "--stereo") == 0) {
+            /* read by the platform (pc_sdl.c) */
         } else if (strcmp(argv[i], "--trace") == 0) {
             trace = 1;
         } else {
