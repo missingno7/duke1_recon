@@ -1,10 +1,13 @@
 /* DUKE.H - declarations shared by both translation units of Duke Nukum v2.0.
 
-   Names are logical ids: g1_XXXX / g2_XXXX / asm_XXXX are functions at frame
-   offset XXXX in DN1; d_XXXX is the global at DN1 DGROUP offset XXXX, d_XXXX_ an
-   uninitialised (BSS) one.  Turbo C orders a unit's BSS by a hash of the name,
-   ties by first appearance (docs: rule BSS-ORDER): the BSS declarations below
-   are therefore kept in address order. */
+   Contents: the data structures, one prototype per function (in the order of the
+   units), the toolbox routines of TOOLBOX.ASM, and every global in DN1 address
+   order.  The original names are lost; layout/game-names.json maps the names used
+   here to the address-based ids of the matching archive (src/).  Turbo C orders a
+   unit's uninitialised data by a hash of the name, ties by first appearance (rule
+   BSS-ORDER), so those globals keep hash-neutral storage names d_XXXX_ (DN1
+   address) and get their readable names from the #define block below; their
+   declarations stay in address order. */
 
 #ifndef DUKE_H
 #define DUKE_H
