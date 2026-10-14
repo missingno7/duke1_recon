@@ -12,8 +12,8 @@ written in the game folder, compatible with the DOS version).
 
 Keys: as in the original (arrows to move, Ctrl jump, Alt fire, F1 help; redefinable
 in the game setup menu).
-Alt+Enter: fullscreen.  Quit with Q)uit in the main menu; that returns to the episode
-dialog, where Esc ends the program.
+Alt+Enter: fullscreen.  Q)uit in the main menu returns to the episode dialog, where
+Esc ends the program; closing the window ends it at once.
 
 Options:
   --data DIR      game files in DIR instead of the program's folder

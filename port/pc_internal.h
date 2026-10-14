@@ -15,7 +15,7 @@ extern char pc_data_directory[4096];
 extern _Atomic uint32_t pc_pit0_divisor;
 extern SDL_Mutex *pc_irq_mutex;
 extern SDL_Condition *pc_irq_condition;
-extern unsigned pc_interrupt_disable_depth;
+extern unsigned pc_interrupts_disabled;
 extern unsigned pc_active_interrupts;
 extern SDL_ThreadID pc_game_thread_id;
 

@@ -6,7 +6,7 @@
 
 SDL_Mutex *pc_irq_mutex;
 SDL_Condition *pc_irq_condition;
-unsigned pc_interrupt_disable_depth;
+unsigned pc_interrupts_disabled;
 unsigned pc_active_interrupts;
 SDL_ThreadID pc_game_thread_id;
 
@@ -27,7 +27,7 @@ int pc_interrupt_init(void) {
     if (!pc_irq_mutex || !pc_irq_condition) return 0;
     memset(vectors, 0, sizeof(vectors));
     memset(delivery_counts, 0, sizeof(delivery_counts));
-    pc_interrupt_disable_depth = 0;
+    pc_interrupts_disabled = 0;
     pc_active_interrupts = 0;
     pending_read = pending_write = 0;
     SDL_SetAtomicInt(&timer_running, 1);
@@ -57,7 +57,7 @@ static int invoke_vector(int vector) {
     uint32_t delivery_count;
     if (vector < 0 || vector >= PC_VECTOR_COUNT || !pc_irq_mutex) return 0;
     SDL_LockMutex(pc_irq_mutex);
-    if (pc_interrupt_disable_depth != 0) {
+    if (pc_interrupts_disabled != 0) {
         SDL_UnlockMutex(pc_irq_mutex);
         return 0;
     }
@@ -83,7 +83,7 @@ static void dispatch_pending_keys(void) {
     for (;;) {
         uint8_t code;
         SDL_LockMutex(pc_irq_mutex);
-        if (pc_interrupt_disable_depth || pending_read == pending_write) {
+        if (pc_interrupts_disabled || pending_read == pending_write) {
             SDL_UnlockMutex(pc_irq_mutex);
             return;
         }
@@ -108,7 +108,9 @@ void pc_deliver_vector(int vector) {
 void pc_disable(void) {
     if (!pc_irq_mutex) return;
     SDL_LockMutex(pc_irq_mutex);
-    ++pc_interrupt_disable_depth;
+    /* CLI: a flag, not a nesting count - the game pairs disable/enable loosely,
+       which is harmless on the CPU because STI always re-enables. */
+    pc_interrupts_disabled = 1;
     while (!inside_interrupt && pc_active_interrupts != 0) {
         SDL_WaitCondition(pc_irq_condition, pc_irq_mutex);
     }
@@ -119,8 +121,8 @@ void pc_enable(void) {
     int drain = 0;
     if (!pc_irq_mutex) return;
     SDL_LockMutex(pc_irq_mutex);
-    if (pc_interrupt_disable_depth) --pc_interrupt_disable_depth;
-    drain = pc_interrupt_disable_depth == 0 && inside_interrupt == 0;
+    pc_interrupts_disabled = 0;                      /* STI */
+    drain = inside_interrupt == 0;
     SDL_BroadcastCondition(pc_irq_condition);
     SDL_UnlockMutex(pc_irq_mutex);
     if (drain) dispatch_pending_keys();

@@ -171,7 +171,10 @@ static SDL_Scancode script_scancode(const char *name) {
     for (size_t i = 0; i <= n; ++i) normalized[i] = (char)tolower((unsigned char)name[i]);
     if (!strcmp(normalized, "esc")) return SDL_SCANCODE_ESCAPE;
     if (!strcmp(normalized, "enter")) return SDL_SCANCODE_RETURN;
-    if (!strcmp(normalized, "ctrl")) return SDL_SCANCODE_LCTRL;
+    if (!strcmp(normalized, "ctrl") || !strcmp(normalized, "lctrl")) return SDL_SCANCODE_LCTRL;
+    if (!strcmp(normalized, "rctrl")) return SDL_SCANCODE_RCTRL;
+    if (!strcmp(normalized, "alt") || !strcmp(normalized, "lalt")) return SDL_SCANCODE_LALT;
+    if (!strcmp(normalized, "ralt")) return SDL_SCANCODE_RALT;
     if (!strcmp(normalized, "alt")) return SDL_SCANCODE_LALT;
     if (!strcmp(normalized, "shift")) return SDL_SCANCODE_LSHIFT;
     if (strlen(normalized) == 1 && normalized[0] >= 'a' && normalized[0] <= 'z')
@@ -425,9 +428,9 @@ static void process_script_events(void) {
             else fprintf(stderr, "[port] shot %s\n", event->argument);
             break;
         case SCRIPT_QUIT:
-            if (SDL_GetAtomicInt(&game_thread_started)) pc_set_quit_hint();
-            else push_launcher_key(0x01);
-            break;
+            fflush(NULL);
+            SDL_Quit();
+            _Exit(0);
         }
     }
 }
@@ -456,19 +459,21 @@ static void render_frame(void) {
 
 static void handle_event(const SDL_Event *event) {
     if (event->type == SDL_EVENT_QUIT || event->type == SDL_EVENT_WINDOW_CLOSE_REQUESTED) {
+        /* Closing the window ends the program at once, like switching the PC off (the
+           game's own Q)uit is the orderly way out); it must work even if the game is stuck. */
         if (window_open) {
             window_open = 0;
-            if (SDL_GetAtomicInt(&game_thread_started)) pc_set_quit_hint();
-            else push_launcher_key(0x01);
+            if (SDL_GetAtomicInt(&game_thread_started)) {
+                fflush(NULL);
+                SDL_Quit();
+                _Exit(0);
+            }
+            push_launcher_key(0x01);
         }
         return;
     }
     if (event->type == SDL_EVENT_KEY_DOWN || event->type == SDL_EVENT_KEY_UP) {
         int down = event->type == SDL_EVENT_KEY_DOWN;
-        if (event->key.scancode == SDL_SCANCODE_ESCAPE || event->key.scancode == SDL_SCANCODE_F10) {
-            if (down) pc_set_quit_hint();
-            return;
-        }
         if (down && event->key.scancode == SDL_SCANCODE_RETURN && (event->key.mod & SDL_KMOD_ALT)) {
             fullscreen = !fullscreen;
             (void)SDL_SetWindowFullscreen(window, fullscreen);
@@ -493,12 +498,9 @@ int platform_init(const char *data_dir) {
     if (data_dir && *data_dir) {
         if (snprintf(pc_data_directory, sizeof(pc_data_directory), "%s", data_dir) >= (int)sizeof(pc_data_directory)) return 0;
     } else {
-        base_path = SDL_GetBasePath();
-        if (!base_path || snprintf(pc_data_directory, sizeof(pc_data_directory), "%s", base_path) >= (int)sizeof(pc_data_directory)) {
-            if (base_path) SDL_free((void *)base_path);
+        base_path = SDL_GetBasePath();     /* owned and cached by SDL3: never free it */
+        if (!base_path || snprintf(pc_data_directory, sizeof(pc_data_directory), "%s", base_path) >= (int)sizeof(pc_data_directory))
             return 0;
-        }
-        SDL_free((void *)base_path);
     }
     window = SDL_CreateWindow("Duke Nukum v2.0", 960, 720, SDL_WINDOW_RESIZABLE);
     if (!window) {

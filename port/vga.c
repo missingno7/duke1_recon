@@ -386,8 +386,13 @@ void vga_replace_colour_in_text_span(uint8_t from, uint8_t to, int x, int y,
     unlock_vga();
 }
 
+void pc_enable(void);
+
+/* The IBM BIOS video service starts with STI: every INT 10h call re-enables interrupts
+   (the game relies on it after its own disable()). */
 void bios_set_mode(uint8_t mode)
 {
+    pc_enable();
     lock_vga();
     video_mode = mode;
     if (mode == 0x0d) {
@@ -399,6 +404,7 @@ void bios_set_mode(uint8_t mode)
 
 void bios_set_palette_register(uint8_t index, uint8_t colour)
 {
+    pc_enable();
     if (index >= 16)
         return;
     lock_vga();
@@ -413,5 +419,6 @@ void vga_set_palette_entry(uint8_t index, uint8_t colour)
 
 void bios_set_active_page(uint8_t page)
 {
+    pc_enable();
     vga_set_display_start((uint16_t)((uint16_t)page * 0x2000u));
 }
