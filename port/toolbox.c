@@ -113,7 +113,7 @@ int16_t copy_planar_video_region(int16_t x, int16_t y, int16_t source_offset)
 
 int16_t blit_planar_sprite_rows(char *src, int16_t x, int16_t y)
 {
-    return blit_planar_sprite_rows_at(0, src, x, y);
+    return blit_planar_sprite_rows_at(SCENE_SCREEN_SITE, src, x, y);   /* not a game call site */
 }
 
 int16_t blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t y)
@@ -121,7 +121,7 @@ int16_t blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t 
     uint16_t dst = add16((uint16_t)x, mul40((uint16_t)y));
     uint16_t source = 0;
     /* Widescreen: a level sprite beyond the original playfield stays off the page. */
-    int off_page = scene_sprite_off_page((int)x * 8, (int)y);
+    int off_page = scene_sprite_off_page(site, (int)x * 8, (int)y);
     unsigned row;
     scene_before_draw();
     if ((draw_page_selector & 0xffu) != 0)

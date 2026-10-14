@@ -34,6 +34,7 @@ static uint32_t rgba_frame[320u * 200u];
 static uint32_t *script_shot_pixels;
 static size_t script_shot_capacity;
 static char pending_script_shot[4096];
+static char pending_script_page[4096];   /* the emulated page, whatever the renderer */
 static int renderer_override = -1;
 static int verify_native;
 static int verify_episode;
@@ -48,7 +49,7 @@ static unsigned char *episode_state_begin[4];
 static size_t episode_state_size[4];
 static unsigned char *episode_state_snapshot[4];
 
-enum script_action { SCRIPT_KEY, SCRIPT_KEYDOWN, SCRIPT_KEYUP, SCRIPT_SHOT, SCRIPT_QUIT };
+enum script_action { SCRIPT_KEY, SCRIPT_KEYDOWN, SCRIPT_KEYUP, SCRIPT_SHOT, SCRIPT_PAGE, SCRIPT_QUIT };
 struct script_event {
     uint64_t at_ms;
     unsigned order;
@@ -453,6 +454,7 @@ int platform_set_script(const char *path) {
         else if (!SDL_strcasecmp(action, "keydown")) event.action = SCRIPT_KEYDOWN;
         else if (!SDL_strcasecmp(action, "keyup")) event.action = SCRIPT_KEYUP;
         else if (!SDL_strcasecmp(action, "shot")) event.action = SCRIPT_SHOT;
+        else if (!SDL_strcasecmp(action, "page")) event.action = SCRIPT_PAGE;
         else if (!SDL_strcasecmp(action, "quit")) event.action = SCRIPT_QUIT;
         else {
             fprintf(stderr, "Unknown script action: %s\n", action);
@@ -469,7 +471,7 @@ int platform_set_script(const char *path) {
                 return 0;
             }
             event.extended = extended;
-        } else if (event.action == SCRIPT_SHOT) {
+        } else if (event.action == SCRIPT_SHOT || event.action == SCRIPT_PAGE) {
             if (!argument[0]) {
                 fprintf(stderr, "Shot event needs a PNG path\n");
                 fclose(file);
@@ -547,6 +549,11 @@ static void process_script_events(void) {
         case SCRIPT_SHOT:
             if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
             (void)snprintf(pending_script_shot, sizeof(pending_script_shot), "%s", event->argument);
+            if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+            break;
+        case SCRIPT_PAGE:
+            if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+            (void)snprintf(pending_script_page, sizeof(pending_script_page), "%s", event->argument);
             if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
             break;
         case SCRIPT_QUIT:
@@ -802,7 +809,25 @@ static void render_enhanced_picture(void) {
         fprintf(stderr, "[port] shot %s (%dx200 native canvas)\n", shot_path, picture_width);
 }
 
+/* "page" script events: the emulated EGA page as the game left it (a test reference). */
+static void save_pending_script_page(void)
+{
+    char path[4096];
+    static uint32_t page[320 * 200];
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    (void)snprintf(path, sizeof(path), "%s", pending_script_page);
+    pending_script_page[0] = 0;
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+    if (!path[0]) return;
+    vga_render_rgb(page);
+    if (!save_rgb_png_pixels_sized(path, page, 320, 200))
+        fprintf(stderr, "Could not write script page %s\n", path);
+    else
+        fprintf(stderr, "[port] page %s\n", path);
+}
+
 static void render_frame(void) {
+    save_pending_script_page();
     if (renderer_is_enhanced()) {
         render_enhanced_picture();
     } else {

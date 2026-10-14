@@ -24,10 +24,14 @@ typedef struct page {
     uint16_t owner[SCENE_WIDTH * SCENE_HEIGHT];
     uint32_t seen_writes;                   /* vga writes accounted for */
     SceneView view;
+    int level_tiles;                        /* live strip items (map tiles, backdrop cells) */
     uint64_t version;
 } Page;
 
 static Page pages[SCENE_PAGES];
+static int in_strip;                        /* inside draw_animated_level_strip */
+static int16_t strip_scroll_x, strip_map_y;
+static int view_known;                      /* a page shows a level picture */
 static SDL_Mutex *lock;
 static uint64_t next_seq = 1;
 static int draw_page, shown_page;
@@ -35,9 +39,6 @@ static uint64_t shown_version;              /* bumps on every change of what is 
 static uint32_t cache_writes_seen;
 static uint32_t tile_generation = 1;
 
-static int in_strip;                        /* inside draw_animated_level_strip */
-static int16_t strip_scroll_x, strip_map_y;
-static int view_known;                      /* a strip has run since the last mode set */
 
 static SDL_AtomicInt wide_canvas, wide_enabled, wide_activity;
 static SDL_AtomicInt active;             /* the enhanced renderer is on */
@@ -100,16 +101,42 @@ static void page_clear(Page *pg)
     for (size_t i = 0; i < SCENE_WIDTH * SCENE_HEIGHT; ++i)
         pg->owner[i] = NO_ITEM;
     pg->view.valid = 0;
+    pg->level_tiles = 0;
     ++pg->version;
 }
 
+static int is_level_tile(const SceneItem *item)
+{
+    return item->kind == SCENE_BITMAP && item->space != SCENE_SCREEN;
+}
+
+static void level_ended(Page *pg);
+
 static void slot_free(Page *pg, uint16_t s)
 {
+    int tile = is_level_tile(&pg->items[s]);
     if (pg->prev[s] != NO_ITEM) pg->next[pg->prev[s]] = pg->next[s]; else pg->head = pg->next[s];
     if (pg->next[s] != NO_ITEM) pg->prev[pg->next[s]] = pg->prev[s]; else pg->tail = pg->prev[s];
     pixels_unref(pg->items[s].pixels);
     pg->items[s].pixels = NULL;
     pg->free_list[pg->free_count++] = s;
+    if (tile && --pg->level_tiles == 0 && !in_strip)
+        level_ended(pg);
+}
+
+/* The last tile of the page's level picture was drawn over (a picture, a cleared page): the
+   level is no longer on this page - neither its view nor its sprites beyond the page. */
+static void level_ended(Page *pg)
+{
+    uint16_t s = pg->head;
+    pg->view.valid = 0;
+    while (s != NO_ITEM) {
+        uint16_t n = pg->next[s];
+        if (pg->items[s].offpage) slot_free(pg, s);
+        s = n;
+    }
+    if (!pages[0].view.valid && !pages[1].view.valid)
+        view_known = 0;
 }
 
 /* Add an item whose pixels are known; it takes ownership of every drawn pixel. */
@@ -134,6 +161,7 @@ static void page_add(int page, SceneItem *item)
     pg->prev[s] = pg->tail;
     if (pg->tail != NO_ITEM) pg->next[pg->tail] = s; else pg->head = s;
     pg->tail = s;
+    if (is_level_tile(item)) ++pg->level_tiles;
     for (int yy = 0; yy < px->h; ++yy) {
         int y = item->y + yy;
         if (y < 0 || y >= SCENE_HEIGHT) continue;
@@ -325,10 +353,9 @@ void scene_add_sprite(uint32_t site, const char *source, int x, int y, int writt
             for (int bit = 0; bit < 8; ++bit)
                 mask[row * 16 + half * 8 + bit] = (uint8_t)((cell[0] >> (7 - bit)) & 1u);
         }
-    /* In the level picture a sprite is part of the level unless it is drawn into the right
-       column (the HUD: health, firepower, inventory); margin sprites are always level. */
-    if (world_space_now() && (!written || (x < RIGHT_COLUMN_X && y + 16 > PLAYFIELD_Y0 &&
-                                           y < PLAYFIELD_Y1))) {
+    /* Level sprites (by call site) are part of the level picture; HUD, title and transition
+       sprites are screen items wherever they are. */
+    if (!(site & SCENE_SCREEN_SITE) && world_space_now()) {
         item.space = SCENE_WORLD;
         world_position(&item);
     }
@@ -353,7 +380,7 @@ void scene_add_sprite(uint32_t site, const char *source, int x, int y, int writt
     if (written) page_add(draw_page, &item);
     else {
         /* Off-page sprites live outside the 320x200 ownership map: keep them in the page's
-           list until the next strip replaces the level picture. */
+           list until the next strip replaces the level picture or the level leaves the page. */
         Page *pg = &pages[draw_page];
         if (pg->free_count > 0 && item.pixels) {
             uint16_t s = pg->free_list[--pg->free_count];
@@ -524,13 +551,17 @@ int32_t scene_wide_view_left(int16_t scroll_x, int canvas_width)
     return left;
 }
 
-int scene_sprite_off_page(int x, int y)
+int scene_sprite_off_page(uint32_t site, int x, int y)
 {
-    if (!SDL_GetAtomicInt(&active) || !SDL_GetAtomicInt(&wide_enabled) || !view_known || y + 16 <= PLAYFIELD_Y0 || y >= PLAYFIELD_Y1)
+    if ((site & SCENE_SCREEN_SITE) || !SDL_GetAtomicInt(&active) || !view_known ||
+        scene_wide_canvas_width() <= SCENE_WIDTH || y + 16 <= PLAYFIELD_Y0 || y >= PLAYFIELD_Y1)
         return 0;
-    /* Left of the playfield, or beyond the page.  (Between the playfield and the page edge the
-       game draws the HUD; a level sprite there is drawn on the page like the original.) */
-    return x < PLAYFIELD_X0 || x + 16 > SCENE_WIDTH;
+    /* A sprite straddling a playfield edge is drawn on the page as in the original: the game
+       redraws the frame columns over it every frame (draw_video_page_template), so the part
+       inside stays visible.  Only a sprite with nothing inside the original playfield - one
+       the wide view tests added - stays off the page (it would land in the HUD or wrap into
+       the previous line). */
+    return x + 16 <= PLAYFIELD_X0 || x >= PLAYFIELD_X1;
 }
 
 /* The view tests the generator routes here: draw-gating ones see the wide view; behaviour

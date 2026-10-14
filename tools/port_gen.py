@@ -847,19 +847,59 @@ def instrument_episode_state(source: str, episode: int, source_name: str,
     return source
 
 
+# Sprite sites whose position is a parameter that their callers fill with a level position.
+LEVEL_SPRITE_FUNCTIONS = {"draw_player_action_sprite"}
+SCREEN_SPRITE_FLAG = 0x40000000          # site | flag: drawn at a screen position (HUD, UI)
+
+
+def sprite_site_is_level(source: str, tokens: list, open_index: int, function: str | None) -> bool:
+    """A sprite drawn from level coordinates (its x argument uses them) is part of the level;
+    one at fixed or UI screen columns (HUD pieces, dialog cursors) is not."""
+    depth, commas = 0, []
+    for pos in range(open_index, len(tokens)):
+        t = tokens[pos].text
+        if tokens[pos].kind in {"string", "char", "line", "block", "space"}:
+            continue
+        if t == "(":
+            depth += 1
+        elif t == ")":
+            depth -= 1
+            if depth == 0:
+                commas.append(pos)
+                break
+        elif t == "," and depth == 1:
+            commas.append(pos)
+    if len(commas) < 2:
+        return True
+    x_names = {tokens[p].text for p in range(commas[0] + 1, commas[1]) if tokens[p].kind == "ident"}
+    if function in LEVEL_SPRITE_FUNCTIONS:
+        return True
+    return any("world_x" in n or n in {"level_scroll_x", "player_screen_x"} for n in x_names)
+
+
+SPRITE_SITE_REPORT: list = []
+
+
 def tag_sprite_draw_calls(source: str, first_site: int) -> tuple[str, int]:
-    """Give every game sprite draw call a stable source-order identity."""
+    """Give every game sprite draw call a stable source-order identity, flagged when it draws
+    at a screen position rather than from level coordinates."""
     tokens = lex(source)
     edits: list[tuple[int, int, str]] = []
     next_site = first_site
+    definitions = function_definitions(source)
     for index, token in enumerate(tokens):
         if token.kind != "ident" or token.text != "blit_planar_sprite_rows":
             continue
         open_index = significant(tokens, index + 1)
         if open_index is None or tokens[open_index].text != "(":
             continue
+        function = next((name for name, start, end in definitions if start <= token.start < end), None)
+        level = sprite_site_is_level(source, tokens, open_index, function)
+        SPRITE_SITE_REPORT.append({"site": next_site, "function": function or "?",
+                                   "kind": "level" if level else "screen"})
+        site = next_site if level else next_site | SCREEN_SPRITE_FLAG
         edits.append((token.start, token.end, "blit_planar_sprite_rows_at"))
-        edits.append((tokens[open_index].end, tokens[open_index].end, f"{next_site}, "))
+        edits.append((tokens[open_index].end, tokens[open_index].end, f"{site}u, "))
         next_site += 1
     for start, end, replacement in sorted(edits, reverse=True):
         source = source[:start] + replacement + source[end:]
@@ -1168,7 +1208,7 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path,
                 )
             (ep_dir / source_path.name).write_text(translated, encoding="latin1", newline="\n")
 
-    review_dir = output_dir.parent / "workers" / "luna-wide"
+    review_dir = output_dir / "review"            # tables for review: classified sites and loops
     review_dir.mkdir(parents=True, exist_ok=True)
     reports = [
         ("view-test-classification.csv", view_test_report,
@@ -1179,9 +1219,9 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path,
             writer = csv.DictWriter(report_file, fieldnames=columns)
             writer.writeheader()
             writer.writerows(rows)
-    flow_report_dir = output_dir.parent / "workers" / "luna-flow"
-    flow_report_dir.mkdir(parents=True, exist_ok=True)
+    unique_sprite_sites = list({row["site"]: row for row in SPRITE_SITE_REPORT}.values())
     for filename, rows, columns in [
+        ("sprite-sites.csv", unique_sprite_sites, ["site", "function", "kind"]),
         ("sound-sites.csv", sound_site_report,
          ["source", "line", "function", "occurrence", "x", "reason"]),
         ("spin-loops.csv", spin_loop_report,
@@ -1189,7 +1229,7 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path,
         ("episode-state-layout.csv", episode_state_report,
          ["episode", "source", "function", "variable", "section", "storage"]),
     ]:
-        with (flow_report_dir / filename).open("w", encoding="utf-8", newline="") as report_file:
+        with (review_dir / filename).open("w", encoding="utf-8", newline="") as report_file:
             writer = csv.DictWriter(report_file, fieldnames=columns)
             writer.writeheader()
             writer.writerows(rows)

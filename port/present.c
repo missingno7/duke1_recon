@@ -2,8 +2,8 @@
 
    1:1 (canvas 320) the items are drawn in drawing order at their page positions: that is the
    original picture exactly.  In a wider canvas:
-   - a screen without a level view (title, menus, pictures) is centred, black at the sides;
-   - in the level the playfield grows: the backdrop as a screen-fixed layer, the map tiles of the
+   - a screen without the gameplay frame (title, menus, pictures) is centred, black at the sides;
+   - in the gameplay frame the playfield grows (empty until a level is drawn, as at GET READY): the backdrop as a screen-fixed layer, the map tiles of the
      wide view straight from the level map, the level sprites at their level positions, dialogs
      and texts centred on the original view, the right column (frame bar + HUD) at the right
      edge, and the top and bottom bars rebuilt from their own tiles - the plain one repeated, the
@@ -64,11 +64,16 @@ static void blit_item(int width, const SceneItem *it, int x, int y,
          clip_x0, clip_y0, clip_x1, clip_y1, 0);
 }
 
-static int has_level(const SceneSnapshot *s)
+/* The gameplay screen: the page carries the frame of draw_video_page_template (its side
+   columns, tiles 0x3000 and 0x3020) - with or without a level in it yet (GET READY). */
+static int has_gameplay_frame(const SceneSnapshot *s)
 {
-    if (!s->view.valid) return 0;
-    for (size_t i = 0; i < s->count; ++i)
-        if (s->items[i].space != SCENE_SCREEN) return 1;
+    for (size_t i = 0; i < s->count; ++i) {
+        const SceneItem *it = &s->items[i];
+        if (it->space == SCENE_SCREEN && it->kind == SCENE_BITMAP &&
+            ((it->source == 0x3000u && it->x == 0) || (it->source == 0x3020u && it->x == RIGHT_COLUMN_X)))
+            return 1;
+    }
     return 0;
 }
 
@@ -125,7 +130,7 @@ static void compose_level(const SceneSnapshot *s, int width)
     int pw = px1 - px0;
 
     /* backdrop: the 13-column pattern of the original, fixed to the screen, repeated */
-    for (int variant = 0; variant < 2; ++variant)
+    for (int variant = 0; variant < 2 && v->valid; ++variant)
         for (int row = 0; row < SCENE_VIEW_ROWS; ++row)
             for (int column = 0; column * 16 < pw; ++column) {
                 int pattern = column % 13;
@@ -137,7 +142,7 @@ static void compose_level(const SceneSnapshot *s, int width)
                         backdrop[variant][(row * 16 + yy) * 4096 + column * 16 + xx] = cell[yy * 16 + xx];
             }
     /* map tiles of the wide view; empty cells show the backdrop */
-    for (int row = 0; row < SCENE_VIEW_ROWS; ++row) {
+    for (int row = 0; row < SCENE_VIEW_ROWS && v->valid; ++row) {
         int cy = py0 + (top_row + row) * 16 - view_top;
         for (int column = (int)(view_left / 16); column < SCENE_MAP_COLUMNS && column * 16 < view_left + pw; ++column) {
             int cx = px0 + column * 16 - (int)view_left;
@@ -159,12 +164,13 @@ static void compose_level(const SceneSnapshot *s, int width)
             }
         }
     }
-    /* everything drawn: level items by level position, the rest by region */
+    /* everything drawn: level items by level position, the rest by region (without a level
+       view on the page, level items too: the playfield is centred like the original view) */
     for (size_t i = 0; i < s->count; ++i) {
         const SceneItem *it = &s->items[i];
-        if (it->space == SCENE_BACKDROP || (it->space == SCENE_WORLD && it->kind == SCENE_BITMAP))
+        if (v->valid && (it->space == SCENE_BACKDROP || (it->space == SCENE_WORLD && it->kind == SCENE_BITMAP)))
             continue;                                      /* replaced by the layers above */
-        if (it->space == SCENE_WORLD) {
+        if (it->space == SCENE_WORLD && v->valid) {
             blit_item(width, it, px0 + (int)(it->world_x - view_left), py0 + (int)(it->world_y - view_top),
                       px0, py0, px1, py1);
         } else if (it->offpage) {
@@ -192,7 +198,7 @@ int present_compose(const SceneSnapshot *s, int width, uint32_t *rgba)
         canvas = bigger;
         canvas_capacity = (int)n;
     }
-    if (width > SCENE_WIDTH && has_level(s)) {
+    if (width > SCENE_WIDTH && has_gameplay_frame(s)) {
         memset(canvas, 0, n);
         compose_level(s, width);
     } else {
@@ -291,20 +297,118 @@ SDL_Texture *present_texture(SDL_Renderer *renderer, int width, const uint32_t *
 }
 
 /* Anchor test (--verify-native): at every page flip, on the game thread - where the scene and
-   the emulated page agree by construction - compose the shown page at 320 and compare. */
+   the emulated page agree by construction - compose the shown page at 320 and compare.  With a
+   wider canvas the wide picture is checked against the page too, region by region: the gameplay
+   frame's left column in place, the right column (frame bar + HUD) at the right edge, the
+   playfield centred (backdrop cells excepted: they are screen-fixed and continue the pattern;
+   and only while the wide view is not clamped at a level edge), and every other screen centred. */
 static SDL_AtomicInt verify_on;
+static uint64_t verify_wide_frames, verify_wide_mismatches;
 void present_set_verify(int on) { SDL_SetAtomicInt(&verify_on, on != 0); }
+
+#define NO_OWNER 0xffffu
+#define WIDE_ONLY 0xfffeu
+
+/* For each page pixel, the item drawn last there (NO_OWNER: nothing); WIDE_ONLY where a sprite
+   the wide view adds (kept off the page) covers it. */
+static void owner_map(const SceneSnapshot *s, uint16_t map[SCENE_WIDTH * SCENE_HEIGHT])
+{
+    for (size_t i = 0; i < SCENE_WIDTH * SCENE_HEIGHT; ++i) map[i] = NO_OWNER;
+    for (size_t i = 0; i < s->count; ++i) {
+        const SceneItem *it = &s->items[i];
+        const ScenePixels *px = it->pixels;
+        for (int yy = 0; yy < px->h; ++yy)
+            for (int xx = 0; xx < px->w; ++xx) {
+                int x = it->x + xx, y = it->y + yy;
+                if (x < 0 || x >= SCENE_WIDTH || y < 0 || y >= SCENE_HEIGHT ||
+                    px->data[yy * px->w + xx] == SCENE_TRANSPARENT) continue;
+                map[y * SCENE_WIDTH + x] = it->offpage ? WIDE_ONLY : (uint16_t)i;
+            }
+    }
+}
+
+static char verify_detail[512];
+
+static uint32_t *verify_wide_picture;
+
+static void write_ppm(const char *path, const uint32_t *rgb, int width)
+{
+    FILE *file = fopen(path, "wb");
+    if (!file) return;
+    fprintf(file, "P6 %d %d 255\n", width, SCENE_HEIGHT);
+    for (size_t i = 0; i < (size_t)width * SCENE_HEIGHT; ++i) {
+        unsigned char c[3] = { (unsigned char)(rgb[i] >> 16), (unsigned char)(rgb[i] >> 8), (unsigned char)rgb[i] };
+        fwrite(c, 1, 3, file);
+    }
+    fclose(file);
+}
+
+static unsigned verify_wide(const SceneSnapshot *s, const uint32_t *ega, int width, const char **region)
+{
+    static uint32_t *wide;
+    static size_t wide_capacity;
+    static uint16_t owners[SCENE_WIDTH * SCENE_HEIGHT];
+    size_t n = (size_t)width * SCENE_HEIGHT;
+    int extra = width - SCENE_WIDTH;
+    unsigned differing = 0;
+    if (n > wide_capacity) {
+        uint32_t *bigger = (uint32_t *)realloc(wide, n * sizeof(uint32_t));
+        if (!bigger) return 0;
+        wide = bigger;
+        wide_capacity = n;
+    }
+    verify_wide_picture = wide;
+    if (!present_compose(s, width, wide)) return 0;
+    *region = "centred screen";
+    if (!has_gameplay_frame(s)) {
+        for (int y = 0; y < SCENE_HEIGHT; ++y)
+            for (int x = 0; x < SCENE_WIDTH; ++x)
+                differing += wide[y * width + x + extra / 2] != ega[y * SCENE_WIDTH + x];
+        return differing;
+    }
+    *region = "left column";
+    for (int y = 0; y < SCENE_HEIGHT; ++y)
+        for (int x = 0; x < PLAYFIELD_X0; ++x)
+            differing += wide[y * width + x] != ega[y * SCENE_WIDTH + x];
+    if (differing) return differing;
+    *region = "right column";
+    for (int y = 0; y < SCENE_HEIGHT; ++y)
+        for (int x = RIGHT_COLUMN_X; x < SCENE_WIDTH; ++x)
+            differing += wide[y * width + x + extra] != ega[y * SCENE_WIDTH + x];
+    if (differing) return differing;
+    *region = "playfield";
+    if (s->view.valid &&
+        scene_wide_view_left(s->view.scroll_x, width) != (int32_t)s->view.scroll_x * 8 - extra / 2)
+        return 0;                                          /* clamped: a different view */
+    owner_map(s, owners);
+    verify_detail[0] = 0;
+    for (int y = PLAYFIELD_Y0; y < PLAYFIELD_Y1; ++y)
+        for (int x = PLAYFIELD_X0; x < PLAYFIELD_X1; ++x) {
+            uint16_t o = owners[y * SCENE_WIDTH + x];
+            if (o == WIDE_ONLY || (o != NO_OWNER && s->items[o].space == SCENE_BACKDROP)) continue;
+            if (wide[y * width + x + extra / 2] == ega[y * SCENE_WIDTH + x]) continue;
+            if (!differing++ && o != NO_OWNER) {
+                const SceneItem *it = &s->items[o];
+                (void)snprintf(verify_detail, sizeof(verify_detail),
+                               " (first at %d,%d: item space %d kind %d at %d,%d source %04x site %08x world %d,%d; view scroll %d phase %u)",
+                               x, y, it->space, it->kind, it->x, it->y, it->source, (unsigned)it->site,
+                               (int)it->world_x, (int)it->world_y, s->view.scroll_x, s->view.animation_phase);
+            }
+        }
+    return differing;
+}
 
 void present_verify_shown(void)
 {
     static SceneSnapshot *snap;
     static uint32_t native[SCENE_WIDTH * SCENE_HEIGHT], ega[SCENE_WIDTH * SCENE_HEIGHT];
     unsigned differing = 0;
+    int width;
     if (!SDL_GetAtomicInt(&verify_on)) return;
     if (!snap && !(snap = (SceneSnapshot *)calloc(1, sizeof(SceneSnapshot)))) return;
     if (!scene_snapshot(snap, (uint64_t)-1)) return;
+    vga_render_rgb(ega);
     if (present_compose(snap, SCENE_WIDTH, native)) {
-        vga_render_rgb(ega);
         for (size_t i = 0; i < SCENE_WIDTH * SCENE_HEIGHT; ++i) differing += ega[i] != native[i];
         ++verify_frames;
         if (verify_frames % 100 == 0)
@@ -316,6 +420,26 @@ void present_verify_shown(void)
                     (unsigned long long)verify_frames, differing, snap->count);
         }
     }
+    width = scene_wide_canvas_width();
+    if (width > SCENE_WIDTH) {
+        const char *region = "";
+        unsigned wide_differing = verify_wide(snap, ega, width, &region);
+        ++verify_wide_frames;
+        if (wide_differing) {
+            const char *dump = getenv("DUKE1_VERIFY_DUMP");     /* directory for the evidence */
+            ++verify_wide_mismatches;
+            if (dump && verify_wide_mismatches <= 20) {
+                char path[1024];
+                (void)snprintf(path, sizeof(path), "%s/flip%llu-page.ppm", dump, (unsigned long long)verify_frames);
+                write_ppm(path, ega, SCENE_WIDTH);
+                (void)snprintf(path, sizeof(path), "%s/flip%llu-wide.ppm", dump, (unsigned long long)verify_frames);
+                write_ppm(path, verify_wide_picture, width);
+            }
+            fprintf(stderr, "[native] flip %llu, %d wide: %s, %u differing pixels%s\n",
+                    (unsigned long long)verify_frames, width, region, wide_differing,
+                    strcmp(region, "playfield") ? "" : verify_detail);
+        }
+    }
     scene_release(snap);
 }
 
@@ -324,6 +448,9 @@ void present_report(void)
     if (verify_frames)
         fprintf(stderr, "[native] verified %llu frames, %llu with differences\n",
                 (unsigned long long)verify_frames, (unsigned long long)verify_mismatches);
+    if (verify_wide_frames)
+        fprintf(stderr, "[native] wide layout verified on %llu frames, %llu with differences\n",
+                (unsigned long long)verify_wide_frames, (unsigned long long)verify_wide_mismatches);
 }
 
 void present_shutdown(void)

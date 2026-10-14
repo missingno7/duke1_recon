@@ -73,11 +73,13 @@ start is like a fresh DOS start.  Closing the window ends the program at once.
 ## Testing
 
 `--verify-native` (enhanced renderer) composes the shown page natively at every page flip and
-compares it with the emulated page; differences are logged (all screens, not only gameplay).
+compares it with the emulated page, and with a wider canvas checks the wide layout against it;
+differences are logged (all screens, not only gameplay), `DUKE1_VERIFY_DUMP=dir` keeps evidence.
 `DUKE1_SCENE_DEBUG=1` logs every scene snapshot the presenter takes.
 
-`--script FILE` runs lines `<ms> key|keydown|keyup <name>`, `<ms> shot <file.png>` (the exact
-320x200 picture) and `<ms> quit`; key names are DOSBox-X mapper names (`space`, `enter`,
+`--script FILE` runs lines `<ms> key|keydown|keyup <name>`, `<ms> shot <file.png>` (the picture
+the window shows, at its canvas width), `<ms> page <file.png>` (the emulated EGA page) and
+`<ms> quit`; key names are DOSBox-X mapper names (`space`, `enter`,
 `esc`, `f1`, `up`, `lctrl`, `lalt`, `a` ...).  `DUKE1_AUDIO_WAV=file.wav` records everything
 the speaker plays.
 

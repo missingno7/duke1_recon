@@ -93,9 +93,12 @@ void scene_add_water(int x, int y, int w, int h);                  /* after the 
 void scene_begin_strip(int16_t scroll_x, int16_t map_y_offset);    /* draw_animated_level_strip */
 void scene_capture_view(const uint16_t *tile_map, int16_t map_y_offset, uint16_t animation_phase);
 void scene_end_strip(void);
-/* Widescreen: a sprite at page position (x, y) the game drew outside the original playfield
-   is a level sprite in the wide view; it is recorded but kept off the page. */
-int  scene_sprite_off_page(int x, int y);
+/* Sprite call sites: the port generator sets SCENE_SCREEN_SITE on the sites that draw at fixed
+   screen positions (HUD, title, transitions); every other site draws a level sprite. */
+#define SCENE_SCREEN_SITE 0x40000000u
+/* Widescreen: a level sprite the game drew outside the original playfield (the wide view shows
+   more of the level) is recorded but kept off the page, which has the frame and HUD there. */
+int  scene_sprite_off_page(uint32_t site, int x, int y);
 
 /* Presenter thread. */
 int  scene_snapshot(SceneSnapshot *out, uint64_t have_sequence);   /* 0: nothing new */

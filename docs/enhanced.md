@@ -57,16 +57,27 @@ composed from them.
   whenever it changed and composes it into a canvas of palette indices, converted with the live
   palette (fades work):
   - at 320 wide: the items in drawing order at their positions - the original page exactly;
-  - wider, without a level view (title, menus, pictures): the 320x200 picture centred;
-  - wider, in the level: the backdrop as a stable screen-fixed layer across the width, the map
+  - wider, without the gameplay frame (title, menus, pictures): the 320x200 picture centred;
+  - wider, in the gameplay frame (the frame's side columns are on the page; from GET READY on,
+    with an empty playfield until the first level picture): the backdrop as a stable screen-fixed layer across the width, the map
     tiles of the wide view straight from the level map (animated tiles included), level sprites
     at their level positions, dialogs and texts centred on the original view, the right column
     (frame bar + HUD) at the right edge, the top and bottom bars rebuilt from their own tiles
     (the plain tile repeated, the corner pieces kept, the "PRESS F1 FOR HELP" plate centred).
 * **Dialogs need nothing special:** what the game draws on the shown page while it waits for a
   key is shown at once, in every layout.
-* **Anchor test:** at 320 wide the composed picture must equal the emulated page on every frame
-  - menus, dialogs, title screens and gameplay alike.
+* **Sprites by call site:** the port generator tags every sprite call (`build/port-gen/review/
+  sprite-sites.csv`): a site whose x comes from a level position draws a level sprite, the
+  rest (HUD, title, transitions) draw screen sprites wherever they are.
+* **The level leaves a page** when its last map tile or backdrop cell there is drawn over (a
+  picture, a cleared page): the page's view and its off-page sprites go with it, so nothing of
+  the level outlives it.
+* **Anchor test (`--verify-native`):** at 320 wide the composed picture must equal the emulated
+  page on every flip - menus, dialogs, title screens and gameplay alike.  With a wider canvas
+  the wide picture is checked against the page too: the left column in place, the right column
+  at the right edge, the playfield centred (except the screen-fixed backdrop cells, sprites only
+  the wide view shows, and views clamped at a level edge), other screens centred.
+  `DUKE1_VERIFY_DUMP=dir` writes the page and the wide picture of the first mismatches.
 
 ## Settings: `duke1.json`
 
@@ -110,8 +121,11 @@ the right edge.  The playfield takes the extra width: more of the level is visib
 Widescreen without changing gameplay: the port generator gives the 125 view tests that
 only decide whether to *draw* a wide view, so everything the game would draw is drawn in
 the margins; the 50 that decide behaviour keep the original view unless `wide_activity`
-is on.  Draw calls outside the original playfield are recorded for the native renderer
-and never written into the emulated page (whose off-screen memory holds the tile cache).
+is on.  A level sprite with nothing inside the original playfield (only the wide view
+draws it) is recorded for the native renderer but never written into the emulated page,
+where it would land in the HUD or wrap into the previous line.  Sprites straddling a
+playfield edge are drawn as in the original: the game redraws the frame columns over them
+every frame.
 
 ## Milestones
 
