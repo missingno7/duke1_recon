@@ -1,4 +1,10 @@
-/* GAME2.C - second translation unit (menus, text screens, high scores, timer and sound) of Duke Nukum v2.0. */
+/* GAME2.C - second translation unit of Duke Nukum v2.0: menus, text screens, high scores,
+   timer and PC-speaker sound.
+
+   Functions, initialised data and literals stay in the order of the original object
+   file: Turbo C 2.0 emits code, string literals and data in source order, so this
+   order is part of what makes the build byte-identical.  Sections below group the
+   functions by subsystem as far as that order allows. */
 
 #define UNIT 2      /* selects this unit's declarations in duke.h */
 #include "duke.h"
@@ -604,6 +610,10 @@ unsigned char credits_glyph_color_sequence[35] = { 1, 2, 3, 2, 1, 2, 3, 2, 1, 2,
 char credits_scroll_text[550] = "                           DUKE NUKUM is one of the best, feature-packed games ever made for an IBM PC! It beats Nintendo easily!    DUKE NUKUM features:     Incredible animation,   One megabyte of graphics, dual scrolling playfields,  arcade sound effects,     and much, much more...! A built in Hint Mode makes learning the game easy!    Supports joystick, too.   You'll find dozens of    secret rooms with prizes. Duke can somersault and   cling onto ceilings with     his special hooks.       GET DUKE NUKUM NOW!                             ";
 int current_sound_sample_position = 0;
 
+/* ============================================================================================
+   Palette, video pages and joystick sampling
+   ============================================================================================ */
+
 /* Visits all 16 palette registers in order, setting each to color value 23 with the requested
    delay. */
 void pascal set_palette_entries_to_23(int delay_ticks)
@@ -722,6 +732,12 @@ void pascal clear_video_page_region(int bitmap_offset)
         }
     }
 }
+
+/* ============================================================================================
+   Information screens, hints and dialogs
+   Ordering and story pages, save/restore messages, the hint (secret tip) cards, help,
+   key bindings, high scores and the timer/sound interrupt.
+   ============================================================================================ */
 
 /* Displays the ordering page one screen or message and waits for the associated input when
    required. */
@@ -1874,6 +1890,12 @@ void pascal wait_input_animated_sprite(register int sprite_x, register int text_
     }
     blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x37a0, sprite_x, text_row * 8);
 }
+
+/* ============================================================================================
+   Screen templates, bitmaps and text
+   Full-screen backgrounds and frames, the title/credits/ending bitmaps, text output,
+   sound banks, episode dialogues and the keyboard remapping screen.
+   ============================================================================================ */
 
 /* Draws the fixed planar background and border template into the selected video page. */
 void draw_video_page_template(void)

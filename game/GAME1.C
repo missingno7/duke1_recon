@@ -1,4 +1,9 @@
-/* GAME1.C - first translation unit (startup, main loop, levels, actors, files) of Duke Nukum v2.0. */
+/* GAME1.C - first translation unit of Duke Nukum v2.0: startup, main loop, levels, actors, files.
+
+   Functions, initialised data and literals stay in the order of the original object
+   file: Turbo C 2.0 emits code, string literals and data in source order, so this
+   order is part of what makes the build byte-identical.  Sections below group the
+   functions by subsystem as far as that order allows. */
 
 #define UNIT 1      /* selects this unit's declarations in duke.h */
 #include "duke.h"
@@ -360,6 +365,12 @@ int credit_scroll_delay = 0;
 int title_graphic_animation_state = 0;
 
 char restore_saved_game_requested = 0x00;
+
+/* ============================================================================================
+   Menus, text entry, saving and joystick setup
+   In-game menus and prompts, the save-game writer, high-score entry and the joystick
+   calibration screens.
+   ============================================================================================ */
 
 /* Looks up the display string for one key code and draws its first character at the requested
    position. */
@@ -1462,6 +1473,11 @@ void pascal load_planar_image_file(char far *filename, register int offset, int 
     }
 }
 
+/* ============================================================================================
+   Player collision probes
+   Tests of the tiles around the player against the level map.
+   ============================================================================================ */
+
 /* Tests the player floor clearance and returns the result to its caller. */
 char test_player_floor_clearance(void)
 {
@@ -1618,6 +1634,11 @@ void draw_animated_level_strip(void)
     outport(0x3ce, 5);
 }
 
+/* ============================================================================================
+   Keyboard interrupt
+   INT 9 handler: reads the scan code from port 0x60 and keeps the key-state flags.
+   ============================================================================================ */
+
 /* Handles keyboard IRQ 9 scan codes, updates held-key state, acknowledges the controller, and
    chains when requested. */
 void interrupt keyboard_interrupt_handler(void)
@@ -1715,6 +1736,11 @@ void interrupt keyboard_interrupt_handler(void)
     outportb(0x61, inportb(0x61) & 0x7f);
     outportb(0x20, 0x20);
 }
+
+/* ============================================================================================
+   Player, projectiles and contact effects
+   Drawing the player, the shots and their collisions, the per-frame player and level update.
+   ============================================================================================ */
 
 /* Draws the player's current action sprite from the player sprite resource. */
 void draw_player_action_sprite(int sprite_frame, int sprite_x, int sprite_y)
@@ -2312,6 +2338,12 @@ void advance_player_transition(void)
     }
 }
 
+/* ============================================================================================
+   Object pools and collision helpers
+   Small fixed pools (moving actors, pickups, ambient sprites, flashes) and the tests
+   shared by the actors: visibility, overlap with the player, blocked map cells.
+   ============================================================================================ */
+
 /* Skips the three-byte resource header and reads the requested byte block into a buffer. */
 void read_file_block(char far *filename, void far *buffer, unsigned int count)
 {
@@ -2834,6 +2866,13 @@ int is_level_position_blocked(int world_x, int world_y)
         return 1;
     return 0;
 }
+
+/* ============================================================================================
+   Level actors
+   One update routine per kind of object placed in the level map (the map word 0x30XX
+   that spawns it is in each description), with the drawing helpers they share.
+   create_objects_from_level_map registers the routines for the current level.
+   ============================================================================================ */
 
 /* Updates and draws records from level-map marker 0x3000; the concrete entity identity is not
    established by source. */
@@ -6654,6 +6693,11 @@ void draw_marker_3058_objects(void)
     }
 }
 
+/* ============================================================================================
+   Level setup
+   The per-level callback table and the walk over the level map that creates the actors.
+   ============================================================================================ */
+
 /* Registers a level-object update callback for execution by the gameplay loop. */
 void pascal register_level_update_callback(void (far *update_callback)(void))
 {
@@ -7317,6 +7361,11 @@ void pascal create_objects_from_level_map(unsigned int row_count)
     }
 }
 
+/* ============================================================================================
+   Files, demos and settings
+   Level map, demo recordings, buffers, memory check and the game-speed setting.
+   ============================================================================================ */
+
 /* Reads the level's 16-bit tile map from the named file into the level-map buffer. */
 void load_level_tile_map(char far *filename)
 {
@@ -7666,6 +7715,11 @@ void pascal save_game_speed_setting(char far *filename)
     putw(game_speed_setting, stream);
     fclose(stream);
 }
+
+/* ============================================================================================
+   Game flow
+   Timing, level transitions, start-up and shut-down, the main loop, the title menu and main().
+   ============================================================================================ */
 
 /* Busy-wait until the timer-interrupt tick counter reaches n (pascal). */
 /* Waits until the timer interrupt counter reaches the requested number of ticks. */
