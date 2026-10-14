@@ -1,3 +1,4 @@
+#include "wide_pass.h"
 #include "pc_internal.h"
 #include <stdio.h>
 #include <string.h>
@@ -37,6 +38,7 @@ void pc_io_reset(void)
 }
 
 uint8_t pc_inportb(uint16_t port) {
+    port_wide_pass_abandon("pc_inportb");      /* reads have side effects (keyboard, retrace) */
     uint8_t value = 0xff;
     if (is_vga_port(port)) {
         value = vga_port_read(port);
@@ -74,6 +76,7 @@ uint16_t pc_inport(uint16_t port) {
 }
 
 void pc_outportb(uint16_t port, uint8_t value) {
+    if (port_in_wide_pass) return;             /* EGA set-up and speaker: nothing to keep */
     pc_trace(PC_TRACE_PORTS, "OUT %04X <- %02X", (unsigned)port, (unsigned)value);
     if (is_vga_port(port)) {
         vga_port_write(port, value);

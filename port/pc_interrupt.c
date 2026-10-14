@@ -1,4 +1,5 @@
 ﻿#include "pc_internal.h"
+#include "wide_pass.h"
 #include <string.h>
 
 #define PC_VECTOR_COUNT 256
@@ -18,6 +19,7 @@ static uint8_t pending_keys[PC_KEY_QUEUE];
 static unsigned pending_read;
 static unsigned pending_write;
 static _Thread_local unsigned inside_interrupt;
+static unsigned interrupts_held;          /* the wide presentation pass: deliveries wait */
 
 static void pc_noop_isr(void) {}
 
@@ -57,6 +59,7 @@ void pc_interrupt_reset(void)
 }
 
 void pc_setvect(int16_t vector, pc_isr handler) {
+    port_wide_pass_abandon("pc_setvect");
     if (vector < 0 || vector >= PC_VECTOR_COUNT) return;
     if (pc_irq_mutex) SDL_LockMutex(pc_irq_mutex);
     vectors[vector] = handler;
@@ -70,6 +73,8 @@ static int invoke_vector(int vector) {
     uint32_t delivery_count;
     if (vector < 0 || vector >= PC_VECTOR_COUNT || !pc_irq_mutex) return 0;
     SDL_LockMutex(pc_irq_mutex);
+    while (interrupts_held)                      /* delayed, never lost */
+        SDL_WaitCondition(pc_irq_condition, pc_irq_mutex);
     if (pc_interrupts_disabled != 0) {
         SDL_UnlockMutex(pc_irq_mutex);
         return 0;
@@ -94,6 +99,7 @@ static int invoke_vector(int vector) {
 
 void pc_halt(void)
 {
+    port_wide_pass_abandon("pc_halt");
     if (!pc_irq_mutex || !pc_irq_condition) {
         SDL_Delay(1);
         return;
@@ -131,8 +137,20 @@ void pc_deliver_vector(int vector) {
     (void)invoke_vector(vector);
 }
 
-void pc_disable(void) {
+/* The wide presentation pass: no handler runs (and none is running) until it is released;
+   a tick or key that arrives meanwhile is delivered right after. */
+void pc_hold_interrupts(int hold) {
     if (!pc_irq_mutex) return;
+    SDL_LockMutex(pc_irq_mutex);
+    interrupts_held = hold != 0;
+    while (hold && pc_active_interrupts != 0)
+        SDL_WaitCondition(pc_irq_condition, pc_irq_mutex);
+    SDL_BroadcastCondition(pc_irq_condition);
+    SDL_UnlockMutex(pc_irq_mutex);
+}
+
+void pc_disable(void) {
+    if (!pc_irq_mutex || port_in_wide_pass) return;
     SDL_LockMutex(pc_irq_mutex);
     /* CLI: a flag, not a nesting count - the game pairs disable/enable loosely,
        which is harmless on the CPU because STI always re-enables. */
@@ -145,7 +163,7 @@ void pc_disable(void) {
 
 void pc_enable(void) {
     int drain = 0;
-    if (!pc_irq_mutex) return;
+    if (!pc_irq_mutex || port_in_wide_pass) return;
     SDL_LockMutex(pc_irq_mutex);
     pc_interrupts_disabled = 0;                      /* STI */
     drain = inside_interrupt == 0;

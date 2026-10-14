@@ -1,4 +1,5 @@
 /* EGA/VGA register and planar-memory model used by the SDL port. */
+#include "wide_pass.h"
 #include "platform.h"
 
 #include <stdatomic.h>
@@ -104,6 +105,7 @@ uint8_t vga_graphics_register(uint8_t index)
 void vga_cpu_write(uint16_t offset, uint8_t value)
 {
     unsigned plane;
+    if (port_in_wide_pass) return;
     ++region_writes[offset < 0x2000u ? 0 : offset < 0x4000u ? 1 : 2];
     unsigned mode;
     uint8_t rotated;
@@ -147,6 +149,21 @@ void vga_cpu_write(uint16_t offset, uint8_t value)
         planes[plane][offset] = result;
     }
     unlock_vga();
+}
+
+/* A fingerprint of everything the EGA holds: planes, registers, latches, display start. */
+uint64_t vga_state_fingerprint(void)
+{
+    uint64_t h = 1469598103934665603ull;
+    #define MIX(ptr, n) for (size_t i_ = 0; i_ < (n); ++i_) h = (h ^ ((const uint8_t *)(ptr))[i_]) * 1099511628211ull
+    lock_vga();
+    MIX(planes, sizeof(planes)); MIX(seq_regs, sizeof(seq_regs)); MIX(gc_regs, sizeof(gc_regs));
+    MIX(crtc_regs, sizeof(crtc_regs)); MIX(attr_regs, sizeof(attr_regs)); MIX(latches, sizeof(latches));
+    MIX(&seq_index, 1); MIX(&gc_index, 1); MIX(&crtc_index, 1); MIX(&attr_index, 1);
+    MIX(&attr_data_phase, 1); MIX(&display_start, sizeof(display_start));
+    unlock_vga();
+    #undef MIX
+    return h;
 }
 
 uint8_t vga_cpu_read(uint16_t offset)

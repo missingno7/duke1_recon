@@ -5,6 +5,7 @@
    replays the changes at those times, a fixed delay behind, so note lengths come out exact
    instead of being rounded to audio buffer boundaries. */
 
+#include "wide_pass.h"
 #include "pc_internal.h"
 #include "scene.h"
 #include <math.h>
@@ -74,6 +75,7 @@ void pc_speaker_set_stereo(int on)
 
 void pc_speaker_set_source_world_x(int16_t world_x, int16_t scroll_x)
 {
+    if (port_in_wide_pass) return;
     /* Pan by the source's position in the visible view (half-tile units): the original
        playfield is 26 wide from scroll_x; widescreen shows the scene's wide view. */
     float left = (float)scroll_x;
@@ -114,6 +116,7 @@ void pc_speaker_reset(void)
 
 void pc_speaker_begin_sound(void)
 {
+    if (port_in_wide_pass) return;
     SDL_LockSpinlock(&event_lock);
     state_pan = requested_pan;
     SDL_UnlockSpinlock(&event_lock);

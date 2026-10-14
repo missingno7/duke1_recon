@@ -1,3 +1,4 @@
+#include "wide_pass.h"
 #include "pc_internal.h"
 #include "config.h"
 #include "scene.h"
@@ -47,6 +48,7 @@ static _Thread_local jmp_buf *game_exit_target;
 static SDL_AtomicInt episode_exit_requested;
 static unsigned char *episode_state_begin[4];
 static size_t episode_state_size[4];
+static int current_episode;               /* the episode whose state is live */
 static unsigned char *episode_state_snapshot[4];
 
 enum script_action { SCRIPT_KEY, SCRIPT_KEYDOWN, SCRIPT_KEYUP, SCRIPT_SHOT, SCRIPT_PAGE, SCRIPT_QUIT };
@@ -92,6 +94,7 @@ void pc_trace(unsigned category, const char *format, ...) {
 }
 
 void pc_spin(void) {
+    port_wide_pass_abandon("pc_spin");
     /* One millisecond sleeps can round to a longer Windows timer quantum. A 440-pass batch
        amortizes that yield while matching the fixed-cycle 386 reference's menu transitions. */
     if (++pc_spin_iterations >= PC_SPIN_BATCH) {
@@ -557,6 +560,8 @@ static void process_script_events(void) {
             if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
             break;
         case SCRIPT_QUIT:
+            if (verify_native) present_report();
+            port_wide_pass_report();
             save_windowed_size();
             fflush(NULL);
             SDL_Quit();
@@ -981,6 +986,7 @@ static int game_thread_main(void *opaque) {
 }
 
 void pc_exit(int16_t status) {
+    port_wide_pass_abandon("pc_exit");
     if (pc_is_game_thread() && game_exit_target) {
         SDL_SetAtomicInt(&game_status, status);
         SDL_SetAtomicInt(&episode_exit_requested, 1);
@@ -1048,6 +1054,7 @@ void platform_prepare_episode_state(int16_t episode, unsigned char *begin,
     }
     episode_state_begin[episode] = begin;
     episode_state_size[episode] = size;
+    current_episode = episode;
     if (!episode_state_snapshot[episode]) {
         episode_state_snapshot[episode] = (unsigned char *)malloc(size);
         if (!episode_state_snapshot[episode]) {
@@ -1063,6 +1070,15 @@ void platform_prepare_episode_state(int16_t episode, unsigned char *begin,
         fprintf(stderr, "[port] episode %d state restored: %zu bytes\n",
                 (int)episode, size);
     }
+}
+
+/* The running episode's variables (the wide presentation pass saves and restores them). */
+int platform_current_episode_state(unsigned char **begin, size_t *size)
+{
+    if (current_episode < 1 || current_episode > 3 || !episode_state_begin[current_episode]) return 0;
+    *begin = episode_state_begin[current_episode];
+    *size = episode_state_size[current_episode];
+    return 1;
 }
 
 void platform_reset_episode(void)
@@ -1090,6 +1106,7 @@ void platform_shutdown(void) {
     pc_interrupt_shutdown();
     pc_speaker_shutdown();
     if (verify_native) present_report();
+    port_wide_pass_report();
     present_shutdown();
     scene_shutdown();
     pc_release_all_allocations();

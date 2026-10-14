@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include "pc_internal.h"
+#include "wide_pass.h"
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +9,7 @@
 
 char pc_data_directory[4096];
 
-void pc_delay(uint16_t milliseconds) { SDL_Delay(milliseconds); }
+void pc_delay(uint16_t milliseconds) { port_wide_pass_abandon("pc_delay"); SDL_Delay(milliseconds); }
 
 uint32_t pc_coreleft(void) { return 2u * 1024u * 1024u; }
 
@@ -38,6 +39,7 @@ static void unmap_segment(uint8_t *segment)
 
 void *pc_malloc(uint16_t size)
 {
+    port_wide_pass_abandon("pc_malloc");
     HANDLE section;
     if (size == 0 || size > SEGMENT_SIZE)
         return NULL;
@@ -75,6 +77,7 @@ void *pc_malloc(uint16_t size)
 
 void pc_free(void *block)
 {
+    port_wide_pass_abandon("pc_free");
     uint8_t *segment = (uint8_t *)block;
     pc_allocation **link = &pc_allocations;
     if (!segment)
@@ -89,6 +92,15 @@ void pc_free(void *block)
         link = &allocation->next;
     }
     unmap_segment(segment);
+}
+
+/* The 64 KB segments of the live blocks (the wide presentation pass check). */
+int pc_allocation_segments(uint8_t **segments, int capacity)
+{
+    int count = 0;
+    for (pc_allocation *a = pc_allocations; a && count < capacity; a = a->next)
+        segments[count++] = a->segment;
+    return count;
 }
 
 void pc_episode_allocations_begin(void)
@@ -125,7 +137,7 @@ void pc_release_all_allocations(void)
     }
 }
 
-void pc_textmode(int16_t mode) { bios_set_mode((uint8_t)mode); }
+void pc_textmode(int16_t mode) { port_wide_pass_abandon("pc_textmode"); bios_set_mode((uint8_t)mode); }
 
 static int join_data_path(char *out, size_t capacity, const char *name) {
     WIN32_FIND_DATAA entry;
@@ -152,6 +164,7 @@ static int join_data_path(char *out, size_t capacity, const char *name) {
 }
 
 FILE *pc_fopen(const char *name, const char *mode) {
+    port_wide_pass_abandon("pc_fopen");
     char resolved[8192];
     FILE *file;
     if (!name || !mode) return NULL;
@@ -165,6 +178,7 @@ FILE *pc_fopen(const char *name, const char *mode) {
 }
 
 int16_t pc_getw(FILE *stream) {
+    port_wide_pass_abandon("pc_getw");
     int low, high;
     if (!stream) return (int16_t)-1;
     low = fgetc(stream);
@@ -175,6 +189,7 @@ int16_t pc_getw(FILE *stream) {
 }
 
 int16_t pc_putw(int16_t word, FILE *stream) {
+    port_wide_pass_abandon("pc_putw");
     uint16_t bits = (uint16_t)word;
     if (!stream) return (int16_t)-1;
     if (fputc((int)(bits & 0xffu), stream) == EOF) return (int16_t)-1;

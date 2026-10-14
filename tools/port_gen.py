@@ -934,6 +934,55 @@ def instrument_gameplay_capture(source: str) -> str:
     return source[:end_position] + "    capture_end_tile_strip();\n" + source[end_position:]
 
 
+# The frame's actor routines, in the order the gameplay loop runs them after
+# update_player_and_level_state(); "*callbacks*" is the per-level callback table walk.
+WIDE_PASS_CALLS = [
+    "animate_ambient_sprite_records", "animate_contact_flash_effects",
+    "update_collision_effect_pool", "update_pickup_object_pool", "update_moving_world_effects",
+    "resolve_projectile_collisions", "update_animated_actor_pool", "*callbacks*",
+    "update_moving_actor_pool",
+]
+
+
+def instrument_wide_presentation_pass(raw: str, translated: str, episode: int) -> str:
+    """Run the frame's actor routines once more for the wide margins (port/wide_pass.c) after
+    the frame's own drawing.  The routine list is checked against the gameplay loop."""
+    steps = []
+    for name in WIDE_PASS_CALLS:
+        if name == "*callbacks*":
+            steps.append(r"j\s*=\s*0;\s*while\s*\(j\s*<\s*keyboard_hotkey_count\)\s*\{\s*"
+                         r"level_update_callback_table\[j\]\(\);\s*\+\+j;\s*\}")
+        else:
+            steps.append(rf"{name}\(\);")
+    if not re.search(r"update_player_and_level_state\(\);\s*enable\(\);\s*" + r"\s*".join(steps[:-1]),
+                     uncomment(raw)):
+        raise ValueError("the gameplay loop no longer runs the wide-pass actor routines in order")
+    if len(re.findall(r"\bupdate_moving_actor_pool\(\);\s*update_water_shimmer\(\);", uncomment(raw))) != 1:
+        raise ValueError("expected one update_moving_actor_pool(); update_water_shimmer(); in the gameplay loop")
+    call = f"ep{episode}_update_water_shimmer();"
+    if translated.count(call) != 1:
+        raise ValueError(f"expected one call {call}")
+    translated = translated.replace(
+        call, call + f"\n        port_wide_presentation_pass(ep{episode}_wide_presentation_pass, "
+                     f"(unsigned char *)ep{episode}_level_tile_map, 24000);")
+    include = '#include "DUKE.H"\n'
+    if translated.count(include) != 1:
+        raise ValueError("expected one DUKE.H include in GAME1.C")
+    translated = translated.replace(include, include + f"void ep{episode}_wide_presentation_pass(void);\n")
+    body = []
+    for name in WIDE_PASS_CALLS:
+        if name == "*callbacks*":
+            body.append(f"    for (j = 0; j < ep{episode}_keyboard_hotkey_count; ++j) {{\n"
+                        f"        port_wide_pass_routine();\n"
+                        f"        ep{episode}_level_update_callback_table[j]();\n    }}")
+        else:
+            body.append(f"    port_wide_pass_routine();\n    ep{episode}_{name}();")
+    return translated + (
+        "\n/* The wide presentation pass: the frame's actor routines for the wide margins "
+        "(port/wide_pass.c). */\n"
+        f"void ep{episode}_wide_presentation_pass(void)\n{{\n    int16_t j;\n" + "\n".join(body) + "\n}\n")
+
+
 def instrument_modal_capture(source: str) -> str:
     """Publish an interim native frame from the page being drawn while a gameplay dialog
     waits for input.  The final page flip still publishes the completed frame as usual."""
@@ -1200,6 +1249,7 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path,
                 raw = instrument_gameplay_capture(raw)
             translated = translate(raw, episode, prefixes)
             if source_path.name.upper() == "GAME1.C":
+                translated = instrument_wide_presentation_pass(raw, translated, episode)
                 translated += (
                     f"\n__attribute__((section(\".ep{episode}$a\"), used)) "
                     f"unsigned char ep{episode}_state_begin = 0;\n"

@@ -99,7 +99,7 @@ a dialog drawn with the game's own routines (like the episode dialog).
 | `stereo` | `false`, `true` | pan speaker sounds by where they come from |
 | --- | | (enhanced renderer only) |
 | `widescreen` | `false`, `true` | the playfield grows to the picture shape; the HUD frame stretches |
-| `wide_activity` | `false`, `true` | actors act in the whole wide view (changes gameplay) |
+| `wide_activity` | `false`, `true` | real widescreen: actors act in the whole wide view - the game no longer plays like the original |
 | `smooth_camera` | `false`, `true` | continuous camera instead of 8/16-pixel steps |
 | `interpolation` | `false`, `true` | actors and shots move smoothly between game frames |
 | `frame_cap` | `0` | 0: the display's refresh rate; N: at most N frames per second |
@@ -118,14 +118,51 @@ cable at the top left, and the "PRESS F1 FOR HELP" plate, which stays centred un
 playfield - and the HUD column (SCORE, HEALTH, FIREPOWER, INVENTORY) keeps its place at
 the right edge.  The playfield takes the extra width: more of the level is visible.
 
-Widescreen without changing gameplay: the port generator gives the 125 view tests that
-only decide whether to *draw* a wide view, so everything the game would draw is drawn in
-the margins; the 50 that decide behaviour keep the original view unless `wide_activity`
-is on.  A level sprite with nothing inside the original playfield (only the wide view
-draws it) is recorded for the native renderer but never written into the emulated page,
-where it would land in the HUD or wrap into the previous line.  Sprites straddling a
-playfield edge are drawn as in the original: the game redraws the frame columns over them
-every frame.
+Widescreen without changing gameplay.  The game runs and draws an actor only inside its
+active window (`is_world_position_outside_view`: from the left edge of the original view to
+3 half-tiles beyond its right edge); outside it the actor is frozen.  The port generator sorts
+the 176 view tests: the 111 that only decide whether to *draw* see the wide view, so whatever
+the game draws anyway is drawn in the margins; the 65 that decide whether an actor *runs* keep
+the game's window.  The wide view reaches 32 pixels (two tiles, the widest actors) past its
+left edge: an actor's position is its left edge, and one that starts there still shows
+partly - the picture is clipped at the edge, so actors slide out instead of vanishing.
+
+### The wide margins: the presentation pass
+
+The actors behind those 65 tests are frozen in the margins, and the game would not draw them
+there - they would appear at the edge of its window and vanish behind the player.  After each
+frame's own drawing (`port_wide_presentation_pass`, placed by the generator after
+`update_water_shimmer()` in the gameplay loop) the port runs the frame's actor routines once
+more on a throwaway copy of the game state (`port/wide_pass.c`):
+
+1. interrupts are held (a timer tick or key that arrives is delivered right after, never lost),
+   the episode's variables and the level map are saved;
+2. the routines run in the loop's order (the generator checks it).  An actor's behaviour
+   test is its gate: it lets in only an actor in the wide margins (inside the wide view,
+   outside the game's window) - one the frame skipped as a whole.  Behind an open gate the
+   draw tests see the whole wide view, so all of that actor is drawn, also a part reaching
+   into the original view; draw tests behind no open gate answer "outside", the frame drew
+   those already.  The gate closes at the next behaviour test and before each routine;
+3. only level sprites are kept, as off-page items of the wide picture; ports, the EGA, the
+   speaker, CLI/STI and all other drawing do nothing, and anything that would wait, allocate,
+   open a file or leave the frame abandons the pass;
+4. everything is restored byte for byte.
+
+So a frozen actor is shown as the game itself would draw it the moment it came into view:
+pickups stay where they are, enemies stand still until they enter the game's window and
+start acting, and nothing pops at the edges.  `DUKE1_WIDE_PASS_CHECK=1` proves each pass
+left no trace (every allocated block and the whole EGA compare equal afterwards, and pass
+sprites inside the original view are reported as duplicates); `DUKE1_WIDE_PASS_OFF=1`
+disables it for comparisons.
+
+`wide_activity` is the real widescreen: the 65 tests see the wide view too, actors act in
+the whole wide view, and the pass is not needed - but the game no longer plays like the
+original.
+
+A level sprite with nothing inside the original playfield is recorded for the native
+renderer but never written into the emulated page, where it would land in the HUD or wrap
+into the previous line.  Sprites straddling a playfield edge are drawn as in the original:
+the game redraws the frame columns over them every frame.
 
 ## Milestones
 

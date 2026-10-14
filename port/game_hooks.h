@@ -52,6 +52,8 @@ void vga_cpu_write(uint16_t offset, uint8_t value);
 void platform_show_port_settings_dialog(int16_t episode);
 void pc_speaker_set_source_world_x(int16_t world_x, int16_t scroll_x);
 void pc_speaker_begin_sound(void);
+void port_wide_presentation_pass(void (*pass)(void), unsigned char *tile_map, uint16_t tile_map_size);
+void port_wide_pass_routine(void);
 
 #ifdef __cplusplus
 }

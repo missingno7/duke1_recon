@@ -23,6 +23,7 @@ duke1.exe = episode 1 + episode 2 + episode 3 + launcher + emulated PC
 | `launcher.c` | finds the episodes, shows the episode dialog (drawn with the game's own routines), runs the chosen one |
 | `pc_sdl.c` | SDL3: window, scaling (pixel aspect, integer scale, filter), keyboard to XT scan codes, game thread, `--script` |
 | `scene.c` | the native picture: everything the game draws, as items per video page (level, sprites, HUD, frame, dialogs, text, pictures) |
+| `wide_pass.c` | widescreen: the frame's actor routines once more on a throwaway state, for the frozen actors in the wide margins |
 | `present.c` | composes the shown page from its items: 1:1 the original exactly, wider the widescreen layout; the enhanced renderer never shows the emulated page |
 | `config.c` | `duke1.json` and the settings model behind the "Port settings" dialogs |
 | `game_hooks.h`, `pc_capture_hooks.c` | exact-width declarations of everything the generated game code may call (checked by the generator) |

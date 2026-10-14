@@ -100,6 +100,14 @@ void scene_end_strip(void);
    more of the level) is recorded but kept off the page, which has the frame and HUD there. */
 int  scene_sprite_off_page(uint32_t site, int x, int y);
 
+/* The wide presentation pass (wide_pass.c): wanted now?  While it runs, the view tests answer
+   for the wide margins only. */
+int  scene_wide_pass_wanted(void);
+void scene_wide_pass_begin(void);
+void scene_wide_pass_end(void);
+void scene_wide_pass_routine(void);     /* a new routine: no actor's gate is open */
+void scene_wide_pass_report(void);
+
 /* Presenter thread. */
 int  scene_snapshot(SceneSnapshot *out, uint64_t have_sequence);   /* 0: nothing new */
 void scene_release(SceneSnapshot *snapshot);

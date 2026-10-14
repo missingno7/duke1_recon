@@ -1,8 +1,10 @@
 /* scene.c - the native picture, game-thread side (see scene.h). */
 #include "scene.h"
+#include "wide_pass.h"
 #include "platform.h"
 
 #include <SDL3/SDL.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -42,6 +44,9 @@ static uint32_t tile_generation = 1;
 
 static SDL_AtomicInt wide_canvas, wide_enabled, wide_activity;
 static SDL_AtomicInt active;             /* the enhanced renderer is on */
+static int in_pass;                         /* the wide presentation pass is running */
+static int pass_gate_open;                  /* the pass: an actor in the margins is let in */
+static uint32_t pass_sites_inside[1024];    /* pass sprites inside the original view, by site */
 
 /* ---- pixels ---------------------------------------------------------------------------- */
 
@@ -377,6 +382,8 @@ void scene_add_sprite(uint32_t site, const char *source, int x, int y, int writt
                     }
                 }
     }
+    if (in_pass && !pass_gate_open && x >= PLAYFIELD_X0 && x + 16 <= PLAYFIELD_X1 && y >= PLAYFIELD_Y0 && y + 16 <= PLAYFIELD_Y1)
+        ++pass_sites_inside[site & 1023u];       /* the game drew it already: a duplicate */
     if (written) page_add(draw_page, &item);
     else {
         /* Off-page sprites live outside the 320x200 ownership map: keep them in the page's
@@ -554,42 +561,81 @@ int32_t scene_wide_view_left(int16_t scroll_x, int canvas_width)
 int scene_sprite_off_page(uint32_t site, int x, int y)
 {
     if ((site & SCENE_SCREEN_SITE) || !SDL_GetAtomicInt(&active) || !view_known ||
-        scene_wide_canvas_width() <= SCENE_WIDTH || y + 16 <= PLAYFIELD_Y0 || y >= PLAYFIELD_Y1)
+        scene_wide_canvas_width() <= SCENE_WIDTH)
         return 0;
-    /* A sprite straddling a playfield edge is drawn on the page as in the original: the game
-       redraws the frame columns over it every frame (draw_video_page_template), so the part
-       inside stays visible.  Only a sprite with nothing inside the original playfield - one
-       the wide view tests added - stays off the page (it would land in the HUD or wrap into
-       the previous line). */
-    return x + 16 <= PLAYFIELD_X0 || x >= PLAYFIELD_X1;
+    /* The original draws only level sprites that overlap its playfield; one straddling an
+       edge is drawn on the page as there, and the game redraws the frame over it every frame
+       (draw_video_page_template), so the part inside stays visible.  A sprite with nothing
+       inside the original playfield - one the wide view added, on any side - stays off the
+       page: there it would land on the frame or HUD, or wrap into another line. */
+    return x + 16 <= PLAYFIELD_X0 || x >= PLAYFIELD_X1 || y + 16 <= PLAYFIELD_Y0 || y >= PLAYFIELD_Y1;
 }
 
 /* The view tests the generator routes here: draw-gating ones see the wide view; behaviour
-   ones only with wide_activity. */
-static int wide_view_outside(int world_x, int world_y, int original_result)
+   ones only with wide_activity.
+
+   In the wide presentation pass an actor's behaviour test is its gate: it opens only for an
+   actor in the wide margins (inside the wide view, outside the game's own window), which the
+   frame skipped as a whole.  Behind an open gate the draw tests see the whole wide view, so
+   every part of that actor is drawn, also a part that reaches into the original view.  Draw
+   tests behind no open gate answer "outside": the frame has drawn those already.  The gate
+   closes at the next behaviour test and at the start of each routine of the pass. */
+#define WIDE_REACH 32                      /* the widest actors: two tiles */
+
+
+static int wide_view_inside(int world_x, int world_y)
 {
     int canvas = scene_wide_canvas_width();
     int width = canvas - SCENE_WIDTH + (PLAYFIELD_X1 - PLAYFIELD_X0);
-    int32_t left;
-    if (!SDL_GetAtomicInt(&wide_enabled) || canvas <= SCENE_WIDTH || !view_known)
-        return original_result;
-    left = scene_wide_view_left(strip_scroll_x, canvas);
-    if ((int32_t)world_x * 8 < left || (int32_t)world_x * 8 >= left + width)
-        return 1;
-    if (world_y < strip_map_y - 64 || world_y >= strip_map_y + 1280)
-        return 1;
-    return 0;
+    int32_t left = scene_wide_view_left(strip_scroll_x, canvas);
+    /* An actor's position is its left edge; one starting up to WIDE_REACH pixels left of the
+       view still shows partly (the picture is clipped at the edge), so it counts as inside. */
+    return (int32_t)world_x * 8 >= left - WIDE_REACH && (int32_t)world_x * 8 < left + width &&
+           world_y >= strip_map_y - 64 && world_y < strip_map_y + 1280;
+}
+
+static int wide_view_known(void)
+{
+    return SDL_GetAtomicInt(&wide_enabled) && scene_wide_canvas_width() > SCENE_WIDTH && view_known;
 }
 
 int port_is_world_position_outside_wide_view(int world_x, int world_y, int original_result)
 {
-    return wide_view_outside(world_x, world_y, original_result);
+    if (!wide_view_known()) return original_result;
+    if (in_pass && !pass_gate_open) return 1;
+    return !wide_view_inside(world_x, world_y);
 }
 
 int port_is_world_position_outside_wide_if_active(int world_x, int world_y, int original_result)
 {
+    if (!wide_view_known()) return original_result;
+    if (in_pass) {
+        pass_gate_open = original_result && wide_view_inside(world_x, world_y);
+        return !pass_gate_open;
+    }
     if (!SDL_GetAtomicInt(&wide_activity)) return original_result;
-    return wide_view_outside(world_x, world_y, original_result);
+    return !wide_view_inside(world_x, world_y);
+}
+
+/* The wide presentation pass (wide_pass.c) runs when the wide view shows more than the game's
+   window and the game itself does not act there (wide_activity off). */
+int scene_wide_pass_wanted(void)
+{
+    return lock && SDL_GetAtomicInt(&active) && SDL_GetAtomicInt(&wide_enabled) &&
+           !SDL_GetAtomicInt(&wide_activity) && SDL_GetAtomicInt(&wide_canvas) > SCENE_WIDTH &&
+           view_known;
+}
+
+void scene_wide_pass_begin(void) { in_pass = 1; pass_gate_open = 0; }
+void scene_wide_pass_end(void) { in_pass = 0; pass_gate_open = 0; }
+void scene_wide_pass_routine(void) { pass_gate_open = 0; }
+
+void scene_wide_pass_report(void)
+{
+    for (int site = 0; site < 1024; ++site)
+        if (pass_sites_inside[site])
+            fprintf(stderr, "[wide pass] site %d drew %u sprites inside the original view behind no gate\n",
+                    site, (unsigned)pass_sites_inside[site]);
 }
 
 /* ---- the hook names the port generator emits (draw_animated_level_strip, input loops) ---- */

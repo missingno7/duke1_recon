@@ -1,4 +1,5 @@
 #define WIN32_LEAN_AND_MEAN
+#include "wide_pass.h"
 #include "platform.h"
 #include "scene.h"
 #include "pc_internal.h"
@@ -240,6 +241,7 @@ static void show_port_settings_dialog(int episode, int in_game) {
 }
 
 void platform_show_port_settings_dialog(int16_t episode) {
+    port_wide_pass_abandon("platform_show_port_settings_dialog");
     show_port_settings_dialog(episode, 1);
 }
 
