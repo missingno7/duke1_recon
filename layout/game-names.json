@@ -1383,6 +1383,595 @@
   "d_d714_": "primary_sound_bank_buffer",
   "d_d718_": "bios_timer_chain_divider"
  },
+ "params": {
+  "allocate_collision_record": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "p": "collision_effect_record"
+  },
+  "animate_ambient_sprite_records": {
+   "p": "ambient_object_record"
+  },
+  "animate_contact_flash_effects": {
+   "p": "contact_flash"
+  },
+  "animate_level_tile_records": {
+   "p": "animation_record"
+  },
+  "calibrate_joystick_controls": {
+   "a0": "joystick_mode",
+   "a1": "text_x",
+   "dx": "x_threshold_margin",
+   "dy": "y_threshold_margin",
+   "text": "button_state",
+   "x1": "first_x_reading",
+   "x2": "second_x_reading",
+   "y1": "first_y_reading",
+   "y2": "second_y_reading"
+  },
+  "check_minimum_available_memory": {
+   "available": "available_bytes"
+  },
+  "clear_palette_entries": {
+   "value": "delay_ticks"
+  },
+  "clear_video_page_region": {
+   "a0": "bitmap_offset",
+   "di": "row_offset",
+   "si": "column_offset"
+  },
+  "configure_joystick_axes": {
+   "mode": "joystick_mode",
+   "sample": "port_value",
+   "state": "button_state",
+   "x": "axis_x_reading",
+   "xdir": "x_direction",
+   "y": "axis_y_reading",
+   "ydir": "y_direction"
+  },
+  "confirm_quit_to_dos": {
+   "a0": "text_x"
+  },
+  "create_objects_from_level_map": {
+   "a0": "row_count",
+   "cell": "tile_cell"
+  },
+  "detect_joystick_connection": {
+   "first": "button_1_state",
+   "second": "button_2_state"
+  },
+  "display_badguy_bitmap": {
+   "si": "byte_offset"
+  },
+  "display_ending_bitmap": {
+   "si": "byte_offset",
+   "vram": "video_memory"
+  },
+  "display_episode_bitmap_b638": {
+   "si": "byte_offset"
+  },
+  "draw_actor_sprite_by_variant": {
+   "a0": "variant",
+   "a1": "x",
+   "a2": "y"
+  },
+  "draw_actor_sprite_pair": {
+   "a0": "frame",
+   "a1": "world_x",
+   "a2": "world_y",
+   "offset": "sprite_offset"
+  },
+  "draw_animated_level_strip": {
+   "di": "strip_column_index",
+   "offset": "bitmap_offset",
+   "p": "tile_map_pointer",
+   "si": "screen_offset"
+  },
+  "draw_buffered_screen_effect": {
+   "si": "effect_index"
+  },
+  "draw_climbing_actor_sprite": {
+   "a0": "frame",
+   "a1": "x",
+   "a2": "y"
+  },
+  "draw_four_wide_actor_sprite": {
+   "a0": "frame",
+   "a1": "x",
+   "a2": "y"
+  },
+  "draw_framed_dialog_box": {
+   "a0": "height_rows",
+   "a1": "top_offset",
+   "a2": "left_offset",
+   "di": "horizontal_offset",
+   "si": "vertical_offset"
+  },
+  "draw_game_setup_menu": {
+   "a0": "text_x"
+  },
+  "draw_high_score_table": {
+   "a0": "text_x",
+   "buffer": "number_text"
+  },
+  "draw_in_game_help_menu": {
+   "a0": "text_x"
+  },
+  "draw_keyboard_binding_values": {
+   "a0": "text_x"
+  },
+  "draw_keyboard_mode_settings": {
+   "a0": "text_x"
+  },
+  "draw_large_actor_sprite": {
+   "a0": "sprite_frame",
+   "a1": "actor_world_x",
+   "a2": "actor_world_y",
+   "offset": "sprite_data_offset"
+  },
+  "draw_level_marker_tiles": {
+   "di": "draw_pass",
+   "si": "page_index"
+  },
+  "draw_level_object_animation": {
+   "a0": "y",
+   "a1": "x",
+   "a2": "frame"
+  },
+  "draw_main_menu": {
+   "a0": "text_x"
+  },
+  "draw_marker_3058_objects": {
+   "p": "marker_record"
+  },
+  "draw_page_frame_template": {
+   "di": "page_index",
+   "si": "row_offset"
+  },
+  "draw_player_action_sprite": {
+   "a0": "sprite_frame",
+   "a1": "sprite_x",
+   "a2": "sprite_y",
+   "offset": "sprite_offset"
+  },
+  "draw_six_tile_actor_sprite": {
+   "a0": "world_y",
+   "a1": "world_x",
+   "a2": "sprite_index",
+   "p1": "x_coord"
+  },
+  "draw_tall_effect_sprite": {
+   "a0": "y",
+   "a1": "x",
+   "a2": "frame"
+  },
+  "draw_text_character": {
+   "a0": "scan_code",
+   "a1": "character_x",
+   "a2": "character_y",
+   "text": "character_buffer"
+  },
+  "draw_text_character_at_position": {
+   "a0": "character",
+   "a1": "pixel_x",
+   "a2": "pixel_y"
+  },
+  "draw_text_panel_background": {
+   "a0": "x_offset",
+   "di": "column_offset",
+   "si": "video_offset"
+  },
+  "draw_two_by_two_actor_sprite": {
+   "a0": "frame",
+   "a1": "world_x",
+   "a2": "world_y",
+   "offset": "sprite_offset"
+  },
+  "draw_two_by_two_actor_variant": {
+   "a0": "frame",
+   "a1": "world_x",
+   "a2": "world_y",
+   "offset": "sprite_offset"
+  },
+  "draw_two_tile_wide_actor_sprite": {
+   "a0": "frame",
+   "a1": "world_x",
+   "a2": "world_y",
+   "offset": "sprite_offset"
+  },
+  "draw_unsigned_score_value": {
+   "di": "digit_count",
+   "page": "text_row",
+   "si": "digit_index",
+   "text": "score_digits",
+   "value": "score",
+   "x": "score_x"
+  },
+  "draw_video_page_template": {
+   "si": "video_offset"
+  },
+  "draw_wide_actor_sprite": {
+   "a0": "frame",
+   "a1": "x",
+   "a2": "y"
+  },
+  "handle_game_setup_input": {
+   "a0": "text_x"
+  },
+  "handle_in_game_help_menu": {
+   "a0": "text_x"
+  },
+  "init_player_and_level_state": {
+   "saved": "saved_score"
+  },
+  "is_level_position_blocked": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "p": "tile_ptr",
+   "q": "adjacent_tile_ptr"
+  },
+  "is_world_position_outside_view": {
+   "a0": "world_x",
+   "a1": "world_y"
+  },
+  "load_badguy_graphics": {
+   "stream": "bitmap_file"
+  },
+  "load_credits_graphics": {
+   "stream": "bitmap_file"
+  },
+  "load_duke_graphics": {
+   "stream": "bitmap_file"
+  },
+  "load_ending_graphics": {
+   "stream": "bitmap_file"
+  },
+  "load_episode_graphics_b638": {
+   "stream": "bitmap_file"
+  },
+  "load_high_score_table": {
+   "stream": "score_file"
+  },
+  "load_keyboard_bindings": {
+   "stream": "bindings_file"
+  },
+  "load_level_and_init_objects": {
+   "a0": "level_filename"
+  },
+  "load_primary_sound_bank": {
+   "stream": "sound_file"
+  },
+  "load_secondary_sound_bank": {
+   "stream": "sound_file"
+  },
+  "load_user_demo_recording": {
+   "fp": "file_stream"
+  },
+  "pause_until_resume_input": {
+   "a0": "text_x"
+  },
+  "play_level_transition_sequence": {
+   "button1": "joystick_button_1",
+   "button2": "joystick_button_2",
+   "counter": "timeout_counter",
+   "phase": "frame_toggle"
+  },
+  "poll_player_controls_and_events": {
+   "a0": "text_x",
+   "button1": "joystick_button_1_state",
+   "button2": "joystick_button_2_state",
+   "ticks": "elapsed_ticks"
+  },
+  "prompt_and_save_game": {
+   "a0": "text_x"
+  },
+  "prompt_for_restore_slot": {
+   "a0": "text_x"
+  },
+  "prompt_for_save_slot": {
+   "a0": "text_x"
+  },
+  "prompt_joystick_calibration": {
+   "a0": "text_x"
+  },
+  "queue_ambient_sprite_animation": {
+   "a0": "sprite_offset",
+   "a1": "world_x",
+   "a2": "world_y",
+   "p": "ambient_object_record"
+  },
+  "read_joystick_button": {
+   "v": "port_value"
+  },
+  "read_restore_slot_digit": {
+   "a0": "text_x"
+  },
+  "read_text_entry": {
+   "a0": "text_buffer",
+   "a1": "text_y",
+   "a2": "text_x"
+  },
+  "register_level_update_callback": {
+   "key": "update_callback"
+  },
+  "remap_keyboard_action": {
+   "a0": "text_x"
+  },
+  "remove_world_actor_at_position": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "p": "world_actor"
+  },
+  "request_priority_sound_effect": {
+   "a0": "sound_effect_id"
+  },
+  "resolve_projectile_collisions": {
+   "p": "projectile_record"
+  },
+  "restore_ega_palette": {
+   "a0": "delay_ticks"
+  },
+  "restore_game_state_from_slot": {
+   "a0": "slot_number",
+   "filename": "save_filename",
+   "previous": "previous_scan_code",
+   "stream": "save_file"
+  },
+  "run_game_loop": {
+   "i": "sprite_offset",
+   "wait": "level_advanced"
+  },
+  "run_title_and_main_menu": {
+   "state": "menu_action"
+  },
+  "sample_joystick_axes": {
+   "a1": "x_axis_count",
+   "a2": "y_axis_count",
+   "first": "x_axis_pressed",
+   "mask1": "x_axis_mask",
+   "mask2": "y_axis_mask",
+   "mode": "joystick_number",
+   "second": "y_axis_pressed",
+   "state": "joystick_port_state"
+  },
+  "save_game_state_to_slot": {
+   "a0": "slot_character",
+   "name": "save_filename"
+  },
+  "save_high_score_table": {
+   "stream": "score_file"
+  },
+  "save_keyboard_bindings": {
+   "stream": "bindings_file"
+  },
+  "select_joystick_configuration": {
+   "a": "text_x"
+  },
+  "set_palette_entries_to_23": {
+   "a0": "delay_ticks"
+  },
+  "show_instruction_screen": {
+   "a0": "text_x"
+  },
+  "show_joystick_mode_status": {
+   "a0": "text_x"
+  },
+  "show_keyboard_controls_help": {
+   "a0": "text_x"
+  },
+  "show_next_episode_promotion": {
+   "a0": "text_x"
+  },
+  "show_save_location_warning": {
+   "a0": "text_x"
+  },
+  "spawn_animated_actor_sprite": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "p": "animated_actor"
+  },
+  "spawn_contact_flash_effect": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "p": "contact_flash"
+  },
+  "spawn_moving_actor": {
+   "a0": "actor_kind",
+   "a1": "world_x",
+   "a2": "world_y",
+   "p": "moving_actor"
+  },
+  "spawn_pickup_object": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "p": "pickup_object"
+  },
+  "spawn_world_actor": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "a2": "actor_state",
+   "p": "actor_record"
+  },
+  "test_level_tile_special_state": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "p": "tile_ptr"
+  },
+  "test_player_body_clearance": {
+   "p": "tile_pointer",
+   "q": "below_tile_pointer",
+   "r": "above_tile_pointer"
+  },
+  "test_player_floor_clearance": {
+   "p0": "base_tile_pointer",
+   "p1": "below_tile_pointer",
+   "p2": "above_tile_pointer"
+  },
+  "test_player_head_clearance": {
+   "p1": "head_tile_pointer",
+   "p2": "adjacent_head_tile_pointer"
+  },
+  "test_player_level_clearance": {
+   "p1": "player_tile_pointer",
+   "p2": "adjacent_player_tile_pointer"
+  },
+  "test_player_overlap_with_object": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "v": "player_y_delta"
+  },
+  "test_player_vertical_range": {
+   "a0": "x_min",
+   "a1": "x_max",
+   "a2": "world_y",
+   "index": "player_y_offset"
+  },
+  "test_player_x_alignment": {
+   "a0": "world_x",
+   "a1": "world_y",
+   "v": "player_y_delta"
+  },
+  "toggle_hint_mode": {
+   "a0": "text_x"
+  },
+  "toggle_sound_setting": {
+   "a0": "text_x"
+  },
+  "update_actor_3000": {
+   "p": "actor"
+  },
+  "update_actor_3001": {
+   "p": "actor",
+   "si": "i"
+  },
+  "update_actor_3002": {
+   "actor_302a_record": "actor",
+   "height": "actor_height"
+  },
+  "update_actor_3007": {
+   "p": "actor"
+  },
+  "update_actor_3009": {
+   "p": "actor"
+  },
+  "update_actor_300a": {
+   "p": "actor"
+  },
+  "update_actor_300b": {
+   "obj": "actor"
+  },
+  "update_actor_300c": {
+   "p": "actor"
+  },
+  "update_actor_300d": {
+   "p": "actor"
+  },
+  "update_actor_300e": {
+   "p": "actor"
+  },
+  "update_actor_300f": {
+   "p": "actor"
+  },
+  "update_actor_3010": {
+   "p": "actor",
+   "status": "removed_actor_state"
+  },
+  "update_actor_3012": {
+   "p": "actor"
+  },
+  "update_actor_3013": {
+   "active": "all_inactive"
+  },
+  "update_actor_3014": {
+   "p": "actor"
+  },
+  "update_actor_3015": {
+   "p": "actor"
+  },
+  "update_actor_3016": {
+   "p": "actor_record"
+  },
+  "update_actor_3018": {
+   "p": "actor_record"
+  },
+  "update_actor_3019": {
+   "si": "tile_column"
+  },
+  "update_actor_3021": {
+   "p": "actor_record"
+  },
+  "update_actor_3022": {
+   "p": "actor_record"
+  },
+  "update_actor_3023": {
+   "p": "actor_record"
+  },
+  "update_actor_3024": {
+   "p": "actor_record"
+  },
+  "update_actor_3029": {
+   "p": "actor_record",
+   "si": "actor_index"
+  },
+  "update_actor_3031": {
+   "p": "actor_record"
+  },
+  "update_actor_3037": {
+   "p": "actor_record"
+  },
+  "update_actor_3044": {
+   "p": "actor_record",
+   "si": "record_index"
+  },
+  "update_actor_3048": {
+   "p": "marker_record"
+  },
+  "update_animated_actor_pool": {
+   "p": "animated_actor"
+  },
+  "update_collision_effect_pool": {
+   "p": "collision_effect"
+  },
+  "update_joystick_axis_state": {
+   "sample": "port_value"
+  },
+  "update_level_lock_or_exit": {
+   "si": "unused_register"
+  },
+  "update_moving_actor_pool": {
+   "p": "moving_actor"
+  },
+  "update_moving_world_effects": {
+   "p": "actor_record"
+  },
+  "update_pickup_object_pool": {
+   "p": "pickup_object"
+  },
+  "update_projectile_pool_051c": {
+   "a0": "projectile_direction",
+   "a1": "world_x",
+   "a2": "world_y",
+   "p": "projectile_record"
+  },
+  "wait_for_keyboard_or_joystick": {
+   "a0": "sprite_x",
+   "a1": "text_row",
+   "x": "button_1_state",
+   "y": "button_2_state"
+  },
+  "wait_for_timer_ticks": {
+   "n": "target_ticks"
+  },
+  "wait_input_animated_sprite": {
+   "a0": "sprite_x",
+   "a1": "text_row",
+   "x": "button_1_state",
+   "y": "button_2_state"
+  },
+  "wait_joystick_button_release": {
+   "r": "button_state"
+  }
+ },
  "structs": {
   "G1_4874_item": {
    "fields": {

@@ -606,62 +606,62 @@ int current_sound_sample_position = 0;
 
 /* Visits all 16 palette registers in order, setting each to color value 23 with the requested
    delay. */
-void pascal set_palette_entries_to_23(int a0)
+void pascal set_palette_entries_to_23(int delay_ticks)
 {
     register int i;
 
     for (i = 0; i < 16; ++i) {
-        delay(a0);
+        delay(delay_ticks);
         set_vga_mode_with_parameters(i, 0x17);
     }
 }
 
 /* Restores the 16 EGA palette registers to the source's default color values, with a delay
    between writes. */
-void pascal restore_ega_palette(register int a0)
+void pascal restore_ega_palette(register int delay_ticks)
 {
     set_vga_mode_with_parameters(0, 0);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(1, 1);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(2, 2);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(3, 3);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(4, 4);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(5, 5);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(6, 6);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(7, 7);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(8, 16);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(9, 17);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(10, 18);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(11, 19);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(12, 20);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(13, 21);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(14, 22);
-    delay(a0);
+    delay(delay_ticks);
     set_vga_mode_with_parameters(15, 23);
-    delay(a0);
+    delay(delay_ticks);
 }
 
 /* clear_palette_entries candidate */
 /* Clears all 16 palette registers to color value zero, with the requested delay between writes. */
-void pascal clear_palette_entries(int value)
+void pascal clear_palette_entries(int delay_ticks)
 {
     register int i;
 
     for (i = 0; i < 16; ++i) {
-        delay(value);
+        delay(delay_ticks);
         set_vga_mode_with_parameters(i, 0);
     }
 }
@@ -675,50 +675,50 @@ void select_and_show_video_page(void)
 
 /* Measures the two selected joystick-axis discharge times and stores the counts through the
    output pointers. */
-void pascal sample_joystick_axes(int mode, int far *a1, int far *a2)
+void pascal sample_joystick_axes(int joystick_number, int far *x_axis_count, int far *y_axis_count)
 {
-    int second;
-    int mask1;
-    int mask2;
-    register int state;
-    register int first;
+    int y_axis_pressed;
+    int x_axis_mask;
+    int y_axis_mask;
+    register int joystick_port_state;
+    register int x_axis_pressed;
 
-    if (mode == 1) {
-        mask1 = 1;
-        mask2 = 2;
+    if (joystick_number == 1) {
+        x_axis_mask = 1;
+        y_axis_mask = 2;
     } else {
-        mask1 = 4;
-        mask2 = 8;
+        x_axis_mask = 4;
+        y_axis_mask = 8;
     }
-    *a1 = 0;
-    *a2 = 0;
+    *x_axis_count = 0;
+    *y_axis_count = 0;
     disable();
     /* Discharge the game-port timing capacitors before joystick_button_sample the axes. */
     outportb(0x201, inportb(0x201));
     do {
-        state = inportb(0x201);
-        first = (state & mask1) != 0;
-        second = (state & mask2) != 0;
-        *a1 += first;
-        *a2 += second;
-    } while (first + second != 0 && *a1 < 500 && *a2 < 500);
+        joystick_port_state = inportb(0x201);
+        x_axis_pressed = (joystick_port_state & x_axis_mask) != 0;
+        y_axis_pressed = (joystick_port_state & y_axis_mask) != 0;
+        *x_axis_count += x_axis_pressed;
+        *y_axis_count += y_axis_pressed;
+    } while (x_axis_pressed + y_axis_pressed != 0 && *x_axis_count < 500 && *y_axis_count < 500);
     enable();
 }
 
 /* Clears a rectangular region of the selected planar video page. */
-void pascal clear_video_page_region(int a0)
+void pascal clear_video_page_region(int bitmap_offset)
 {
-    register int si;
-    register int di;
+    register int column_offset;
+    register int row_offset;
 
     /* Select all VGA planes and write mode 1 for the clear. */
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
     select_draw_page(0);
     show_video_page(0);
-    for (di = 0; di < 25; di++) {
-        for (si = 0; si < 20; si++) {
-            blit_bitmap_to_video_page(a0, si * 2 + di * 640);
+    for (row_offset = 0; row_offset < 25; row_offset++) {
+        for (column_offset = 0; column_offset < 20; column_offset++) {
+            blit_bitmap_to_video_page(bitmap_offset, column_offset * 2 + row_offset * 640);
         }
     }
 }
@@ -1038,36 +1038,36 @@ void show_secret_tip_elevator(void)
 }
 
 /* Toggles the sound setting, redraws its status, and waits for the toggle key to be released. */
-void pascal toggle_sound_setting(register int a0)
+void pascal toggle_sound_setting(register int text_x)
 {
-    draw_framed_dialog_box(a0, 3, 2);
+    draw_framed_dialog_box(text_x, 3, 2);
     outport(0x3ce, 5);
     while (last_keyboard_scan_code == 0x1f) {
     }
-    draw_text_string("       Sound toggle", a0, 7);
+    draw_text_string("       Sound toggle", text_x, 7);
     if (sound_enabled = !sound_enabled) {
-        draw_text_string("     The sound is ON", a0, 9);
+        draw_text_string("     The sound is ON", text_x, 9);
     } else {
-        draw_text_string("     The sound is OFF", a0, 9);
+        draw_text_string("     The sound is OFF", text_x, 9);
         outportb(0x61, inportb(0x61) & 0xfd);
     }
     delay(300);
-    wait_input_animated_sprite(a0 + 24, 10);
+    wait_input_animated_sprite(text_x + 24, 10);
     while (last_keyboard_scan_code == 0x1f) {
     }
 }
 
 /* Toggles hint mode and updates the displayed hint state. */
-void pascal toggle_hint_mode(register int a0)
+void pascal toggle_hint_mode(register int text_x)
 {
-    draw_framed_dialog_box(a0, 3, 2);
+    draw_framed_dialog_box(text_x, 3, 2);
     outport(0x3ce, 5);
     while (last_keyboard_scan_code == 0x23) {
     }
-    draw_text_string("       Hint toggle ", a0, 7);
+    draw_text_string("       Hint toggle ", text_x, 7);
     hint_mode_enabled = !hint_mode_enabled;
     if (hint_mode_enabled) {
-        draw_text_string("     Hint mode is ON", a0, 9);
+        draw_text_string("     Hint mode is ON", text_x, 9);
         hint_revealed_object_7 = 1;
         hint_revealed_object_9 = 1;
         hint_revealed_object_2 = 1;
@@ -1081,7 +1081,7 @@ void pascal toggle_hint_mode(register int a0)
         hint_revealed_object_3 = 1;
         hint_revealed_object_8 = 1;
     } else {
-        draw_text_string("     Hint mode is OFF", a0, 9);
+        draw_text_string("     Hint mode is OFF", text_x, 9);
         hint_revealed_object_7 = 0;
         hint_revealed_object_9 = 0;
         hint_revealed_object_2 = 0;
@@ -1095,46 +1095,46 @@ void pascal toggle_hint_mode(register int a0)
         hint_revealed_object_3 = 0;
         hint_revealed_object_8 = 0;
     }
-    wait_input_animated_sprite(a0 + 24, 10);
+    wait_input_animated_sprite(text_x + 24, 10);
     while (last_keyboard_scan_code == 0x23) {
     }
 }
 
 /* Displays the paused state and waits for the player to resume or select another input. */
-void pascal pause_until_resume_input(register int a0)
+void pascal pause_until_resume_input(register int text_x)
 {
-    draw_framed_dialog_box(a0, 3, 1);
+    draw_framed_dialog_box(text_x, 3, 1);
     outport(0x3ce, 5);
-    draw_text_string("       Game PAUSED. ", a0, 7);
+    draw_text_string("       Game PAUSED. ", text_x, 7);
     while (last_keyboard_scan_code == 0x19) {
     }
-    wait_input_animated_sprite(a0 + 24, 8);
+    wait_input_animated_sprite(text_x + 24, 8);
 }
 
 /* Prompts the player for the for save slot and records the response. */
-void pascal prompt_for_save_slot(register int a0)
+void pascal prompt_for_save_slot(register int text_x)
 {
-    draw_framed_dialog_box(a0, 3, 2);
-    draw_text_string("      Save a game.      ", a0, 7);
-    draw_text_string("    Which game number   ", a0, 8);
-    draw_text_string("  do you want to save?  ", a0, 9);
-    draw_text_string("      Choose (1-9):     ", a0, 10);
+    draw_framed_dialog_box(text_x, 3, 2);
+    draw_text_string("      Save a game.      ", text_x, 7);
+    draw_text_string("    Which game number   ", text_x, 8);
+    draw_text_string("  do you want to save?  ", text_x, 9);
+    draw_text_string("      Choose (1-9):     ", text_x, 10);
     while (last_keyboard_scan_code == 0x1f) {
     }
-    wait_input_animated_sprite(a0 + 20, 10);
+    wait_input_animated_sprite(text_x + 20, 10);
 }
 
 /* Prompts the player for the for restore slot and records the response. */
-void pascal prompt_for_restore_slot(register int a0)
+void pascal prompt_for_restore_slot(register int text_x)
 {
-    draw_framed_dialog_box(a0, 3, 2);
-    draw_text_string("      Restore a game.   ", a0, 7);
-    draw_text_string("    Which game number   ", a0, 8);
-    draw_text_string("  do you want to load?  ", a0, 9);
-    draw_text_string("      Choose (1-9):     ", a0, 10);
+    draw_framed_dialog_box(text_x, 3, 2);
+    draw_text_string("      Restore a game.   ", text_x, 7);
+    draw_text_string("    Which game number   ", text_x, 8);
+    draw_text_string("  do you want to load?  ", text_x, 9);
+    draw_text_string("      Choose (1-9):     ", text_x, 10);
     while (last_keyboard_scan_code == 0x13) {
     }
-    wait_input_animated_sprite(a0 + 20, 10);
+    wait_input_animated_sprite(text_x + 20, 10);
 }
 
 /* Restores the prior timer vector, reprograms PIT channel zero, and silences the PC speaker. */
@@ -1148,27 +1148,27 @@ void restore_timer_interrupt_vector(void)
 }
 
 /* Waits for the for keyboard or joystick condition or input event. */
-void pascal wait_for_keyboard_or_joystick(register int a0, register int a1)
+void pascal wait_for_keyboard_or_joystick(register int sprite_x, register int text_row)
 {
-    char x;
-    char y;
+    char button_1_state;
+    char button_2_state;
 
     last_keyboard_scan_code = 0;
-    x = inportb(0x201) & 0x10;
-    y = inportb(0x201) & 0x20;
-    while (last_keyboard_scan_code == 0 && x != 0 && y != 0) {
-        x = inportb(0x201) & 0x10;
-        y = inportb(0x201) & 0x20;
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3520, a0, a1 * 8);
+    button_1_state = inportb(0x201) & 0x10;
+    button_2_state = inportb(0x201) & 0x20;
+    while (last_keyboard_scan_code == 0 && button_1_state != 0 && button_2_state != 0) {
+        button_1_state = inportb(0x201) & 0x10;
+        button_2_state = inportb(0x201) & 0x20;
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3520, sprite_x, text_row * 8);
         delay(5);
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x35c0, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x35c0, sprite_x, text_row * 8);
         delay(5);
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3660, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3660, sprite_x, text_row * 8);
         delay(5);
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3700, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3700, sprite_x, text_row * 8);
         delay(5);
     }
-    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x37a0, a0, a1 * 8);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x37a0, sprite_x, text_row * 8);
 }
 
 /* Draws the get ready message using the active page and graphics resources. */
@@ -1181,13 +1181,13 @@ void draw_get_ready_message(void)
 }
 
 /* Draws the game setup menu using the active page and graphics resources. */
-void pascal draw_game_setup_menu(register int a0)
+void pascal draw_game_setup_menu(register int text_x)
 {
-    draw_text_string("        GAME SETUP", a0, 6);
-    draw_text_string("      J)oystick mode", a0, 8);
-    draw_text_string("      K)eyboard mode", a0, 9);
-    draw_text_string("      S)ound toggle", a0, 10);
-    draw_text_string("      H)int toggle", a0, 11);
+    draw_text_string("        GAME SETUP", text_x, 6);
+    draw_text_string("      J)oystick mode", text_x, 8);
+    draw_text_string("      K)eyboard mode", text_x, 9);
+    draw_text_string("      S)ound toggle", text_x, 10);
+    draw_text_string("      H)int toggle", text_x, 11);
 }
 
 /* Displays the level restart prompt and returns the player's choice. */
@@ -1350,26 +1350,26 @@ void show_secret_tip_transporter(void)
 }
 
 /* Draws the keyboard binding values using the active page and graphics resources. */
-void pascal draw_keyboard_binding_values(register int a0)
+void pascal draw_keyboard_binding_values(register int text_x)
 {
-    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_up].display_label, a0 + 17, 9);
-    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_down].display_label, a0 + 17, 10);
-    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_left].display_label, a0 + 17, 11);
-    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_right].display_label, a0 + 17, 12);
-    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_fire].display_label, a0 + 17, 13);
-    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_jump].display_label, a0 + 17, 14);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_up].display_label, text_x + 17, 9);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_down].display_label, text_x + 17, 10);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_left].display_label, text_x + 17, 11);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_right].display_label, text_x + 17, 12);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_fire].display_label, text_x + 17, 13);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_jump].display_label, text_x + 17, 14);
 }
 
 /* Draws the in game help menu using the active page and graphics resources. */
-void pascal draw_in_game_help_menu(register int a0)
+void pascal draw_in_game_help_menu(register int text_x)
 {
-    draw_text_string("      DUKE HELP MENU", a0, 4);
-    draw_text_string("      --------------", a0, 5);
-    draw_text_string("      S)ave a game", a0, 7);
-    draw_text_string("      I)nstructions", a0, 8);
-    draw_text_string("      G)ame Setup", a0, 9);
-    draw_text_string("      H)igh scores", a0, 10);
-    draw_text_string("    F10) Restart Level", a0, 11);
+    draw_text_string("      DUKE HELP MENU", text_x, 4);
+    draw_text_string("      --------------", text_x, 5);
+    draw_text_string("      S)ave a game", text_x, 7);
+    draw_text_string("      I)nstructions", text_x, 8);
+    draw_text_string("      G)ame Setup", text_x, 9);
+    draw_text_string("      H)igh scores", text_x, 10);
+    draw_text_string("    F10) Restart Level", text_x, 11);
 }
 
 /* Displays the secret-tip card about insert card and waits for player input. */
@@ -1418,77 +1418,77 @@ void show_secret_tip_lock_key(void)
 
 /* Displays the save location warning screen or message and waits for the associated input when
    required. */
-void pascal show_save_location_warning(register int a0)
+void pascal show_save_location_warning(register int text_x)
 {
-    draw_framed_dialog_box(a0, 2, 2);
-    draw_text_string(" You can only save a game", a0, 6);
-    draw_text_string("  in the main hallways.", a0, 7);
+    draw_framed_dialog_box(text_x, 2, 2);
+    draw_text_string(" You can only save a game", text_x, 6);
+    draw_text_string("  in the main hallways.", text_x, 7);
     do {
     } while (last_keyboard_scan_code == 0x1f);
-    wait_input_animated_sprite(a0 + 24, 7);
+    wait_input_animated_sprite(text_x + 24, 7);
 }
 
 /* Displays the keyboard controls help screen or message and waits for the associated input when
    required. */
-void pascal show_keyboard_controls_help(register int a0)
+void pascal show_keyboard_controls_help(register int text_x)
 {
-    draw_text_string("Important Keys:         ", a0 + 1, 4);
-    draw_text_string("  CTRL - Jump           ", a0 + 1, 5);
-    draw_text_string("  ALT  - Fire           ", a0 + 1, 6);
-    draw_text_string("  Cursor Keys - Move Man", a0 + 1, 7);
-    draw_text_string("  Up Cursor - Action Key", a0 + 1, 8);
-    draw_text_string("                        ", a0 + 1, 9);
-    draw_text_string("Change keys by choosing ", a0 + 1, 10);
-    draw_text_string("option \"K\" in HELP MENU.", a0 + 1, 11);
-    draw_text_string("                        ", a0 + 1, 12);
-    draw_text_string("  \"S\" - Toggle Sound    ", a0 + 1, 13);
-    draw_text_string("  \"H\" - Toggle Hint Mode", a0 + 1, 14);
-    draw_text_string("  F10 - Restart Level   ", a0 + 1, 15);
-    draw_text_string("  ESC - Quit Game       ", a0 + 1, 16);
-    draw_text_string("  \"<\" - Decrease Speed  ", a0 + 1, 17);
-    draw_text_string("  \">\" - Increase Speed  ", a0 + 1, 18);
-    draw_text_string("                        ", a0 + 1, 19);
-    draw_text_string("     Press any key.     ", a0 + 1, 20);
+    draw_text_string("Important Keys:         ", text_x + 1, 4);
+    draw_text_string("  CTRL - Jump           ", text_x + 1, 5);
+    draw_text_string("  ALT  - Fire           ", text_x + 1, 6);
+    draw_text_string("  Cursor Keys - Move Man", text_x + 1, 7);
+    draw_text_string("  Up Cursor - Action Key", text_x + 1, 8);
+    draw_text_string("                        ", text_x + 1, 9);
+    draw_text_string("Change keys by choosing ", text_x + 1, 10);
+    draw_text_string("option \"K\" in HELP MENU.", text_x + 1, 11);
+    draw_text_string("                        ", text_x + 1, 12);
+    draw_text_string("  \"S\" - Toggle Sound    ", text_x + 1, 13);
+    draw_text_string("  \"H\" - Toggle Hint Mode", text_x + 1, 14);
+    draw_text_string("  F10 - Restart Level   ", text_x + 1, 15);
+    draw_text_string("  ESC - Quit Game       ", text_x + 1, 16);
+    draw_text_string("  \"<\" - Decrease Speed  ", text_x + 1, 17);
+    draw_text_string("  \">\" - Increase Speed  ", text_x + 1, 18);
+    draw_text_string("                        ", text_x + 1, 19);
+    draw_text_string("     Press any key.     ", text_x + 1, 20);
     while ((last_keyboard_scan_code & 0x80) == 0) {
     }
 }
 
 /* Draws the high score table using the active page and graphics resources. */
-void pascal draw_high_score_table(int a0)
+void pascal draw_high_score_table(int text_x)
 {
-    char buffer[20];
+    char number_text[20];
     register int i;
 
-    draw_text_panel_background(a0);
-    draw_text_string(" --- HIGH  SCORES ---", a0 + 2, 3);
+    draw_text_panel_background(text_x);
+    draw_text_string(" --- HIGH  SCORES ---", text_x + 2, 3);
     for (i = 0; i < 8; ++i) {
-        ltoa((long)i + 1L, buffer, 10);
-        draw_text_string(buffer, a0 + 2, i * 2 + 5);
-        draw_text_string(".", a0 + 3, i * 2 + 5);
-        ltoa(high_score_values[i], buffer, 10);
-        draw_text_string(buffer, a0 + 6, i * 2 + 5);
-        draw_text_string(high_score_player_names[i], a0 + 14, i * 2 + 5);
+        ltoa((long)i + 1L, number_text, 10);
+        draw_text_string(number_text, text_x + 2, i * 2 + 5);
+        draw_text_string(".", text_x + 3, i * 2 + 5);
+        ltoa(high_score_values[i], number_text, 10);
+        draw_text_string(number_text, text_x + 6, i * 2 + 5);
+        draw_text_string(high_score_player_names[i], text_x + 14, i * 2 + 5);
     }
 }
 
 /* Writes the high score table to the game's selected file or data buffer. */
 void save_high_score_table(void)
 {
-    FILE *stream;
+    FILE *score_file;
     register int i;
 
 #if EPISODE == 1
-    stream = fopen("HIGHS.DN1", "w+");
+    score_file = fopen("HIGHS.DN1", "w+");
 #elif EPISODE == 2
-    stream = fopen("HIGHS.dn2", "w+");
+    score_file = fopen("HIGHS.dn2", "w+");
 #else
-    stream = fopen("HIGHS.dn3", "w+");
+    score_file = fopen("HIGHS.dn3", "w+");
 #endif
     for (i = 0; i < 10; i++) {
-        fprintf(stream, "%lu", high_score_values[i]);
-        fprintf(stream, "%s\n", high_score_player_names[i]);
+        fprintf(score_file, "%lu", high_score_values[i]);
+        fprintf(score_file, "%s\n", high_score_player_names[i]);
     }
-    fclose(stream);
+    fclose(score_file);
 }
 
 /* Programs PIT channel zero and installs the timer-and-sound handler at interrupt vector 8. */
@@ -1509,12 +1509,12 @@ void install_timer_interrupt(void)
 
 /* Displays the instruction screen screen or message and waits for the associated input when
    required. */
-void pascal show_instruction_screen(int a0)
+void pascal show_instruction_screen(int text_x)
 {
-    draw_text_panel_background(a0);
+    draw_text_panel_background(text_x);
     outport(0x3ce, 5);
-    draw_text_string("       Instructions ", a0, 3);
-    show_keyboard_controls_help(a0);
+    draw_text_string("       Instructions ", text_x, 3);
+    show_keyboard_controls_help(text_x);
     wait_input_animated_sprite(26, 20);
 }
 
@@ -1529,11 +1529,11 @@ void show_loading_status(void)
 
 /* Displays the joystick mode status screen or message and waits for the associated input when
    required. */
-void pascal show_joystick_mode_status(int a0)
+void pascal show_joystick_mode_status(int text_x)
 {
-    draw_framed_dialog_box(a0, 3, 7);
+    draw_framed_dialog_box(text_x, 3, 7);
     outport(0x3ce, 5);
-    draw_text_string("      Joystick mode", a0, 7);
+    draw_text_string("      Joystick mode", text_x, 7);
     delay(100);
 }
 
@@ -1559,57 +1559,57 @@ void pascal draw_alternate_planar_sprite(char far* bitmap)
 /* Writes the keyboard bindings to the game's selected file or data buffer. */
 void save_keyboard_bindings(char far *filename)
 {
-    FILE *stream;
+    FILE *bindings_file;
 
-    stream = fopen(filename, "wb");
-    fputc(key_binding_up, stream);
-    fputc(key_binding_down, stream);
-    fputc(key_binding_left, stream);
-    fputc(key_binding_right, stream);
-    fputc(key_binding_fire, stream);
-    fputc(key_binding_jump, stream);
-    fclose(stream);
+    bindings_file = fopen(filename, "wb");
+    fputc(key_binding_up, bindings_file);
+    fputc(key_binding_down, bindings_file);
+    fputc(key_binding_left, bindings_file);
+    fputc(key_binding_right, bindings_file);
+    fputc(key_binding_fire, bindings_file);
+    fputc(key_binding_jump, bindings_file);
+    fclose(bindings_file);
 }
 
 /* Loads the keyboard bindings from the caller-selected file or resource. */
 void load_keyboard_bindings(char far *filename)
 {
-    FILE *stream;
+    FILE *bindings_file;
 
-    stream = fopen(filename, "rb");
-    if (stream) {
-        key_binding_up = fgetc(stream);
-        key_binding_down = fgetc(stream);
-        key_binding_left = fgetc(stream);
-        key_binding_right = fgetc(stream);
-        key_binding_fire = fgetc(stream);
-        key_binding_jump = fgetc(stream);
+    bindings_file = fopen(filename, "rb");
+    if (bindings_file) {
+        key_binding_up = fgetc(bindings_file);
+        key_binding_down = fgetc(bindings_file);
+        key_binding_left = fgetc(bindings_file);
+        key_binding_right = fgetc(bindings_file);
+        key_binding_fire = fgetc(bindings_file);
+        key_binding_jump = fgetc(bindings_file);
     }
-    fclose(stream);
+    fclose(bindings_file);
 }
 
 /* Restores the game state from slot from its saved state. */
-void pascal restore_game_state_from_slot(char a0)
+void pascal restore_game_state_from_slot(char slot_number)
 {
-    char previous;
-    FILE *stream;
-    char far *filename;
+    char previous_scan_code;
+    FILE *save_file;
+    char far *save_filename;
 
-    previous = last_keyboard_scan_code;
+    previous_scan_code = last_keyboard_scan_code;
 #if EPISODE == 1
-    filename = "saved .dn1";
+    save_filename = "saved .dn1";
 #elif EPISODE == 2
-    filename = "saved .dn2";
+    save_filename = "saved .dn2";
 #else
-    filename = "saved .dn3";
+    save_filename = "saved .dn3";
 #endif
-    filename[5] = a0;
-    stream = fopen(filename, "rb");
-    if (stream == 0) {
+    save_filename[5] = slot_number;
+    save_file = fopen(save_filename, "rb");
+    if (save_file == 0) {
         draw_framed_dialog_box(7, 2, 1);
         draw_text_string("     Game not found!!", 7, 5);
-        fclose(stream);
-        while (last_keyboard_scan_code == previous) {
+        fclose(save_file);
+        while (last_keyboard_scan_code == previous_scan_code) {
         }
         last_keyboard_scan_code = 0;
         while (last_keyboard_scan_code == 0) {
@@ -1618,33 +1618,33 @@ void pascal restore_game_state_from_slot(char a0)
         return;
     }
     game_session_abort_flag = 0;
-    level_scroll_x = getw(stream);
-    level_map_y_offset = getw(stream);
-    player_screen_x = getw(stream);
-    player_screen_y = getw(stream);
-    current_level_index = getw(stream);
-    world_actor_count = getw(stream);
-    access_card_or_door_state = getw(stream);
-    player_contact_state = getw(stream);
-    title_graphic_frame_index = getw(stream);
-    actor_3020_active_state = getw(stream);
-    hint_revealed_object_7 = getw(stream);
-    hint_revealed_object_9 = getw(stream);
-    hint_revealed_object_2 = getw(stream);
-    hint_revealed_object_11 = getw(stream);
-    hint_revealed_object_10 = getw(stream);
-    hint_revealed_object_4 = getw(stream);
-    hint_revealed_object_5 = getw(stream);
-    transporter_hint_pending = getw(stream);
-    hint_revealed_object_6 = getw(stream);
-    hint_revealed_object_1 = getw(stream);
-    hint_revealed_object_3 = getw(stream);
-    hint_revealed_object_8 = getw(stream);
+    level_scroll_x = getw(save_file);
+    level_map_y_offset = getw(save_file);
+    player_screen_x = getw(save_file);
+    player_screen_y = getw(save_file);
+    current_level_index = getw(save_file);
+    world_actor_count = getw(save_file);
+    access_card_or_door_state = getw(save_file);
+    player_contact_state = getw(save_file);
+    title_graphic_frame_index = getw(save_file);
+    actor_3020_active_state = getw(save_file);
+    hint_revealed_object_7 = getw(save_file);
+    hint_revealed_object_9 = getw(save_file);
+    hint_revealed_object_2 = getw(save_file);
+    hint_revealed_object_11 = getw(save_file);
+    hint_revealed_object_10 = getw(save_file);
+    hint_revealed_object_4 = getw(save_file);
+    hint_revealed_object_5 = getw(save_file);
+    transporter_hint_pending = getw(save_file);
+    hint_revealed_object_6 = getw(save_file);
+    hint_revealed_object_1 = getw(save_file);
+    hint_revealed_object_3 = getw(save_file);
+    hint_revealed_object_8 = getw(save_file);
     if (hint_mode_enabled == 0) {
         hint_revealed_object_7 = hint_revealed_object_9 = hint_revealed_object_2 = hint_revealed_object_11 = hint_revealed_object_10 = hint_revealed_object_4 = hint_revealed_object_5 = transporter_hint_pending = hint_revealed_object_6 = hint_revealed_object_1 = hint_revealed_object_3 = hint_revealed_object_8 = 0;
     }
-    fscanf(stream, "%ld", &player_score);
-    fclose(stream);
+    fscanf(save_file, "%ld", &player_score);
+    fclose(save_file);
 }
 
 /* Draws the high score name screen using the active page and graphics resources. */
@@ -1673,17 +1673,17 @@ void wait_controller_button(void)
 /* Loads the high score table from the caller-selected file or resource. */
 void load_high_score_table(void)
 {
-    FILE *stream;
+    FILE *score_file;
     register int i;
 
 #if EPISODE == 1
-    stream = fopen("HIGHS.DN1", "r");
+    score_file = fopen("HIGHS.DN1", "r");
 #elif EPISODE == 2
-    stream = fopen("HIGHS.dn2", "r");
+    score_file = fopen("HIGHS.dn2", "r");
 #else
-    stream = fopen("HIGHS.dn3", "r");
+    score_file = fopen("HIGHS.dn3", "r");
 #endif
-    if (stream == 0) {
+    if (score_file == 0) {
         high_score_values[0] = 40000L;
         strcpy(high_score_player_names[0], "TODD");
         high_score_entry_1_alias[0] = 30000L;
@@ -1696,26 +1696,26 @@ void load_high_score_table(void)
         strcpy(high_score_player_names[4], "JOHN");
     } else {
         for (i = 0; i < 10; i++) {
-            fscanf(stream, "%lu", &high_score_values[i]);
-            fscanf(stream, "%[^\n]s", high_score_player_names[i]);
+            fscanf(score_file, "%lu", &high_score_values[i]);
+            fscanf(score_file, "%[^\n]s", high_score_player_names[i]);
         }
     }
-    fclose(stream);
+    fclose(score_file);
 }
 
 /* Samples joystick button bits and marks the joystick connected only when both tested buttons
    are released. */
 void detect_joystick_connection(void)
 {
-    char first;
-    char second;
+    char button_1_state;
+    char button_2_state;
 
     joystick_enabled = 1;
-    first = inportb(0x201) & 0x10;
-    second = inportb(0x201) & 0x20;
-    if (first == 0) {
+    button_1_state = inportb(0x201) & 0x10;
+    button_2_state = inportb(0x201) & 0x20;
+    if (button_1_state == 0) {
         joystick_enabled = 0;
-    } else if (second == 0) {
+    } else if (button_2_state == 0) {
         joystick_enabled = 0;
     }
 }
@@ -1824,22 +1824,22 @@ char normalize_extended_key_code(void)
 }
 
 /* Converts an unsigned score to digits and draws it with the numeric glyph resource. */
-void pascal draw_unsigned_score_value(long value, int x, int page)
+void pascal draw_unsigned_score_value(long score, int score_x, int text_row)
 {
-    char text[16];
-    register int si;
-    register int di;
+    char score_digits[16];
+    register int digit_index;
+    register int digit_count;
 
-    ultoa(value, text, 10);
-    di = strlen(text);
-    si = di - 1;
-    for (; si >= 0; --si) {
+    ultoa(score, score_digits, 10);
+    digit_count = strlen(score_digits);
+    digit_index = digit_count - 1;
+    for (; digit_index >= 0; --digit_index) {
         select_draw_page(1);
-        blit_planar_masked_glyph(font_glyph_data_buffer + (text[di - si - 1] - '0') * 40 + 0x410,
-                                 x - si, page * 8);
+        blit_planar_masked_glyph(font_glyph_data_buffer + (score_digits[digit_count - digit_index - 1] - '0') * 40 + 0x410,
+                                 score_x - digit_index, text_row * 8);
         select_draw_page(0);
-        blit_planar_masked_glyph(font_glyph_data_buffer + (text[di - si - 1] - '0') * 40 + 0x410,
-                                 x - si, page * 8);
+        blit_planar_masked_glyph(font_glyph_data_buffer + (score_digits[digit_count - digit_index - 1] - '0') * 40 + 0x410,
+                                 score_x - digit_index, text_row * 8);
     }
     select_draw_page(!draw_page_index);
 }
@@ -1847,52 +1847,52 @@ void pascal draw_unsigned_score_value(long value, int x, int page)
 /* Wait for a key or joystick button, cycling a 4-frame animation at (x, y). */
 /* Waits for keyboard or joystick input while cycling the four-frame sprite animation at the
    requested position. */
-void pascal wait_input_animated_sprite(register int a0, register int a1)
+void pascal wait_input_animated_sprite(register int sprite_x, register int text_row)
 {
-    char x = 1;
-    char y = 1;
+    char button_1_state = 1;
+    char button_2_state = 1;
 
     last_keyboard_scan_code = 0;
     if (joystick_enabled != 0) {
         wait_joystick_button_release();
-        x = inportb(0x201) & 0x10;
-        y = inportb(0x201) & 0x20;
+        button_1_state = inportb(0x201) & 0x10;
+        button_2_state = inportb(0x201) & 0x20;
     }
-    while (last_keyboard_scan_code == 0 && x != 0 && y != 0) {
+    while (last_keyboard_scan_code == 0 && button_1_state != 0 && button_2_state != 0) {
         if (joystick_enabled != 0) {
-            x = inportb(0x201) & 0x10;
-            y = inportb(0x201) & 0x20;
+            button_1_state = inportb(0x201) & 0x10;
+            button_2_state = inportb(0x201) & 0x20;
         }
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3520, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3520, sprite_x, text_row * 8);
         delay(5);
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x35c0, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x35c0, sprite_x, text_row * 8);
         delay(5);
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3660, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3660, sprite_x, text_row * 8);
         delay(5);
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3700, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3700, sprite_x, text_row * 8);
         delay(5);
     }
-    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x37a0, a0, a1 * 8);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x37a0, sprite_x, text_row * 8);
 }
 
 /* Draws the fixed planar background and border template into the selected video page. */
 void draw_video_page_template(void)
 {
-    register int si;
+    register int video_offset;
 
-    si = 0x280;
+    video_offset = 0x280;
     outport(0x3ce, 0x105);
     do {
-        blit_bitmap_to_video_page(0x3000, si);
-        blit_bitmap_to_video_page(0x3020, si + 0x1c);
-        si += 0x280;
-    } while (si < 0x1b80);
-    si = 2;
+        blit_bitmap_to_video_page(0x3000, video_offset);
+        blit_bitmap_to_video_page(0x3020, video_offset + 0x1c);
+        video_offset += 0x280;
+    } while (video_offset < 0x1b80);
+    video_offset = 2;
     do {
-        blit_bitmap_to_video_page(0x3040, si);
-        blit_bitmap_to_video_page(0x3060, si + 0x1b80);
-        si += 2;
-    } while (si < 0x1c);
+        blit_bitmap_to_video_page(0x3040, video_offset);
+        blit_bitmap_to_video_page(0x3060, video_offset + 0x1b80);
+        video_offset += 2;
+    } while (video_offset < 0x1c);
     blit_bitmap_to_video_page(0x31c0, 0x141c);
     blit_bitmap_to_video_page(0x31c0, 0x065c);
     blit_bitmap_to_video_page(0x31c0, 0x0c9c);
@@ -1909,15 +1909,15 @@ void draw_video_page_template(void)
 /* Draws the framed page template on both video pages before a menu or dialog is shown. */
 void draw_page_frame_template(void)
 {
-    register int si;
-    register int di;
+    register int row_offset;
+    register int page_index;
 
-    di = 0;
+    page_index = 0;
     outport(0x3ce, 0x0105);
     draw_video_page_template();
     do {
-        ++di;
-        select_draw_page(di - 1);
+        ++page_index;
+        select_draw_page(page_index - 1);
         blit_bitmap_to_video_page(0x3080, 0);
         blit_bitmap_to_video_page(0x30a0, 0x001c);
         blit_bitmap_to_video_page(0x30c0, 0x1b9c);
@@ -1928,8 +1928,8 @@ void draw_page_frame_template(void)
         blit_bitmap_to_video_page(0x3100, 0x0024);
         blit_bitmap_to_video_page(0x3120, 0x0026);
         blit_bitmap_to_video_page(0x3160, 0x1ba6);
-        for (si = 0x0280; si < 0x1b80; si += 0x0280)
-            blit_bitmap_to_video_page(0x3140, si + 0x0026);
+        for (row_offset = 0x0280; row_offset < 0x1b80; row_offset += 0x0280)
+            blit_bitmap_to_video_page(0x3140, row_offset + 0x0026);
         blit_bitmap_to_video_page(0x3100, 0x141e);
         blit_bitmap_to_video_page(0x3100, 0x0c9e);
         blit_bitmap_to_video_page(0x3100, 0x1420);
@@ -1957,40 +1957,40 @@ void draw_page_frame_template(void)
         blit_bitmap_to_video_page(0x3440, 0x0ca1);
         blit_bitmap_to_video_page(0x3460, 0x0ca3);
         blit_bitmap_to_video_page(0x31e0, 0x0666);
-    } while (di == 1);
+    } while (page_index == 1);
 }
 
 /* Draws the text panel background using the active page and graphics resources. */
-void pascal draw_text_panel_background(int a0)
+void pascal draw_text_panel_background(int x_offset)
 {
-    register int si;
-    register int di;
+    register int video_offset;
+    register int column_offset;
 
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
-    if (a0 == 2)
+    if (x_offset == 2)
         select_draw_page(draw_page_index);
     else
         select_draw_page(0);
 
-    for (si = 0; si < 10; si++) {
-        for (di = a0; di < a0 + 26; di += 2)
-            blit_bitmap_to_video_page(0x3220, si * 640 + di + 640);
+    for (video_offset = 0; video_offset < 10; video_offset++) {
+        for (column_offset = x_offset; column_offset < x_offset + 26; column_offset += 2)
+            blit_bitmap_to_video_page(0x3220, video_offset * 640 + column_offset + 640);
     }
 
-    blit_bitmap_to_video_page(0x3240, a0 + 640);
-    blit_bitmap_to_video_page(0x3260, a0 + 664);
-    blit_bitmap_to_video_page(0x3280, a0 + 0x1900);
-    blit_bitmap_to_video_page(0x32a0, a0 + 0x1918);
+    blit_bitmap_to_video_page(0x3240, x_offset + 640);
+    blit_bitmap_to_video_page(0x3260, x_offset + 664);
+    blit_bitmap_to_video_page(0x3280, x_offset + 0x1900);
+    blit_bitmap_to_video_page(0x32a0, x_offset + 0x1918);
 
-    for (si = 0x500; si < 0x16a8; si += 640) {
-        blit_bitmap_to_video_page(0x32c0, si + a0);
-        blit_bitmap_to_video_page(0x32e0, si + a0 + 24);
+    for (video_offset = 0x500; video_offset < 0x16a8; video_offset += 640) {
+        blit_bitmap_to_video_page(0x32c0, video_offset + x_offset);
+        blit_bitmap_to_video_page(0x32e0, video_offset + x_offset + 24);
     }
 
-    for (si = 0x282; si < 0x298; si += 2) {
-        blit_bitmap_to_video_page(0x3300, si + a0);
-        blit_bitmap_to_video_page(0x3320, si + a0 + 0x1680);
+    for (video_offset = 0x282; video_offset < 0x298; video_offset += 2) {
+        blit_bitmap_to_video_page(0x3300, video_offset + x_offset);
+        blit_bitmap_to_video_page(0x3320, video_offset + x_offset + 0x1680);
     }
 }
 
@@ -2091,13 +2091,13 @@ void print_ordering_information(void)
 /* Loads the credits bitmap into an allocated planar-image buffer. */
 void pascal load_credits_graphics(char far *filename)
 {
-    FILE *stream;
+    FILE *bitmap_file;
 
-    stream = fopen(filename, "rb");
+    bitmap_file = fopen(filename, "rb");
     credits_graphics_buffer = malloc(32001);
     if (credits_graphics_buffer)
-        fread(credits_graphics_buffer, 32000, 1, stream);
-    fclose(stream);
+        fread(credits_graphics_buffer, 32000, 1, bitmap_file);
+    fclose(bitmap_file);
 }
 
 /* Clears the video page so it can be reused. */
@@ -2144,21 +2144,21 @@ void display_credits_bitmap(void)
 /* Loads the episode gameplay bitmap into its allocated planar-image buffer. */
 void pascal load_episode_graphics_b638(char far *filename)
 {
-    FILE *stream;
+    FILE *bitmap_file;
 
-    stream = fopen(filename, "rb");
+    bitmap_file = fopen(filename, "rb");
     episode_graphics_buffer = malloc(32001);
     if (episode_graphics_buffer != 0) {
-        fread(episode_graphics_buffer, 32000, 1, stream);
+        fread(episode_graphics_buffer, 32000, 1, bitmap_file);
     }
-    fclose(stream);
+    fclose(bitmap_file);
 }
 
 /* Copies the loaded gameplay bitmap planes into video memory and displays the resulting page. */
 void display_episode_bitmap_b638(void)
 {
     char far *screen = (char far *)MK_FP(0xa000, 0);
-    register int si;
+    register int byte_offset;
 
     clear_video_page();
     outport(0x3ce, 5);
@@ -2166,37 +2166,37 @@ void display_episode_bitmap_b638(void)
     show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
-    for (si = 0; si < 8000; ++si)
-        screen[si] = episode_graphics_buffer[si];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        screen[byte_offset] = episode_graphics_buffer[byte_offset];
     outport(0x3c4, 0x0202);
-    for (si = 0; si < 8000; ++si)
-        screen[si] = episode_graphics_buffer[si + 8000];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        screen[byte_offset] = episode_graphics_buffer[byte_offset + 8000];
     outport(0x3c4, 0x0402);
-    for (si = 0; si < 8000; ++si)
-        screen[si] = episode_graphics_buffer[si + 16000];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        screen[byte_offset] = episode_graphics_buffer[byte_offset + 16000];
     outport(0x3c4, 0x0802);
-    for (si = 0; si < 8000; ++si)
-        screen[si] = episode_graphics_buffer[si + 24000];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        screen[byte_offset] = episode_graphics_buffer[byte_offset + 24000];
     show_video_page(0);
 }
 
 /* Loads the bad-guy bitmap into its allocated planar-image buffer. */
 void pascal load_badguy_graphics(char far *filename)
 {
-    FILE *stream;
+    FILE *bitmap_file;
 
-    stream = fopen(filename, "rb");
+    bitmap_file = fopen(filename, "rb");
     badguy_graphics_buffer = malloc(32001);
     if (badguy_graphics_buffer != 0) {
-        fread(badguy_graphics_buffer, 32000, 1, stream);
+        fread(badguy_graphics_buffer, 32000, 1, bitmap_file);
     }
-    fclose(stream);
+    fclose(bitmap_file);
 }
 
 /* Copies the loaded bad-guy bitmap planes into video memory and displays the resulting page. */
 void display_badguy_bitmap(void)
 {
-    register int si;
+    register int byte_offset;
     char far *video = (char far *)MK_FP(0xA000, 0);
 
     clear_video_page();
@@ -2205,31 +2205,31 @@ void display_badguy_bitmap(void)
     show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
-    for (si = 0; si < 8000; ++si)
-        video[si] = badguy_graphics_buffer[si];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        video[byte_offset] = badguy_graphics_buffer[byte_offset];
     outport(0x3c4, 0x0202);
-    for (si = 0; si < 8000; ++si)
-        video[si] = badguy_graphics_buffer[si + 8000];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        video[byte_offset] = badguy_graphics_buffer[byte_offset + 8000];
     outport(0x3c4, 0x0402);
-    for (si = 0; si < 8000; ++si)
-        video[si] = badguy_graphics_buffer[si + 16000];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        video[byte_offset] = badguy_graphics_buffer[byte_offset + 16000];
     outport(0x3c4, 0x0802);
-    for (si = 0; si < 8000; ++si)
-        video[si] = badguy_graphics_buffer[si + 24000];
+    for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
+        video[byte_offset] = badguy_graphics_buffer[byte_offset + 24000];
     show_video_page(0);
 }
 
 /* Loads the Duke bitmap into its allocated planar-image buffer. */
 void pascal load_duke_graphics(char far *filename)
 {
-    FILE *stream;
+    FILE *bitmap_file;
 
-    stream = fopen(filename, "rb");
+    bitmap_file = fopen(filename, "rb");
     duke_graphics_buffer = malloc(32001);
     if (duke_graphics_buffer != 0) {
-        fread(duke_graphics_buffer, 32000, 1, stream);
+        fread(duke_graphics_buffer, 32000, 1, bitmap_file);
     }
-    fclose(stream);
+    fclose(bitmap_file);
 }
 
 /* Copies the loaded Duke bitmap planes into video memory and displays the resulting page. */
@@ -2265,40 +2265,40 @@ void display_duke_bitmap(void)
 /* Loads the ending bitmap into its allocated planar-image buffer. */
 void pascal load_ending_graphics(char far *filename)
 {
-    FILE *stream;
+    FILE *bitmap_file;
 
-    stream = fopen(filename, "rb");
+    bitmap_file = fopen(filename, "rb");
     ending_graphics_buffer = malloc(32001);
     if (ending_graphics_buffer) {
-        fread(ending_graphics_buffer, 32000, 1, stream);
+        fread(ending_graphics_buffer, 32000, 1, bitmap_file);
     }
-    fclose(stream);
+    fclose(bitmap_file);
 }
 
 /* Copies the loaded ending bitmap planes into video memory and displays the resulting page. */
 void display_ending_bitmap(void)
 {
-    char far *vram;
-    register int si;
+    char far *video_memory;
+    register int byte_offset;
 
-    vram = MK_FP(0xa000, 0);
+    video_memory = MK_FP(0xa000, 0);
     clear_video_page();
     outport(0x3ce, 5);
     select_draw_page(0);
     show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
-    for (si = 0; si < 8000; si++)
-        vram[si] = ending_graphics_buffer[si];
+    for (byte_offset = 0; byte_offset < 8000; byte_offset++)
+        video_memory[byte_offset] = ending_graphics_buffer[byte_offset];
     outport(0x3c4, 0x0202);
-    for (si = 0; si < 8000; si++)
-        vram[si] = ending_graphics_buffer[si + 8000];
+    for (byte_offset = 0; byte_offset < 8000; byte_offset++)
+        video_memory[byte_offset] = ending_graphics_buffer[byte_offset + 8000];
     outport(0x3c4, 0x0402);
-    for (si = 0; si < 8000; si++)
-        vram[si] = ending_graphics_buffer[si + 16000];
+    for (byte_offset = 0; byte_offset < 8000; byte_offset++)
+        video_memory[byte_offset] = ending_graphics_buffer[byte_offset + 16000];
     outport(0x3c4, 0x0802);
-    for (si = 0; si < 8000; si++)
-        vram[si] = ending_graphics_buffer[si + 24000];
+    for (byte_offset = 0; byte_offset < 8000; byte_offset++)
+        video_memory[byte_offset] = ending_graphics_buffer[byte_offset + 24000];
     show_video_page(0);
 }
 
@@ -2321,46 +2321,46 @@ void pascal draw_text_string(char far *text, register int x, int y)
 }
 
 /* Draws one mapped character glyph at the requested text position. */
-void pascal draw_text_character_at_position(char a0, int a1, int a2)
+void pascal draw_text_character_at_position(char character, int pixel_x, int pixel_y)
 {
-    if (a0 >= 'a') {
-        draw_ega_glyph(font_glyph_data_buffer + (a0 - 'a') * 40 + 0xac8, a1, a2);
+    if (character >= 'a') {
+        draw_ega_glyph(font_glyph_data_buffer + (character - 'a') * 40 + 0xac8, pixel_x, pixel_y);
     } else {
-        draw_ega_glyph(font_glyph_data_buffer + (a0 - ' ') * 40 + 0x190, a1, a2);
+        draw_ega_glyph(font_glyph_data_buffer + (character - ' ') * 40 + 0x190, pixel_x, pixel_y);
     }
 }
 
 #if EPISODE == 1 || EPISODE == 2
 /* draw_main_menu: at this place in the DN1, DN2 source */
 /* Draws the main menu; the source has a DN3-specific menu body and a shared DN1/DN2 body. */
-void pascal draw_main_menu(register int a0)
+void pascal draw_main_menu(register int text_x)
 {
-    draw_text_string("      DUKE MAIN MENU", a0, 6);
-    draw_text_string("      --------------", a0, 7);
-    draw_text_string("   S)tart a new game", a0, 9);
-    draw_text_string("   R)estore an old game", a0, 10);
-    draw_text_string("   I)nstructions", a0, 11);
-    draw_text_string("   O)rdering information", a0, 12);
-    draw_text_string("   G)ame setup", a0, 13);
-    draw_text_string("   H)igh scores", a0, 14);
-    draw_text_string("   P)reviews/Main Demo!", a0, 15);
-    draw_text_string("   V)iew user demo", a0, 16);
-    draw_text_string("   T)itle screen", a0, 17);
-    draw_text_string("   C)redits", a0, 18);
-    draw_text_string("   Q)uit to DOS", a0, 19);
+    draw_text_string("      DUKE MAIN MENU", text_x, 6);
+    draw_text_string("      --------------", text_x, 7);
+    draw_text_string("   S)tart a new game", text_x, 9);
+    draw_text_string("   R)estore an old game", text_x, 10);
+    draw_text_string("   I)nstructions", text_x, 11);
+    draw_text_string("   O)rdering information", text_x, 12);
+    draw_text_string("   G)ame setup", text_x, 13);
+    draw_text_string("   H)igh scores", text_x, 14);
+    draw_text_string("   P)reviews/Main Demo!", text_x, 15);
+    draw_text_string("   V)iew user demo", text_x, 16);
+    draw_text_string("   T)itle screen", text_x, 17);
+    draw_text_string("   C)redits", text_x, 18);
+    draw_text_string("   Q)uit to DOS", text_x, 19);
 }
 #endif
 
 /* Loads the primary sound bank and builds the first 24 sample pointers and sound priorities. */
 void pascal load_primary_sound_bank(char far *filename)
 {
-    FILE *stream;
+    FILE *sound_file;
     register int i;
 
-    stream = fopen(filename, "rb");
+    sound_file = fopen(filename, "rb");
     primary_sound_bank_buffer = malloc(9300);
-    fread(primary_sound_bank_buffer, 9300, 1, stream);
-    fclose(stream);
+    fread(primary_sound_bank_buffer, 9300, 1, sound_file);
+    fclose(sound_file);
     /* Header words follow each 16-byte actor_302a_record. */
     /* Keep the nested shifts; i * 16 changes Turbo C output. */
     for (i = 0; i < 24; ++i) {
@@ -2372,13 +2372,13 @@ void pascal load_primary_sound_bank(char far *filename)
 /* Loads the secondary sound bank and builds the next 24 sample pointers and sound priorities. */
 void pascal load_secondary_sound_bank(char far *filename)
 {
-    FILE *stream;
+    FILE *sound_file;
     register int i;
 
-    stream = fopen(filename, "rb");
+    sound_file = fopen(filename, "rb");
     secondary_sound_bank_buffer = malloc(8500);
-    fread(secondary_sound_bank_buffer, 8000, 1, stream);
-    fclose(stream);
+    fread(secondary_sound_bank_buffer, 8000, 1, sound_file);
+    fclose(sound_file);
     /* Header words follow each 16-byte actor_302a_record. */
     /* Keep the nested shifts; i * 16 changes Turbo C output. */
     for (i = 0; i < 24; ++i) {
@@ -2482,33 +2482,33 @@ void show_cheat_mode_message(void)
 #if EPISODE == 3
 /* draw_main_menu: at this place in the DN3 source */
 /* Draws the main menu; the source has a DN3-specific menu body and a shared DN1/DN2 body. */
-void pascal draw_main_menu(register int a0)
+void pascal draw_main_menu(register int text_x)
 {
-    draw_text_string("      DUKE MAIN MENU", a0, 6);
-    draw_text_string("      --------------", a0, 7);
-    draw_text_string("   S)tart a new game", a0, 9);
-    draw_text_string("   R)estore an old game", a0, 10);
-    draw_text_string("   I)nstructions", a0, 11);
-    draw_text_string("   O)rdering information", a0, 12);
-    draw_text_string("   G)ame setup", a0, 13);
-    draw_text_string("   H)igh scores", a0, 14);
-    draw_text_string("   P)reviews/Main Demo!", a0, 15);
-    draw_text_string("   V)iew user demo", a0, 16);
-    draw_text_string("   T)itle screen", a0, 17);
-    draw_text_string("   C)redits", a0, 18);
-    draw_text_string("   Q)uit to DOS", a0, 19);
+    draw_text_string("      DUKE MAIN MENU", text_x, 6);
+    draw_text_string("      --------------", text_x, 7);
+    draw_text_string("   S)tart a new game", text_x, 9);
+    draw_text_string("   R)estore an old game", text_x, 10);
+    draw_text_string("   I)nstructions", text_x, 11);
+    draw_text_string("   O)rdering information", text_x, 12);
+    draw_text_string("   G)ame setup", text_x, 13);
+    draw_text_string("   H)igh scores", text_x, 14);
+    draw_text_string("   P)reviews/Main Demo!", text_x, 15);
+    draw_text_string("   V)iew user demo", text_x, 16);
+    draw_text_string("   T)itle screen", text_x, 17);
+    draw_text_string("   C)redits", text_x, 18);
+    draw_text_string("   Q)uit to DOS", text_x, 19);
 }
 #endif
 
 /* Displays the quit confirmation and returns whether the player chose to exit to DOS. */
-void pascal confirm_quit_to_dos(register int a0)
+void pascal confirm_quit_to_dos(register int text_x)
 {
-    draw_framed_dialog_box(a0, 5, 1);
-    draw_text_string("Are you sure you want to", a0 + 1, 11);
-    draw_text_string("         quit?          ", a0 + 1, 12);
+    draw_framed_dialog_box(text_x, 5, 1);
+    draw_text_string("Are you sure you want to", text_x + 1, 11);
+    draw_text_string("         quit?          ", text_x + 1, 12);
     while (last_keyboard_scan_code == 1) {
     }
-    wait_input_animated_sprite(a0 + 16, 12);
+    wait_input_animated_sprite(text_x + 16, 12);
     control_right_pressed = 0;
     control_down_pressed = 0;
     if (last_keyboard_scan_code == 0x15)
@@ -2517,39 +2517,37 @@ void pascal confirm_quit_to_dos(register int a0)
     return 0;
 }
 
-/* Apparently draws a framed box from border tiles (blit_bitmap_to_video_page) at column a2, row a1
-   (pascal; parameters are listed in declaration order a2, a1, a0). */
-/* Draws a framed dialog panel from the border-tile graphics. */
-void pascal draw_framed_dialog_box(int a2, int a1, int a0)
+/* Draws a framed dialog panel from the border-tile graphics (blit_bitmap_to_video_page). */
+void pascal draw_framed_dialog_box(int left_offset, int top_offset, int height_rows)
 {
-    register int si;
-    register int di;
+    register int vertical_offset;
+    register int horizontal_offset;
 
     /* Select all VGA planes before drawing the border. */
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
-    if (a2 == 2)
+    if (left_offset == 2)
         select_draw_page(draw_page_index);
     else
         select_draw_page(0);
 
     /* Keep the 16 * 40 row products; folded multipliers change Turbo C output. */
-    for (si = 0; a0 * 16 * 40 > si; si += 640) {
-        blit_bitmap_to_video_page(0x32c0, a1 * 16 * 40 + (si + a2));
-        blit_bitmap_to_video_page(0x32e0, a1 * 16 * 40 + (si + a2) + 24);
+    for (vertical_offset = 0; height_rows * 16 * 40 > vertical_offset; vertical_offset += 640) {
+        blit_bitmap_to_video_page(0x32c0, top_offset * 16 * 40 + (vertical_offset + left_offset));
+        blit_bitmap_to_video_page(0x32e0, top_offset * 16 * 40 + (vertical_offset + left_offset) + 24);
     }
-    for (di = 2; di < 23; di += 2)
-        for (si = 0; a0 * 16 * 40 > si; si += 640)
-            blit_bitmap_to_video_page(0x3220, a1 * 16 * 40 + a2 + di + si);
+    for (horizontal_offset = 2; horizontal_offset < 23; horizontal_offset += 2)
+        for (vertical_offset = 0; height_rows * 16 * 40 > vertical_offset; vertical_offset += 640)
+            blit_bitmap_to_video_page(0x3220, top_offset * 16 * 40 + left_offset + horizontal_offset + vertical_offset);
 
-    blit_bitmap_to_video_page(0x3240, a1 * 16 * 40 + a2);
-    blit_bitmap_to_video_page(0x3260, a1 * 16 * 40 + a2 + 24);
-    blit_bitmap_to_video_page(0x3280, (a1 * 16 * 40 + a2) + a0 * 16 * 40);
-    blit_bitmap_to_video_page(0x32a0, (a1 * 16 * 40 + a2) + a0 * 16 * 40 + 24);
+    blit_bitmap_to_video_page(0x3240, top_offset * 16 * 40 + left_offset);
+    blit_bitmap_to_video_page(0x3260, top_offset * 16 * 40 + left_offset + 24);
+    blit_bitmap_to_video_page(0x3280, (top_offset * 16 * 40 + left_offset) + height_rows * 16 * 40);
+    blit_bitmap_to_video_page(0x32a0, (top_offset * 16 * 40 + left_offset) + height_rows * 16 * 40 + 24);
 
-    for (di = 0; di < 22; di += 2) {
-        blit_bitmap_to_video_page(0x3300, a1 * 16 * 40 + (di + a2) + 2);
-        blit_bitmap_to_video_page(0x3320, (a0 * 16 * 40 + di + a2) + a1 * 16 * 40 + 2);
+    for (horizontal_offset = 0; horizontal_offset < 22; horizontal_offset += 2) {
+        blit_bitmap_to_video_page(0x3300, top_offset * 16 * 40 + (horizontal_offset + left_offset) + 2);
+        blit_bitmap_to_video_page(0x3320, (height_rows * 16 * 40 + horizontal_offset + left_offset) + top_offset * 16 * 40 + 2);
     }
 }
 
@@ -2597,33 +2595,33 @@ void show_instructions_heading(void)
 }
 
 /* Prompts for a replacement scan code for one keyboard action and redraws its binding label. */
-void pascal remap_keyboard_action(register int a0)
+void pascal remap_keyboard_action(register int text_x)
 {
     control_confirmation_state = 0;
     for (;;) {
 #if EPISODE == 1
         last_keyboard_scan_code = 0;
 #endif
-        draw_framed_dialog_box(a0, 3, 7);
+        draw_framed_dialog_box(text_x, 3, 7);
         outport(0x3ce, 5);
-        draw_keyboard_mode_settings(a0);
-        draw_keyboard_binding_values(a0);
-        draw_text_string("Modify which action?", a0 + 1, 15);
-        draw_text_string("choose(1-6):", a0 + 1, 16);
-        draw_text_string("  Press 'ESC' to exit.", a0 + 1, 20);
+        draw_keyboard_mode_settings(text_x);
+        draw_keyboard_binding_values(text_x);
+        draw_text_string("Modify which action?", text_x + 1, 15);
+        draw_text_string("choose(1-6):", text_x + 1, 16);
+        draw_text_string("  Press 'ESC' to exit.", text_x + 1, 20);
         for (;;) {
             while (last_keyboard_scan_code == 0x25) {
             }
-            wait_input_animated_sprite(a0 + 14, 16);
+            wait_input_animated_sprite(text_x + 14, 16);
             if (last_keyboard_scan_code == 1)
                 return;
             switch (last_keyboard_scan_code) {
             case 2:
-                draw_text_string("Modifying UP.          ", a0 + 1, 18);
-                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                draw_text_string("Modifying UP.          ", text_x + 1, 18);
+                draw_text_string("  Hit new key:            ", text_x + 1, 19);
                 while (last_keyboard_scan_code == 2) {
                 }
-                wait_input_animated_sprite(a0 + 16, 19);
+                wait_input_animated_sprite(text_x + 16, 19);
                 if (last_keyboard_scan_code != 1) {
                     last_keyboard_scan_code = normalize_extended_key_code();
                     key_binding_up = last_keyboard_scan_code;
@@ -2632,11 +2630,11 @@ void pascal remap_keyboard_action(register int a0)
                 }
                 break;
             case 3:
-                draw_text_string("Modifying DOWN.          ", a0 + 1, 18);
-                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                draw_text_string("Modifying DOWN.          ", text_x + 1, 18);
+                draw_text_string("  Hit new key:            ", text_x + 1, 19);
                 while (last_keyboard_scan_code == 3) {
                 }
-                wait_input_animated_sprite(a0 + 16, 19);
+                wait_input_animated_sprite(text_x + 16, 19);
                 if (last_keyboard_scan_code != 1) {
                     last_keyboard_scan_code = normalize_extended_key_code();
                     key_binding_down = last_keyboard_scan_code;
@@ -2645,11 +2643,11 @@ void pascal remap_keyboard_action(register int a0)
                 }
                 break;
             case 4:
-                draw_text_string("Modifying LEFT.          ", a0 + 1, 18);
-                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                draw_text_string("Modifying LEFT.          ", text_x + 1, 18);
+                draw_text_string("  Hit new key:            ", text_x + 1, 19);
                 while (last_keyboard_scan_code == 4) {
                 }
-                wait_input_animated_sprite(a0 + 16, 19);
+                wait_input_animated_sprite(text_x + 16, 19);
                 if (last_keyboard_scan_code != 1) {
                     last_keyboard_scan_code = normalize_extended_key_code();
                     key_binding_left = last_keyboard_scan_code;
@@ -2658,11 +2656,11 @@ void pascal remap_keyboard_action(register int a0)
                 }
                 break;
             case 5:
-                draw_text_string("Modifying RIGHT.          ", a0 + 1, 18);
-                draw_text_string("  hit new key:            ", a0 + 1, 19);
+                draw_text_string("Modifying RIGHT.          ", text_x + 1, 18);
+                draw_text_string("  hit new key:            ", text_x + 1, 19);
                 while (last_keyboard_scan_code == 5) {
                 }
-                wait_input_animated_sprite(a0 + 16, 19);
+                wait_input_animated_sprite(text_x + 16, 19);
                 if (last_keyboard_scan_code != 1) {
                     last_keyboard_scan_code = normalize_extended_key_code();
                     key_binding_right = last_keyboard_scan_code;
@@ -2671,11 +2669,11 @@ void pascal remap_keyboard_action(register int a0)
                 }
                 break;
             case 6:
-                draw_text_string("Modifying FIRE.          ", a0 + 1, 18);
-                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                draw_text_string("Modifying FIRE.          ", text_x + 1, 18);
+                draw_text_string("  Hit new key:            ", text_x + 1, 19);
                 while (last_keyboard_scan_code == 6) {
                 }
-                wait_input_animated_sprite(a0 + 16, 19);
+                wait_input_animated_sprite(text_x + 16, 19);
                 if (last_keyboard_scan_code != 1) {
                     last_keyboard_scan_code = normalize_extended_key_code();
                     key_binding_fire = last_keyboard_scan_code;
@@ -2684,11 +2682,11 @@ void pascal remap_keyboard_action(register int a0)
                 }
                 break;
             case 7:
-                draw_text_string("Modifying JUMP.          ", a0 + 1, 18);
-                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                draw_text_string("Modifying JUMP.          ", text_x + 1, 18);
+                draw_text_string("  Hit new key:            ", text_x + 1, 19);
                 while (last_keyboard_scan_code == 7) {
                 }
-                wait_input_animated_sprite(a0 + 16, 19);
+                wait_input_animated_sprite(text_x + 16, 19);
                 if (last_keyboard_scan_code != 1) {
                     last_keyboard_scan_code = normalize_extended_key_code();
                     key_binding_jump = last_keyboard_scan_code;
@@ -2703,16 +2701,16 @@ void pascal remap_keyboard_action(register int a0)
 }
 
 /* Draws the keyboard mode settings using the active page and graphics resources. */
-void pascal draw_keyboard_mode_settings(register int a0)
+void pascal draw_keyboard_mode_settings(register int text_x)
 {
-    draw_text_string("      KEYBOARD MODE", a0, 7);
-    draw_text_string("                        ", a0 + 1, 8);
-    draw_text_string("  1.  Up     :", a0 + 1, 9);
-    draw_text_string("  2.  Down   :", a0 + 1, 10);
-    draw_text_string("  3.  Left   :", a0 + 1, 11);
-    draw_text_string("  4.  Right  :", a0 + 1, 12);
-    draw_text_string("  5.  Fire   :", a0 + 1, 13);
-    draw_text_string("  6.  Jump   :", a0 + 1, 14);
+    draw_text_string("      KEYBOARD MODE", text_x, 7);
+    draw_text_string("                        ", text_x + 1, 8);
+    draw_text_string("  1.  Up     :", text_x + 1, 9);
+    draw_text_string("  2.  Down   :", text_x + 1, 10);
+    draw_text_string("  3.  Left   :", text_x + 1, 11);
+    draw_text_string("  4.  Right  :", text_x + 1, 12);
+    draw_text_string("  5.  Fire   :", text_x + 1, 13);
+    draw_text_string("  6.  Jump   :", text_x + 1, 14);
 }
 
 /* Dr. Proton taunt shown at the end of a level; text differs per episode. */
@@ -2826,69 +2824,69 @@ void show_game_completion_message(void)
 }
 
 /* Prompts the player for the joystick calibration and records the response. */
-void pascal prompt_joystick_calibration(register int a0)
+void pascal prompt_joystick_calibration(register int text_x)
 {
-    draw_text_string(" Hold the joystick in the", a0, 9);
-    draw_text_string(" upper left and press a", a0, 10);
-    draw_text_string(" button.", a0, 11);
+    draw_text_string(" Hold the joystick in the", text_x, 9);
+    draw_text_string(" upper left and press a", text_x, 10);
+    draw_text_string(" button.", text_x, 11);
 }
 
 /* Displays the next episode promotion screen or message and waits for the associated input when
    required. */
-void pascal show_next_episode_promotion(register int a0)
+void pascal show_next_episode_promotion(register int text_x)
 {
     clear_video_page();
     request_priority_sound_effect(0x2c);
 #if EPISODE == 1
-    draw_framed_dialog_box(a0, 2, 7);
-    draw_text_string("     TO BE CONTINUED     ", a0 + 1, 5);
-    draw_text_string("------------------------", a0 + 1, 6);
-    draw_text_string("In episode two, Duke     ", a0 + 1, 8);
-    draw_text_string("rockets to the moon to   ", a0 + 1, 9);
-    draw_text_string("infiltrate Dr. Proton's  ", a0 + 1, 10);
-    draw_text_string("massive lunar fortress.  ", a0 + 1, 11);
-    draw_text_string("                         ", a0 + 1, 12);
-    draw_text_string("Continue your adventure  ", a0 + 1, 13);
-    draw_text_string("in \"Mission: Moonbase\",  ", a0 + 1, 14);
-    draw_text_string("where you'll encounter:  ", a0 + 1, 15);
-    draw_text_string("New levels, new puzzles,", a0 + 1, 16);
-    draw_text_string("new graphics, and more   ", a0 + 1, 17);
-    draw_text_string("non-stop action.         ", a0 + 1, 18);
+    draw_framed_dialog_box(text_x, 2, 7);
+    draw_text_string("     TO BE CONTINUED     ", text_x + 1, 5);
+    draw_text_string("------------------------", text_x + 1, 6);
+    draw_text_string("In episode two, Duke     ", text_x + 1, 8);
+    draw_text_string("rockets to the moon to   ", text_x + 1, 9);
+    draw_text_string("infiltrate Dr. Proton's  ", text_x + 1, 10);
+    draw_text_string("massive lunar fortress.  ", text_x + 1, 11);
+    draw_text_string("                         ", text_x + 1, 12);
+    draw_text_string("Continue your adventure  ", text_x + 1, 13);
+    draw_text_string("in \"Mission: Moonbase\",  ", text_x + 1, 14);
+    draw_text_string("where you'll encounter:  ", text_x + 1, 15);
+    draw_text_string("New levels, new puzzles,", text_x + 1, 16);
+    draw_text_string("new graphics, and more   ", text_x + 1, 17);
+    draw_text_string("non-stop action.         ", text_x + 1, 18);
 #elif EPISODE == 2
-    draw_framed_dialog_box(a0, 2, 7);
-    draw_text_string("     TO BE CONTINUED    ", a0 + 1, 5);
-    draw_text_string("------------------------", a0 + 1, 6);
-    draw_text_string("Once again you've given ", a0 + 1, 8);
-    draw_text_string("Dr. Proton a major set- ", a0 + 1, 9);
-    draw_text_string("back, by destroying his ", a0 + 1, 10);
-    draw_text_string("lunar fortress.         ", a0 + 1, 11);
-    draw_text_string("                        ", a0 + 1, 12);
-    draw_text_string("Continue your adventure ", a0 + 1, 13);
-    draw_text_string("in \"Trapped in the      ", a0 + 1, 14);
-    draw_text_string("Future\"!  Duke must     ", a0 + 1, 15);
-    draw_text_string("chase Dr. Proton into   ", a0 + 1, 16);
-    draw_text_string("Earth's future to stop  ", a0 + 1, 17);
-    draw_text_string("the largest threat yet! ", a0 + 1, 18);
+    draw_framed_dialog_box(text_x, 2, 7);
+    draw_text_string("     TO BE CONTINUED    ", text_x + 1, 5);
+    draw_text_string("------------------------", text_x + 1, 6);
+    draw_text_string("Once again you've given ", text_x + 1, 8);
+    draw_text_string("Dr. Proton a major set- ", text_x + 1, 9);
+    draw_text_string("back, by destroying his ", text_x + 1, 10);
+    draw_text_string("lunar fortress.         ", text_x + 1, 11);
+    draw_text_string("                        ", text_x + 1, 12);
+    draw_text_string("Continue your adventure ", text_x + 1, 13);
+    draw_text_string("in \"Trapped in the      ", text_x + 1, 14);
+    draw_text_string("Future\"!  Duke must     ", text_x + 1, 15);
+    draw_text_string("chase Dr. Proton into   ", text_x + 1, 16);
+    draw_text_string("Earth's future to stop  ", text_x + 1, 17);
+    draw_text_string("the largest threat yet! ", text_x + 1, 18);
 #else
-    draw_framed_dialog_box(a0, 1, 10);
-    draw_text_string("    CONGRATULATIONS     ", a0 + 1, 3);
-    draw_text_string("------------------------", a0 + 1, 4);
-    draw_text_string(" Dr. Proton is finally  ", a0 + 1, 6);
-    draw_text_string("       defeated!        ", a0 + 1, 7);
-    draw_text_string("                        ", a0 + 1, 8);
-    draw_text_string("Using Proton's time warp", a0 + 1, 9);
-    draw_text_string(" device Duke returns to ", a0 + 1, 10);
-    draw_text_string(" Earth's present and is ", a0 + 1, 11);
-    draw_text_string("presented the key to the", a0 + 1, 12);
-    draw_text_string(" city he saved. (Yeah.) ", a0 + 1, 13);
-    draw_text_string(" Did you locate all the ", a0 + 1, 15);
-    draw_text_string("  hidden rooms on each  ", a0 + 1, 16);
-    draw_text_string("  level?  On your next  ", a0 + 1, 17);
-    draw_text_string("   Apogee games order   ", a0 + 1, 18);
-    draw_text_string("please tell us your best", a0 + 1, 19);
-    draw_text_string(" Duke Nukum high score. ", a0 + 1, 20);
-    draw_text_string("                        ", a0 + 1, 21);
-    draw_text_string(" Thank you for playing! ", a0 + 1, 22);
+    draw_framed_dialog_box(text_x, 1, 10);
+    draw_text_string("    CONGRATULATIONS     ", text_x + 1, 3);
+    draw_text_string("------------------------", text_x + 1, 4);
+    draw_text_string(" Dr. Proton is finally  ", text_x + 1, 6);
+    draw_text_string("       defeated!        ", text_x + 1, 7);
+    draw_text_string("                        ", text_x + 1, 8);
+    draw_text_string("Using Proton's time warp", text_x + 1, 9);
+    draw_text_string(" device Duke returns to ", text_x + 1, 10);
+    draw_text_string(" Earth's present and is ", text_x + 1, 11);
+    draw_text_string("presented the key to the", text_x + 1, 12);
+    draw_text_string(" city he saved. (Yeah.) ", text_x + 1, 13);
+    draw_text_string(" Did you locate all the ", text_x + 1, 15);
+    draw_text_string("  hidden rooms on each  ", text_x + 1, 16);
+    draw_text_string("  level?  On your next  ", text_x + 1, 17);
+    draw_text_string("   Apogee games order   ", text_x + 1, 18);
+    draw_text_string("please tell us your best", text_x + 1, 19);
+    draw_text_string(" Duke Nukum high score. ", text_x + 1, 20);
+    draw_text_string("                        ", text_x + 1, 21);
+    draw_text_string(" Thank you for playing! ", text_x + 1, 22);
 #endif
     restore_ega_palette(15);
     if (control_confirmation_state == 0) {
@@ -2896,9 +2894,9 @@ void pascal show_next_episode_promotion(register int a0)
         }
     }
 #if EPISODE == 3
-    wait_input_animated_sprite(a0 + 24, 22);
+    wait_input_animated_sprite(text_x + 24, 22);
 #else
-    wait_input_animated_sprite(a0 + 24, 18);
+    wait_input_animated_sprite(text_x + 24, 18);
 #endif
     clear_palette_entries(15);
     wait_for_pause_key_release();
