@@ -92,16 +92,17 @@ a dialog drawn with the game's own routines (like the episode dialog).
 
 ## The picture and the HUD frame
 
-The picture is built on a logical canvas measured in game pixels: 200 lines high when
-the target shape is at least 4:3 (wider canvas for wider shapes), 320 wide otherwise
-(taller canvas).  `pixel_aspect` decides whether a game pixel is square or 1.2 high.
-The canvas is scaled to the window (whole factors with `integer_scale`) and centred.
+Widescreen changes only the game's width.  The canvas is always 200 game pixels high; its
+width follows the target shape (`aspect`, or the window with `auto`; `pixel_aspect`
+decides whether a game pixel is square or 1.2 high), never narrower than 320.  The canvas
+is scaled to the window (whole factors with `integer_scale`) and centred; a window
+narrower than the canvas is letterboxed.
 
-In the enhanced renderer the in-game frame is a nine-slice: the grey bars of the border
-repeat their plain middle pixels, the corners (screws, the cable), the "PRESS F1 FOR
-HELP" plate (kept centred under the playfield) and the HUD column (SCORE, HEALTH,
-FIREPOWER, INVENTORY, kept at the right edge, its panel background repeated vertically)
-are drawn unscaled.  The playfield fills the rest: more of the level is visible.
+The in-game frame stretches horizontally only: the top and bottom bars repeat plain
+vertical slices left and right of their fixed parts - the screws in the corners, the
+cable at the top left, and the "PRESS F1 FOR HELP" plate, which stays centred under the
+playfield - and the HUD column (SCORE, HEALTH, FIREPOWER, INVENTORY) keeps its place at
+the right edge.  The playfield takes the extra width: more of the level is visible.
 
 Widescreen without changing gameplay: the port generator gives the 125 view tests that
 only decide whether to *draw* a wide view, so everything the game would draw is drawn in
