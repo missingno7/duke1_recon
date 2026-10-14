@@ -607,6 +607,7 @@ int d_0f2a = 0;
 void pascal g2_0009(int a0)
 {
     register int i;
+
     for (i = 0; i < 16; ++i) {
         delay(a0);
         asm_029d(i, 0x17);
@@ -653,6 +654,7 @@ void pascal g2_0036(register int a0)
 void pascal g2_01a9(int value)
 {
     register int i;
+
     for (i = 0; i < 16; ++i) {
         delay(value);
         asm_029d(i, 0);
@@ -683,6 +685,7 @@ void pascal g2_01f5(int mode, int far *a1, int far *a2)
     *a1 = 0;
     *a2 = 0;
     disable();
+    /* Discharge the game-port timing capacitors before reading the axes. */
     outportb(0x201, inportb(0x201));
     do {
         state = inportb(0x201);
@@ -699,6 +702,7 @@ void pascal g2_0286(int a0)
     register int si;
     register int di;
 
+    /* Select all VGA planes and write mode 1 for the clear. */
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
     asm_05eb(0);
@@ -712,7 +716,7 @@ void pascal g2_0286(int a0)
 
 void g2_02f4(void)
 {
-    g2_01a9(0x14);
+    g2_01a9(20);
     g2_0286(0x1710);
     g2_37b6("          ORDERING INFORMATION          ", 0, 0);
     g2_37b6("      Duke Nukum consists of three      ", 0, 2);
@@ -737,7 +741,7 @@ void g2_02f4(void)
     g2_37b6(" and of course, more adventure than any ", 0, 21);
     g2_37b6("       human can possibly handle!       ", 0, 22);
     g2_37b6("  Press any key for more information... ", 0, 24);
-    g2_0036(0x14);
+    g2_0036(20);
 }
 
 void g2_0491(void)
@@ -775,7 +779,7 @@ void g2_0491(void)
 /* g2_062c candidate */
 void g2_062c(void)
 {
-    g2_01a9(0x14);
+    g2_01a9(20);
     g2_0286(0x1710);
     g2_37b6("                THE STORY               ", 0, 0);
     g2_37b6("The year is 1997.  Doctor Proton and his", 0, 2);
@@ -797,11 +801,11 @@ void g2_062c(void)
     g2_37b6("   It seems Dr. Proton's plan to rule   ", 0, 18);
     g2_37b6("        Earth is well underway...       ", 0, 19);
     g2_37b6("             Press any key.             ", 0, 24);
-    g2_0036(0x14);
+    g2_0036(20);
     if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0)
-            ;
-    g2_2870(0x27, 0x18);
+        while ((d_a0fa_ & 0x80) == 0) {
+        }
+    g2_2870(39, 24);
     g2_0286(0x1710);
     g2_37b6("                THE STORY               ", 0, 0);
     g2_37b6("   Self-proclaimed hero Duke Nukum is   ", 0, 2);
@@ -814,9 +818,9 @@ void g2_062c(void)
     g2_37b6("            chance of success.          ", 0, 9);
     g2_26d5();
     if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0)
-            ;
-    g2_2870(0x27, 0x18);
+        while ((d_a0fa_ & 0x80) == 0) {
+        }
+    g2_2870(39, 24);
     g2_0286(0x1710);
     g2_37b6("           KEYBOARD CONTROLS            ", 0, 0);
     g2_37b6("                                        ", 0, 1);
@@ -844,9 +848,9 @@ void g2_062c(void)
     g2_37b6(" within the \"Game Setup\" menu option.   ", 0, 23);
     g2_37b6("             Press any key.             ", 0, 24);
     if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0)
-            ;
-    g2_2870(0x27, 0x18);
+        while ((d_a0fa_ & 0x80) == 0) {
+        }
+    g2_2870(39, 24);
     g2_0286(0x1710);
     g2_37b6("         IMPORTANT INFORMATION          ", 0, 0);
     g2_37b6("Duke Nukum needs food and soft drinks   ", 0, 2);
@@ -869,9 +873,9 @@ void g2_062c(void)
     g2_37b6("Duke's firepower. ", 0, 22);
     g2_37b6("             Press any key.             ", 0, 24);
     if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0)
-            ;
-    g2_2870(0x27, 0x18);
+        while ((d_a0fa_ & 0x80) == 0) {
+        }
+    g2_2870(39, 24);
     g2_0286(0x1710);
     g2_37b6("         IMPORTANT INFORMATION          ", 0, 0);
     g2_37b6("Duke has unlimited chances (lives) to   ", 0, 2);
@@ -895,9 +899,9 @@ void g2_062c(void)
     g2_37b6("each level you complete.                ", 0, 22);
     g2_37b6("             Press any key.             ", 0, 24);
     if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0)
-            ;
-    g2_2870(0x27, 0x18);
+        while ((d_a0fa_ & 0x80) == 0) {
+        }
+    g2_2870(39, 24);
     g2_01a9(10);
 }
 
@@ -907,7 +911,7 @@ void g2_0d39(void)
     g2_37b6("   Your game is SAVED.  ", 3, 7);
     g2_37b6("      Press ENTER:      ", 3, 8);
     do {
-        g2_2870(0x1a, 8);
+        g2_2870(26, 8);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -923,7 +927,7 @@ void g2_0d97(void)
     g2_37b6("                        ", 3, 9);
     g2_37b6("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -939,7 +943,7 @@ void g2_0e19(void)
     g2_37b6("the first level.        ", 8, 9);
     g2_37b6("      Press ENTER:      ", 8, 10);
     do {
-        g2_2870(0x1f, 0x0a);
+        g2_2870(31, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -958,7 +962,7 @@ void g2_0e98(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -978,7 +982,7 @@ void g2_0f2a(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 0x0a);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -999,7 +1003,7 @@ void g2_0fc1(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1013,8 +1017,8 @@ void pascal g2_1058(register int a0)
 {
     g2_3d8c(a0, 3, 2);
     outport(0x3ce, 5);
-    while (d_a0fa_ == 0x1f)
-        ;
+    while (d_a0fa_ == 0x1f) {
+    }
     g2_37b6("       Sound toggle", a0, 7);
     if (d_0097 = !d_0097) {
         g2_37b6("     The sound is ON", a0, 9);
@@ -1023,17 +1027,17 @@ void pascal g2_1058(register int a0)
         outportb(0x61, inportb(0x61) & 0xfd);
     }
     delay(300);
-    g2_2870(a0 + 0x18, 0x0a);
-    while (d_a0fa_ == 0x1f)
-        ;
+    g2_2870(a0 + 24, 10);
+    while (d_a0fa_ == 0x1f) {
+    }
 }
 
 void pascal g2_10f0(register int a0)
 {
     g2_3d8c(a0, 3, 2);
     outport(0x3ce, 5);
-    while (d_a0fa_ == 0x23)
-        ;
+    while (d_a0fa_ == 0x23) {
+    }
     g2_37b6("       Hint toggle ", a0, 7);
     d_0b46 = !d_0b46;
     if (d_0b46) {
@@ -1065,9 +1069,9 @@ void pascal g2_10f0(register int a0)
         d_5555_ = 0;
         d_5c6a_ = 0;
     }
-    g2_2870(a0 + 0x18, 0x0a);
-    while (d_a0fa_ == 0x23)
-        ;
+    g2_2870(a0 + 24, 10);
+    while (d_a0fa_ == 0x23) {
+    }
 }
 
 void pascal g2_11f2(register int a0)
@@ -1077,7 +1081,7 @@ void pascal g2_11f2(register int a0)
     g2_37b6("       Game PAUSED. ", a0, 7);
     while (d_a0fa_ == 0x19) {
     }
-    g2_2870(a0 + 0x18, 8);
+    g2_2870(a0 + 24, 8);
 }
 
 void pascal g2_1241(register int a0)
@@ -1087,9 +1091,9 @@ void pascal g2_1241(register int a0)
     g2_37b6("    Which game number   ", a0, 8);
     g2_37b6("  do you want to save?  ", a0, 9);
     g2_37b6("      Choose (1-9):     ", a0, 10);
-    while (d_a0fa_ == 0x1f)
-        ;
-    g2_2870(a0 + 0x14, 0x0a);
+    while (d_a0fa_ == 0x1f) {
+    }
+    g2_2870(a0 + 20, 10);
 }
 
 void pascal g2_12ad(register int a0)
@@ -1101,7 +1105,7 @@ void pascal g2_12ad(register int a0)
     g2_37b6("      Choose (1-9):     ", a0, 10);
     while (d_a0fa_ == 0x13) {
     }
-    g2_2870(a0 + 0x14, 10);
+    g2_2870(a0 + 20, 10);
 }
 
 void g2_1319(void)
@@ -1160,7 +1164,7 @@ void g2_14e6(void)
     g2_3d8c(2, 1, 1);
     g2_37b6("Are you sure you want to", 3, 3);
     g2_37b6("RESTART the level(Y/N)? ", 3, 4);
-    g2_2870(0x1a, 4);
+    g2_2870(26, 4);
     d_d4c0_ = 0;
     d_d134_ = 0;
 }
@@ -1175,7 +1179,7 @@ void g2_1534(void)
     g2_37b6("                        ", 3, 8);
     g2_37b6("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1194,7 +1198,7 @@ void g2_15c9(void)
     g2_37b6("                        ", 3, 8);
     g2_37b6("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1213,7 +1217,7 @@ void g2_165e(void)
     g2_37b6("health to maximum!      ", 3, 9);
     g2_37b6("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1233,7 +1237,7 @@ void g2_16f3(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1254,7 +1258,7 @@ void g2_178a(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1275,7 +1279,7 @@ void g2_1821(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1295,7 +1299,7 @@ void g2_18b8(void)
     g2_37b6("TRANSPORTER.            ", 3, 9);
     g2_37b6("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1306,12 +1310,12 @@ void g2_18b8(void)
 
 void pascal g2_194d(register int a0)
 {
-    g2_37b6(d_00a1[(unsigned char)d_02f4].field, a0 + 0x11, 9);
-    g2_37b6(d_00a1[(unsigned char)d_02f5].field, a0 + 0x11, 10);
-    g2_37b6(d_00a1[(unsigned char)d_02f6].field, a0 + 0x11, 11);
-    g2_37b6(d_00a1[(unsigned char)d_02f7].field, a0 + 0x11, 12);
-    g2_37b6(d_00a1[(unsigned char)d_02f8].field, a0 + 0x11, 13);
-    g2_37b6(d_00a1[(unsigned char)d_02f9].field, a0 + 0x11, 14);
+    g2_37b6(d_00a1[(unsigned char)d_02f4].field, a0 + 17, 9);
+    g2_37b6(d_00a1[(unsigned char)d_02f5].field, a0 + 17, 10);
+    g2_37b6(d_00a1[(unsigned char)d_02f6].field, a0 + 17, 11);
+    g2_37b6(d_00a1[(unsigned char)d_02f7].field, a0 + 17, 12);
+    g2_37b6(d_00a1[(unsigned char)d_02f8].field, a0 + 17, 13);
+    g2_37b6(d_00a1[(unsigned char)d_02f9].field, a0 + 17, 14);
 }
 
 void pascal g2_1a0d(register int a0)
@@ -1336,7 +1340,7 @@ void g2_1a82(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1357,7 +1361,7 @@ void g2_1b19(void)
     g2_37b6("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(0x1a, 10);
+        g2_2870(26, 10);
         d_d4c0_ = 0;
         d_d134_ = 0;
     } while (d_a0fa_ != 0x1c);
@@ -1374,7 +1378,7 @@ void pascal g2_1bb0(register int a0)
     g2_37b6("  in the main hallways.", a0, 7);
     do {
     } while (d_a0fa_ == 0x1f);
-    g2_2870(a0 + 0x18, 7);
+    g2_2870(a0 + 24, 7);
 }
 
 void pascal g2_1bfb(register int a0)
@@ -1396,8 +1400,8 @@ void pascal g2_1bfb(register int a0)
     g2_37b6("  \">\" - Increase Speed  ", a0 + 1, 18);
     g2_37b6("                        ", a0 + 1, 19);
     g2_37b6("     Press any key.     ", a0 + 1, 20);
-    while ((d_a0fa_ & 0x80) == 0)
-        ;
+    while ((d_a0fa_ & 0x80) == 0) {
+    }
 }
 
 void pascal g2_1d40(int a0)
@@ -1421,6 +1425,7 @@ void g2_1e1b(void)
 {
     FILE *stream;
     register int i;
+
 #if EPISODE == 1
     stream = fopen("HIGHS.DN1", "w+");
 #elif EPISODE == 2
@@ -1456,7 +1461,7 @@ void pascal g2_1ee1(int a0)
     outport(0x3ce, 5);
     g2_37b6("       Instructions ", a0, 3);
     g2_1bfb(a0);
-    g2_2870(0x1a, 0x14);
+    g2_2870(26, 20);
 }
 
 void g2_1f24(void)
@@ -1494,6 +1499,7 @@ void pascal g2_1ffa(char far* bitmap)
 void g2_205f(char far *filename)
 {
     FILE *stream;
+
     stream = fopen(filename, "wb");
     fputc(d_02f4, stream);
     fputc(d_02f5, stream);
@@ -1735,8 +1741,8 @@ void g2_26d5(void)
 char g2_276f(void)
 {
     if (d_a0fa_ == 0xe0) {
-        while (d_a0fa_ == 0xe0)
-            ;
+        while (d_a0fa_ == 0xe0) {
+        }
         disable();
         return d_a0fa_ & 0x7f;
     }
@@ -2002,10 +2008,11 @@ void g2_2f04(void)
 void pascal g2_30b0(char far *filename)
 {
     FILE *stream;
+
     stream = fopen(filename, "rb");
-    d_c285_ = malloc(0x7d01);
+    d_c285_ = malloc(32001);
     if (d_c285_)
-        fread(d_c285_, 0x7d00, 1, stream);
+        fread(d_c285_, 32000, 1, stream);
     fclose(stream);
 }
 
@@ -2032,28 +2039,30 @@ void g2_315d(void)
     outport(0x3ce, 5);
     asm_05eb(0);
     asm_05f7(1);
+    /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
-    for (i = 0; i < 0x1f40; ++i)
+    for (i = 0; i < 8000; ++i)
         video[i] = d_c285_[i];
     outport(0x3c4, 0x0202);
-    for (i = 0; i < 0x1f40; ++i)
-        video[i] = d_c285_[i + 0x1f40];
+    for (i = 0; i < 8000; ++i)
+        video[i] = d_c285_[i + 8000];
     outport(0x3c4, 0x0402);
-    for (i = 0; i < 0x1f40; ++i)
-        video[i] = d_c285_[i + 0x3e80];
+    for (i = 0; i < 8000; ++i)
+        video[i] = d_c285_[i + 16000];
     outport(0x3c4, 0x0802);
-    for (i = 0; i < 0x1f40; ++i)
-        video[i] = d_c285_[i + 0x5dc0];
+    for (i = 0; i < 8000; ++i)
+        video[i] = d_c285_[i + 24000];
     asm_05f7(0);
 }
 
 void pascal g2_3252(char far *filename)
 {
     FILE *stream;
+
     stream = fopen(filename, "rb");
-    d_b638_ = malloc(0x7d01);
+    d_b638_ = malloc(32001);
     if (d_b638_ != 0) {
-        fread(d_b638_, 0x7d00, 1, stream);
+        fread(d_b638_, 32000, 1, stream);
     }
     fclose(stream);
 }
@@ -2067,18 +2076,19 @@ void g2_32b6(void)
     outport(0x3ce, 5);
     asm_05eb(0);
     asm_05f7(1);
+    /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
-    for (si = 0; si < 0x1f40; ++si)
+    for (si = 0; si < 8000; ++si)
         screen[si] = d_b638_[si];
     outport(0x3c4, 0x0202);
-    for (si = 0; si < 0x1f40; ++si)
-        screen[si] = d_b638_[si + 0x1f40];
+    for (si = 0; si < 8000; ++si)
+        screen[si] = d_b638_[si + 8000];
     outport(0x3c4, 0x0402);
-    for (si = 0; si < 0x1f40; ++si)
-        screen[si] = d_b638_[si + 0x3e80];
+    for (si = 0; si < 8000; ++si)
+        screen[si] = d_b638_[si + 16000];
     outport(0x3c4, 0x0802);
-    for (si = 0; si < 0x1f40; ++si)
-        screen[si] = d_b638_[si + 0x5dc0];
+    for (si = 0; si < 8000; ++si)
+        screen[si] = d_b638_[si + 24000];
     asm_05f7(0);
 }
 
@@ -2087,9 +2097,9 @@ void pascal g2_33ab(char far *filename)
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    d_c27d_ = malloc(0x7d01);
+    d_c27d_ = malloc(32001);
     if (d_c27d_ != 0) {
-        fread(d_c27d_, 0x7d00, 1, stream);
+        fread(d_c27d_, 32000, 1, stream);
     }
     fclose(stream);
 }
@@ -2103,18 +2113,19 @@ void g2_340f(void)
     outport(0x3ce, 5);
     asm_05eb(0);
     asm_05f7(1);
+    /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
-    for (si = 0; si < 0x1f40; ++si)
+    for (si = 0; si < 8000; ++si)
         video[si] = d_c27d_[si];
     outport(0x3c4, 0x0202);
-    for (si = 0; si < 0x1f40; ++si)
-        video[si] = d_c27d_[si + 0x1f40];
+    for (si = 0; si < 8000; ++si)
+        video[si] = d_c27d_[si + 8000];
     outport(0x3c4, 0x0402);
-    for (si = 0; si < 0x1f40; ++si)
-        video[si] = d_c27d_[si + 0x3e80];
+    for (si = 0; si < 8000; ++si)
+        video[si] = d_c27d_[si + 16000];
     outport(0x3c4, 0x0802);
-    for (si = 0; si < 0x1f40; ++si)
-        video[si] = d_c27d_[si + 0x5dc0];
+    for (si = 0; si < 8000; ++si)
+        video[si] = d_c27d_[si + 24000];
     asm_05f7(0);
 }
 
@@ -2123,9 +2134,9 @@ void pascal g2_3504(char far *filename)
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    d_a0bb_ = malloc(0x7d01);
+    d_a0bb_ = malloc(32001);
     if (d_a0bb_ != 0) {
-        fread(d_a0bb_, 0x7d00, 1, stream);
+        fread(d_a0bb_, 32000, 1, stream);
     }
     fclose(stream);
 }
@@ -2139,6 +2150,7 @@ void g2_3568(void)
     outport(0x3ce, 5);
     asm_05eb(0);
     asm_05f7(1);
+    /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
     for (i = 0; i < 8000; ++i) {
         video[i] = d_a0bb_[i];
@@ -2161,10 +2173,11 @@ void g2_3568(void)
 void pascal g2_365d(char far *filename)
 {
     FILE *stream;
+
     stream = fopen(filename, "rb");
-    d_c28f_ = malloc(0x7d01);
+    d_c28f_ = malloc(32001);
     if (d_c28f_) {
-        fread(d_c28f_, 0x7d00, 1, stream);
+        fread(d_c28f_, 32000, 1, stream);
     }
     fclose(stream);
 }
@@ -2179,18 +2192,19 @@ void g2_36c1(void)
     outport(0x3ce, 5);
     asm_05eb(0);
     asm_05f7(1);
+    /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
-    for (si = 0; si < 0x1f40; si++)
+    for (si = 0; si < 8000; si++)
         vram[si] = d_c28f_[si];
     outport(0x3c4, 0x0202);
-    for (si = 0; si < 0x1f40; si++)
-        vram[si] = d_c28f_[si + 0x1f40];
+    for (si = 0; si < 8000; si++)
+        vram[si] = d_c28f_[si + 8000];
     outport(0x3c4, 0x0402);
-    for (si = 0; si < 0x1f40; si++)
-        vram[si] = d_c28f_[si + 0x3e80];
+    for (si = 0; si < 8000; si++)
+        vram[si] = d_c28f_[si + 16000];
     outport(0x3c4, 0x0802);
-    for (si = 0; si < 0x1f40; si++)
-        vram[si] = d_c28f_[si + 0x5dc0];
+    for (si = 0; si < 8000; si++)
+        vram[si] = d_c28f_[si + 24000];
     asm_05f7(0);
 }
 
@@ -2227,16 +2241,16 @@ void pascal g2_38be(register int a0)
     g2_37b6("      DUKE MAIN MENU", a0, 6);
     g2_37b6("      --------------", a0, 7);
     g2_37b6("   S)tart a new game", a0, 9);
-    g2_37b6("   R)estore an old game", a0, 0x0a);
-    g2_37b6("   I)nstructions", a0, 0x0b);
-    g2_37b6("   O)rdering information", a0, 0x0c);
-    g2_37b6("   G)ame setup", a0, 0x0d);
-    g2_37b6("   H)igh scores", a0, 0x0e);
-    g2_37b6("   P)reviews/Main Demo!", a0, 0x0f);
-    g2_37b6("   V)iew user demo", a0, 0x10);
-    g2_37b6("   T)itle screen", a0, 0x11);
-    g2_37b6("   C)redits", a0, 0x12);
-    g2_37b6("   Q)uit to DOS", a0, 0x13);
+    g2_37b6("   R)estore an old game", a0, 10);
+    g2_37b6("   I)nstructions", a0, 11);
+    g2_37b6("   O)rdering information", a0, 12);
+    g2_37b6("   G)ame setup", a0, 13);
+    g2_37b6("   H)igh scores", a0, 14);
+    g2_37b6("   P)reviews/Main Demo!", a0, 15);
+    g2_37b6("   V)iew user demo", a0, 16);
+    g2_37b6("   T)itle screen", a0, 17);
+    g2_37b6("   C)redits", a0, 18);
+    g2_37b6("   Q)uit to DOS", a0, 19);
 }
 #endif
 
@@ -2246,9 +2260,11 @@ void pascal g2_3980(char far *filename)
     register int i;
 
     stream = fopen(filename, "rb");
-    d_d714_ = malloc(0x2454);
-    fread(d_d714_, 0x2454, 1, stream);
+    d_d714_ = malloc(9300);
+    fread(d_d714_, 9300, 1, stream);
     fclose(stream);
+    /* Header words follow each 16-byte record. */
+    /* Keep the nested shifts; i * 16 changes Turbo C output. */
     for (i = 0; i < 24; ++i) {
         d_cbb5_[i] = d_d714_ + (((struct g2_3980_record far *)(d_d714_ + ((((i << 1) << 1) << 1) << 1)))->f[8] >> 1 << 1);
         d_4fce_[i] = ((struct g2_3980_record far *)(d_d714_ + ((((i << 1) << 1) << 1) << 1)))->f[9];
@@ -2261,12 +2277,14 @@ void pascal g2_3a38(char far *filename)
     register int i;
 
     stream = fopen(filename, "rb");
-    d_d710_ = malloc(0x2134);
-    fread(d_d710_, 0x1f40, 1, stream);
+    d_d710_ = malloc(8500);
+    fread(d_d710_, 8000, 1, stream);
     fclose(stream);
-    for (i = 0; i < 0x18; ++i) {
-        d_cbb5_[i + 0x18] = d_d710_ + (((*((unsigned int far *)((char far *)d_d710_ + ((((i << 1) << 1) << 1) << 1) + 0x10))) >> 1) << 1);
-        d_4fe6_[i] = *((unsigned char far *)((char far *)d_d710_ + ((((i << 1) << 1) << 1) << 1) + 0x10));
+    /* Header words follow each 16-byte record. */
+    /* Keep the nested shifts; i * 16 changes Turbo C output. */
+    for (i = 0; i < 24; ++i) {
+        d_cbb5_[i + 24] = d_d710_ + (((*((unsigned int far *)((char far *)d_d710_ + ((((i << 1) << 1) << 1) << 1) + 16))) >> 1) << 1);
+        d_4fe6_[i] = *((unsigned char far *)((char far *)d_d710_ + ((((i << 1) << 1) << 1) << 1) + 16));
     }
 }
 
@@ -2298,42 +2316,42 @@ void g2_3bd7(void)
 {
     g2_3d8c(0, 9, 2);
 #if EPISODE == 1
-    g2_37b6("So you're the pitiful   ", 1, 0x13);
-    g2_37b6("hero they sent to stop  ", 1, 0x14);
-    g2_37b6("me.  I, Dr. Proton, will", 1, 0x15);
-    g2_37b6("soon rule the world!    ", 1, 0x16);
+    g2_37b6("So you're the pitiful   ", 1, 19);
+    g2_37b6("hero they sent to stop  ", 1, 20);
+    g2_37b6("me.  I, Dr. Proton, will", 1, 21);
+    g2_37b6("soon rule the world!    ", 1, 22);
 #elif EPISODE == 2
-    g2_37b6("So Duke, you managed to ", 1, 0x13);
-    g2_37b6("find my secret moonbase.", 1, 0x14);
-    g2_37b6("My Techbots will soon", 1, 0x15);
-    g2_37b6("be the end of you.", 1, 0x16);
+    g2_37b6("So Duke, you managed to ", 1, 19);
+    g2_37b6("find my secret moonbase.", 1, 20);
+    g2_37b6("My Techbots will soon", 1, 21);
+    g2_37b6("be the end of you.", 1, 22);
 #else
-    g2_37b6("Now that I've warped to ", 1, 0x13);
-    g2_37b6("Earth's future, Duke the", 1, 0x14);
-    g2_37b6("Fluke cannot stop me.", 1, 0x15);
+    g2_37b6("Now that I've warped to ", 1, 19);
+    g2_37b6("Earth's future, Duke the", 1, 20);
+    g2_37b6("Fluke cannot stop me.", 1, 21);
 #endif
-    g2_2870(0x18, 0x16);
+    g2_2870(24, 22);
 }
 
 void g2_3c38(void)
 {
     g2_3d8c(10, 9, 2);
 #if EPISODE == 1
-    g2_37b6("You're wrong, Proton    ", 11, 0x13);
-    g2_37b6("breath.  I'll be done   ", 11, 0x14);
-    g2_37b6("with you and still have ", 11, 0x15);
-    g2_37b6("time to watch Oprah!    ", 11, 0x16);
+    g2_37b6("You're wrong, Proton    ", 11, 19);
+    g2_37b6("breath.  I'll be done   ", 11, 20);
+    g2_37b6("with you and still have ", 11, 21);
+    g2_37b6("time to watch Oprah!    ", 11, 22);
 #elif EPISODE == 2
-    g2_37b6("Your Techbots were", 11, 0x13);
-    g2_37b6("beaten on Earth and I'll", 11, 0x14);
-    g2_37b6("defeat them here. Your", 11, 0x15);
-    g2_37b6("terror will soon end.", 11, 0x16);
+    g2_37b6("Your Techbots were", 11, 19);
+    g2_37b6("beaten on Earth and I'll", 11, 20);
+    g2_37b6("defeat them here. Your", 11, 21);
+    g2_37b6("terror will soon end.", 11, 22);
 #else
-    g2_37b6("I need to find Dr.", 11, 0x13);
-    g2_37b6("Proton's time machine", 11, 0x14);
-    g2_37b6("or Earth is doomed!", 11, 0x15);
+    g2_37b6("I need to find Dr.", 11, 19);
+    g2_37b6("Proton's time machine", 11, 20);
+    g2_37b6("or Earth is doomed!", 11, 21);
 #endif
-    g2_2870(0x22, 0x16);
+    g2_2870(34, 22);
 }
 
 void g2_3c9a(void)
@@ -2359,16 +2377,16 @@ void pascal g2_38be(register int a0)
     g2_37b6("      DUKE MAIN MENU", a0, 6);
     g2_37b6("      --------------", a0, 7);
     g2_37b6("   S)tart a new game", a0, 9);
-    g2_37b6("   R)estore an old game", a0, 0x0a);
-    g2_37b6("   I)nstructions", a0, 0x0b);
-    g2_37b6("   O)rdering information", a0, 0x0c);
-    g2_37b6("   G)ame setup", a0, 0x0d);
-    g2_37b6("   H)igh scores", a0, 0x0e);
-    g2_37b6("   P)reviews/Main Demo!", a0, 0x0f);
-    g2_37b6("   V)iew user demo", a0, 0x10);
-    g2_37b6("   T)itle screen", a0, 0x11);
-    g2_37b6("   C)redits", a0, 0x12);
-    g2_37b6("   Q)uit to DOS", a0, 0x13);
+    g2_37b6("   R)estore an old game", a0, 10);
+    g2_37b6("   I)nstructions", a0, 11);
+    g2_37b6("   O)rdering information", a0, 12);
+    g2_37b6("   G)ame setup", a0, 13);
+    g2_37b6("   H)igh scores", a0, 14);
+    g2_37b6("   P)reviews/Main Demo!", a0, 15);
+    g2_37b6("   V)iew user demo", a0, 16);
+    g2_37b6("   T)itle screen", a0, 17);
+    g2_37b6("   C)redits", a0, 18);
+    g2_37b6("   Q)uit to DOS", a0, 19);
 }
 #endif
 
@@ -2379,7 +2397,7 @@ void pascal g2_3d1e(register int a0)
     g2_37b6("         quit?          ", a0 + 1, 12);
     while (d_a0fa_ == 1) {
     }
-    g2_2870(a0 + 0x10, 12);
+    g2_2870(a0 + 16, 12);
     d_d4c0_ = 0;
     d_d134_ = 0;
     if (d_a0fa_ == 0x15)
@@ -2395,6 +2413,7 @@ void pascal g2_3d8c(int a2, int a1, int a0)
     register int si;
     register int di;
 
+    /* Select all VGA planes before drawing the border. */
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
     if (a2 == 2)
@@ -2425,27 +2444,27 @@ void g2_3f68(void)
 {
     register int i;
 
-    if (d_0b9f < 0x28)
+    if (d_0b9f < 40)
         ++d_0b9f;
-    if (d_0b9f == 0x28) {
+    if (d_0b9f == 40) {
         d_5305_ += 2;
         if (d_5305_ % 26 == 0)
             d_0b9f = 0;
-        if (d_5305_ > 0x1ee)
+        if (d_5305_ > 494)
             d_5305_ = 0;
     }
     ++d_039f;
     if (d_039f == 4)
         d_039f = 0;
     for (i = 0; i < 26; ++i)
-        g2_385b(*(int near *)&d_0d04[d_5305_ + i], i + 2,
+        g2_385b(d_0d04[d_5305_ + i], i + 2,
                 d_0ce1[d_039f + i] + 0xa2);
 }
 
 void g2_3fe1(void)
 {
-    while (d_a0fa_ == 0x18)
-        ;
+    while (d_a0fa_ == 0x18) {
+    }
 #if EPISODE != 3
     g2_3114();
 #endif
@@ -2453,10 +2472,10 @@ void g2_3fe1(void)
 
 void g2_3fed(void)
 {
-    while (d_a0fa_ == 0x17)
-        ;
+    while (d_a0fa_ == 0x17) {
+    }
     g2_3114();
-    g2_37b6("Instructions", 0x0e, 0);
+    g2_37b6("Instructions", 14, 0);
 }
 
 void pascal g2_4009(register int a0)
@@ -2474,8 +2493,8 @@ void pascal g2_4009(register int a0)
         g2_37b6("choose(1-6):", a0 + 1, 16);
         g2_37b6("  Press 'ESC' to exit.", a0 + 1, 20);
         for (;;) {
-            while (d_a0fa_ == 0x25)
-                ;
+            while (d_a0fa_ == 0x25) {
+            }
             g2_2870(a0 + 14, 16);
             if (d_a0fa_ == 1)
                 return;
@@ -2483,8 +2502,8 @@ void pascal g2_4009(register int a0)
             case 2:
                 g2_37b6("Modifying UP.          ", a0 + 1, 18);
                 g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 2)
-                    ;
+                while (d_a0fa_ == 2) {
+                }
                 g2_2870(a0 + 16, 19);
                 if (d_a0fa_ != 1) {
                     d_a0fa_ = g2_276f();
@@ -2496,8 +2515,8 @@ void pascal g2_4009(register int a0)
             case 3:
                 g2_37b6("Modifying DOWN.          ", a0 + 1, 18);
                 g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 3)
-                    ;
+                while (d_a0fa_ == 3) {
+                }
                 g2_2870(a0 + 16, 19);
                 if (d_a0fa_ != 1) {
                     d_a0fa_ = g2_276f();
@@ -2509,8 +2528,8 @@ void pascal g2_4009(register int a0)
             case 4:
                 g2_37b6("Modifying LEFT.          ", a0 + 1, 18);
                 g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 4)
-                    ;
+                while (d_a0fa_ == 4) {
+                }
                 g2_2870(a0 + 16, 19);
                 if (d_a0fa_ != 1) {
                     d_a0fa_ = g2_276f();
@@ -2522,8 +2541,8 @@ void pascal g2_4009(register int a0)
             case 5:
                 g2_37b6("Modifying RIGHT.          ", a0 + 1, 18);
                 g2_37b6("  hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 5)
-                    ;
+                while (d_a0fa_ == 5) {
+                }
                 g2_2870(a0 + 16, 19);
                 if (d_a0fa_ != 1) {
                     d_a0fa_ = g2_276f();
@@ -2535,8 +2554,8 @@ void pascal g2_4009(register int a0)
             case 6:
                 g2_37b6("Modifying FIRE.          ", a0 + 1, 18);
                 g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 6)
-                    ;
+                while (d_a0fa_ == 6) {
+                }
                 g2_2870(a0 + 16, 19);
                 if (d_a0fa_ != 1) {
                     d_a0fa_ = g2_276f();
@@ -2548,8 +2567,8 @@ void pascal g2_4009(register int a0)
             case 7:
                 g2_37b6("Modifying JUMP.          ", a0 + 1, 18);
                 g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 7)
-                    ;
+                while (d_a0fa_ == 7) {
+                }
                 g2_2870(a0 + 16, 19);
                 if (d_a0fa_ != 1) {
                     d_a0fa_ = g2_276f();
@@ -2581,99 +2600,99 @@ void g2_4334(void)
 {
     g2_3d8c(0, 9, 2);
 #if EPISODE == 1
-    g2_37b6("You may have defeated me", 1, 0x13);
-    g2_37b6("on Earth, but on the    ", 1, 0x14);
-    g2_37b6("Moon I can make plans   ", 1, 0x15);
-    g2_37b6("for my ulimate attack!  ", 1, 0x16);
+    g2_37b6("You may have defeated me", 1, 19);
+    g2_37b6("on Earth, but on the    ", 1, 20);
+    g2_37b6("Moon I can make plans   ", 1, 21);
+    g2_37b6("for my ulimate attack!  ", 1, 22);
 #elif EPISODE == 2
-    g2_37b6("Duke, your lucky ways   ", 1, 0x13);
-    g2_37b6("annoy me.  I see now    ", 1, 0x14);
-    g2_37b6("how best to be rid of", 1, 0x15);
-    g2_37b6("of your pesky presence.", 1, 0x16);
+    g2_37b6("Duke, your lucky ways   ", 1, 19);
+    g2_37b6("annoy me.  I see now    ", 1, 20);
+    g2_37b6("how best to be rid of", 1, 21);
+    g2_37b6("of your pesky presence.", 1, 22);
 #else
-    g2_37b6("You will never get me,  ", 1, 0x13);
-    g2_37b6("Duke!  Watch your self", 1, 0x14);
-    g2_37b6("you here!.", 1, 0x15);
+    g2_37b6("You will never get me,  ", 1, 19);
+    g2_37b6("Duke!  Watch your self", 1, 20);
+    g2_37b6("you here!.", 1, 21);
 #endif
-    g2_2870(0x18, 0x16);
+    g2_2870(24, 22);
 }
 
 void g2_4394(void)
 {
     g2_3d8c(10, 9, 2);
 #if EPISODE == 1
-    g2_37b6("Proton, you coward!  You", 0x0b, 0x13);
-    g2_37b6("can run but you can't   ", 0x0b, 0x14);
-    g2_37b6("hide!                   ", 0x0b, 0x15);
-    g2_37b6("                        ", 0x0b, 0x16);
+    g2_37b6("Proton, you coward!  You", 11, 19);
+    g2_37b6("can run but you can't   ", 11, 20);
+    g2_37b6("hide!                   ", 11, 21);
+    g2_37b6("                        ", 11, 22);
 #elif EPISODE == 2
-    g2_37b6("There's IS no place to", 0x0b, 0x13);
-    g2_37b6("hide from me.  Running", 0x0b, 0x14);
-    g2_37b6("back to Earth will not", 0x0b, 0x15);
-    g2_37b6("save you.", 0x0b, 0x16);
+    g2_37b6("There's IS no place to", 11, 19);
+    g2_37b6("hide from me.  Running", 11, 20);
+    g2_37b6("back to Earth will not", 11, 21);
+    g2_37b6("save you.", 11, 22);
 #else
-    g2_37b6("You'll not get away", 0x0b, 0x13);
-    g2_37b6("butthead!", 0x0b, 0x14);
-    g2_37b6("", 0x0b, 0x15);
+    g2_37b6("You'll not get away", 11, 19);
+    g2_37b6("butthead!", 11, 20);
+    g2_37b6("", 11, 21);
 #endif
-    g2_2870(0x22, 0x16);
+    g2_2870(34, 22);
 }
 
 void g2_43f5(void)
 {
     g2_3d8c(0, 9, 2);
 #if EPISODE == 1
-    g2_37b6("Once my forces are     ", 1, 0x13);
-    g2_37b6("together, I'll be back ", 1, 0x14);
-    g2_37b6("to rule Earth.         ", 1, 0x15);
+    g2_37b6("Once my forces are     ", 1, 19);
+    g2_37b6("together, I'll be back ", 1, 20);
+    g2_37b6("to rule Earth.         ", 1, 21);
 #elif EPISODE == 2
-    g2_37b6("But escaping to Earth's", 1, 0x13);
-    g2_37b6("future will!  Then my", 1, 0x14);
-    g2_37b6("Techbot army can build", 1, 0x15);
-    g2_37b6("and return victorious!", 1, 0x16);
+    g2_37b6("But escaping to Earth's", 1, 19);
+    g2_37b6("future will!  Then my", 1, 20);
+    g2_37b6("Techbot army can build", 1, 21);
+    g2_37b6("and return victorious!", 1, 22);
 #else
-    g2_37b6("Butthead, it's buthead!!", 1, 0x13);
-    g2_37b6("                     ", 1, 0x14);
-    g2_37b6("     ", 1, 0x15);
+    g2_37b6("Butthead, it's buthead!!", 1, 19);
+    g2_37b6("                     ", 1, 20);
+    g2_37b6("     ", 1, 21);
 #endif
-    g2_2870(0x18, 0x16);
+    g2_2870(24, 22);
 }
 
 void g2_4444(void)
 {
     g2_3d8c(10, 9, 2);
 #if EPISODE == 1
-    g2_37b6("Not if I can stop you ", 0xb, 0x13);
-    g2_37b6("first...              ", 0xb, 0x14);
-    g2_37b6("                      ", 0xb, 0x15);
-    g2_37b6("     Here I come!     ", 0xb, 0x16);
+    g2_37b6("Not if I can stop you ", 11, 19);
+    g2_37b6("first...              ", 11, 20);
+    g2_37b6("                      ", 11, 21);
+    g2_37b6("     Here I come!     ", 11, 22);
 #elif EPISODE == 2
-    g2_37b6("Not if I can find a way", 0xb, 0x13);
-    g2_37b6("to stop you...even if", 0xb, 0x14);
-    g2_37b6("I have to follow you", 0xb, 0x15);
-    g2_37b6("into the future...!", 0xb, 0x16);
+    g2_37b6("Not if I can find a way", 11, 19);
+    g2_37b6("to stop you...even if", 11, 20);
+    g2_37b6("I have to follow you", 11, 21);
+    g2_37b6("into the future...!", 11, 22);
 #else
-    g2_37b6("The spelling of yours", 0xb, 0x13);
-    g2_37b6("is getting better!", 0xb, 0x14);
-    g2_37b6("", 0xb, 0x15);
+    g2_37b6("The spelling of yours", 11, 19);
+    g2_37b6("is getting better!", 11, 20);
+    g2_37b6("", 11, 21);
 #endif
-    g2_2870(0x22, 0x16);
+    g2_2870(34, 22);
 }
 
 void g2_44a5(void)
 {
     g2_3d8c(10, 9, 2);
 #if EPISODE == 1 || EPISODE == 2
-    g2_37b6("I won it all!!!!!!!", 0xb, 0x13);
-    g2_37b6("         ", 0xb, 0x14);
-    g2_37b6("", 0xb, 0x15);
+    g2_37b6("I won it all!!!!!!!", 11, 19);
+    g2_37b6("         ", 11, 20);
+    g2_37b6("", 11, 21);
 #else
-    g2_37b6("Finally, Earth is free", 0xb, 0x13);
-    g2_37b6("from Dr. Proton and", 0xb, 0x14);
-    g2_37b6("his Techbot menace.", 0xb, 0x15);
-    g2_37b6("", 0xb, 0x16);
+    g2_37b6("Finally, Earth is free", 11, 19);
+    g2_37b6("from Dr. Proton and", 11, 20);
+    g2_37b6("his Techbot menace.", 11, 21);
+    g2_37b6("", 11, 22);
 #endif
-    g2_2870(0x22, 0x16);
+    g2_2870(34, 22);
 }
 
 void pascal g2_44f5(register int a0)
@@ -2738,23 +2757,23 @@ void pascal g2_452b(register int a0)
     g2_37b6("                        ", a0 + 1, 21);
     g2_37b6(" Thank you for playing! ", a0 + 1, 22);
 #endif
-    g2_0036(0xf);
+    g2_0036(15);
     if (d_cc81_ == 0) {
         while ((d_a0fa_ & 0x80) == 0) {
         }
     }
 #if EPISODE == 3
-    g2_2870(a0 + 0x18, 0x16);
+    g2_2870(a0 + 24, 22);
 #else
-    g2_2870(a0 + 0x18, 0x12);
+    g2_2870(a0 + 24, 18);
 #endif
-    g2_01a9(0xf);
+    g2_01a9(15);
     g2_3fe1();
     g2_02f4();
-    g2_2870(0x27, 0x18);
+    g2_2870(39, 24);
     g2_3114();
     g2_0491();
-    g2_2870(0x27, 0x18);
-    g2_2870(0x27, 0x18);
+    g2_2870(39, 24);
+    g2_2870(39, 24);
 }
 
