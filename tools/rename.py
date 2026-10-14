@@ -367,6 +367,11 @@ def main() -> int:
         fname = glob.get(func, func)
         for n in csrc:
             files[n] = rename_params(files[n], fname, flat(pm))
+        # the prototypes (header, per-unit copies) name the parameters too
+        proto = re.compile(r"(?m)^([^\n;{}#]*\b" + re.escape(fname) + r"\s*)(\([^;{]*\))(\s*;)")
+        for n in csrc:
+            files[n] = proto.sub(lambda mm: mm.group(1) + replace_tokens(mm.group(2), flat(pm), in_comments=False)
+                                 + mm.group(3), files[n])
     # 4. macro names of the uninitialised globals
     if aliases:
         h = files["DUKE.H"]
