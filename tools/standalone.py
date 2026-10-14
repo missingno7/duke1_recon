@@ -135,14 +135,20 @@ echo build failed
 """
 
 
+def dos_text(text: str) -> bytes:
+    """CRLF line endings: Turbo C 2.0 mis-reads LF-only headers."""
+    return text.replace("\r\n", "\n").replace("\n", "\r\n").encode("latin-1")
+
+
 def generate(outdir: Path) -> list:
     outdir.mkdir(parents=True, exist_ok=True)
+    import gentree
     written = []
-    for unit, fname in UNITS:
-        (outdir / fname).write_bytes(unit_source(unit).encode("latin-1"))
+    for fname, text in gentree.generate_texts().items():          # DOS line endings for the DOS tools
+        (outdir / fname).write_bytes(dos_text(text))
         written.append(fname)
     asm = load_json(LAYOUT / "asm-unit.json")["source"]
-    shutil.copy(ROOT / asm, outdir / "TOOLBOX.ASM")
+    (outdir / "TOOLBOX.ASM").write_bytes(dos_text((ROOT / asm).read_text("latin-1")))
     (outdir / "BUILD.BAT").write_bytes(BUILD_BAT.replace("\n", "\r\n").encode("ascii"))
     return written + ["TOOLBOX.ASM", "BUILD.BAT"]
 
@@ -152,7 +158,8 @@ def build(srcdir: Path, ep: str, work: Path) -> dict:
     flags = tcc.profile_flags(profile) + [f"-DEPISODE={ep[-1]}"]
     objs = {}
     for unit, fname in UNITS:
-        r = tcc.compile_c((srcdir / fname).read_text("latin-1"), flags, name=fname)
+        extra = {"DUKE.H": (srcdir / "DUKE.H").read_text("latin-1")} if (srcdir / "DUKE.H").exists() else None
+        r = tcc.compile_c((srcdir / fname).read_text("latin-1"), flags, name=fname, extra_files=extra)
         if not r.ok:
             return {"status": "COMPILE_ERROR", "file": fname, "log": r.log.strip().splitlines()[-12:]}
         objs[fname.replace(".C", ".OBJ")] = r.obj

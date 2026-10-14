@@ -1,10 +1,11 @@
-#include <dos.h>
-#include <stdio.h>
-#include <string.h>
-#define DRAW3(n, x, y) (((void (near *)(int, int, int))g1_17f5)((n), (x), (y)))
-#include <stdlib.h>
+/* GAME1.C - first translation unit (startup, main loop, levels, actors, files) of Duke Nukum v2.0. */
+
+#define UNIT 1      /* selects this unit's declarations in duke.h */
+#include "duke.h"
+
 #undef abs
 #define G1_4D42_ROW(i) (*((struct G1_4D42_RECORD *)&d_0650[(i) * 6]))
+
 #if EPISODE == 1
 #define F_BORDER0 "border.dn1"
 #define F_FONT1 "font1.dn1"
@@ -90,63 +91,9 @@
 #define F_ANIM4 "anim4.dn3"
 #define F_ANIM5 "anim5.dn3"
 #endif
-#include <alloc.h>
-#include <conio.h>
-struct g1_0008_row { char field[7]; };
-struct reading { int a; int b; int c; };
-struct t_cb6d { int state, x, y, marker; };
-struct t_52dd { int used, x, y, marker; };
-struct row0613 { unsigned char cells[12]; };
-struct t_c8eb { int used, value1, value2; };
-struct s8 { int a, b, c, d; };
-struct t_b63c { int state, x, y, kind; };
-struct t_d1cf { int used, x, y; };
-struct t_551e { int state, value1, value2; };
-struct t_5320 { int f[15]; };
-struct g1_376f_record { int state, x, y; };
-struct g1_3882_record { int used, x, y; };
-struct Record { int reserved; int y; int x; int height; int state; };
-struct g1_3e06_record { int state, x, y; };
-struct g1_43fa_record { int state, x, y; };
-struct g1_4638_entry { int state, position2, position4; };
-struct G1_4874_item { int type; int x; int y; int step; };
-struct G1_4D42_RECORD { int f0, f1, f2, f3, f4, f5; };
-struct g1_4f91_record { int state, x, y, marker; };
-struct g1_54e1_record { int state, x, y; };
-struct g1_5b0b_record { int state, x, y; };
-struct g1_5d6f_record { int active, x, y, state; };
-struct g1_5f0c_record { int state, x, y, field3; };
-struct g1_6445_record { int state; int x; int y; int kind; int flag8; int flag10; };
-struct g1_6afd_record { int x; int y; };
-struct g1_6b82_record { int state, x, y; };
-struct g1_6e71_record { int state, x, y; };
-struct g1_7163_record { int state, x, y; };
-struct t_b3d6 { int x, y, used; };
-struct g1_7647_record { int state, value1, value2, count; };
-struct g1_784b_record { int active, x, y, state; };
-struct g1_79d9_record { int state, x, y, flag; };
-struct g1_7b68_record { int state, x, y, flag; };
-struct t_726b { int x, y; };
-struct g1_8069_record { int f0, f2, f4, f6, f8, fa; };
-struct g1_8506_record { int state, x, y; };
-struct g1_87bf_record { int state, x, y; };
-struct g1_892b_record { int offset; int x; unsigned int y; };
-struct g1_899e_record { int state, x; unsigned int y; };
-struct record { int state; int x; int y; };
-struct g1_9698_record { int x; int y; };
-struct g1_9757_row { int state, x, y; };
-struct g1_9986_record { int state, x, y; };
-struct g1_a218_record { int state, x, y; };
-struct g1_a30a_record { int used; int x; int y; };
-struct g1_a75c_record { int state, x, y, flag; };
-struct g1_aac2_record { int state, x, y, kind; };
-struct g1_af94_record { int state, x, y; };
-struct s_bccb { int a, b, c; };
-struct t_b9de { int offset, x, y, alternate; };
-struct g1_c1b2_record { int kind; int x; int y; };
-struct cell_pair { unsigned int first, second; };
 
-/* data: bss.c */
+/* ---- uninitialised data (BSS) ---- */
+
 /* G1 BSS definitions in ascending DN1 address order. The six-byte g1_0c52 struct-return static precedes these globals at 0x4eca. */
 
 int d_4ed0_;
@@ -266,643 +213,8 @@ struct g1_a75c_record d_a0bf_[6];
 char far *d_a0ef_;
 char d_a0f3_;
 
-extern struct g1_0008_row d_00a1[];
-void pascal g2_37b6(char far* a0, int a1, int a2);
-extern char d_4fce_[];
-extern char d_530b_;
-extern char d_531b_;
-extern char d_a8d8_;
-extern char d_d579_;
-void pascal g2_1f5a(int a);
-void g1_0e30(int a, int b);
-extern char d_a0fa_;
-void pascal g2_3d8c(int a0, int a1, int a2);
-void pascal g2_148f(int a0);
-void pascal g2_2870(int a0, int a1);
-void pascal g2_4009(int a0);
-void pascal g2_1058(int a0);
-void pascal g2_10f0(int a0);
-void g1_006f(int a0);
-extern char d_554c_;
-void pascal g2_12ad(int a0);
-extern int d_0099;
-extern int d_009b;
-extern int d_009d;
-extern int d_009f;
-extern char d_02fa;
-extern int d_4ed4_;
-extern char d_5553_;
-extern char d_5554_;
-extern char d_5555_;
-extern char d_555a_;
-extern char d_555b_;
-extern char d_555c_;
-extern char d_5a11_;
-extern char d_5c6a_;
-extern char d_5c6b_;
-extern char d_5ec8_;
-extern char d_637e_;
-extern char d_68f7_;
-extern long d_68f8_;
-extern int d_798a_;
-extern int d_a0f8_;
-extern int d_c295_;
-extern int d_cc82_;
-void pascal g2_1241(int a0);
-void pascal g1_0151(char a0);
-extern char d_0094;
-extern int d_02fb;
-void pascal g2_1a0d(int a0);
-void pascal g2_1bb0(int a0);
-void g2_0d39(void);
-void g2_0d97(void);
-void pascal g2_1d40(int a0);
-void pascal g2_1ee1(int a0);
-char pascal g1_0351(int a0);
-void pascal g1_008a(int a0);
-extern int d_0095;
-extern char d_530e_;
-extern char d_cc81_;
-extern char d_d135_;
-extern char d_d56b_;
-void g2_3114(void);
-void pascal g2_01a9(int a0);
-void g2_32b6(void);
-void pascal g2_0036(int a0);
-void g2_3fe1(void);
-void g2_02f4(void);
-void g2_315d(void);
-int pascal g2_3d1e(int a0);
-void pascal g2_38be(int a0);
-void g2_0e19(void);
-void g2_062c(void);
-void g2_0491(void);
-void pascal g1_0008(char a0, int a1, int a2);
-extern long d_4fa2_[];
-extern char d_5008_[10][11];
-void g2_23f7(void);
-void pascal g1_0042(int a0);
-void pascal g1_0874(volatile int a0, volatile int a1, char far *a2);
-extern int d_03a1;
-extern char d_6e0a_;
-extern char far *d_a0fb_;
-void asm_05eb(int a0);
-void asm_0424(char far *a0, int a1, int a2);
-void g1_0a0e(void);
-void asm_05eb(int page);
-void asm_0424(char far *bitmap, int row, int offset);
-void pascal g2_2789(long a0, int a1, int a2);
-extern int d_771c_[];
-extern int d_7722_[];
-extern int d_9676_[];
-extern int d_967c_[];
-extern int d_c297_;
-extern char d_c68c_;
-extern char d_d134_;
-extern char d_d13f_;
-extern char d_d4c0_;
-void pascal g2_01f5(int mode, int far *x, int far *y);
-void pascal g2_44f5(int a0);
-void pascal g2_01f5(int a0, int far* a1, int far* a2);
-void pascal g2_1340(int a0, int a1);
-struct reading g1_0c52(int a0);
-struct reading g1_0c52(int mode);
-extern char d_d138_;
-extern char far *d_7986_;
-extern char far *d_cc7d_;
-extern unsigned int far *d_7729_;
-extern char d_0439;
-extern char d_043b;
-extern char d_0611;
-extern char d_0644;
-extern char d_d576_;
-extern int d_0437;
-extern unsigned int far* d_7729_;
-void asm_02ad(int a0, int a1);
-extern char d_02f4;
-extern char d_02f5;
-extern char d_02f6;
-extern char d_02f7;
-extern char d_02f8;
-extern char d_02f9;
-extern int d_039d;
-extern char d_0643;
-extern int d_4ed2_;
-extern int d_5002_;
-extern void interrupt far (*d_5556_)(void);
-extern char d_771b_;
-extern char d_7728_;
-extern char d_772d_;
-extern char d_a67d_;
-extern char d_a8d9_;
-extern char d_c683_;
-extern int d_d139_;
-extern int d_d13b_;
-extern char d_d148_;
-extern char far *d_5ec4_;
-extern char d_d4bf_;
-extern struct t_cb6d d_cb6d_[];
-extern int d_0646;
-extern char d_530f_;
-int g1_367e(int a0, int a1);
-void pascal g1_2b86(int a0, int a1, int a2);
-char pascal g1_326e(int a0, int a1);
-extern struct t_52dd d_52dd_[];
-extern int d_051c;
-extern int d_0648;
-extern char d_6379_;
-int g1_3513(int a0, int a1);
-unsigned char g1_12ce(void);
-char g1_1247(void);
-extern char d_043a;
-extern int d_060e;
-extern char d_0610;
-extern char d_0612;
-extern char d_9d98_;
-extern char d_a0f3_;
-extern int d_a679_;
-extern unsigned int d_d144_;
-extern int d_d247_;
-extern struct row0613 d_0613[];
-void g1_a53a(void);
-void g1_892b(void);
-void g1_87bf(void);
-void g1_6292(void);
-void g1_b1fd(void);
-void g1_ba39(void);
-void g1_3882(void);
-void g1_a3e7(void);
-void g1_bdd9(void);
-void pascal g1_29d0(int a0, int a1);
-void g1_14af(void);
-void g1_17f5(int a0, int a1, int a2, int a3);
-char g1_143e(void);
-void pascal g1_18d4(int a0, int a1, int a2);
-char g1_1352(void);
-extern struct t_c8eb d_c8eb_[];
-extern int d_051e;
-extern struct s8 d_d4c3_[];
-extern int d_0518;
-extern int d_064a;
-extern char far *d_a0ef_;
-extern struct t_b63c d_b63c_[];
-extern int d_0522;
-extern char far *d_637a_;
-void asm_0424(char far *bitmap, int a0, int a1);
-extern struct t_d1cf d_d1cf_[];
-extern int d_0520;
-extern struct t_551e d_551e_[];
-extern int d_051a;
-extern int d_0412[];
-void pascal g1_3034(int a0, int a1, int a2);
-extern struct t_5320 d_5320_[];
-extern int d_043e;
-extern int d_064c;
-extern int d_0440[];
-extern int d_0476[];
-extern int d_04ac[];
-extern int d_04e2[];
-extern int abs(int);
-void pascal g1_2e64(int a0, int a1);
-void pascal g1_0b85(long a0);
-extern struct g1_376f_record d_669f_[];
-extern int d_043c;
-int g1_3714(int a0, int a1);
-char pascal g1_3558(int a0, int a1);
-void pascal g1_314c(int a0, int a1);
-void pascal g1_2a40(register int a0, int a1, int a2);
-extern struct g1_3882_record d_a8da_[];
-extern int d_0524;
-extern int d_d646_[];
-void g2_0fc1(void);
-int g1_363b(int a0, int a1);
-extern struct Record d_c299_[];
-extern int d_0526;
-extern int d_064e;
-int g1_35ee(int a0, int a1, int a2);
-extern int d_0528;
-extern int d_052a;
-extern int d_052c;
-void pascal g1_2a40(int a0, int a1, int a2);
-void pascal g1_0b85(long value);
-void pascal g2_1ffa(char far *bitmap);
-void asm_0424(char far *bitmap, int x, int y);
-extern struct g1_3e06_record d_6bb2_[];
-extern int d_01fe[];
-extern int d_053e;
-extern int d_4ed8_;
-extern int d_052e;
-extern int d_a67b_;
-extern int d_a67e_;
-extern struct g1_43fa_record d_772e_[];
-extern int d_0540;
-extern struct g1_4638_entry d_9b3a_[];
-extern int d_0542;
-void asm_0424(char far *bitmap, int a1, int a2);
-extern int d_0544;
-extern int d_0546[];
-extern int d_0576[];
-extern int d_05a6;
-extern int d_05a8;
-extern struct G1_4874_item d_637f_[];
-void pascal g1_1b8a(int a0, int a1, int a2);
-extern int d_0650[];
-extern struct g1_4f91_record d_b6bc_[];
-extern int d_05aa;
-extern int d_0698[];
-extern int d_5081_[];
-void pascal g1_4d42(int a0, int a1, int a2);
-void pascal g1_2fe7(int a0, int a1);
-extern struct g1_54e1_record d_a0ff_[];
-extern int d_05ac;
-extern int d_06dc;
-extern int d_06de;
-extern int d_d57e_[];
-void pascal g1_5427(int a0, int a1, int a2);
-extern int d_0530;
-extern int d_0532;
-extern int d_0534;
-extern int d_0536;
-extern int d_0538;
-extern int d_053a;
-extern int d_053c;
-extern int d_b3d4_;
-extern void g2_1f9c(void);
-extern void asm_0424(char far *bitmap, int row, int offset);
-extern struct g1_5b0b_record d_abec_[];
-extern int d_05ae;
-extern int d_05b0;
-extern int d_05b2;
-extern int d_4eda_[];
-void pascal g1_59cf(int a0, int a1, int a2);
-extern struct g1_5d6f_record d_ab32_[];
-extern int d_05b4;
-void g1_0adc(void);
-extern struct g1_5f0c_record d_b0b4_[];
-extern int d_05b6;
-extern int d_06e0;
-extern char d_0436;
-extern char d_06e2;
-extern int d_d4bd_;
-extern int d_d4c1_;
-extern int d_d570_;
-void g2_16f3(void);
-void pascal g1_6183(int a0, int a1, int a2);
-extern struct g1_6445_record d_555d_[];
-extern int d_05b8;
-extern int d_02fd[];
-extern int d_034d[];
-extern int d_06e3;
-extern int d_5310_;
-extern char far* d_637a_;
-extern int d_abd2_;
-extern int d_abd4_[];
-extern int d_abe6_;
-extern int d_b09c_[];
-extern int d_b0ae_;
-extern int d_b636_;
-extern int d_d249_[];
-void asm_0424(char far* a0, int a1, int a2);
-extern struct g1_6afd_record d_70db_[];
-extern int d_05ba;
-extern int d_06e5;
-void asm_0315(int x, int row, int source);
-char pascal g1_326e(int x, int y);
-extern struct g1_6b82_record d_5a12_[];
-extern int d_05bc;
-extern int d_06e7;
-void g2_1534(void);
-void g1_0acc(void);
-extern struct g1_6e71_record d_d261_[];
-extern int d_05be;
-extern int d_06e9;
-extern int d_06eb;
-extern struct g1_7163_record d_c01e_[];
-extern int d_05c0;
-void g2_15c9(void);
-extern int d_b62e_;
-extern int d_b632_;
-extern int d_c281_;
-extern int d_d136_;
-extern int d_d155_;
-extern int d_d4b9_;
-extern int d_d4bb_;
-extern struct t_b3d6 d_b3d6_[];
-extern int d_05c2;
-extern int d_06ed;
-extern char pascal g1_326e(int a0, int a1);
-extern int g1_3513(int a0, int a1);
-extern void pascal g1_0042(int a0);
-extern int d_05c4;
-extern struct g1_7647_record d_798c_[];
-void pascal g1_75b9(int a0, int a1, int a2);
-extern struct g1_784b_record d_9d99_[];
-extern int d_05c6;
-char pascal g1_3558(int a0, register int a1);
-extern int d_05c8;
-extern struct g1_79d9_record d_a357_[];
-extern struct g1_7b68_record d_9818_[];
-extern int d_05ca;
-extern int d_05cc;
-extern int d_06ef;
-extern struct t_726b d_726b_[];
-void asm_0424(char far *bitmap, int row, int column);
-void pascal g1_0042(int value);
-extern struct g1_8069_record d_5ec9_[];
-extern int d_05ce;
-extern int d_06f1;
-void pascal g1_7f4a(int a0, int a1, int a2);
-void pascal g1_7dff(int a0, int a1, int a2);
-extern struct g1_8506_record d_7cac_[];
-extern int d_05d0;
-extern int d_06f3;
-extern struct g1_87bf_record d_68fc_[];
-extern int d_05d2;
-extern int d_4ed6_;
-extern struct g1_892b_record d_7f06_[];
-extern int d_05d4;
-extern struct g1_899e_record d_7063_[];
-extern int d_05d6;
-extern int d_06f5;
-void g2_165e(void);
-extern struct record d_c691_[];
-extern int d_05d8;
-extern int d_531c_;
-extern int d_06f7;
-extern int d_c68d_;
-extern int d_c68f_;
-extern int d_c8e9_;
-extern int d_d56e_;
-extern int d_d572_;
-extern struct g1_9698_record d_9688_[];
-extern int d_05da;
-extern struct g1_9757_row d_c915_[];
-extern int d_05dc;
-extern int d_06f9;
-extern struct g1_9986_record d_6e0b_[];
-extern int d_05de;
-extern int d_06fb;
-extern char d_06fd;
-extern int d_c279_;
-extern int d_c27b_;
-extern int d_c28b_;
-extern int d_c28d_;
-extern int d_c684_;
-extern int d_c686_;
-extern int d_c68a_;
-void g2_18b8(void);
-void pascal g1_9bb5(int a0, int a1, int a2);
-extern int d_c688_;
-extern struct g1_a218_record d_ae44_[];
-extern int d_05e0;
-extern int d_05e2[];
-extern struct g1_a30a_record d_5c6c_[];
-extern int d_5004_;
-extern int d_06fe;
-extern int d_7f04_;
-extern int d_9d96_;
-extern int d_a0b9_;
-void g2_1821(void);
-void g2_3b79(void);
-void g2_1a82(void);
-extern int d_5000_;
-extern int d_5149_;
-extern int d_52db_;
-extern int d_5307_;
-extern int d_d13d_;
-extern int d_d140_;
-void g2_178a(void);
-extern int d_5316_;
-extern int d_d574_;
-extern int d_d577_;
-void pascal g1_2b86(register int a0, int a1, int a2);
-extern struct g1_a75c_record d_a0bf_[];
-extern int d_5309_;
-extern int d_530c_;
-extern int d_d149_[];
-extern int d_d14b_;
-extern int d_d14d_;
-extern int d_d57a_;
-extern struct g1_aac2_record d_73fb_[];
-extern int d_0600;
-extern int d_5312_;
-void pascal g1_aa1b(int a0, int a1, int a2);
-extern struct g1_af94_record d_a680_[];
-extern int d_05fe;
-extern int d_0700;
-void pascal g1_af06(int a0, int a1, int a2);
-extern char far *d_0ba1[];
-void pascal g2_37b6(char far *a0, int a1, int a2);
-void asm_05f7(int page);
-extern int d_9d92_;
-extern int d_9d94_;
-extern int d_a677_;
-void g1_b118(void);
-void g2_0f2a(void);
-extern int d_0602;
-extern int d_0604;
-extern int d_0606;
-extern int d_0608;
-extern int d_060a;
-extern int d_060c;
-extern int d_0702[];
-extern int d_554a_;
-extern int d_b630_;
-extern int d_b634_;
-extern int d_b9dc_;
-extern int d_c283_;
-extern int d_c293_;
-extern int d_d142_;
-extern int d_d56c_;
-void pascal g1_b292(int a0, int a1, int a2);
-extern int d_d146_;
-extern int d_071a;
-extern int d_071c;
-extern int d_071e;
-extern int d_5314_;
-extern int d_c276_;
-extern int d_c289_;
-extern int d_c681_;
-void pascal g1_b926(int a0, int a1, int a2);
-extern char d_554f_;
-extern char d_5550_;
-extern char d_5551_;
-extern char d_5552_;
-extern struct s_bccb d_6b58_[];
-extern int d_d70e_;
-void pascal g1_bb9f(void);
-extern int d_0720;
-extern int d_5319_;
-extern int d_5548_;
-extern struct t_b9de d_d157_[];
-extern struct t_b9de d_b9de_[];
-void g2_0e98(void);
-void g2_1b19(void);
-extern struct g1_c1b2_record d_cc84_[];
-extern int d_531e_;
-extern void (far *d_514b_[])(void);
-extern int d_554d_;
-extern int d_0100[];
-extern int d_5006_;
-extern int d_d57c_;
-void g1_c1b2(void);
-void g1_a30a(void);
-void g1_9986(void);
-void g1_9757(void);
-void g1_79d9(void);
-void g1_7b68(void);
-void g1_6b82(void);
-void g1_7163(void);
-void g1_784b(void);
-void g1_c0c7(void);
-void g1_bccb(void);
-void g1_b595(void);
-void g1_af94(void);
-void g1_aac2(void);
-void g1_a75c(void);
-void g1_a6f4(void);
-void g1_5887(void);
-void g1_a218(void);
-void g1_a125(void);
-void g1_a032(void);
-void g1_9698(void);
-void g1_8ec1(void);
-void g1_8b5b(void);
-void g1_899e(void);
-void g1_8506(void);
-void g1_8069(void);
-void g1_7cfa(void);
-void g1_573d(void);
-void g1_7647(void);
-void g1_74c2(void);
-void g1_73d3(void);
-void g1_6e71(void);
-void g1_6947(void);
-void g1_6445(void);
-void g1_5f0c(void);
-void g1_5d6f(void);
-void g1_5b0b(void);
-void g1_54e1(void);
-void g1_4f91(void);
-void g1_4874(void);
-void g1_4638(void);
-void g1_43fa(void);
-void g1_42b8(void);
-void g1_3e06(void);
-void g1_3cbc(void);
-void g1_3a98(void);
-void g1_376f(void);
-void pascal g1_c243(void (far *a0)(void));
-extern int d_040e;
-extern char d_c278_;
-extern int d_0410;
-extern void far *d_5a0d_;
-extern char far *d_6b54_;
-extern void far *d_9684_;
-void g2_1f24(void);
-void g2_3af3(void);
-void pascal g1_10fb(char far *a0, int a1, int a2);
-void g1_295e(char far *a0, void far *a1, unsigned int a2);
-void g1_de71(char far *a0, char far *a1);
-void g1_dee9(char far *a0, char far *a1);
-extern char far *d_0b47[];
-void pascal g1_1b51(void);
-void g1_de26(char far* a0);
-void pascal g1_10fb(char far* a0, int a1, int a2);
-void pascal g1_2a1d(void);
-void pascal g1_c287(unsigned int a0);
-extern char d_0098;
-extern char d_03a3;
-extern char far *d_03a4[];
-extern char d_5318_;
-extern int d_9682_;
-extern int d_9b38_;
-extern char far* d_a0fb_;
-void pascal g2_219d(char a0);
-void pascal g2_0009(int a0);
-void pascal g2_1ffa(char far* a0);
-void g2_2ab9(void);
-void g2_1454(void);
-void g2_29a2(void);
-void pascal g1_e3e0(char far *a0);
-extern int d_4ed0_;
-void g2_3568(void);
-void g2_44a5(void);
-void pascal g2_452b(int a0);
-void g2_36c1(void);
-void g2_340f(void);
-void g2_4334(void);
-void g2_4394(void);
-void g2_43f5(void);
-void g2_4444(void);
-void g2_2473(void);
-void pascal g1_e92e(int a0);
-void g2_25cd(void);
-void asm_0258(int page);
-void g2_2104(char far *filename);
-void g2_24b1(void);
-void pascal g2_3980(char far *filename);
-void pascal g2_3a38(char far *filename);
-void pascal g2_3252(char far *filename);
-void pascal g2_365d(char far *filename);
-void pascal g2_33ab(char far *filename);
-void pascal g2_3504(char far *filename);
-void pascal g2_30b0(char far *filename);
-void interrupt g1_15f4(void);
-void g2_1e97(void);
-void g1_e83e(void);
-void g1_e00d(void);
-void pascal g1_e89d(char far *filename);
-extern int d_039f;
-extern char far* d_03a4[];
-extern int d_040c;
-extern int d_0b9f;
-extern int d_5305_;
-extern void far* d_5a0d_;
-extern void far* d_9684_;
-void g2_3f68(void);
-void g2_3cdc(void);
-void asm_05f7(int a0);
-void pascal g2_11f2(int a0);
-void g2_14e6(void);
-void g2_3c9a(void);
-void g2_1f9c(void);
-void g1_290f(void);
-void g1_10a5(void);
-void g1_1e77(void);
-void g1_2a93(void);
-void g1_32a5(void);
-void g1_2f4c(void);
-void g1_2eb1(void);
-void g1_1933(void);
-void g1_1bf6(void);
-void g1_30c9(void);
-void g1_2bd9(void);
-void g1_6afd(void);
-void g1_e947(void);
-void g1_0928(void);
-void g1_e655(void);
-void pascal g1_e3e0(char far* text);
-void pascal g1_037e(int a0);
-void g1_ecf4(void);
-void g2_205f(char far *filename);
-void g2_1e1b(void);
-void g2_2f04(void);
-void g2_1319(void);
-void g1_df57(char far *filename, void far *buffer);
-void g1_dfb2(char far *filename, void far *buffer);
-void pascal g1_e8ed(char far *filename);
-extern char d_0b46;
-void g2_3bd7(void);
-void g2_3c38(void);
-int pascal g1_049f(int a0);
-unsigned char pascal g1_0126(int a0);
-void g1_fc9c(void);
-void pascal g1_ec3d(void);
-void pascal g1_fd15(void);
-void pascal g1_fc85(void);
+/* ---- initialised data ---- */
 
-/* data: prefix.c */
 /* G1 initialised data, DGROUP 0x0094..0x03a3, in definition order (rule DATA-LAYOUT).
    Proven with tail.c by `python tools/tubuild.py G1_TEXT --data`. */
 char d_0094 = 0x00;
@@ -1049,7 +361,6 @@ int d_03a1 = 0;
 
 char d_03a3 = 0x00;
 
-/* g1_0008 */
 void pascal g1_0008(char a0, int a1, int a2)
 {
     char text[2];
@@ -1059,7 +370,6 @@ void pascal g1_0008(char a0, int a1, int a2)
     g2_37b6(text, a1, a2);
 }
 
-/* g1_0042 */
 void pascal g1_0042(int a0)
 {
     disable();
@@ -1072,14 +382,12 @@ void pascal g1_0042(int a0)
     enable();
 }
 
-/* g1_006f */
 void g1_006f(int a)
 {
     g2_1f5a(a);
     g1_0e30(1, a);
 }
 
-/* g1_008a */
 void pascal g1_008a(register int a0)
 {
     g2_3d8c(a0, 2, 4);
@@ -1107,7 +415,6 @@ void pascal g1_008a(register int a0)
     } while (d_a0fa_ != 0x1c && d_a0fa_ != 1 && d_a0fa_ != 0x39);
 }
 
-/* g1_0126 */
 unsigned char pascal g1_0126(int a0)
 {
     g2_12ad(a0);
@@ -1118,7 +425,7 @@ unsigned char pascal g1_0126(int a0)
     return 0;
 }
 
-/* g1_0151 */
+/* Save the game state to SAVEDn.DNx (n = slot character). */
 void pascal g1_0151(char a0)
 {
     FILE *stream;
@@ -1158,7 +465,6 @@ void pascal g1_0151(char a0)
     fclose(stream);
 }
 
-/* g1_0351 */
 char pascal g1_0351(int a0)
 {
     g2_1241(a0);
@@ -1169,7 +475,6 @@ char pascal g1_0351(int a0)
     return 0;
 }
 
-/* g1_037e */
 void pascal g1_037e(register int a0)
 {
     outport(0x3ce, 0x105);
@@ -1230,7 +535,9 @@ void pascal g1_037e(register int a0)
     }
 }
 
-/* g1_049f */
+/* goto kept: three gotos keep the shared timer-loop test (structured for: 979 bytes, if/do:
+   1020; this form 981 = original); the default-state reset to L_064b (nested continue/break
+   form: 988 bytes).  Measured by luna-g1_049f. */
 int pascal g1_049f(register int a0)
 {
     unsigned long ticks;
@@ -1388,7 +695,6 @@ int pascal g1_049f(register int a0)
     }
 }
 
-/* g1_0874 */
 void pascal g1_0874(volatile int a2, volatile int a1, char far *a0)
 {
     register int i = 0;
@@ -1418,7 +724,8 @@ void pascal g1_0874(volatile int a2, volatile int a1, char far *a0)
     }
 }
 
-/* g1_0928 */
+/* goto kept: jumps into the do-while test; the structured loops tried emit different code
+   (measured by luna-g1_0928, 2026-10-13). */
 void g1_0928(void)
 {
     register int entry;
@@ -1450,7 +757,6 @@ test:
     } while (slot < 8);
 }
 
-/* g1_0a0e */
 void g1_0a0e(void)
 {
     register int i;
@@ -1467,7 +773,6 @@ void g1_0a0e(void)
     }
 }
 
-/* g1_0acc */
 void g1_0acc(void)
 {
     if (d_4ed4_ < 9)
@@ -1475,7 +780,6 @@ void g1_0acc(void)
     g1_0a0e();
 }
 
-/* g1_0adc */
 void g1_0adc(void)
 {
     register int si;
@@ -1490,7 +794,7 @@ void g1_0adc(void)
     }
 }
 
-/* g1_0b85 */
+/* Add to the score and redraw it on both pages (resets display on wrap to 0). */
 void pascal g1_0b85(long value)
 {
     outport(0x3ce, 5);
@@ -1509,7 +813,6 @@ void pascal g1_0b85(long value)
     g2_2789(d_68f8_, 0x25, 3);
 }
 
-/* g1_0c52 */
 struct reading g1_0c52(register int mode)
 {
     int x;
@@ -1569,7 +872,8 @@ struct reading g1_0c52(register int mode)
     return state;
 }
 
-/* data: tail.c */
+/* ---- initialised data, placed here for the literal pool ---- */
+
 /* G1 initialised data, DGROUP 0x03a4..0x0721.  Defined after g1_0151 and before g1_0e30 so the
    strings of the level-file table d_03a4 land at their original place in the literal pool. */
 #if EPISODE == 1
@@ -1960,7 +1264,6 @@ int d_071e = 0;
 
 int d_0720 = 0;
 
-/* g1_0e30 */
 void g1_0e30(register int a0, int a1)
 {
     int dx, dy;
@@ -2026,7 +1329,7 @@ void g1_0e30(register int a0, int a1)
     }
 }
 
-/* g1_1053 */
+/* Joystick buttons from game port 0x201: 1 = button A, 2 = button B, 0 = none. */
 int g1_1053(void)
 {
     register int v = inportb(0x201);
@@ -2038,7 +1341,6 @@ int g1_1053(void)
     return 0;
 }
 
-/* g1_1076 */
 void g1_1076(void)
 {
     struct reading r;
@@ -2048,7 +1350,6 @@ void g1_1076(void)
     } while (r.b == 1 || r.c == 1);
 }
 
-/* g1_10a5 */
 void g1_10a5(void)
 {
     char sample;
@@ -2063,7 +1364,6 @@ void g1_10a5(void)
     }
 }
 
-/* g1_10fb */
 void pascal g1_10fb(char far *filename, register int offset, int count)
 {
     FILE *stream;
@@ -2092,7 +1392,6 @@ void pascal g1_10fb(char far *filename, register int offset, int count)
     }
 }
 
-/* g1_1247 */
 char g1_1247(void)
 {
     unsigned int far *p0;
@@ -2113,7 +1412,6 @@ char g1_1247(void)
     return 1;
 }
 
-/* g1_12ce */
 unsigned char g1_12ce(void)
 {
     unsigned int far *p;
@@ -2131,7 +1429,6 @@ unsigned char g1_12ce(void)
     return 1;
 }
 
-/* g1_1352 */
 char g1_1352(void)
 {
     unsigned int far *p1;
@@ -2173,7 +1470,9 @@ char g1_1352(void)
     return 1;
 }
 
-/* g1_143e */
+/* goto kept: every structured return form tried (if/||, direct relational return, inverted
+   compares, byte-boolean return) emits a 113-byte near match with five branch-layout
+   differences; measured by luna-g1_143e, 2026-10-13. */
 char g1_143e(void)
 {
     unsigned int far *p1;
@@ -2199,7 +1498,6 @@ one_result:
     return 1;
 }
 
-/* g1_14af */
 void g1_14af(void)
 {
     register int si;
@@ -2246,7 +1544,6 @@ void g1_14af(void)
     outport(0x3ce, 5);
 }
 
-/* g1_15f4 */
 void interrupt g1_15f4(void)
 {
     d_a0fa_ = inportb(0x60);
@@ -2290,8 +1587,7 @@ void interrupt g1_15f4(void)
     outportb(0x20, 0x20);
 }
 
-/* g1_17f5 */
-void g1_17f5(int a0, int a1, int a2, int a3)
+void g1_17f5(int a0, int a1, int a2)
 {
     register int offset;
 
@@ -2316,7 +1612,6 @@ void g1_17f5(int a0, int a1, int a2, int a3)
     }
 }
 
-/* g1_18d4 */
 void pascal g1_18d4(register int a0, int a1, int a2)
 {
     register int i;
@@ -2335,7 +1630,6 @@ void pascal g1_18d4(register int a0, int a1, int a2)
     }
 }
 
-/* g1_1933 */
 void g1_1933(void)
 {
     register int i;
@@ -2402,7 +1696,6 @@ void g1_1933(void)
     d_530f_ = 0;
 }
 
-/* g1_1b51 */
 void pascal g1_1b51(void)
 {
     register int i;
@@ -2413,7 +1706,6 @@ void pascal g1_1b51(void)
     }
 }
 
-/* g1_1b8a */
 void pascal g1_1b8a(register int a0, int a1, int a2)
 {
     register int i;
@@ -2432,7 +1724,8 @@ void pascal g1_1b8a(register int a0, int a1, int a2)
     }
 }
 
-/* g1_1bf6 */
+/* goto kept: success_update and clear_record are shared targets reached from both state
+   branches; the structured forms tried by the worker emitted different sizes. */
 void g1_1bf6(void)
 {
     register int i;
@@ -2515,7 +1808,6 @@ loop_continue:
     }
 }
 
-/* g1_1e77 */
 void g1_1e77(void)
 {
     if (d_6379_ != 0 && d_d4bf_ != 0)
@@ -2701,9 +1993,9 @@ void g1_1e77(void)
         return;
     if (d_0439 != 0 && d_d135_ == 0 && d_d576_ == 0 && d_6379_ == 0) {
         if (d_043a == 0)
-            DRAW3(0x1c + d_043b, d_0099, d_009b);
+            g1_17f5(0x1c + d_043b, d_0099, d_009b);
         else
-            DRAW3(0x20 + d_043b, d_0099, d_009b);
+            g1_17f5(0x20 + d_043b, d_0099, d_009b);
         if ((d_d13f_ == 0 && d_d4c0_ != 0) ||
             (d_d4c0_ == 0 && d_d13f_ != 0)) {
             if (d_0437 == 0x20 || d_0437 == 0x60)
@@ -2712,9 +2004,9 @@ void g1_1e77(void)
     }
     if (d_0439 != 0 && d_d135_ != 0 && d_d576_ == 0 && d_6379_ == 0) {
         if (d_043a == 0)
-            DRAW3(0x24, d_0099, d_009b);
+            g1_17f5(0x24, d_0099, d_009b);
         else
-            DRAW3(0x25, d_0099, d_009b);
+            g1_17f5(0x25, d_0099, d_009b);
     }
     if (d_d135_ != 0 && d_d13f_ == 0 && d_d4c0_ == 0 && d_0439 == 0 &&
         d_d576_ == 0 && d_6379_ == 0)
@@ -2729,50 +2021,50 @@ void g1_1e77(void)
     if (((d_0611 == 0 && d_0610 != 0) || g1_143e() == 0) &&
         d_a679_ == 0 &&
         d_0439 == 0 && d_d576_ == 0 && d_6379_ == 0)
-        DRAW3(d_043a + d_043b, d_0099, d_009b);
+        g1_17f5(d_043a + d_043b, d_0099, d_009b);
     if (d_0610 == 0 && g1_143e() != 0 && d_a679_ == 0 && d_0439 == 0 &&
         d_d576_ == 0 && d_6379_ == 0) {
         if (d_0611 == 0) {
             if (d_043a == 0)
-                DRAW3(d_043a + 8, d_0099, d_009b);
+                g1_17f5(d_043a + 8, d_0099, d_009b);
             else
-                DRAW3(d_043a + 5, d_0099, d_009b);
+                g1_17f5(d_043a + 5, d_0099, d_009b);
         } else if (d_043a == 0) {
-            DRAW3(d_043a + 10, d_0099, d_009b);
+            g1_17f5(d_043a + 10, d_0099, d_009b);
         } else {
-            DRAW3(d_043a + 7, d_0099, d_009b);
+            g1_17f5(d_043a + 7, d_0099, d_009b);
         }
     }
     if (d_d576_ != 0 && d_6379_ == 0) {
         --d_d576_;
         d_009b -= 16;
         if (d_043a == 0)
-            DRAW3(0x28 - d_d576_, d_0099, d_009b);
+            g1_17f5(0x28 - d_d576_, d_0099, d_009b);
         else
-            DRAW3(0x2b - d_d576_, d_0099, d_009b);
+            g1_17f5(0x2b - d_d576_, d_0099, d_009b);
         if (d_d576_ == 0)
             d_0644 = 1;
     }
     if (d_a679_ != 0 && d_0439 == 0 && d_d576_ == 0 && d_6379_ == 0) {
     if (d_a679_ == 1) {
         switch (d_d144_) {
-            case 0: case 1: DRAW3(0x0e, d_0099, d_009b); break;
-            case 2: case 3: DRAW3(0x0f, d_0099, d_009b); break;
-            case 4: case 5: DRAW3(0x10, d_0099, d_009b); break;
-            case 6: case 7: DRAW3(0x11, d_0099, d_009b); break;
-            case 8: case 9: DRAW3(0x12, d_0099, d_009b); break;
-            case 10: case 11: DRAW3(0x13, d_0099, d_009b); break;
-            case 12: case 13: DRAW3(0x14, d_0099, d_009b); break;
+            case 0: case 1: g1_17f5(0x0e, d_0099, d_009b); break;
+            case 2: case 3: g1_17f5(0x0f, d_0099, d_009b); break;
+            case 4: case 5: g1_17f5(0x10, d_0099, d_009b); break;
+            case 6: case 7: g1_17f5(0x11, d_0099, d_009b); break;
+            case 8: case 9: g1_17f5(0x12, d_0099, d_009b); break;
+            case 10: case 11: g1_17f5(0x13, d_0099, d_009b); break;
+            case 12: case 13: g1_17f5(0x14, d_0099, d_009b); break;
         }
     } else if (d_a679_ == 2) {
         switch (d_d144_) {
-            case 0: case 1: DRAW3(0x15, d_0099, d_009b); break;
-            case 2: case 3: DRAW3(0x16, d_0099, d_009b); break;
-            case 4: case 5: DRAW3(0x17, d_0099, d_009b); break;
-            case 6: case 7: DRAW3(0x18, d_0099, d_009b); break;
-            case 8: case 9: DRAW3(0x19, d_0099, d_009b); break;
-            case 10: case 11: DRAW3(0x1a, d_0099, d_009b); break;
-            case 12: case 13: DRAW3(0x1b, d_0099, d_009b); break;
+            case 0: case 1: g1_17f5(0x15, d_0099, d_009b); break;
+            case 2: case 3: g1_17f5(0x16, d_0099, d_009b); break;
+            case 4: case 5: g1_17f5(0x17, d_0099, d_009b); break;
+            case 6: case 7: g1_17f5(0x18, d_0099, d_009b); break;
+            case 8: case 9: g1_17f5(0x19, d_0099, d_009b); break;
+            case 10: case 11: g1_17f5(0x1a, d_0099, d_009b); break;
+            case 12: case 13: g1_17f5(0x1b, d_0099, d_009b); break;
         }
     }
     }
@@ -2795,12 +2087,11 @@ void g1_1e77(void)
     d_6379_ = 0; d_d4bf_ = 0x15; d_0612 = 0; d_0610 = 0;
     d_0439 = 0; d_0611 = 1; d_a679_ = 0; d_d144_ = 0;
     if (d_043a == 0)
-        DRAW3(0x2c, d_0099, d_009b);
+        g1_17f5(0x2c, d_0099, d_009b);
     else
-        DRAW3(0x2d, d_0099, d_009b);
+        g1_17f5(0x2d, d_0099, d_009b);
 }
 
-/* g1_290f */
 void g1_290f(void)
 {
     if (d_5002_ == 0 && d_0644 != 0) {
@@ -2818,7 +2109,6 @@ void g1_290f(void)
     }
 }
 
-/* g1_295e */
 void g1_295e(char far *filename, void far *buffer, unsigned int count)
 {
     FILE *stream;
@@ -2831,7 +2121,6 @@ void g1_295e(char far *filename, void far *buffer, unsigned int count)
     fclose(stream);
 }
 
-/* g1_29d0 */
 void pascal g1_29d0(register int a0, int a1)
 {
     register int i;
@@ -2848,7 +2137,7 @@ void pascal g1_29d0(register int a0, int a1)
     }
 }
 
-/* g1_2a1d */
+/* Clear the first word of every 8-byte record in table d_d4c3_[0..d_0518). */
 void pascal g1_2a1d(void)
 {
     register int i;
@@ -2857,7 +2146,6 @@ void pascal g1_2a1d(void)
         d_d4c3_[i].a = 0;
 }
 
-/* g1_2a40 */
 void pascal g1_2a40(register int a0, int a1, int a2)
 {
     register int i;
@@ -2875,7 +2163,6 @@ void pascal g1_2a40(register int a0, int a1, int a2)
     }
 }
 
-/* g1_2a93 */
 void g1_2a93(void)
 {
     register int i;
@@ -2910,7 +2197,6 @@ void g1_2a93(void)
     }
 }
 
-/* g1_2b86 */
 void pascal g1_2b86(register int a0, int a1, int a2)
 {
     register int i;
@@ -2928,7 +2214,6 @@ void pascal g1_2b86(register int a0, int a1, int a2)
     }
 }
 
-/* g1_2bd9 */
 void g1_2bd9(void)
 {
     register int i;
@@ -2987,7 +2272,6 @@ void g1_2bd9(void)
     }
 }
 
-/* g1_2e64 */
 void pascal g1_2e64(register int a0, int a1)
 {
     register int i;
@@ -3004,7 +2288,6 @@ void pascal g1_2e64(register int a0, int a1)
     }
 }
 
-/* g1_2eb1 */
 void g1_2eb1(void)
 {
     register int i;
@@ -3027,7 +2310,6 @@ void g1_2eb1(void)
     }
 }
 
-/* g1_2f4c */
 void g1_2f4c(void)
 {
     register int i;
@@ -3049,7 +2331,6 @@ void g1_2f4c(void)
     }
 }
 
-/* g1_2fe7 */
 void pascal g1_2fe7(register int a0, int a1)
 {
     register int i;
@@ -3066,7 +2347,6 @@ void pascal g1_2fe7(register int a0, int a1)
     }
 }
 
-/* g1_3034 */
 void pascal g1_3034(int a0, int a1, int a2)
 {
     register int offset;
@@ -3084,7 +2364,6 @@ void pascal g1_3034(int a0, int a1, int a2)
     }
 }
 
-/* g1_30c9 */
 void g1_30c9(void)
 {
     register int i;
@@ -3104,7 +2383,6 @@ void g1_30c9(void)
     }
 }
 
-/* g1_314c */
 void pascal g1_314c(int a0, int a1)
 {
     register int i;
@@ -3157,7 +2435,6 @@ void pascal g1_314c(int a0, int a1)
     }
 }
 
-/* g1_326e */
 char pascal g1_326e(int a0, int a1)
 {
     if (a0 >= d_009d &&
@@ -3168,7 +2445,6 @@ char pascal g1_326e(int a0, int a1)
     return 1;
 }
 
-/* g1_32a5 */
 void g1_32a5(void)
 {
     register int i;
@@ -3219,7 +2495,6 @@ void g1_32a5(void)
     }
 }
 
-/* g1_3513 */
 int g1_3513(int a0, int a1)
 {
     register int v = d_009b;
@@ -3236,7 +2511,6 @@ int g1_3513(int a0, int a1)
     return 0;
 }
 
-/* g1_3558 */
 char pascal g1_3558(int a0, register int a1)
 {
     register int i;
@@ -3263,7 +2537,6 @@ char pascal g1_3558(int a0, register int a1)
     return 0;
 }
 
-/* g1_35ee */
 int g1_35ee(register int a0, int a1, int a2)
 {
     register int index;
@@ -3276,7 +2549,6 @@ int g1_35ee(register int a0, int a1, int a2)
     return 0;
 }
 
-/* g1_363b */
 int g1_363b(int a0, int a1)
 {
     register int v = d_009b;
@@ -3293,7 +2565,8 @@ int g1_363b(int a0, int a1)
     return 0;
 }
 
-/* g1_367e */
+/* goto kept: the structured form (testing *p == 0x1800 || p[128] == 0x1800 first)
+   emits 10 more bytes; measured 2026-10-13. */
 int g1_367e(register int a0, register int a1)
 {
     int far *p;
@@ -3319,7 +2592,6 @@ check:
     return 0;
 }
 
-/* g1_3714 */
 int g1_3714(int a0, int a1)
 {
     unsigned int far *p;
@@ -3334,7 +2606,6 @@ int g1_3714(int a0, int a1)
     return 0;
 }
 
-/* g1_376f */
 void g1_376f(void)
 {
     register int i;
@@ -3363,7 +2634,9 @@ void g1_376f(void)
     }
 }
 
-/* g1_3882 */
+/* goto kept: the used == 1 path jumps BACK into the first branch's draw; -O tail merging
+   only produces forward jumps into the later copy (rule TAIL-MERGE), and the structured
+   form (receipt-structured-final.json) differs in 157 bytes. */
 void g1_3882(void)
 {
     register int si;
@@ -3421,7 +2694,11 @@ draw_second:
     }
 }
 
-/* g1_3a98 */
+/* goto kept: both loops are label loops.  Turbo C weights each use of a register variable
+   by 3 per enclosing for/while/do (rule REGISTER-PRIORITY); with syntactic loops the inner
+   counter j outranks i and takes SI (measured: v_for, og_for).  The original has i in SI and
+   j in DI, which only equal (unweighted) priorities with i declared first reproduce. */
+/* g1_3a98 translation-unit declarations from skeleton2.c */
 void g1_3a98(void)
 {
     register int i;
@@ -3486,7 +2763,6 @@ otest:
         goto obody;
 }
 
-/* g1_3cbc */
 void g1_3cbc(void)
 {
     if (d_798a_ != 0)
@@ -3529,7 +2805,6 @@ void g1_3cbc(void)
     }
 }
 
-/* g1_3e06 */
 void g1_3e06(void)
 {
     register int i;
@@ -3623,7 +2898,6 @@ void g1_3e06(void)
     }
 }
 
-/* g1_42b8 */
 void g1_42b8(void)
 {
     if (d_a0f8_ != 0)
@@ -3660,7 +2934,6 @@ void g1_42b8(void)
              ((d_a67e_ - d_009f) >> 3) + 0x10);
 }
 
-/* g1_43fa */
 void g1_43fa(void)
 {
     register int i;
@@ -3716,7 +2989,6 @@ void g1_43fa(void)
     }
 }
 
-/* g1_4638 */
 void g1_4638(void)
 {
     register int i;
@@ -3765,7 +3037,9 @@ void g1_4638(void)
     }
 }
 
-/* g1_4874 */
+/* goto kept: the original places the shared g1_2e64 tail inside the 0xFE branch and jumps
+   back to it from the 0xFF branch; the structured form (receipt-structured-equal-size.json)
+   moves the shared call after the 0xFF renderer. */
 void g1_4874(void)
 {
     register int i;
@@ -3898,7 +3172,6 @@ void g1_4874(void)
     }
 }
 
-/* g1_4d42 */
 void pascal g1_4d42(int a2, int p1, register int a0)
 {
     register int a1 = p1;
@@ -3936,7 +3209,6 @@ void pascal g1_4d42(int a2, int p1, register int a0)
         d_6379_ = 1;
 }
 
-/* g1_4f91 */
 void g1_4f91(void)
 {
     register int i;
@@ -4052,7 +3324,6 @@ void g1_4f91(void)
     }
 }
 
-/* g1_5427 */
 void pascal g1_5427(int a0, int a1, int a2)
 {
     register int offset;
@@ -4073,7 +3344,6 @@ void pascal g1_5427(int a0, int a1, int a2)
         d_6379_ = 1;
 }
 
-/* g1_54e1 */
 void g1_54e1(void)
 {
     register int i;
@@ -4144,7 +3414,6 @@ void g1_54e1(void)
     }
 }
 
-/* g1_573d */
 void g1_573d(void)
 {
     if (d_cc82_ != 0)
@@ -4188,7 +3457,6 @@ void g1_573d(void)
              ((d_0532 - d_009f) >> 3) + 0x10);
 }
 
-/* g1_5887 */
 void g1_5887(void)
 {
     if (d_b3d4_ != 0)
@@ -4232,7 +3500,6 @@ void g1_5887(void)
     }
 }
 
-/* g1_59cf */
 void pascal g1_59cf(int a0, int a1, int a2)
 {
     register int offset;
@@ -4264,7 +3531,6 @@ void pascal g1_59cf(int a0, int a1, int a2)
         d_6379_ = 1;
 }
 
-/* g1_5b0b */
 void g1_5b0b(void)
 {
     register int i;
@@ -4330,7 +3596,6 @@ void g1_5b0b(void)
     }
 }
 
-/* g1_5d6f */
 void g1_5d6f(void)
 {
     register int i;
@@ -4375,7 +3640,6 @@ void g1_5d6f(void)
     }
 }
 
-/* g1_5f0c */
 void g1_5f0c(void)
 {
     register int i;
@@ -4447,7 +3711,6 @@ void g1_5f0c(void)
     }
 }
 
-/* g1_6183 */
 void pascal g1_6183(int a0, int a1, int a2)
 {
     register int offset;
@@ -4475,7 +3738,6 @@ void pascal g1_6183(int a0, int a1, int a2)
     }
 }
 
-/* g1_6292 */
 void g1_6292(void)
 {
     ++d_06e2;
@@ -4539,7 +3801,6 @@ void g1_6292(void)
     }
 }
 
-/* g1_6445 */
 void g1_6445(void)
 {
     register int i;
@@ -4660,7 +3921,6 @@ void g1_6445(void)
     }
 }
 
-/* g1_6947 */
 void g1_6947(void)
 {
     register int i;
@@ -4715,7 +3975,6 @@ void g1_6947(void)
         d_abd2_ = 0;
 }
 
-/* g1_6afd */
 void g1_6afd(void)
 {
     register int i;
@@ -4734,7 +3993,6 @@ void g1_6afd(void)
     }
 }
 
-/* g1_6b82 */
 void g1_6b82(void)
 {
     register int i;
@@ -4828,7 +4086,6 @@ void g1_6b82(void)
     }
 }
 
-/* g1_6e71 */
 void g1_6e71(void)
 {
     register int i;
@@ -4894,7 +4151,6 @@ void g1_6e71(void)
     }
 }
 
-/* g1_7163 */
 void g1_7163(void)
 {
     register int i;
@@ -4959,7 +4215,6 @@ void g1_7163(void)
     }
 }
 
-/* g1_73d3 */
 void g1_73d3(void)
 {
     register int si;
@@ -4988,7 +4243,6 @@ void g1_73d3(void)
         d_d155_ = 2;
 }
 
-/* g1_74c2 */
 void g1_74c2(void)
 {
     register int i;
@@ -5017,7 +4271,6 @@ void g1_74c2(void)
     }
 }
 
-/* g1_75b9 */
 void pascal g1_75b9(int row, int horizontal, int vertical)
 {
     register int index = row * 0x140 + 0x6180;
@@ -5029,7 +4282,6 @@ void pascal g1_75b9(int row, int horizontal, int vertical)
                  ((vertical - d_009f) >> 3) + 0x10);
 }
 
-/* g1_7647 */
 void g1_7647(void)
 {
     register int i;
@@ -5084,7 +4336,6 @@ void g1_7647(void)
     }
 }
 
-/* g1_784b */
 void g1_784b(void)
 {
     register int i;
@@ -5125,7 +4376,6 @@ void g1_784b(void)
     }
 }
 
-/* g1_79d9 */
 void g1_79d9(void)
 {
     register int i;
@@ -5165,7 +4415,6 @@ void g1_79d9(void)
     }
 }
 
-/* g1_7b68 */
 void g1_7b68(void)
 {
     register int i;
@@ -5205,7 +4454,6 @@ void g1_7b68(void)
     }
 }
 
-/* g1_7cfa */
 void g1_7cfa(void)
 {
     register int i;
@@ -5235,7 +4483,6 @@ void g1_7cfa(void)
     }
 }
 
-/* g1_7dff */
 void pascal g1_7dff(int a0, int a1, int a2)
 {
     register int offset;
@@ -5265,7 +4512,6 @@ void pascal g1_7dff(int a0, int a1, int a2)
         d_6379_ = 1;
 }
 
-/* g1_7f4a */
 void pascal g1_7f4a(int a0, int a1, int a2)
 {
     register int offset;
@@ -5283,7 +4529,6 @@ void pascal g1_7f4a(int a0, int a1, int a2)
     }
 }
 
-/* g1_8069 */
 void g1_8069(void)
 {
     register int i;
@@ -5389,7 +4634,6 @@ void g1_8069(void)
     }
 }
 
-/* g1_8506 */
 void g1_8506(void)
 {
     register int i;
@@ -5452,7 +4696,6 @@ void g1_8506(void)
     }
 }
 
-/* g1_87bf */
 void g1_87bf(void)
 {
     register int i;
@@ -5492,7 +4735,6 @@ void g1_87bf(void)
     }
 }
 
-/* g1_892b */
 void g1_892b(void)
 {
     register unsigned int i;
@@ -5506,7 +4748,6 @@ void g1_892b(void)
     }
 }
 
-/* g1_899e */
 void g1_899e(void)
 {
     register unsigned int si;
@@ -5562,7 +4803,6 @@ void g1_899e(void)
     }
 }
 
-/* g1_8b5b */
 void g1_8b5b(void)
 {
     struct record far *p;
@@ -5640,7 +4880,6 @@ void g1_8b5b(void)
     }
 }
 
-/* g1_8ec1 */
 void g1_8ec1(void)
 {
     register int i;
@@ -5830,7 +5069,6 @@ void g1_8ec1(void)
     }
 }
 
-/* g1_9698 */
 void g1_9698(void)
 {
     register int i;
@@ -5853,7 +5091,6 @@ void g1_9698(void)
     }
 }
 
-/* g1_9757 */
 void g1_9757(void)
 {
     register int i;
@@ -5915,7 +5152,6 @@ void g1_9757(void)
     }
 }
 
-/* g1_9986 */
 void g1_9986(void)
 {
     register int si;
@@ -5984,7 +5220,6 @@ void g1_9986(void)
     }
 }
 
-/* g1_9bb5 */
 void pascal g1_9bb5(int a2, register int a1, register int a0)
 {
     ++d_06fd;
@@ -6062,7 +5297,6 @@ void pascal g1_9bb5(int a2, register int a1, register int a0)
     }
 }
 
-/* g1_a032 */
 void g1_a032(void)
 {
     if (d_c684_ != 0) {
@@ -6101,7 +5335,6 @@ void g1_a032(void)
     }
 }
 
-/* g1_a125 */
 void g1_a125(void)
 {
     if (d_c688_ == 0)
@@ -6143,7 +5376,6 @@ void g1_a125(void)
     }
 }
 
-/* g1_a218 */
 void g1_a218(void)
 {
     register int i;
@@ -6169,7 +5401,6 @@ void g1_a218(void)
     }
 }
 
-/* g1_a30a */
 void g1_a30a(void)
 {
     register int i;
@@ -6197,7 +5428,6 @@ void g1_a30a(void)
     }
 }
 
-/* g1_a3e7 */
 void g1_a3e7(void)
 {
     register int i;
@@ -6244,7 +5474,6 @@ void g1_a3e7(void)
         g2_1a82();
 }
 
-/* g1_a53a */
 void g1_a53a(void)
 {
     if (d_5307_ == 0)
@@ -6302,7 +5531,6 @@ void g1_a53a(void)
     }
 }
 
-/* g1_a6f4 */
 void g1_a6f4(void)
 {
     if (d_5316_ == 0) return;
@@ -6317,7 +5545,6 @@ void g1_a6f4(void)
     d_d574_ += 2;
 }
 
-/* g1_a75c */
 void g1_a75c(void)
 {
     register int i;
@@ -6382,7 +5609,6 @@ void g1_a75c(void)
     }
 }
 
-/* g1_aa1b */
 void pascal g1_aa1b(int a0, register int a1, int a2)
 {
     register int offset;
@@ -6403,7 +5629,6 @@ void pascal g1_aa1b(int a0, register int a1, int a2)
                  ((a2 - d_009f) >> 3) + 0x10);
 }
 
-/* g1_aac2 */
 void g1_aac2(void)
 {
     register int i;
@@ -6523,7 +5748,6 @@ void g1_aac2(void)
     }
 }
 
-/* g1_af06 */
 void pascal g1_af06(int a2, int a1, int a0)
 {
     register int row;
@@ -6538,7 +5762,6 @@ void pascal g1_af06(int a2, int a1, int a0)
         asm_0424(d_637a_ + row + 0xa0, col - d_009d, ((a0 - d_009f) >> 3) + 0x10);
 }
 
-/* g1_af94 */
 void g1_af94(void)
 {
     register int i;
@@ -6578,7 +5801,6 @@ void g1_af94(void)
     }
 }
 
-/* g1_b118 */
 void g1_b118(void)
 {
     register int si;
@@ -6603,7 +5825,6 @@ void g1_b118(void)
     d_02fb = 0;
 }
 
-/* g1_b1fd */
 void g1_b1fd(void)
 {
     if (d_a677_ != 0) {
@@ -6623,7 +5844,6 @@ void g1_b1fd(void)
     }
 }
 
-/* g1_b292 */
 void pascal g1_b292(int a0, register int a1, register int a2)
 {
     if (a0 < 2) {
@@ -6693,7 +5913,6 @@ void pascal g1_b292(int a0, register int a1, register int a2)
         d_6379_ = 1;
 }
 
-/* g1_b595 */
 void g1_b595(void)
 {
     if (d_554a_ != 0) {
@@ -6807,7 +6026,6 @@ void g1_b595(void)
     }
 }
 
-/* g1_b926 */
 void pascal g1_b926(int a0, int a1, int a2)
 {
     register int offset;
@@ -6837,7 +6055,6 @@ void pascal g1_b926(int a0, int a1, int a2)
     }
 }
 
-/* g1_ba39 */
 void g1_ba39(void)
 {
     register int si;
@@ -6898,7 +6115,6 @@ void g1_ba39(void)
     }
 }
 
-/* g1_bb9f */
 void pascal g1_bb9f(void)
 {
     register int si;
@@ -6929,7 +6145,6 @@ void pascal g1_bb9f(void)
     } while (di == 1);
 }
 
-/* g1_bccb */
 void g1_bccb(void)
 {
     register int si;
@@ -6969,7 +6184,6 @@ void g1_bccb(void)
     }
 }
 
-/* g1_bdd9 */
 void g1_bdd9(void)
 {
     register int i;
@@ -7043,7 +6257,6 @@ void g1_bdd9(void)
     }
 }
 
-/* g1_c0c7 */
 void g1_c0c7(void)
 {
     register int i;
@@ -7071,7 +6284,6 @@ void g1_c0c7(void)
     }
 }
 
-/* g1_c1b2 */
 void g1_c1b2(void)
 {
     register int i;
@@ -7091,7 +6303,6 @@ void g1_c1b2(void)
     }
 }
 
-/* g1_c243 */
 void pascal g1_c243(void (far *key)(void))
 {
     register int i;
@@ -7104,7 +6315,6 @@ void pascal g1_c243(void (far *key)(void))
     ++d_554d_;
 }
 
-/* g1_c287 */
 void pascal g1_c287(unsigned int a0) {
     register unsigned int col;
     register unsigned int row;
@@ -7725,7 +6935,6 @@ void pascal g1_c287(unsigned int a0) {
     }
 }
 
-/* g1_de26 */
 void g1_de26(char far *filename)
 {
     FILE *stream;
@@ -7735,7 +6944,7 @@ void g1_de26(char far *filename)
     fclose(stream);
 }
 
-/* g1_de71 */
+/* g1_de71 candidate 3 */
 void g1_de71(char far *filename, char far *buffer)
 {
     FILE *fp;
@@ -7753,7 +6962,6 @@ void g1_de71(char far *filename, char far *buffer)
     fclose(fp);
 }
 
-/* g1_dee9 */
 void g1_dee9(char far *filename, char far *buffer)
 {
     FILE *stream;
@@ -7769,7 +6977,6 @@ void g1_dee9(char far *filename, char far *buffer)
     fclose(stream);
 }
 
-/* g1_df57 */
 void g1_df57(char far *filename, void far *buffer)
 {
     FILE *stream;
@@ -7779,7 +6986,6 @@ void g1_df57(char far *filename, void far *buffer)
     fclose(stream);
 }
 
-/* g1_dfb2 */
 void g1_dfb2(char far *filename, void far *buffer)
 {
     FILE *stream;
@@ -7789,7 +6995,6 @@ void g1_dfb2(char far *filename, void far *buffer)
     fclose(stream);
 }
 
-/* g1_e00d */
 void g1_e00d(void)
 {
     g1_10fb(F_BORDER0, 0x3000, 0x1e00);
@@ -7850,7 +7055,6 @@ void g1_e00d(void)
     g2_01a9(5);
 }
 
-/* g1_e3e0 */
 void pascal g1_e3e0(char far *a0)
 {
     g1_1b51();
@@ -7945,7 +7149,8 @@ void pascal g1_e3e0(char far *a0)
     g1_bb9f();
 }
 
-/* g1_e655 */
+/* d_68fa_ is byte 2 of accepted d_68f8_ (long): use d_68f8_ */
+/* d_a0fd_ is byte 2 of accepted d_a0fb_ (char far*): use d_a0fb_ */
 void g1_e655(void)
 {
     long saved;
@@ -8028,7 +7233,6 @@ void g1_e655(void)
     g1_0a0e();
 }
 
-/* g1_e83e */
 void g1_e83e(void)
 {
     unsigned long available;
@@ -8043,7 +7247,6 @@ void g1_e83e(void)
     }
 }
 
-/* g1_e89d */
 void pascal g1_e89d(char far *filename)
 {
     FILE *stream;
@@ -8056,7 +7259,6 @@ void pascal g1_e89d(char far *filename)
     fclose(stream);
 }
 
-/* g1_e8ed */
 void pascal g1_e8ed(char far *filename)
 {
     FILE *stream;
@@ -8065,7 +7267,7 @@ void pascal g1_e8ed(char far *filename)
     fclose(stream);
 }
 
-/* g1_e92e */
+/* Busy-wait until the timer-interrupt tick counter reaches n (pascal). */
 void pascal g1_e92e(register int n)
 {
     d_02fb = 0;
@@ -8073,7 +7275,8 @@ void pascal g1_e92e(register int n)
         ;
 }
 
-/* g1_e947 */
+/* goto kept: the counter timeout leaves the wait loop past the first fade-in wait; the
+   structured while/break forms (receipts 6337ed3791d958c7, dab76c2736839010) emit 756 bytes. */
 void g1_e947(void)
 {
     register int i;
@@ -8194,7 +7397,6 @@ void g1_e947(void)
     g2_452b(7);
 }
 
-/* g1_ec3d */
 void pascal g1_ec3d(void)
 {
     g1_e83e();
@@ -8250,7 +7452,9 @@ void pascal g1_ec3d(void)
 #endif
 }
 
-/* g1_ecf4 */
+/* goto kept (STRUCTURING BACKLOG): the main game loop's shared exits and state tails; the
+   structured forms measured 3900 and 4128 bytes, switch variants 3952 and 3983 (original 3985). */
+/* d_a0fd_ is byte 2 of accepted d_a0fb_ (char far*): use d_a0fb_ */
 void g1_ecf4(void)
 
 {
@@ -8754,7 +7958,7 @@ void g1_ecf4(void)
     }
 }
 
-/* g1_fc85 */
+/* g1_fc85 candidate, attempt 2: char stub matches the observed low-byte argument setup. */
 void pascal g1_fc85(void)
 {
     g1_e655();
@@ -8764,7 +7968,6 @@ void pascal g1_fc85(void)
     }
 }
 
-/* g1_fc9c */
 void g1_fc9c(void)
 {
     textmode(3);
@@ -8793,7 +7996,6 @@ void g1_fc9c(void)
     _exit(0);
 }
 
-/* g1_fd15 */
 void pascal g1_fd15(void)
 {
     register int state;
@@ -8918,7 +8120,6 @@ void pascal g1_fd15(void)
     }
 }
 
-/* g1_ff16 */
 void main(int argc, char **argv)
 {
     if (argv[1][0] == 'a' && argv[1][1] == 's' && argv[1][2] == 'p') {

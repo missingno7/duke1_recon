@@ -6,6 +6,7 @@ three original executables byte for byte.
 
 | File | Contents |
 |---|---|
+| `DUKE.H` | declarations shared by both units: data structures, every function's prototype, every global (in address order: Turbo C places uninitialised globals by a hash of the name, ties by first appearance) |
 | `GAME1.C` | first translation unit: startup, main loop, levels, actors, player, files |
 | `GAME2.C` | second translation unit: menus, text screens, high scores, timer and PC-speaker sound |
 | `TOOLBOX.ASM` | ProGraphx EGA/VGA Toolbox routines (TASM 1.0) |
@@ -13,7 +14,9 @@ three original executables byte for byte.
 
 Requirements: Turbo C 2.0 (TCC, TLINK, `INCLUDE\`, `LIB\C0L.OBJ`, `LIB\CL.LIB`),
 TASM 1.0 and LZEXE 0.91, with `TC` set to the Turbo C directory.  The episode is
-selected with `-DEPISODE=n`; one source serves all three.
+selected with `-DEPISODE=n`; one source serves all three.  Each unit defines `UNIT`
+before including `DUKE.H`: the original units declared three things differently
+(`g2_3d1e`, `d_02fa`, `d_9682_`), and the header records both views.
 
 From the repository, `python tools/standalone.py build` runs the same steps with the
 pinned toolchain and compares the results with the original files' SHA-256

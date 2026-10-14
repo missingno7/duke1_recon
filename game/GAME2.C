@@ -1,70 +1,32 @@
-#include <dos.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-struct g1_0008_row { char field[7]; };
-struct g2_3980_record { unsigned int f[8]; };
+/* GAME2.C - second translation unit (menus, text screens, high scores, timer and sound) of Duke Nukum v2.0. */
 
-/* data: bss.c */
+#define UNIT 2      /* selects this unit's declarations in duke.h */
+#include "duke.h"
+
+/* ---- uninitialised data (BSS) ---- */
+
 /* G2 BSS objects in ascending DN1 address order. Each typed array spans to the next object start. */
-/* Accepted G1 struct definitions required by G2 BSS arrays. */
-struct Record {
-    int reserved;
-    int y;
-    int x;
-    int height;
-    int state;
-};
 
-struct g1_3882_record { int used, x, y; };
 
-struct g1_4f91_record { int state, x, y, marker; };
 
-struct g1_54e1_record { int state, x, y; };
 
-struct g1_5b0b_record { int state, x, y; };
 
-struct g1_5d6f_record { int active, x, y, state; };
 
-struct g1_5f0c_record { int state, x, y, field3; };
 
-struct g1_6e71_record { int state, x, y; };
 
-struct g1_7163_record { int state, x, y; };
 
-struct g1_79d9_record { int state, x, y, flag; };
 
-struct g1_9757_row { int state, x, y; };
 
-struct g1_a218_record { int state, x, y; };
 
-struct g1_af94_record { int state, x, y; };
 
-struct g1_c1b2_record {
-    int kind;
-    int x;
-    int y;
-};
 
-struct record {
-    int state;
-    int x;
-    int y;
-};
 
-struct s8 { int a, b, c, d; };
 
-struct t_b3d6 { int x, y, used; };
 
-struct t_b63c { int state, x, y, kind; };
 
-struct t_b9de { int offset, x, y, alternate; };
 
-struct t_c8eb { int used, value1, value2; };
 
-struct t_cb6d { int state, x, y, marker; };
 
-struct t_d1cf { int used, x, y; };
 
 /* 0xa0f4; accepted scalar type. */
 void interrupt far (*d_a0f4_)(void);
@@ -309,121 +271,8 @@ char far *d_d714_;
 /* 0xd718; accepted scalar type. */
 int d_d718_;
 
-void asm_029d(int a0, int a1);
-void asm_029d(int index, int value);
-extern char d_6e0a_;
-void asm_05eb(int page);
-void asm_05f7(int page);
-void asm_05eb(int a0);
-void asm_05f7(int a0);
-void asm_02ad(int a0, int a1);
-void pascal g2_37b6(char far *a0, int a1, int a2);
-void pascal g2_01a9(int a0);
-void pascal g2_0286(int a0);
-void pascal g2_0036(int a0);
-extern char d_a0fa_;
-extern char d_cc81_;
-void pascal g2_37b6(char far* a0, int a1, int a2);
-void pascal g2_2870(int a0, int a1);
-void g2_26d5(void);
-extern int d_02fb;
-extern char d_d134_;
-extern char d_d4c0_;
-void pascal g2_3d8c(int a0, int a1, int a2);
-void g2_01d5(void);
-void pascal g1_0042(int a0);
-extern char d_0097;
-extern char d_0b46;
-extern char d_5553_;
-extern char d_5554_;
-extern char d_5555_;
-extern char d_555a_;
-extern char d_555b_;
-extern char d_555c_;
-extern char d_5a11_;
-extern char d_5c6a_;
-extern char d_5c6b_;
-extern char d_5ec8_;
-extern char d_637e_;
-extern char d_68f7_;
-extern void interrupt far (*d_a0f4_)(void);
-extern char far *d_a0fb_;
-void asm_0424(char far *bitmap, int a0, int a1);
-extern struct g1_0008_row d_00a1[];
-extern char d_02f4;
-extern char d_02f5;
-extern char d_02f6;
-extern char d_02f7;
-extern char d_02f8;
-extern char d_02f9;
-extern long d_4fa2_[];
-extern char d_5008_[10][11];
-void pascal g2_2d58(int a0);
-extern char d_a8d8_;
-extern char d_d579_;
-extern void interrupt far g2_25fc(void);
-void pascal g2_1bfb(int a0);
-extern void pascal g2_3d8c(int a0, int a1, int a2);
-extern void pascal g2_37b6(char far *a0, int a1, int a2);
-extern int d_9b38_;
-void asm_0424(char far *a0, int a1, int a2);
-extern char d_9682_;
-void asm_0424(char far* a0, int a1, int a2);
-extern int d_0099;
-extern int d_009b;
-extern int d_009d;
-extern int d_009f;
-extern int d_02fa;
-extern int d_4ed4_;
-extern char d_5318_;
-extern int d_798a_;
-extern int d_a0f8_;
-extern int d_c295_;
-extern int d_cc82_;
-extern long d_68f8_;
-extern long d_4fa6_[];
-extern long d_4faa_[];
-extern long d_4fae_[];
-extern long d_4fb2_[];
-extern char d_d56b_;
-extern int d_0f2a;
-extern char d_530b_;
-extern char d_531b_;
-extern char far *d_cbb5_[];
-extern int d_d718_;
-extern char far *d_6b54_;
-void asm_053c(char far *bitmap, int x, int y);
-void g1_1076(void);
-void g2_29a2(void);
-void asm_02ad(int source, int offset);
-void pascal g2_2e8c(char x, char y, char far *text, char attribute);
-extern char far *d_c285_;
-void g2_3114(void);
-extern char far *d_b638_;
-extern char far *d_c27d_;
-extern char far *d_a0bb_;
-extern char far *d_c28f_;
-void asm_04c5(char far *a0, int a1, int a2);
-extern char d_4fce_[];
-extern char far *d_d714_;
-extern char d_4fe6_[];
-extern char far *d_d710_;
-void pascal g2_37b6(char far *p, int a1, int a2);
-extern int d_039f;
-extern int d_0b9f;
-extern unsigned char d_0ce1[];
-extern unsigned char d_0d04[];
-extern int d_5305_;
-void pascal g2_385b(char a0, int a1, int a2);
-void pascal g2_42a3(int a0);
-void pascal g2_194d(int a0);
-char g2_276f(void);
-void pascal g2_37b6(char far *s, int x, int y);
-void g2_3fe1(void);
-void g2_02f4(void);
-void g2_0491(void);
+/* ---- initialised data ---- */
 
-/* data: prefix.c */
 /* G2 initialised data (DGROUP 0x0b46..0x0f2b in every episode), in definition order.
    Defined before the first function so that the strings of the two pointer tables
    open the unit's literal pool (rule DATA-LAYOUT).  Proven by
@@ -755,7 +604,6 @@ unsigned char d_0ce1[35] = { 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 
 char d_0d04[550] = "                           DUKE NUKUM is one of the best, feature-packed games ever made for an IBM PC! It beats Nintendo easily!    DUKE NUKUM features:     Incredible animation,   One megabyte of graphics, dual scrolling playfields,  arcade sound effects,     and much, much more...! A built in Hint Mode makes learning the game easy!    Supports joystick, too.   You'll find dozens of    secret rooms with prizes. Duke can somersault and   cling onto ceilings with     his special hooks.       GET DUKE NUKUM NOW!                             ";
 int d_0f2a = 0;
 
-/* g2_0009 */
 void pascal g2_0009(int a0)
 {
     register int i;
@@ -765,7 +613,6 @@ void pascal g2_0009(int a0)
     }
 }
 
-/* g2_0036 */
 void pascal g2_0036(register int a0)
 {
     asm_029d(0, 0);
@@ -802,7 +649,7 @@ void pascal g2_0036(register int a0)
     delay(a0);
 }
 
-/* g2_01a9 */
+/* g2_01a9 candidate */
 void pascal g2_01a9(int value)
 {
     register int i;
@@ -812,14 +659,12 @@ void pascal g2_01a9(int value)
     }
 }
 
-/* g2_01d5 */
 void g2_01d5(void)
 {
     asm_05eb(!d_6e0a_);
     asm_05f7(d_6e0a_);
 }
 
-/* g2_01f5 */
 void pascal g2_01f5(int mode, int far *a1, int far *a2)
 {
     int second;
@@ -849,7 +694,6 @@ void pascal g2_01f5(int mode, int far *a1, int far *a2)
     enable();
 }
 
-/* g2_0286 */
 void pascal g2_0286(int a0)
 {
     register int si;
@@ -866,7 +710,6 @@ void pascal g2_0286(int a0)
     }
 }
 
-/* g2_02f4 */
 void g2_02f4(void)
 {
     g2_01a9(0x14);
@@ -897,7 +740,6 @@ void g2_02f4(void)
     g2_0036(0x14);
 }
 
-/* g2_0491 */
 void g2_0491(void)
 {
     g2_0286(0x1710);
@@ -930,7 +772,7 @@ void g2_0491(void)
     }
 }
 
-/* g2_062c */
+/* g2_062c candidate */
 void g2_062c(void)
 {
     g2_01a9(0x14);
@@ -1059,7 +901,6 @@ void g2_062c(void)
     g2_01a9(10);
 }
 
-/* g2_0d39 */
 void g2_0d39(void)
 {
     g2_3d8c(2, 3, 1);
@@ -1074,7 +915,6 @@ void g2_0d39(void)
     g2_01d5();
 }
 
-/* g2_0d97 */
 void g2_0d97(void)
 {
     g2_3d8c(2, 3, 2);
@@ -1091,7 +931,6 @@ void g2_0d97(void)
     g2_01d5();
 }
 
-/* g2_0e19 */
 void g2_0e19(void)
 {
     g2_3d8c(7, 3, 2);
@@ -1108,7 +947,6 @@ void g2_0e19(void)
     g2_01d5();
 }
 
-/* g2_0e98 */
 void g2_0e98(void)
 {
     d_a0fa_ = 0;
@@ -1129,7 +967,6 @@ void g2_0e98(void)
     g2_01d5();
 }
 
-/* g2_0f2a */
 void g2_0f2a(void)
 {
     d_a0fa_ = 0;
@@ -1151,7 +988,6 @@ void g2_0f2a(void)
     g2_01d5();
 }
 
-/* g2_0fc1 */
 void g2_0fc1(void)
 {
     d_a0fa_ = 0;
@@ -1173,7 +1009,6 @@ void g2_0fc1(void)
     g2_01d5();
 }
 
-/* g2_1058 */
 void pascal g2_1058(register int a0)
 {
     g2_3d8c(a0, 3, 2);
@@ -1193,7 +1028,6 @@ void pascal g2_1058(register int a0)
         ;
 }
 
-/* g2_10f0 */
 void pascal g2_10f0(register int a0)
 {
     g2_3d8c(a0, 3, 2);
@@ -1236,7 +1070,6 @@ void pascal g2_10f0(register int a0)
         ;
 }
 
-/* g2_11f2 */
 void pascal g2_11f2(register int a0)
 {
     g2_3d8c(a0, 3, 1);
@@ -1247,7 +1080,6 @@ void pascal g2_11f2(register int a0)
     g2_2870(a0 + 0x18, 8);
 }
 
-/* g2_1241 */
 void pascal g2_1241(register int a0)
 {
     g2_3d8c(a0, 3, 2);
@@ -1260,7 +1092,6 @@ void pascal g2_1241(register int a0)
     g2_2870(a0 + 0x14, 0x0a);
 }
 
-/* g2_12ad */
 void pascal g2_12ad(register int a0)
 {
     g2_3d8c(a0, 3, 2);
@@ -1273,7 +1104,6 @@ void pascal g2_12ad(register int a0)
     g2_2870(a0 + 0x14, 10);
 }
 
-/* g2_1319 */
 void g2_1319(void)
 {
     outportb(0x43, 0x36);
@@ -1283,7 +1113,6 @@ void g2_1319(void)
     outportb(0x61, inportb(0x61) & 0xfd);
 }
 
-/* g2_1340 */
 void pascal g2_1340(register int a0, register int a1)
 {
     char x;
@@ -1307,7 +1136,6 @@ void pascal g2_1340(register int a0, register int a1)
     asm_0424(d_a0fb_ + 0x37a0, a0, a1 * 8);
 }
 
-/* g2_1454 */
 void g2_1454(void)
 {
     d_6e0a_ = 0;
@@ -1316,7 +1144,6 @@ void g2_1454(void)
     g2_37b6("    you're going in!!   ", 3, 12);
 }
 
-/* g2_148f */
 void pascal g2_148f(register int a0)
 {
     g2_37b6("        GAME SETUP", a0, 6);
@@ -1326,7 +1153,6 @@ void pascal g2_148f(register int a0)
     g2_37b6("      H)int toggle", a0, 11);
 }
 
-/* g2_14e6 */
 void g2_14e6(void)
 {
     do {
@@ -1339,7 +1165,6 @@ void g2_14e6(void)
     d_d134_ = 0;
 }
 
-/* g2_1534 */
 void g2_1534(void)
 {
     d_a0fa_ = 0;
@@ -1359,7 +1184,6 @@ void g2_1534(void)
     g2_01d5();
 }
 
-/* g2_15c9 */
 void g2_15c9(void)
 {
     d_a0fa_ = 0;
@@ -1379,7 +1203,6 @@ void g2_15c9(void)
     g2_01d5();
 }
 
-/* g2_165e */
 void g2_165e(void)
 {
     d_a0fa_ = 0;
@@ -1399,7 +1222,6 @@ void g2_165e(void)
     g2_01d5();
 }
 
-/* g2_16f3 */
 void g2_16f3(void)
 {
     d_a0fa_ = 0;
@@ -1421,7 +1243,6 @@ void g2_16f3(void)
     g2_01d5();
 }
 
-/* g2_178a */
 void g2_178a(void)
 {
     d_a0fa_ = 0;
@@ -1443,7 +1264,6 @@ void g2_178a(void)
     g2_01d5();
 }
 
-/* g2_1821 */
 void g2_1821(void)
 {
     d_a0fa_ = 0;
@@ -1465,7 +1285,6 @@ void g2_1821(void)
     g2_01d5();
 }
 
-/* g2_18b8 */
 void g2_18b8(void)
 {
     d_a0fa_ = 0;
@@ -1485,7 +1304,6 @@ void g2_18b8(void)
     g2_01d5();
 }
 
-/* g2_194d */
 void pascal g2_194d(register int a0)
 {
     g2_37b6(d_00a1[(unsigned char)d_02f4].field, a0 + 0x11, 9);
@@ -1496,7 +1314,6 @@ void pascal g2_194d(register int a0)
     g2_37b6(d_00a1[(unsigned char)d_02f9].field, a0 + 0x11, 14);
 }
 
-/* g2_1a0d */
 void pascal g2_1a0d(register int a0)
 {
     g2_37b6("      DUKE HELP MENU", a0, 4);
@@ -1508,7 +1325,6 @@ void pascal g2_1a0d(register int a0)
     g2_37b6("    F10) Restart Level", a0, 11);
 }
 
-/* g2_1a82 */
 void g2_1a82(void)
 {
     d_a0fa_ = 0;
@@ -1530,7 +1346,6 @@ void g2_1a82(void)
     g2_01d5();
 }
 
-/* g2_1b19 */
 void g2_1b19(void)
 {
     d_a0fa_ = 0;
@@ -1552,7 +1367,6 @@ void g2_1b19(void)
     g2_01d5();
 }
 
-/* g2_1bb0 */
 void pascal g2_1bb0(register int a0)
 {
     g2_3d8c(a0, 2, 2);
@@ -1563,7 +1377,6 @@ void pascal g2_1bb0(register int a0)
     g2_2870(a0 + 0x18, 7);
 }
 
-/* g2_1bfb */
 void pascal g2_1bfb(register int a0)
 {
     g2_37b6("Important Keys:         ", a0 + 1, 4);
@@ -1587,7 +1400,6 @@ void pascal g2_1bfb(register int a0)
         ;
 }
 
-/* g2_1d40 */
 void pascal g2_1d40(int a0)
 {
     char buffer[20];
@@ -1605,7 +1417,6 @@ void pascal g2_1d40(int a0)
     }
 }
 
-/* g2_1e1b */
 void g2_1e1b(void)
 {
     FILE *stream;
@@ -1624,7 +1435,6 @@ void g2_1e1b(void)
     fclose(stream);
 }
 
-/* g2_1e97 */
 void g2_1e97(void)
 {
     outportb(0x43, 0x36);
@@ -1640,7 +1450,6 @@ void g2_1e97(void)
     enable();
 }
 
-/* g2_1ee1 */
 void pascal g2_1ee1(int a0)
 {
     g2_2d58(a0);
@@ -1650,7 +1459,6 @@ void pascal g2_1ee1(int a0)
     g2_2870(0x1a, 0x14);
 }
 
-/* g2_1f24 */
 void g2_1f24(void)
 {
     g2_3d8c(7, 5, 1);
@@ -1658,7 +1466,6 @@ void g2_1f24(void)
     g2_37b6("      please wait...  ", 8, 12);
 }
 
-/* g2_1f5a */
 void pascal g2_1f5a(int a0)
 {
     g2_3d8c(a0, 3, 7);
@@ -1667,7 +1474,6 @@ void pascal g2_1f5a(int a0)
     delay(100);
 }
 
-/* g2_1f9c */
 void g2_1f9c(void)
 {
     asm_05eb(d_6e0a_);
@@ -1676,7 +1482,6 @@ void g2_1f9c(void)
     asm_0424(d_a0fb_ + 0x2800, 0x24, d_9b38_ + 0xa0);
 }
 
-/* g2_1ffa */
 void pascal g2_1ffa(char far* bitmap)
 {
     asm_05eb(d_6e0a_);
@@ -1686,7 +1491,6 @@ void pascal g2_1ffa(char far* bitmap)
     d_9682_ += 2;
 }
 
-/* g2_205f */
 void g2_205f(char far *filename)
 {
     FILE *stream;
@@ -1700,7 +1504,6 @@ void g2_205f(char far *filename)
     fclose(stream);
 }
 
-/* g2_2104 */
 void g2_2104(char far *filename)
 {
     FILE *stream;
@@ -1717,7 +1520,6 @@ void g2_2104(char far *filename)
     fclose(stream);
 }
 
-/* g2_219d */
 void pascal g2_219d(char a0)
 {
     char previous;
@@ -1776,7 +1578,6 @@ void pascal g2_219d(char a0)
     fclose(stream);
 }
 
-/* g2_23f7 */
 void g2_23f7(void)
 {
     g2_37b6("       High Score       ", 8, 5);
@@ -1788,7 +1589,6 @@ void g2_23f7(void)
     g2_37b6(" Press ENTER when done. ", 8, 13);
 }
 
-/* g2_2473 */
 void g2_2473(void)
 {
     g2_3d8c(7, 0, 1);
@@ -1799,7 +1599,6 @@ void g2_2473(void)
     }
 }
 
-/* g2_24b1 */
 void g2_24b1(void)
 {
     FILE *stream;
@@ -1832,7 +1631,6 @@ void g2_24b1(void)
     fclose(stream);
 }
 
-/* g2_25cd */
 void g2_25cd(void)
 {
     char first;
@@ -1848,7 +1646,6 @@ void g2_25cd(void)
     }
 }
 
-/* g2_25fc */
 void interrupt g2_25fc(void)
 {
     register unsigned int period;
@@ -1890,7 +1687,6 @@ void interrupt g2_25fc(void)
     }
 }
 
-/* g2_26d5 */
 void g2_26d5(void)
 {
 #if EPISODE == 1
@@ -1934,7 +1730,8 @@ void g2_26d5(void)
 #endif
 }
 
-/* g2_276f */
+/* Wait out an 0xE0 extended-key prefix in the keyboard byte, then return it
+   with the release bit cleared (interrupts left disabled). */
 char g2_276f(void)
 {
     if (d_a0fa_ == 0xe0) {
@@ -1946,7 +1743,6 @@ char g2_276f(void)
     return d_a0fa_;
 }
 
-/* g2_2789 */
 void pascal g2_2789(long value, int x, int page)
 {
     char text[16];
@@ -1967,7 +1763,7 @@ void pascal g2_2789(long value, int x, int page)
     asm_05eb(!d_6e0a_);
 }
 
-/* g2_2870 */
+/* Wait for a key or joystick button, cycling a 4-frame animation at (x, y). */
 void pascal g2_2870(register int a0, register int a1)
 {
     char x = 1;
@@ -1996,7 +1792,6 @@ void pascal g2_2870(register int a0, register int a1)
     asm_0424(d_a0fb_ + 0x37a0, a0, a1 * 8);
 }
 
-/* g2_29a2 */
 void g2_29a2(void)
 {
     register int si;
@@ -2027,7 +1822,6 @@ void g2_29a2(void)
     asm_02ad(0x33a0, 0x1b91);
 }
 
-/* g2_2ab9 */
 void g2_2ab9(void)
 {
     register int si;
@@ -2081,7 +1875,6 @@ void g2_2ab9(void)
     } while (di == 1);
 }
 
-/* g2_2d58 */
 void pascal g2_2d58(int a0)
 {
     register int si;
@@ -2115,7 +1908,6 @@ void pascal g2_2d58(int a0)
     }
 }
 
-/* g2_2e8c */
 void pascal g2_2e8c(char x, char y, char far *text, char attribute)
 {
     register int i = 0;
@@ -2128,7 +1920,7 @@ void pascal g2_2e8c(char x, char y, char far *text, char attribute)
     }
 }
 
-/* g2_2f04 */
+/* g2_2f04 reconstructed candidate */
 void g2_2f04(void)
 {
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
@@ -2207,7 +1999,6 @@ void g2_2f04(void)
 #endif
 }
 
-/* g2_30b0 */
 void pascal g2_30b0(char far *filename)
 {
     FILE *stream;
@@ -2218,7 +2009,6 @@ void pascal g2_30b0(char far *filename)
     fclose(stream);
 }
 
-/* g2_3114 */
 void g2_3114(void)
 {
     register int x;
@@ -2233,7 +2023,6 @@ void g2_3114(void)
     }
 }
 
-/* g2_315d */
 void g2_315d(void)
 {
     char far *video = (char far *)0xa0000000L;
@@ -2258,7 +2047,6 @@ void g2_315d(void)
     asm_05f7(0);
 }
 
-/* g2_3252 */
 void pascal g2_3252(char far *filename)
 {
     FILE *stream;
@@ -2270,7 +2058,6 @@ void pascal g2_3252(char far *filename)
     fclose(stream);
 }
 
-/* g2_32b6 */
 void g2_32b6(void)
 {
     char far *screen = (char far *)MK_FP(0xa000, 0);
@@ -2295,7 +2082,6 @@ void g2_32b6(void)
     asm_05f7(0);
 }
 
-/* g2_33ab */
 void pascal g2_33ab(char far *filename)
 {
     FILE *stream;
@@ -2308,7 +2094,6 @@ void pascal g2_33ab(char far *filename)
     fclose(stream);
 }
 
-/* g2_340f */
 void g2_340f(void)
 {
     register int si;
@@ -2333,7 +2118,6 @@ void g2_340f(void)
     asm_05f7(0);
 }
 
-/* g2_3504 */
 void pascal g2_3504(char far *filename)
 {
     FILE *stream;
@@ -2346,7 +2130,6 @@ void pascal g2_3504(char far *filename)
     fclose(stream);
 }
 
-/* g2_3568 */
 void g2_3568(void)
 {
     register int i;
@@ -2375,7 +2158,6 @@ void g2_3568(void)
     asm_05f7(0);
 }
 
-/* g2_365d */
 void pascal g2_365d(char far *filename)
 {
     FILE *stream;
@@ -2387,7 +2169,6 @@ void pascal g2_365d(char far *filename)
     fclose(stream);
 }
 
-/* g2_36c1 */
 void g2_36c1(void)
 {
     char far *vram;
@@ -2413,7 +2194,6 @@ void g2_36c1(void)
     asm_05f7(0);
 }
 
-/* g2_37b6 */
 void pascal g2_37b6(char far *text, register int x, int y)
 {
     register int i;
@@ -2431,7 +2211,6 @@ void pascal g2_37b6(char far *text, register int x, int y)
     }
 }
 
-/* g2_385b */
 void pascal g2_385b(char a0, int a1, int a2)
 {
     if (a0 >= 'a') {
@@ -2461,7 +2240,6 @@ void pascal g2_38be(register int a0)
 }
 #endif
 
-/* g2_3980 */
 void pascal g2_3980(char far *filename)
 {
     FILE *stream;
@@ -2477,7 +2255,6 @@ void pascal g2_3980(char far *filename)
     }
 }
 
-/* g2_3a38 */
 void pascal g2_3a38(char far *filename)
 {
     FILE *stream;
@@ -2493,7 +2270,6 @@ void pascal g2_3a38(char far *filename)
     }
 }
 
-/* g2_3af3 */
 void g2_3af3(void)
 {
     g2_3d8c(7, 3, 6);
@@ -2510,7 +2286,6 @@ void g2_3af3(void)
 #endif
 }
 
-/* g2_3b79 */
 void g2_3b79(void)
 {
     asm_05eb(d_6e0a_);
@@ -2519,7 +2294,6 @@ void g2_3b79(void)
     asm_0424(d_a0fb_ + 0x4c40, 0x24, d_9b38_ + 0xa0);
 }
 
-/* g2_3bd7 */
 void g2_3bd7(void)
 {
     g2_3d8c(0, 9, 2);
@@ -2541,7 +2315,6 @@ void g2_3bd7(void)
     g2_2870(0x18, 0x16);
 }
 
-/* g2_3c38 */
 void g2_3c38(void)
 {
     g2_3d8c(10, 9, 2);
@@ -2563,7 +2336,6 @@ void g2_3c38(void)
     g2_2870(0x22, 0x16);
 }
 
-/* g2_3c9a */
 void g2_3c9a(void)
 {
     g2_37b6("     You have died.", 3, 3);
@@ -2572,7 +2344,6 @@ void g2_3c9a(void)
     g2_37b6("      Press ENTER:", 3, 6);
 }
 
-/* g2_3cdc */
 void g2_3cdc(void)
 {
     g2_37b6("You are now cheating.", 3, 3);
@@ -2601,7 +2372,6 @@ void pascal g2_38be(register int a0)
 }
 #endif
 
-/* g2_3d1e */
 void pascal g2_3d1e(register int a0)
 {
     g2_3d8c(a0, 5, 1);
@@ -2618,7 +2388,8 @@ void pascal g2_3d1e(register int a0)
     return 0;
 }
 
-/* g2_3d8c */
+/* Apparently draws a framed box from border tiles (asm_02ad) at column a2, row a1
+   (pascal; parameters are listed in declaration order a2, a1, a0). */
 void pascal g2_3d8c(int a2, int a1, int a0)
 {
     register int si;
@@ -2650,7 +2421,6 @@ void pascal g2_3d8c(int a2, int a1, int a0)
     }
 }
 
-/* g2_3f68 */
 void g2_3f68(void)
 {
     register int i;
@@ -2672,7 +2442,6 @@ void g2_3f68(void)
                 d_0ce1[d_039f + i] + 0xa2);
 }
 
-/* g2_3fe1 */
 void g2_3fe1(void)
 {
     while (d_a0fa_ == 0x18)
@@ -2682,7 +2451,6 @@ void g2_3fe1(void)
 #endif
 }
 
-/* g2_3fed */
 void g2_3fed(void)
 {
     while (d_a0fa_ == 0x17)
@@ -2691,7 +2459,6 @@ void g2_3fed(void)
     g2_37b6("Instructions", 0x0e, 0);
 }
 
-/* g2_4009 */
 void pascal g2_4009(register int a0)
 {
     d_cc81_ = 0;
@@ -2797,7 +2564,6 @@ void pascal g2_4009(register int a0)
     }
 }
 
-/* g2_42a3 */
 void pascal g2_42a3(register int a0)
 {
     g2_37b6("      KEYBOARD MODE", a0, 7);
@@ -2810,7 +2576,7 @@ void pascal g2_42a3(register int a0)
     g2_37b6("  6.  Jump   :", a0 + 1, 14);
 }
 
-/* g2_4334 */
+/* Dr. Proton taunt shown at the end of a level; text differs per episode. */
 void g2_4334(void)
 {
     g2_3d8c(0, 9, 2);
@@ -2832,7 +2598,6 @@ void g2_4334(void)
     g2_2870(0x18, 0x16);
 }
 
-/* g2_4394 */
 void g2_4394(void)
 {
     g2_3d8c(10, 9, 2);
@@ -2854,7 +2619,6 @@ void g2_4394(void)
     g2_2870(0x22, 0x16);
 }
 
-/* g2_43f5 */
 void g2_43f5(void)
 {
     g2_3d8c(0, 9, 2);
@@ -2875,7 +2639,6 @@ void g2_43f5(void)
     g2_2870(0x18, 0x16);
 }
 
-/* g2_4444 */
 void g2_4444(void)
 {
     g2_3d8c(10, 9, 2);
@@ -2897,7 +2660,6 @@ void g2_4444(void)
     g2_2870(0x22, 0x16);
 }
 
-/* g2_44a5 */
 void g2_44a5(void)
 {
     g2_3d8c(10, 9, 2);
@@ -2914,7 +2676,6 @@ void g2_44a5(void)
     g2_2870(0x22, 0x16);
 }
 
-/* g2_44f5 */
 void pascal g2_44f5(register int a0)
 {
     g2_37b6(" Hold the joystick in the", a0, 9);
@@ -2922,7 +2683,6 @@ void pascal g2_44f5(register int a0)
     g2_37b6(" button.", a0, 11);
 }
 
-/* g2_452b */
 void pascal g2_452b(register int a0)
 {
     g2_3114();
