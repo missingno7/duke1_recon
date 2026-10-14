@@ -926,7 +926,7 @@ extern char hint_revealed_object_4;          /* Indicates whether the fourth hid
 extern char hint_revealed_object_5;          /* Indicates whether the fifth hidden-object hint has been revealed. */
 extern char hint_revealed_object_6;          /* Indicates whether the sixth hidden-object hint has been revealed. */
 extern struct actor_3012_record actor_3012_records[];  /* Holds the record array for level object marker 0x3012. */
-extern void far *user_demo_buffer;  /* Points to the user-demo recording buffer; d_5a0f is its segment-word alias. */
+extern char far *user_demo_buffer;  /* Points to the user-demo recording buffer; d_5a0f is its segment-word alias. */
 extern char hint_revealed_object_7;          /* Indicates whether the seventh hidden-object hint has been revealed. */
 extern struct actor_3015_record actor_3015_records[];  /* Holds the record array for level object marker 0x3015. */
 extern char hint_revealed_object_8;          /* Indicates whether the eighth hidden-object hint has been revealed. */
@@ -977,7 +977,7 @@ extern int alternate_sprite_draw_offset;     /* Stores the current sprite or map
 #else
 extern char alternate_sprite_draw_offset;    /* Stores the current sprite or map offset for alternate sprite draw. */
 #endif
-extern void far *saved_demo_buffer;  /* Points to the saved-demo playback buffer; d_9686 is its segment-word alias. */
+extern char far *saved_demo_buffer;  /* Points to the saved-demo playback buffer; d_9686 is its segment-word alias. */
 extern struct actor_302c_record actor_302c_records[];  /* Holds the record array for level object marker 0x302C. */
 extern struct actor_301f_record actor_301f_records[];  /* Holds the record array for level object marker 0x301F. */
 extern int episode_sprite_resource_table;    /* Holds the lookup or pointer table for episode sprite resource. */

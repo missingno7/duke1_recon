@@ -200,20 +200,21 @@ def collect_struct_fields(texts) -> dict:
 
 
 def rename_params(text: str, func: str, mapping: dict) -> str:
-    m = re.search(r"(?m)^[^\n;{}#]*\b" + re.escape(func) + r"\s*\([^;{]*\)\s*\{", text)
-    if not m:
-        return text
-    depth, i = 0, m.end() - 1
-    while i < len(text):
-        if text[i] == "{":
-            depth += 1
-        elif text[i] == "}":
-            depth -= 1
-            if depth == 0:
-                break
-        i += 1
-    span = text[m.start():i + 1]
-    return text[:m.start()] + replace_tokens(span, mapping, in_comments=False) + text[i + 1:]
+    """Rename inside every definition of func (one per #if EPISODE placement)."""
+    defs = list(re.finditer(r"(?m)^[A-Za-z_][^\n;{}#=()]*\b" + re.escape(func) + r"\s*\([^;{]*\)\s*\{", text))
+    for m in reversed(defs):
+        depth, i = 0, m.end() - 1
+        while i < len(text):
+            if text[i] == "{":
+                depth += 1
+            elif text[i] == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+            i += 1
+        span = text[m.start():i + 1]
+        text = text[:m.start()] + replace_tokens(span, mapping, in_comments=False) + text[i + 1:]
+    return text
 
 
 def paren_columns(text: str) -> list:
@@ -368,7 +369,7 @@ def main() -> int:
         for n in csrc:
             files[n] = rename_params(files[n], fname, flat(pm))
         # the prototypes (header, per-unit copies) name the parameters too
-        proto = re.compile(r"(?m)^([^\n;{}#]*\b" + re.escape(fname) + r"\s*)(\([^;{]*\))(\s*;)")
+        proto = re.compile(r"(?m)^([A-Za-z_][^\n;{}#=()]*\b" + re.escape(fname) + r"\s*)(\([^;{]*\))(\s*;)")
         for n in csrc:
             files[n] = proto.sub(lambda mm: mm.group(1) + replace_tokens(mm.group(2), flat(pm), in_comments=False)
                                  + mm.group(3), files[n])

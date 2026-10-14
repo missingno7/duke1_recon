@@ -1732,6 +1732,7 @@ void interrupt timer_sound_interrupt_handler(void)
         sound_interrupt_active_state = 1;
     }
 
+    /* The table holds byte-addressed sample bases; the timer reads word periods. */
     if (((int far *)sound_sample_pointer_table[(unsigned char)pending_sound_effect_index])[current_sound_sample_position] == -1) {
         sound_interrupt_active_state = 0;
         current_sound_priority = 0;
@@ -2532,6 +2533,7 @@ void pascal draw_framed_dialog_box(int a2, int a1, int a0)
     else
         select_draw_page(0);
 
+    /* Keep the 16 * 40 row products; folded multipliers change Turbo C output. */
     for (si = 0; a0 * 16 * 40 > si; si += 640) {
         blit_bitmap_to_video_page(0x32c0, a1 * 16 * 40 + (si + a2));
         blit_bitmap_to_video_page(0x32e0, a1 * 16 * 40 + (si + a2) + 24);

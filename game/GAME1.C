@@ -155,7 +155,7 @@ char hint_revealed_object_4;
 char hint_revealed_object_5;
 char hint_revealed_object_6;
 struct actor_3012_record actor_3012_records[100];
-void far *user_demo_buffer;
+char far *user_demo_buffer;
 char hint_revealed_object_7;
 struct actor_3015_record actor_3015_records[100];
 char hint_revealed_object_8;
@@ -197,7 +197,7 @@ struct animated_level_tile_record animated_level_tile_records[1000];
 int joystick_x_axis_threshold_high[3];
 int joystick_y_axis_threshold_high[3];
 int alternate_sprite_draw_offset;
-void far *saved_demo_buffer;
+char far *saved_demo_buffer;
 struct actor_302c_record actor_302c_records[100];
 struct actor_301f_record actor_301f_records[100];
 int episode_sprite_resource_table;
@@ -5781,7 +5781,7 @@ void update_actor_3034(void)
 
     if (test_player_overlap_with_object(actor_3034_world_x, actor_3034_world_y) != 0 && actor_3033_active_state != 0 && control_up_pressed != 0) {
         for (i = 0; i < actor_3021_count; ++i)
-            (&actor_3021_records[i].world_x)[2] = 0;      /* The original clears the next actor_302a_record's x. */
+            (&actor_3021_records[i].world_x)[2] = 0;      /* Direct next-record indexing changes output; this clears the following actor's world_x. */
 
         actor_3034_active_state = 0;
         draw_planar_sprite_frame();
@@ -6984,7 +6984,7 @@ void pascal create_objects_from_level_map(unsigned int a0)
                 case 0x3021:
                     actor_3021_records[actor_3021_count].world_x = col * 2 + 2;
                     actor_3021_records[actor_3021_count].world_y = row * 128;
-                    /* This writes x in the next actor_302a_record; keep the matching-era form. */
+                    /* Direct next-record indexing changes output; this sets the following actor's world_x. */
                     (&actor_3021_records[actor_3021_count].world_x)[2] = 1;
                     register_level_update_callback(update_actor_3021);
                     ++actor_3021_count;
@@ -7894,12 +7894,12 @@ void run_game_loop(void)
 
         /* Demo snapshots contain six bytes of player state. */
         if (player_level_transition_state == 1) {
-            control_up_pressed = ((char far *)saved_demo_buffer)[menu_selection_state];
-            control_down_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 1];
-            control_left_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 2];
-            control_right_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 3];
-            control_fire_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 4];
-            control_jump_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 5];
+            control_up_pressed = saved_demo_buffer[menu_selection_state];
+            control_down_pressed = saved_demo_buffer[menu_selection_state + 1];
+            control_left_pressed = saved_demo_buffer[menu_selection_state + 2];
+            control_right_pressed = saved_demo_buffer[menu_selection_state + 3];
+            control_fire_pressed = saved_demo_buffer[menu_selection_state + 4];
+            control_jump_pressed = saved_demo_buffer[menu_selection_state + 5];
             menu_selection_state += 6;
             if (menu_selection_state >= 0x425a || menu_selection_state >= user_demo_input_length) {
                 enable();
@@ -7907,12 +7907,12 @@ void run_game_loop(void)
             }
         }
         if (demo_mode_state == 1 && menu_selection_state != 0x425a) {
-            ((char far *)saved_demo_buffer)[menu_selection_state] = control_up_pressed;
-            ((char far *)saved_demo_buffer)[menu_selection_state + 1] = control_down_pressed;
-            ((char far *)saved_demo_buffer)[menu_selection_state + 2] = control_left_pressed;
-            ((char far *)saved_demo_buffer)[menu_selection_state + 3] = control_right_pressed;
-            ((char far *)saved_demo_buffer)[menu_selection_state + 4] = control_fire_pressed;
-            ((char far *)saved_demo_buffer)[menu_selection_state + 5] = control_jump_pressed;
+            saved_demo_buffer[menu_selection_state] = control_up_pressed;
+            saved_demo_buffer[menu_selection_state + 1] = control_down_pressed;
+            saved_demo_buffer[menu_selection_state + 2] = control_left_pressed;
+            saved_demo_buffer[menu_selection_state + 3] = control_right_pressed;
+            saved_demo_buffer[menu_selection_state + 4] = control_fire_pressed;
+            saved_demo_buffer[menu_selection_state + 5] = control_jump_pressed;
             menu_selection_state += 6;
             if (menu_selection_state >= 0x4259) {
                 demo_mode_state = 0;
@@ -7920,12 +7920,12 @@ void run_game_loop(void)
             }
         }
         if (player_level_transition_state == 2) {
-            control_up_pressed = ((char far *)user_demo_buffer)[menu_selection_state];
-            control_down_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 1];
-            control_left_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 2];
-            control_right_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 3];
-            control_fire_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 4];
-            control_jump_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 5];
+            control_up_pressed = user_demo_buffer[menu_selection_state];
+            control_down_pressed = user_demo_buffer[menu_selection_state + 1];
+            control_left_pressed = user_demo_buffer[menu_selection_state + 2];
+            control_right_pressed = user_demo_buffer[menu_selection_state + 3];
+            control_fire_pressed = user_demo_buffer[menu_selection_state + 4];
+            control_jump_pressed = user_demo_buffer[menu_selection_state + 5];
             menu_selection_state += 6;
             if (menu_selection_state >= 0x425a || menu_selection_state >= saved_demo_input_length) {
                 enable();
@@ -7933,12 +7933,12 @@ void run_game_loop(void)
             }
         }
         if (demo_mode_state == 2 && menu_selection_state != 0x425a) {
-            ((char far *)user_demo_buffer)[menu_selection_state] = control_up_pressed;
-            ((char far *)user_demo_buffer)[menu_selection_state + 1] = control_down_pressed;
-            ((char far *)user_demo_buffer)[menu_selection_state + 2] = control_left_pressed;
-            ((char far *)user_demo_buffer)[menu_selection_state + 3] = control_right_pressed;
-            ((char far *)user_demo_buffer)[menu_selection_state + 4] = control_fire_pressed;
-            ((char far *)user_demo_buffer)[menu_selection_state + 5] = control_jump_pressed;
+            user_demo_buffer[menu_selection_state] = control_up_pressed;
+            user_demo_buffer[menu_selection_state + 1] = control_down_pressed;
+            user_demo_buffer[menu_selection_state + 2] = control_left_pressed;
+            user_demo_buffer[menu_selection_state + 3] = control_right_pressed;
+            user_demo_buffer[menu_selection_state + 4] = control_fire_pressed;
+            user_demo_buffer[menu_selection_state + 5] = control_jump_pressed;
             menu_selection_state += 6;
             saved_demo_input_length = menu_selection_state;
             if (menu_selection_state >= 0x4259)
