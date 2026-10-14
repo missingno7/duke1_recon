@@ -44,7 +44,7 @@ void g1_a3e7(void);    /* accepted signature */
 void g1_bdd9(void);    /* accepted signature */
 void pascal g1_29d0(int a0, int a1);    /* accepted signature */
 void g1_14af(void) {}    /* accepted signature; stub for push cs; call near */
-void g1_17f5(int a0, int a1, int a2, int a3) {}    /* accepted signature; stub for push cs; call near */
+void g1_17f5(int a0, int a1, int a2) {}
 char g1_143e(void) { return 0; }    /* accepted signature; stub for push cs; call near */
 void pascal g1_18d4(int a0, int a1, int a2) {}    /* accepted signature; stub for push cs; call near */
 void g1_0a0e(void) {}    /* accepted signature; stub for push cs; call near */
@@ -52,7 +52,6 @@ void pascal g1_0042(int a0) {}    /* accepted signature; stub for push cs; call 
 char g1_1352(void) { return 0; }    /* accepted signature; stub for push cs; call near */
 char g1_1247(void) { return 0; }    /* accepted signature; stub for push cs; call near */
 unsigned char g1_12ce(void) { return 0; }    /* accepted signature; stub for push cs; call near */
-#define DRAW3(n, x, y) (((void (near *)(int, int, int))g1_17f5)((n), (x), (y)))
 /*@body*/
 void g1_1e77(void)
 {
@@ -239,9 +238,9 @@ void g1_1e77(void)
         return;
     if (d_0439 != 0 && d_d135_ == 0 && d_d576_ == 0 && d_6379_ == 0) {
         if (d_043a == 0)
-            DRAW3(0x1c + d_043b, d_0099, d_009b);
+            g1_17f5(0x1c + d_043b, d_0099, d_009b);
         else
-            DRAW3(0x20 + d_043b, d_0099, d_009b);
+            g1_17f5(0x20 + d_043b, d_0099, d_009b);
         if ((d_d13f_ == 0 && d_d4c0_ != 0) ||
             (d_d4c0_ == 0 && d_d13f_ != 0)) {
             if (d_0437 == 0x20 || d_0437 == 0x60)
@@ -250,9 +249,9 @@ void g1_1e77(void)
     }
     if (d_0439 != 0 && d_d135_ != 0 && d_d576_ == 0 && d_6379_ == 0) {
         if (d_043a == 0)
-            DRAW3(0x24, d_0099, d_009b);
+            g1_17f5(0x24, d_0099, d_009b);
         else
-            DRAW3(0x25, d_0099, d_009b);
+            g1_17f5(0x25, d_0099, d_009b);
     }
     if (d_d135_ != 0 && d_d13f_ == 0 && d_d4c0_ == 0 && d_0439 == 0 &&
         d_d576_ == 0 && d_6379_ == 0)
@@ -267,50 +266,50 @@ void g1_1e77(void)
     if (((d_0611 == 0 && d_0610 != 0) || g1_143e() == 0) &&
         d_a679_ == 0 &&
         d_0439 == 0 && d_d576_ == 0 && d_6379_ == 0)
-        DRAW3(d_043a + d_043b, d_0099, d_009b);
+        g1_17f5(d_043a + d_043b, d_0099, d_009b);
     if (d_0610 == 0 && g1_143e() != 0 && d_a679_ == 0 && d_0439 == 0 &&
         d_d576_ == 0 && d_6379_ == 0) {
         if (d_0611 == 0) {
             if (d_043a == 0)
-                DRAW3(d_043a + 8, d_0099, d_009b);
+                g1_17f5(d_043a + 8, d_0099, d_009b);
             else
-                DRAW3(d_043a + 5, d_0099, d_009b);
+                g1_17f5(d_043a + 5, d_0099, d_009b);
         } else if (d_043a == 0) {
-            DRAW3(d_043a + 10, d_0099, d_009b);
+            g1_17f5(d_043a + 10, d_0099, d_009b);
         } else {
-            DRAW3(d_043a + 7, d_0099, d_009b);
+            g1_17f5(d_043a + 7, d_0099, d_009b);
         }
     }
     if (d_d576_ != 0 && d_6379_ == 0) {
         --d_d576_;
         d_009b -= 16;
         if (d_043a == 0)
-            DRAW3(0x28 - d_d576_, d_0099, d_009b);
+            g1_17f5(0x28 - d_d576_, d_0099, d_009b);
         else
-            DRAW3(0x2b - d_d576_, d_0099, d_009b);
+            g1_17f5(0x2b - d_d576_, d_0099, d_009b);
         if (d_d576_ == 0)
             d_0644 = 1;
     }
     if (d_a679_ != 0 && d_0439 == 0 && d_d576_ == 0 && d_6379_ == 0) {
     if (d_a679_ == 1) {
         switch (d_d144_) {
-            case 0: case 1: DRAW3(0x0e, d_0099, d_009b); break;
-            case 2: case 3: DRAW3(0x0f, d_0099, d_009b); break;
-            case 4: case 5: DRAW3(0x10, d_0099, d_009b); break;
-            case 6: case 7: DRAW3(0x11, d_0099, d_009b); break;
-            case 8: case 9: DRAW3(0x12, d_0099, d_009b); break;
-            case 10: case 11: DRAW3(0x13, d_0099, d_009b); break;
-            case 12: case 13: DRAW3(0x14, d_0099, d_009b); break;
+            case 0: case 1: g1_17f5(0x0e, d_0099, d_009b); break;
+            case 2: case 3: g1_17f5(0x0f, d_0099, d_009b); break;
+            case 4: case 5: g1_17f5(0x10, d_0099, d_009b); break;
+            case 6: case 7: g1_17f5(0x11, d_0099, d_009b); break;
+            case 8: case 9: g1_17f5(0x12, d_0099, d_009b); break;
+            case 10: case 11: g1_17f5(0x13, d_0099, d_009b); break;
+            case 12: case 13: g1_17f5(0x14, d_0099, d_009b); break;
         }
     } else if (d_a679_ == 2) {
         switch (d_d144_) {
-            case 0: case 1: DRAW3(0x15, d_0099, d_009b); break;
-            case 2: case 3: DRAW3(0x16, d_0099, d_009b); break;
-            case 4: case 5: DRAW3(0x17, d_0099, d_009b); break;
-            case 6: case 7: DRAW3(0x18, d_0099, d_009b); break;
-            case 8: case 9: DRAW3(0x19, d_0099, d_009b); break;
-            case 10: case 11: DRAW3(0x1a, d_0099, d_009b); break;
-            case 12: case 13: DRAW3(0x1b, d_0099, d_009b); break;
+            case 0: case 1: g1_17f5(0x15, d_0099, d_009b); break;
+            case 2: case 3: g1_17f5(0x16, d_0099, d_009b); break;
+            case 4: case 5: g1_17f5(0x17, d_0099, d_009b); break;
+            case 6: case 7: g1_17f5(0x18, d_0099, d_009b); break;
+            case 8: case 9: g1_17f5(0x19, d_0099, d_009b); break;
+            case 10: case 11: g1_17f5(0x1a, d_0099, d_009b); break;
+            case 12: case 13: g1_17f5(0x1b, d_0099, d_009b); break;
         }
     }
     }
@@ -333,7 +332,7 @@ void g1_1e77(void)
     d_6379_ = 0; d_d4bf_ = 0x15; d_0612 = 0; d_0610 = 0;
     d_0439 = 0; d_0611 = 1; d_a679_ = 0; d_d144_ = 0;
     if (d_043a == 0)
-        DRAW3(0x2c, d_0099, d_009b);
+        g1_17f5(0x2c, d_0099, d_009b);
     else
-        DRAW3(0x2d, d_0099, d_009b);
+        g1_17f5(0x2d, d_0099, d_009b);
 }

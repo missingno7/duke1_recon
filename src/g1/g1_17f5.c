@@ -6,7 +6,7 @@ extern char far *d_5ec4_;
 extern char d_d4bf_;
 void asm_0424(char far *a0, int a1, int a2);
 /*@body*/
-void g1_17f5(int a0, int a1, int a2, int a3)
+void g1_17f5(int a0, int a1, int a2)
 {
     register int offset;
 

@@ -1,0 +1,310 @@
+"""Rename identifiers in the standalone tree (game/) without changing the program.
+
+    python tools/rename.py MAP.json [--dir game] [--dry-run]
+
+MAP.json: {"functions": {old: new}, "globals": {old: new},
+           "structs": {old_tag: new_tag or {"name": new_tag, "fields": {old: new}}},
+           "fields": {old_tag: {old: new}}, "params": {function: {old: new}}}
+(the values may also be objects with a "name" key, as in build/workers/luna-names2/names.json).
+
+* Identifiers are replaced as whole C tokens outside string and character
+  literals; in comments too, so notes keep pointing at the right names.
+  Struct members (after '.' or '->') are never touched by these renames.
+* Fields are renamed in their struct definition and in member accesses whose
+  struct is known: the variable the access applies to (local, parameter or
+  global declared `struct T ...`, also subscripted) or a cast `((struct T *)x)`.
+  A field name that only one struct renames is renamed anywhere; anything
+  else that cannot be resolved is reported, never guessed.
+* Parameters are renamed inside their function only.
+* Uninitialised globals: Turbo C places a unit's BSS objects by a hash of the
+  name (rule BSS-ORDER: (first + 4*last + 32*length) mod 1024, ties by first
+  appearance), so their storage names d_XXXX_ (all hashing alike) stay and the
+  new names become macros in DUKE.H (block "names of the uninitialised globals").
+The result is only accepted when `python tools/standalone.py build` is EQUAL.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import ROOT  # noqa: E402
+
+TOKEN = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*.*?\*/|//[^\n]*|\d\w*|[A-Za-z_]\w*|\s+|->|.', re.S)
+IDENT = re.compile(r"[A-Za-z_]\w*$")
+KEYWORDS = set("""auto break case char const continue default do double else enum extern float for goto if int
+long register return short signed sizeof static struct switch typedef union unsigned void volatile while
+far near huge pascal cdecl interrupt asm _cs _ds _es _ss main""".split())
+CRLF, LF = chr(13) + chr(10), chr(10)       # the tree has DOS line endings
+
+
+def flat(m: dict) -> dict:
+    return {k: (v["name"] if isinstance(v, dict) else v) for k, v in (m or {}).items()}
+
+
+def is_member(toks: list, k: int) -> bool:
+    """toks[k] follows '.' or '->' (a struct member, not a variable)."""
+    j = k - 1
+    while j >= 0 and toks[j].isspace():
+        j -= 1
+    return j >= 0 and toks[j] in (".", "->")
+
+
+def replace_tokens(text: str, mapping: dict, in_comments: bool = True) -> str:
+    toks = TOKEN.findall(text)
+    out = []
+    for k, tok in enumerate(toks):
+        if tok in mapping and not is_member(toks, k):
+            out.append(mapping[tok])
+        elif in_comments and tok.startswith("/*"):
+            out.append(re.sub(r"\b[A-Za-z_]\w*\b", lambda m: mapping.get(m.group(0), m.group(0)), tok))
+        else:
+            out.append(tok)
+    return "".join(out)
+
+
+DECL = re.compile(r"\bstruct\s+(\w+)\s+(?!\{)([^;{}()=]*(?:\([^;{}()=]*\))?[^;{}()=]*)")
+TYPE_WORD = re.compile(r"\b(int|char|unsigned|long|void|struct|short|signed)\b")
+
+
+def struct_vars(text: str) -> dict:
+    """{variable: struct tag} for the declarations `struct T [far] *a, b[n]` in text."""
+    out = {}
+    for m in DECL.finditer(text):
+        for piece in m.group(2).split(","):
+            piece = re.sub(r"\[[^\]]*\]", "", piece).strip()
+            if TYPE_WORD.search(piece):
+                break                                  # the next parameter, of another type
+            n = re.search(r"(\w+)\s*\)?\s*$", piece)
+            if n and n.group(1) not in KEYWORDS:
+                out[n.group(1)] = m.group(1)
+    return out
+
+
+def top_blocks(toks: list):
+    """(start, open, close) token indexes of each top-level {...} block; start is
+    the first token after the previous top-level ';' or '}'."""
+    depth, start, opened = 0, 0, None
+    for k, tok in enumerate(toks):
+        if tok == "{":
+            if depth == 0:
+                opened = k
+            depth += 1
+        elif tok == "}":
+            depth -= 1
+            if depth == 0:
+                yield start, opened, k
+                start = k + 1
+        elif tok == ";" and depth == 0:
+            start = k + 1
+
+
+def top_level_text(text: str) -> str:
+    toks, depth, out = TOKEN.findall(text), 0, []
+    for tok in toks:
+        depth += tok == "{"
+        if depth == 0 and not tok.startswith(("/*", "//")):
+            out.append(tok)
+        depth -= tok == "}"
+    return "".join(out)
+
+
+def rename_fields(text: str, fields: dict, globals_: dict, unresolved: list, fname: str) -> str:
+    """fields = {tag: {old: new}}; see the module docstring."""
+    toks = TOKEN.findall(text)
+    wanted = {f for fm in fields.values() for f in fm}
+    scopes = []                                       # (lo, hi, {variable: tag})
+    for start, op, cl in top_blocks(toks):
+        head = "".join(toks[start:op])
+        m = re.search(r"\bstruct\s+(\w+)\s*$", head)
+        if m:                                         # struct T { ... }: rename the fields themselves
+            fm = fields.get(m.group(1), {})
+            for k in range(op, cl):
+                if toks[k] in fm and not is_member(toks, k):
+                    toks[k] = fm[toks[k]]
+            continue
+        scopes.append((start, cl, {**globals_, **struct_vars("".join(toks[start:cl]))}))
+
+    def scope_vars(k):
+        for lo, hi, v in scopes:
+            if lo <= k <= hi:
+                return v
+        return globals_
+
+    def back(j):
+        while j >= 0 and toks[j].isspace():
+            j -= 1
+        return j
+
+    def matching(j, close, open_):
+        depth = 0
+        while j >= 0:
+            depth += toks[j] == close
+            depth -= toks[j] == open_
+            if depth == 0:
+                return j
+            j -= 1
+        return j
+
+    def base_tag(k):
+        j = back(back(k - 1) - 1)                     # before the '.' / '->'
+        while j >= 0 and toks[j] == "]":              # a[i][j]  ->  a
+            j = back(matching(j, "]", "[") - 1)
+        if j >= 0 and IDENT.match(toks[j]):
+            return scope_vars(j).get(toks[j])
+        if j >= 0 and toks[j] == ")":                 # ((struct T far *)x)
+            i = matching(j, ")", "(")
+            m = re.match(r"\(\s*\(\s*struct\s+(\w+)", "".join(toks[i:j + 1]))
+            return m.group(1) if m else None
+        return None
+
+    for k, tok in enumerate(toks):
+        if tok in wanted and is_member(toks, k):
+            tag = base_tag(k)
+            if tag in fields and tok in fields[tag]:
+                toks[k] = fields[tag][tok]
+                continue
+            owners = {fm[tok] for t, fm in fields.items() if tok in fm}
+            if tag is None and len(owners) == 1 and all(tok not in struct_fields
+                                                        for t, struct_fields in STRUCT_FIELDS.items() if t not in fields):
+                toks[k] = owners.pop()
+            elif tag is None:
+                line = "".join(toks[:k]).count(LF) + 1
+                unresolved.append(f"{fname}:{line}: .{tok} (struct {tag or 'unknown'})")
+    return "".join(toks)
+
+
+STRUCT_FIELDS: dict = {}                              # tag -> field names, from the struct definitions
+
+
+def collect_struct_fields(texts) -> dict:
+    out = {}
+    for text in texts:
+        for m in re.finditer(r"\bstruct\s+(\w+)\s*\{([^{}]*)\}", text):
+            body = re.sub(r"/\*.*?\*/", "", m.group(2), flags=re.S)
+            names = set()
+            for decl in body.split(";"):
+                for piece in decl.split(","):
+                    n = re.search(r"(\w+)\s*(\[[^\]]*\])*\s*$", piece.strip())
+                    if n and n.group(1) not in KEYWORDS:
+                        names.add(n.group(1))
+            out[m.group(1)] = names
+    return out
+
+
+def rename_params(text: str, func: str, mapping: dict) -> str:
+    m = re.search(r"(?m)^[^\n;{}#]*\b" + re.escape(func) + r"\s*\([^;{]*\)\s*\{", text)
+    if not m:
+        return text
+    depth, i = 0, m.end() - 1
+    while i < len(text):
+        if text[i] == "{":
+            depth += 1
+        elif text[i] == "}":
+            depth -= 1
+            if depth == 0:
+                break
+        i += 1
+    span = text[m.start():i + 1]
+    return text[:m.start()] + replace_tokens(span, mapping, in_comments=False) + text[i + 1:]
+
+
+BSS_NAME = re.compile(r"^d_[0-9a-f]{4}_$")
+ALIAS_MARK = "/* ---- global data"
+ALIAS_HEAD = """/* ---- names of the uninitialised globals ----
+   Turbo C 2.0 lays out a unit's uninitialised data by a hash of each name
+   (first character + 4 * last character + 32 * length, mod 1024; equal hashes
+   in order of first appearance).  The original names are lost, so the objects
+   keep storage names that all hash alike (d_ + DN1 address + _) and therefore
+   lie in declaration order; the program refers to them by these names. */
+"""
+
+
+def alias_block(aliases: dict) -> str:
+    w = max(len(n) for n in aliases.values())
+    return ALIAS_HEAD + "".join(f"#define {new:<{w}} {old}{LF}" for old, new in sorted(aliases.items())) + LF
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("map")
+    ap.add_argument("--dir", default=str(ROOT / "game"))
+    ap.add_argument("--dry-run", action="store_true")
+    a = ap.parse_args()
+    m = json.loads(Path(a.map).read_text(encoding="utf-8-sig"))
+    d = Path(a.dir)
+    files = {p.name: p.read_bytes().decode("latin-1").replace(CRLF, LF)
+             for p in d.iterdir() if p.suffix.upper() in (".C", ".H", ".ASM")}
+    csrc = [n for n in files if not n.upper().endswith(".ASM")]
+    glob = {k: v for k, v in {**flat(m.get("functions")), **flat(m.get("globals"))}.items() if k != v}
+    tags = {k: v for k, v in flat(m.get("structs")).items() if k != v}
+    # uninitialised globals keep their storage names; the new names are macros (see ALIAS_HEAD)
+    aliases = {o: n for o, n in glob.items() if BSS_NAME.match(o)}
+    news = list(glob.values()) + list(tags.values())
+    dup = {n for n in news if news.count(n) > 1}
+    if dup:
+        print("name collisions:", sorted(dup)[:20])
+        return 1
+    fmaps = {tag: dict(flat(fm)) for tag, fm in (m.get("fields") or {}).items()}
+    for tag, sd in (m.get("structs") or {}).items():
+        if isinstance(sd, dict) and sd.get("fields"):
+            fmaps.setdefault(tag, {}).update(flat(sd["fields"]))
+    fmaps = {tag: {o: n for o, n in fm.items() if o != n} for tag, fm in fmaps.items()}
+    fmaps = {tag: fm for tag, fm in fmaps.items() if fm}
+    member_names = {n for fm in fmaps.values() for n in fm.values()}
+    member_names |= {n for pm in (m.get("params") or {}).values() for n in flat(pm).values()}
+    clash = sorted(set(aliases.values()) & member_names)
+    if clash:
+        print("uninitialised-global names that are also field or parameter names (the macro would rename those):", clash)
+        return 1
+    # 1. fields (while tags and globals still have their old names)
+    if fmaps:
+        STRUCT_FIELDS.update(collect_struct_fields(files[n] for n in csrc))
+        gvars = {}
+        for n in csrc:
+            gvars.update(struct_vars(top_level_text(files[n])))
+        unresolved = []
+        for n in csrc:
+            files[n] = rename_fields(files[n], fmaps, gvars, unresolved, n)
+        if unresolved:
+            print(f"{len(unresolved)} member accesses not renamed:")
+            print(LF.join("  " + u for u in unresolved[:60]))
+    # 2. functions, globals, struct tags
+    mapping = {**glob, **tags}
+    for name, text in files.items():
+        if name.upper().endswith(".ASM"):
+            amap = {f"_{k}": f"_{v}" for k, v in glob.items() if k.startswith("asm_")}
+            amap.update({k: v for k, v in glob.items() if k.startswith("c_")})
+            files[name] = replace_tokens(text, amap)
+        else:
+            files[name] = replace_tokens(text, mapping)
+    # 3. parameters
+    for func, pm in (m.get("params") or {}).items():
+        fname = glob.get(func, func)
+        for n in csrc:
+            files[n] = rename_params(files[n], fname, flat(pm))
+    # 4. macro names of the uninitialised globals
+    if aliases:
+        h = files["DUKE.H"]
+        old_block = re.search(r"/\* ---- names of the uninitialised globals.*?\n\n(?=/\* ---- )", h, re.S)
+        known = dict(re.findall(r"(?m)^#define (\w+)\s+(d_[0-9a-f]{4}_)$", old_block.group(0))) if old_block else {}
+        merged = {v: k2 for k2, v in known.items()}
+        merged.update(aliases)
+        if old_block:
+            h = h[:old_block.start()] + h[old_block.end():]
+        k = h.index(ALIAS_MARK)
+        files["DUKE.H"] = h[:k] + alias_block(merged) + h[k:]
+        print(f"{len(aliases)} uninitialised globals named by macro")
+    if a.dry_run:
+        return 0
+    for name, text in files.items():
+        (d / name).write_bytes(text.replace(LF, CRLF).encode("latin-1"))      # DOS line endings
+    print(f"renamed {len(mapping)} identifiers in {len(files)} files")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
