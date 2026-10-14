@@ -92,6 +92,23 @@ same semantics (plane masks, write modes, latches, page selection).
 * **DOS services**: `delay`, `coreleft`, `textmode`, `exit` (returns to the launcher),
   file names resolved case-insensitively in the data directory.
 
+## DOS semantics the port must reproduce (found the hard way)
+
+Each of these broke the first builds; each is fixed where the semantics live, not in game/:
+
+| Turbo C / DOS behaviour | What went wrong | Where it is reproduced |
+|---|---|---|
+| `char` is unsigned (compiled with `-K`) | key releases (scan code >= 0x80) never matched, keys stuck after the first press | `-funsigned-char` for game and toolbox |
+| adding an `int` to a far pointer changes only the 16-bit offset, which wraps in the 64 KB segment | `sprite_graphics_buffer + offset` with offset 0x80C0 went 32 KB backwards: player sprites drawn in place of level tiles | `pc_malloc`: each game buffer is a 64 KB segment mapped three times (alias, segment, alias) |
+| `disable()`/`enable()` are CLI/STI, a flag, not a nesting count; INT 10h starts with STI | the hint dialogs' `enable ... disable` pairs left interrupts off: no timer, no keys, game stuck at GET READY | `pc_disable`/`pc_enable` flag; `bios_*` re-enable |
+| loops that count passes run at CPU speed | title -> demo in seconds | `pc_spin()` pacing calibrated to a 386 in DOSBox-X |
+| 200-line EGA modes read palette registers as CGA colours (bit 4 = intensity) | wrong colours | `vga_colour_rgb` |
+
+Still to audit: intermediate `int` overflow (16-bit in Turbo C, 32-bit after promotion
+here), `long` vs host `long` on non-Windows hosts, far-pointer comparisons/normalisation,
+and reads past the end of arrays into neighbouring globals (the DOS data layout differs
+from the port's).
+
 ## Build
 
 CMake + SDL3 (Windows first: MinGW-w64 gcc and the SDL3 3.4.16 MinGW package in
