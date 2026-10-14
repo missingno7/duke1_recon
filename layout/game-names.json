@@ -325,7 +325,7 @@
   "d_b632_": "Stores the Y-coordinate or Y-related value for marker 0x3019 world.",
   "d_b634_": "Stores the Y-coordinate or Y-related value for marker 0x3042 world.",
   "d_b636_": "Tracks whether formation update is active.",
-  "d_b638_": "Holds the buffer used for episode graphics.",
+  "d_b638_": "The title screen bitmap (dn.dnX), four planes of 8000 bytes.",
   "d_b63c_": "Holds the record array for moving actor.",
   "d_b6bc_": "Holds the record array for level object marker 0x300C.",
   "d_b9dc_": "Tracks whether ending sequence is active.",
@@ -422,7 +422,7 @@
   "g1_0151": "Writes the current game state to the selected SAVED slot file.",
   "g1_0351": "Prompts for a save slot and saves the current game when the input is valid.",
   "g1_037e": "Displays the in-game help menu and handles its input and page changes.",
-  "g1_049f": "Polls keyboard, joystick, and timer state while handling menu or demo input events.",
+  "g1_049f": "Shows the title screen (dn.dnX), the credits and ordering pages while idle, then the main menu; returns the chosen action (0 quit, 1 start, 4 record demo, 5 play the demo after the idle timeout).",
   "g1_0874": "Reads a line of player-name text from the keyboard into the supplied buffer.",
   "g1_0928": "Inserts the current score into the high-score table and prompts for the player's name when it qualifies.",
   "g1_0a0e": "Draws the current title-screen graphic frame on both video pages.",
@@ -444,8 +444,8 @@
   "g1_17f5": "Draws the player's current action sprite from the player sprite resource.",
   "g1_18d4": "Adds a world actor record at the supplied coordinates with the requested actor state.",
   "g1_1933": "Moves and draws the active moving world effects and spawns follow-up actors when they hit special tiles.",
-  "g1_1b51": "Marks all projectile records inactive.",
-  "g1_1b8a": "Advances active projectiles, removes blocked ones, and draws those still inside the view.",
+  "g1_1b51": "Clears every projectile slot.",
+  "g1_1b8a": "Puts a projectile in the first free slot (direction, world position) and plays its sound when it is on screen.",
   "g1_1bf6": "Checks active projectiles against level tiles and the player, then removes or updates colliding shots.",
   "g1_1e77": "Updates player movement, level scrolling, animation, and nearby level effects.",
   "g1_290f": "Moves the player and vertical map offset during a level transition animation.",
@@ -629,8 +629,8 @@
   "g2_30b0": "Loads the credits bitmap into an allocated planar-image buffer.",
   "g2_3114": "Clears the video page so it can be reused.",
   "g2_315d": "Copies the loaded credits bitmap planes into video memory and displays the resulting page.",
-  "g2_3252": "Loads the episode gameplay bitmap into its allocated planar-image buffer.",
-  "g2_32b6": "Copies the loaded gameplay bitmap planes into video memory and displays the resulting page.",
+  "g2_3252": "Loads the title screen bitmap (dn.dnX) into title_screen_buffer.",
+  "g2_32b6": "Copies the title screen bitmap plane by plane into video memory.",
   "g2_33ab": "Loads the bad-guy bitmap into its allocated planar-image buffer.",
   "g2_340f": "Copies the loaded bad-guy bitmap planes into video memory and displays the resulting page.",
   "g2_3504": "Loads the Duke bitmap into its allocated planar-image buffer.",
@@ -735,7 +735,7 @@
   "g1_0151": "save_game_state_to_slot",
   "g1_0351": "prompt_and_save_game",
   "g1_037e": "handle_in_game_help_menu",
-  "g1_049f": "poll_player_controls_and_events",
+  "g1_049f": "title_screen_and_menu",
   "g1_0874": "read_text_entry",
   "g1_0928": "insert_score_into_high_scores",
   "g1_0a0e": "draw_title_screen_graphic",
@@ -757,8 +757,8 @@
   "g1_17f5": "draw_player_action_sprite",
   "g1_18d4": "spawn_world_actor",
   "g1_1933": "update_moving_world_effects",
-  "g1_1b51": "clear_projectile_pool_051c",
-  "g1_1b8a": "update_projectile_pool_051c",
+  "g1_1b51": "clear_projectiles",
+  "g1_1b8a": "spawn_projectile",
   "g1_1bf6": "resolve_projectile_collisions",
   "g1_1e77": "update_player_and_level_state",
   "g1_290f": "advance_player_transition",
@@ -942,8 +942,8 @@
   "g2_30b0": "load_credits_graphics",
   "g2_3114": "clear_video_page",
   "g2_315d": "display_credits_bitmap",
-  "g2_3252": "load_episode_graphics_b638",
-  "g2_32b6": "display_episode_bitmap_b638",
+  "g2_3252": "load_title_screen",
+  "g2_32b6": "display_title_screen",
   "g2_33ab": "load_badguy_graphics",
   "g2_340f": "display_badguy_bitmap",
   "g2_3504": "load_duke_graphics",
@@ -1293,7 +1293,7 @@
   "d_b632_": "actor_3019_world_y",
   "d_b634_": "actor_3042_world_y",
   "d_b636_": "formation_update_enabled",
-  "d_b638_": "episode_graphics_buffer",
+  "d_b638_": "title_screen_buffer",
   "d_b63c_": "moving_actor_records",
   "d_b6bc_": "actor_300c_records",
   "d_b9dc_": "ending_sequence_enabled",
@@ -1447,7 +1447,7 @@
    "si": "byte_offset",
    "vram": "video_memory"
   },
-  "display_episode_bitmap_b638": {
+  "display_title_screen": {
    "si": "byte_offset"
   },
   "draw_actor_sprite_by_variant": {
@@ -1626,9 +1626,6 @@
   "load_ending_graphics": {
    "stream": "bitmap_file"
   },
-  "load_episode_graphics_b638": {
-   "stream": "bitmap_file"
-  },
   "load_high_score_table": {
    "stream": "score_file"
   },
@@ -1644,6 +1641,9 @@
   "load_secondary_sound_bank": {
    "stream": "sound_file"
   },
+  "load_title_screen": {
+   "stream": "bitmap_file"
+  },
   "load_user_demo_recording": {
    "fp": "file_stream"
   },
@@ -1655,12 +1655,6 @@
    "button2": "joystick_button_2",
    "counter": "timeout_counter",
    "phase": "frame_toggle"
-  },
-  "poll_player_controls_and_events": {
-   "a0": "text_x",
-   "button1": "joystick_button_1_state",
-   "button2": "joystick_button_2_state",
-   "ticks": "elapsed_ticks"
   },
   "prompt_and_save_game": {
    "a0": "text_x"
@@ -1786,6 +1780,12 @@
    "a1": "world_y",
    "p": "pickup_object"
   },
+  "spawn_projectile": {
+   "a0": "projectile_direction",
+   "a1": "world_x",
+   "a2": "world_y",
+   "p": "projectile_record"
+  },
   "spawn_world_actor": {
    "a0": "world_x",
    "a1": "world_y",
@@ -1830,6 +1830,12 @@
    "a0": "world_x",
    "a1": "world_y",
    "v": "player_y_delta"
+  },
+  "title_screen_and_menu": {
+   "a0": "menu_x",
+   "button1": "joystick_button_1_state",
+   "button2": "joystick_button_2_state",
+   "ticks": "elapsed_ticks"
   },
   "toggle_hint_mode": {
    "a0": "text_x"
@@ -1946,12 +1952,6 @@
   },
   "update_pickup_object_pool": {
    "p": "pickup_object"
-  },
-  "update_projectile_pool_051c": {
-   "a0": "projectile_direction",
-   "a1": "world_x",
-   "a2": "world_y",
-   "p": "projectile_record"
   },
   "wait_for_keyboard_or_joystick": {
    "a0": "sprite_x",

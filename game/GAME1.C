@@ -557,8 +557,10 @@ void pascal handle_in_game_help_menu(register int text_x)
 }
 
 /* Gotos preserve the original 981-byte timer-loop layout; structured variants differed. */
-/* Polls keyboard, joystick, and timer state while handling menu or demo input events. */
-int pascal poll_player_controls_and_events(register int text_x)
+/* Shows the title screen (dn.dnX), the credits and ordering pages while idle, then the main
+   menu; returns the chosen action (0 quit, 1 start, 4 record demo, 5 play the demo after the
+   idle timeout). */
+int pascal title_screen_and_menu(register int menu_x)
 {
     unsigned long elapsed_ticks;
     unsigned char joystick_button_1_state;
@@ -575,7 +577,7 @@ int pascal poll_player_controls_and_events(register int text_x)
 
     for (;;) {
         clear_palette_entries(20);
-        display_episode_bitmap_b638();
+        display_title_screen();
         restore_ega_palette(20);
         elapsed_ticks = 0;
         last_keyboard_scan_code = 0;
@@ -620,9 +622,9 @@ int pascal poll_player_controls_and_events(register int text_x)
                 }
             }
             elapsed_ticks = 0;
-            draw_framed_dialog_box(text_x, 2, 8);
+            draw_framed_dialog_box(menu_x, 2, 8);
             outport(0x3ce, 5);
-            draw_main_menu(text_x);
+            draw_main_menu(menu_x);
             restore_ega_palette(15);
             L_064b:
             last_keyboard_scan_code = 0;
@@ -653,7 +655,7 @@ int pascal poll_player_controls_and_events(register int text_x)
                     }
                 }
                 if (control_confirmation_state == 0 && joystick_enabled != 0)
-                    select_joystick_configuration(text_x);
+                    select_joystick_configuration(menu_x);
                 if (control_confirmation_state == 0)
                     continue;
                 clear_palette_entries(20);
@@ -672,10 +674,10 @@ int pascal poll_player_controls_and_events(register int text_x)
                 while (last_keyboard_scan_code == 0) {
                 }
             } else if (last_keyboard_scan_code == 0x23) {
-                draw_high_score_table(text_x);
+                draw_high_score_table(menu_x);
                 while (last_keyboard_scan_code == 0x23) {
                 }
-                wait_input_animated_sprite(text_x + 0x18, 20);
+                wait_input_animated_sprite(menu_x + 0x18, 20);
             } else if (last_keyboard_scan_code == 0x2f) {
                 if (user_demo_recording_state != 0) {
                     show_save_unavailable_message();
@@ -695,7 +697,7 @@ int pascal poll_player_controls_and_events(register int text_x)
                 if (confirm_quit_to_dos(7) != 0)
                     return 0;
             } else if (last_keyboard_scan_code == 0x22) {
-                handle_game_setup_input(text_x);
+                handle_game_setup_input(menu_x);
             } else if (last_keyboard_scan_code == 0x14) {
                 break;
             } else if (last_keyboard_scan_code == 0x18) {
@@ -710,7 +712,7 @@ int pascal poll_player_controls_and_events(register int text_x)
                 goto L_064b;
             }
             clear_palette_entries(15);
-            display_episode_bitmap_b638();
+            display_title_screen();
         }
     }
 }
@@ -1855,8 +1857,8 @@ void update_moving_world_effects(void)
     secret_block_collision_state = 0;
 }
 
-/* Marks all projectile records inactive. */
-void pascal clear_projectile_pool_051c(void)
+/* Clears every projectile slot. */
+void pascal clear_projectiles(void)
 {
     register int i;
 
@@ -1866,8 +1868,9 @@ void pascal clear_projectile_pool_051c(void)
     }
 }
 
-/* Advances active projectiles, removes blocked ones, and draws those still inside the view. */
-void pascal update_projectile_pool_051c(register int projectile_direction, int world_x, int world_y)
+/* Puts a projectile in the first free slot (direction, world position) and plays its sound when
+   it is on screen. */
+void pascal spawn_projectile(register int projectile_direction, int world_x, int world_y)
 {
     register int i;
     struct projectile_record far *projectile_record;
@@ -3430,7 +3433,7 @@ void update_actor_300b(void)
                 } else if (!test_level_tile_special_state(actor->world_x - 1, actor->world_y - 5)) {
                     --actor->world_x;
                     if (actor_300b_animation_frame == 0)
-                        update_projectile_pool_051c(1, actor->world_x - 1, actor->world_y - 160);
+                        spawn_projectile(1, actor->world_x - 1, actor->world_y - 160);
                 }
             }
             if (actor->world_x < player_screen_x + level_scroll_x) {
@@ -3439,7 +3442,7 @@ void update_actor_300b(void)
                 } else if (!test_level_tile_special_state(actor->world_x + 2, actor->world_y - 5)) {
                     ++actor->world_x;
                     if (actor_300b_animation_frame == 0)
-                        update_projectile_pool_051c(2, actor->world_x + 1, actor->world_y - 160);
+                        spawn_projectile(2, actor->world_x + 1, actor->world_y - 160);
                 }
             }
         }
@@ -3555,11 +3558,11 @@ void update_actor_300c(void)
                 actor->world_y = (actor->world_y >> 7) << 7;
                 if (actor->state == 13) {
                     if (actor->marker_state == 1) {
-                        update_projectile_pool_051c(1, actor->world_x - 1, actor->world_y - 80);
+                        spawn_projectile(1, actor->world_x - 1, actor->world_y - 80);
                         draw_six_tile_actor_sprite(1, actor->world_x, actor->world_y);
                     }
                     if (actor->marker_state == 2) {
-                        update_projectile_pool_051c(2, actor->world_x + 3, actor->world_y - 80);
+                        spawn_projectile(2, actor->world_x + 3, actor->world_y - 80);
                         draw_six_tile_actor_sprite(4, actor->world_x, actor->world_y);
                     }
                     ++actor->state;
@@ -3676,10 +3679,10 @@ void update_actor_300d(void)
         if (actor->state == 1) {
             if (test_level_tile_special_state(actor->world_x, actor->world_y) != 0) {
                 actor->state = 2;
-                update_projectile_pool_051c(2, actor->world_x + 4, actor->world_y - 64);
+                spawn_projectile(2, actor->world_x + 4, actor->world_y - 64);
             } else if (test_level_tile_special_state(actor->world_x, actor->world_y + 128) == 0) {
                 actor->state = 2;
-                update_projectile_pool_051c(2, actor->world_x + 4, actor->world_y - 64);
+                spawn_projectile(2, actor->world_x + 4, actor->world_y - 64);
             } else {
                 if (actor_300d_animation_counter == 0)
                     --actor->world_x;
@@ -3691,7 +3694,7 @@ void update_actor_300d(void)
             if (test_level_tile_special_state(actor->world_x + 4, actor->world_y) != 0 ||
                 test_level_tile_special_state(actor->world_x + 4, actor->world_y + 128) == 0) {
                 actor->state = 1;
-                update_projectile_pool_051c(1, actor->world_x - 2, actor->world_y - 64);
+                spawn_projectile(1, actor->world_x - 2, actor->world_y - 64);
                 draw_two_tile_wide_actor_sprite(actor_300d_animation_phase + 2, actor->world_x - 1, actor->world_y);
                 continue;
             }
@@ -5888,9 +5891,9 @@ void update_actor_3035(void)
 
     if (actor_3035_animation_state != 0) {
         if (world_animation_phase == 0)
-            update_projectile_pool_051c(1, actor_3035_world_x + 2, actor_3035_world_y - 36);
+            spawn_projectile(1, actor_3035_world_x + 2, actor_3035_world_y - 36);
         if (world_animation_phase == 0x40)
-            update_projectile_pool_051c(2, actor_3035_world_x - 2, actor_3035_world_y - 36);
+            spawn_projectile(2, actor_3035_world_x - 2, actor_3035_world_y - 36);
     }
 }
 
@@ -6314,9 +6317,9 @@ void update_actor_3042(void)
                 ++actor_3042_animation_frame_1;
                 if (actor_3042_animation_frame_1 == (actor_3042_animation_frame_5 >> 1)) {
                     if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
-                        update_projectile_pool_051c(1, actor_3042_world_x, actor_3042_world_y - 32);
+                        spawn_projectile(1, actor_3042_world_x, actor_3042_world_y - 32);
                     else
-                        update_projectile_pool_051c(2, actor_3042_world_x + 3, actor_3042_world_y - 32);
+                        spawn_projectile(2, actor_3042_world_x + 3, actor_3042_world_y - 32);
                 }
                 if (actor_3042_animation_frame_1 > actor_3042_animation_frame_5) {
                     actor_3042_animation_frame_1 = 0;
@@ -7498,7 +7501,7 @@ void allocate_game_buffers_and_state(void)
    draws their marker tiles. */
 void pascal load_level_and_init_objects(char far *level_filename)
 {
-    clear_projectile_pool_051c();
+    clear_projectiles();
     interaction_cooldown_state = 0;
     world_animation_phase = 0;
     gameplay_animation_flag = 0;
@@ -7874,7 +7877,7 @@ void pascal init_video_keyboard_and_assets(void)
 #if EPISODE == 1
     load_primary_sound_bank("duke1.dn1");
     load_secondary_sound_bank("duke1-b.dn1");
-    load_episode_graphics_b638("dn.dn1");
+    load_title_screen("dn.dn1");
     load_ending_graphics("end.dn1");
     load_badguy_graphics("badguy.dn1");
     load_duke_graphics("duke.dn1");
@@ -7882,7 +7885,7 @@ void pascal init_video_keyboard_and_assets(void)
 #elif EPISODE == 2
     load_primary_sound_bank("duke1.dn2");
     load_secondary_sound_bank("duke1-b.dn2");
-    load_episode_graphics_b638("dn.dn2");
+    load_title_screen("dn.dn2");
     load_ending_graphics("end.dn2");
     load_badguy_graphics("badguy.dn2");
     load_duke_graphics("duke.dn2");
@@ -7890,7 +7893,7 @@ void pascal init_video_keyboard_and_assets(void)
 #else
     load_primary_sound_bank("duke1.dn3");
     load_secondary_sound_bank("duke1-b.dn3");
-    load_episode_graphics_b638("dn.dn3");
+    load_title_screen("dn.dn3");
     load_ending_graphics("end.dn3");
     load_badguy_graphics("badguy.dn3");
     load_duke_graphics("duke.dn3");
@@ -8475,7 +8478,7 @@ void pascal run_title_and_main_menu(void)
 
     for (;;) {
         clear_video_page();
-        menu_action = poll_player_controls_and_events(7);
+        menu_action = title_screen_and_menu(7);
 
         hint_revealed_object_7 = 0;
         hint_revealed_object_9 = 0;

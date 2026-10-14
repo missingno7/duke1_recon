@@ -101,7 +101,7 @@ int actor_3042_world_y;
 /* 0xb636; accepted scalar type. */
 int formation_update_enabled;
 /* 0xb638; accepted scalar type. */
-char far *episode_graphics_buffer;
+char far *title_screen_buffer;
 /* 0xb63c; array extent from address gap. */
 struct moving_actor_record moving_actor_records[16];
 /* 0xb6bc; array extent from address gap. */
@@ -2163,21 +2163,21 @@ void display_credits_bitmap(void)
     show_video_page(0);
 }
 
-/* Loads the episode gameplay bitmap into its allocated planar-image buffer. */
-void pascal load_episode_graphics_b638(char far *filename)
+/* Loads the title screen bitmap (dn.dnX) into title_screen_buffer. */
+void pascal load_title_screen(char far *filename)
 {
     FILE *bitmap_file;
 
     bitmap_file = fopen(filename, "rb");
-    episode_graphics_buffer = malloc(32001);
-    if (episode_graphics_buffer != 0) {
-        fread(episode_graphics_buffer, 32000, 1, bitmap_file);
+    title_screen_buffer = malloc(32001);
+    if (title_screen_buffer != 0) {
+        fread(title_screen_buffer, 32000, 1, bitmap_file);
     }
     fclose(bitmap_file);
 }
 
-/* Copies the loaded gameplay bitmap planes into video memory and displays the resulting page. */
-void display_episode_bitmap_b638(void)
+/* Copies the title screen bitmap plane by plane into video memory. */
+void display_title_screen(void)
 {
     char far *screen = (char far *)MK_FP(0xa000, 0);
     register int byte_offset;
@@ -2189,16 +2189,16 @@ void display_episode_bitmap_b638(void)
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
     for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
-        screen[byte_offset] = episode_graphics_buffer[byte_offset];
+        screen[byte_offset] = title_screen_buffer[byte_offset];
     outport(0x3c4, 0x0202);
     for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
-        screen[byte_offset] = episode_graphics_buffer[byte_offset + 8000];
+        screen[byte_offset] = title_screen_buffer[byte_offset + 8000];
     outport(0x3c4, 0x0402);
     for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
-        screen[byte_offset] = episode_graphics_buffer[byte_offset + 16000];
+        screen[byte_offset] = title_screen_buffer[byte_offset + 16000];
     outport(0x3c4, 0x0802);
     for (byte_offset = 0; byte_offset < 8000; ++byte_offset)
-        screen[byte_offset] = episode_graphics_buffer[byte_offset + 24000];
+        screen[byte_offset] = title_screen_buffer[byte_offset + 24000];
     show_video_page(0);
 }
 

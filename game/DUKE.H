@@ -165,7 +165,7 @@ unsigned char pascal read_restore_slot_digit(int text_x);
 void pascal save_game_state_to_slot(char slot_character);
 char pascal prompt_and_save_game(int text_x);
 void pascal handle_in_game_help_menu(int text_x);
-int pascal poll_player_controls_and_events(int text_x);
+int pascal title_screen_and_menu(int menu_x);
 void pascal read_text_entry(volatile int text_x, volatile int text_y, char far *text_buffer);
 void insert_score_into_high_scores(void);
 void draw_title_screen_graphic(void);
@@ -187,8 +187,8 @@ void interrupt keyboard_interrupt_handler(void);
 void draw_player_action_sprite(int sprite_frame, int sprite_x, int sprite_y);
 void pascal spawn_world_actor(int world_x, int world_y, int actor_state);
 void update_moving_world_effects(void);
-void pascal clear_projectile_pool_051c(void);
-void pascal update_projectile_pool_051c(int projectile_direction, int world_x, int world_y);
+void pascal clear_projectiles(void);
+void pascal spawn_projectile(int projectile_direction, int world_x, int world_y);
 void resolve_projectile_collisions(void);
 void update_player_and_level_state(void);
 void advance_player_transition(void);
@@ -374,8 +374,8 @@ void print_ordering_information(void);
 void pascal load_credits_graphics(char far *filename);
 void clear_video_page(void);
 void display_credits_bitmap(void);
-void pascal load_episode_graphics_b638(char far *filename);
-void display_episode_bitmap_b638(void);
+void pascal load_title_screen(char far *filename);
+void display_title_screen(void);
 void pascal load_badguy_graphics(char far *filename);
 void display_badguy_bitmap(void);
 void pascal load_duke_graphics(char far *filename);
@@ -582,7 +582,7 @@ extern int abs(int);
 #define actor_3019_world_y              d_b632_
 #define actor_3042_world_y              d_b634_
 #define formation_update_enabled        d_b636_
-#define episode_graphics_buffer         d_b638_
+#define title_screen_buffer         d_b638_
 #define moving_actor_records            d_b63c_
 #define actor_300c_records              d_b6bc_
 #define ending_sequence_enabled         d_b9dc_
@@ -1035,7 +1035,7 @@ extern int actor_3042_world_x;               /* Stores the X-coordinate or X-rel
 extern int actor_3019_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3019 world. */
 extern int actor_3042_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3042 world. */
 extern int formation_update_enabled;         /* Tracks whether formation update is active. */
-extern char far *episode_graphics_buffer;    /* Holds the buffer used for episode graphics. */
+extern char far *title_screen_buffer;        /* The title screen bitmap (dn.dnX), four planes of 8000 bytes. */
 extern struct moving_actor_record moving_actor_records[];  /* Holds the record array for moving actor. */
 extern struct actor_300c_record actor_300c_records[];  /* Holds the record array for level object marker 0x300C. */
 extern int ending_sequence_enabled;          /* Tracks whether ending sequence is active. */
