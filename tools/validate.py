@@ -248,6 +248,13 @@ def main() -> int:
         print(f"link {e}: {r['status']}" + (f", repacked {r['repacked']['status']}" if r.get("repacked") else ""))
     if (LAYOUT / "link.json").exists() and load_json(LAYOUT / "link.json").get("proven"):
         failures += [f"natural link {e}: {r['status']}" for e, r in link.items() if r["status"] != "EQUAL"]
+    standalone = {}
+    if (ROOT / "game" / "GAME1.C").exists():
+        import standalone as sa
+        for e in EPISODES:
+            standalone[e] = sa.build(ROOT / "game", e, BUILD / "scratch" / "standalone" / f"validate-{e}")
+            print(f"standalone tree {e}: {standalone[e]['status']}")
+        failures += [f"standalone tree {e}: {r['status']}" for e, r in standalone.items() if r["status"] != "EQUAL"]
     cov = coverage(results)
     for e in EPISODES:
         cov[e]["complete_units_equal"] = sorted(u for u, eps in units.items() if eps.get(e) == "EQUAL")

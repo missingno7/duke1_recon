@@ -31,7 +31,8 @@ outputs with `layout/oracle.lock.json`.
 2. **The link becomes the proof** (done: `layout/link.json`): `tools/validate.py` runs the full link and the
    repack for all three episodes; any change that moves one byte fails.  From here
    on, refactoring is safe and mechanical to check.
-3. **Readability pass** (no change in emitted code, verified by phase 2 on every step):
+3. **Readability pass** on `game/` (no change in emitted code, verified by the standalone
+   build on every step):
    * semantic names through `layout/symbols.json` aliases (proposals with evidence
      from `build/workers/luna-names/`, reviewed by the supervisor).  Names of
      uninitialised globals are constrained: Turbo C orders a unit's `_BSS` by a hash
@@ -47,8 +48,9 @@ outputs with `layout/oracle.lock.json`.
    * idioms that only exist to reproduce the original made explicit and named
      (e.g. the out-of-record store `(&d_726b[i].x)[2]`, label loops kept for
      register allocation, `goto kept:` notes).
-4. **Standalone tree**: `BUILD.BAT` + host check script; the per-function sources and
-   recipes become matching history, not the canonical source.
+4. **Standalone tree** (generated and proven 2026-10-14: `game/`, `python tools/standalone.py build`,
+   re-run by `tools/validate.py`): `BUILD.BAT` + host check script.  `game/` is now the source
+   that is edited; `src/` + `recipes/` stay frozen as the per-function matching record.
 5. **SDL3 port** on top of the standalone tree (see `docs/porting-notes.md`): a platform
    seam that keeps the DOS build identical.
 
