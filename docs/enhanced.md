@@ -65,6 +65,50 @@ game thread (16 Hz)                        render thread (display rate, e.g. 60-
   page pixel for pixel in gameplay.  This test runs on scripted levels in all three
   episodes and keeps the whole pipeline honest.
 
+## Settings: `duke1.json`
+
+One flat JSON object in the game folder, written with every key and its default on first
+start; unknown keys are ignored, missing keys take the default, a broken file is reported
+and replaced.  The episode screen has a "Port settings" entry that edits the same values in
+a dialog drawn with the game's own routines (like the episode dialog).
+
+| Key | Values (default first) | Meaning |
+|---|---|---|
+| `renderer` | `"classic"`, `"enhanced"` | classic: the emulated EGA screen; enhanced: the native renderer (needed by everything below the line) |
+| `fullscreen` | `false`, `true` | borderless fullscreen on the current display (Alt+Enter toggles and saves) |
+| `window_width`, `window_height` | `1280`, `800` | last windowed size (saved on exit) |
+| `aspect` | `"auto"`, `"4:3"`, `"16:10"`, `"16:9"`, `"21:9"`, `"32:9"` | shape of the picture: `auto` fills the window, a ratio letterboxes |
+| `pixel_aspect` | `"4:3"`, `"square"` | 4:3: pixels 1.2 x taller, as on a CRT; square: 1:1 |
+| `integer_scale` | `false`, `true` | only whole-number scale factors |
+| `filter` | `"sharp"`, `"nearest"`, `"linear"` | sharp: nearest at the integer part, smoothed seams |
+| `volume` | `80` (0-100) | speaker volume |
+| `stereo` | `false`, `true` | pan speaker sounds by where they come from |
+| --- | | (enhanced renderer only) |
+| `widescreen` | `false`, `true` | the playfield grows to the picture shape; the HUD frame stretches |
+| `wide_activity` | `false`, `true` | actors act in the whole wide view (changes gameplay) |
+| `smooth_camera` | `false`, `true` | continuous camera instead of 8/16-pixel steps |
+| `interpolation` | `false`, `true` | actors and shots move smoothly between game frames |
+| `frame_cap` | `0` | 0: the display's refresh rate; N: at most N frames per second |
+
+## The picture and the HUD frame
+
+The picture is built on a logical canvas measured in game pixels: 200 lines high when
+the target shape is at least 4:3 (wider canvas for wider shapes), 320 wide otherwise
+(taller canvas).  `pixel_aspect` decides whether a game pixel is square or 1.2 high.
+The canvas is scaled to the window (whole factors with `integer_scale`) and centred.
+
+In the enhanced renderer the in-game frame is a nine-slice: the grey bars of the border
+repeat their plain middle pixels, the corners (screws, the cable), the "PRESS F1 FOR
+HELP" plate (kept centred under the playfield) and the HUD column (SCORE, HEALTH,
+FIREPOWER, INVENTORY, kept at the right edge, its panel background repeated vertically)
+are drawn unscaled.  The playfield fills the rest: more of the level is visible.
+
+Widescreen without changing gameplay: the port generator gives the 125 view tests that
+only decide whether to *draw* a wide view, so everything the game would draw is drawn in
+the margins; the 50 that decide behaviour keep the original view unless `wide_activity`
+is on.  Draw calls outside the original playfield are recorded for the native renderer
+and never written into the emulated page (whose off-screen memory holds the tile cache).
+
 ## Milestones
 
 Each one is a bounded task with its own acceptance test; none changes `src/`.
