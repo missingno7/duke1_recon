@@ -14,17 +14,10 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-_VENDOR = ROOT / "build" / "python"          # tools/setup_env.py: pinned capstone/unicorn
-if _VENDOR.is_dir() and str(_VENDOR) not in sys.path:
-    sys.path.insert(0, str(_VENDOR))
 TOOLS = ROOT / "tools"
-LAYOUT = ROOT / "layout"
-EVIDENCE = ROOT / "evidence"
-RECIPES = ROOT / "recipes"
+CONFIG = ROOT / "config"           # toolchain pins, compiler profile, hashes of the original files
 SRC = ROOT / "src"
-INCLUDE = ROOT / "include"
-BUILD = ROOT / "build"
-STATE = ROOT / "state"
+BUILD = ROOT / "build"             # everything generated; never committed
 EPISODES = ("dn1", "dn2", "dn3")
 
 

@@ -170,6 +170,57 @@ def header_symbols(header: str) -> tuple[set[str], set[str]]:
     return functions - {"abs"} - c_keywords, globals_
 
 
+def defined_objects(text: str) -> set[str]:
+    """Names of the variables a unit defines at file level (outside functions): every one
+    must get the episode prefix, whether DUKE.H declares it or not."""
+    text = re.sub(r"(?m)^[ 	]*#.*$", "", text)          # preprocessor lines
+    names: set[str] = set()
+    depth = 0
+    statement: list[str] = []
+    skip_to_semicolon = False
+
+    def declarators(words: list[str]) -> None:
+        if not words or words[0] in {"typedef", "extern"}:
+            return
+        fp = re.search(r"\(\s*\*\s*([A-Za-z_]\w*)\s*\)", " ".join(words))
+        if fp:                                             # function pointer variable
+            names.add(fp.group(1))
+            return
+        if "(" in words:
+            return                                         # a prototype
+        for i, w in enumerate(words):
+            nxt = words[i + 1] if i + 1 < len(words) else ";"
+            if re.match(r"[A-Za-z_]\w*$", w) and nxt in {"=", "[", ",", ";"}:
+                names.add(w)
+
+    for tok in lex(text):
+        if tok.kind in {"space", "line", "block"}:
+            continue
+        if tok.text == "{":
+            if depth == 0:
+                if "=" in statement:                       # an initialiser: names come before it
+                    declarators(statement[:statement.index("=")] + [";"])
+                    skip_to_semicolon = True
+                statement = []
+            depth += 1
+            continue
+        if tok.text == "}":
+            depth -= 1
+            continue
+        if depth:
+            continue
+        if tok.text == ";":
+            if not skip_to_semicolon:
+                declarators(statement)
+            statement = []
+            skip_to_semicolon = False
+        elif not skip_to_semicolon:
+            statement.append(tok.text)
+    keywords = {"void", "char", "short", "int", "long", "unsigned", "signed", "struct", "far",
+                "near", "huge", "static", "const", "volatile", "register", "interrupt"}
+    return names - keywords
+
+
 def function_definitions(text: str) -> list[tuple[str, int, int]]:
     """Find top-level function definition spans using balanced C tokens."""
     tokens = lex(text)
@@ -467,6 +518,7 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
     raw_units = {p: p.read_text(encoding="latin1") for p in game_paths}
     for p, raw in raw_units.items():
         functions.update(name for name, _, _ in function_definitions(raw))
+        globals_.update(defined_objects(raw))
     # The storage identifiers are intentionally mechanical and never alias library names.
     for raw in [header, *raw_units.values()]:
         globals_.update(re.findall(r"\bd_[0-9A-Fa-f]{4}_?\b", uncomment(raw)))
@@ -508,7 +560,7 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=Path(__file__).resolve().parents[1] / "game")
+    parser.add_argument("--source", type=Path, default=Path(__file__).resolve().parents[1] / "src")
     parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[1] / "build" / "port-gen")
     parser.add_argument("--override-dir", type=Path, default=Path(__file__).resolve().parents[1] / "port" / "override")
     args = parser.parse_args()

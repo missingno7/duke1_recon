@@ -1,0 +1,151 @@
+{
+ "episodes": {
+  "dn1": {
+   "packed": {
+    "file": "DN1.EXE",
+    "lz91": {
+     "checksum": 3590,
+     "comp_paras": 3287,
+     "decompressor_size": 2064,
+     "hdr_paras": 2,
+     "inc_paras": 4107,
+     "loader_cs": 3287,
+     "maxalloc": 65535,
+     "minalloc": 6451
+    },
+    "mz": {
+     "checksum": 0,
+     "cs": 3287,
+     "header_paras": 2,
+     "ip": 14,
+     "last_page_bytes": 416,
+     "maxalloc": 65535,
+     "minalloc": 6451,
+     "overlay_number": 0,
+     "pages": 107,
+     "reloc_count": 0,
+     "reloc_offset": 28,
+     "signature": 23117,
+     "sp": 128,
+     "ss": 7523
+    },
+    "sha256": "7e31ad9fc5d9d25c2a646d992f84b2ecf4906f1294c14808096e670a2987cc5f",
+    "size": 54688
+   },
+   "unpacked": {
+    "canonical_mz_sha256": "fc0504d1680b295dab1b194ee2713a0015d42047ce12d8774fa930d8507efe13",
+    "canonical_mz_size": 124666,
+    "cs": 0,
+    "image_sha256": "51adca0b26602885f0187db553d366898788397eee3fb612db7697f3b256f012",
+    "image_size": 118010,
+    "ip": 0,
+    "max_extra_paras": 65535,
+    "min_extra_paras": 2206,
+    "reloc_count": 1581,
+    "relocs_ordered_key": "201035fb762ae9787c8270691aa06447327cf190aec3359ffbb6ab7c19a07f7d",
+    "relocs_sorted_key": "201035fb762ae9787c8270691aa06447327cf190aec3359ffbb6ab7c19a07f7d",
+    "sp": 230,
+    "ss": 9566
+   }
+  },
+  "dn2": {
+   "packed": {
+    "file": "DN2.EXE",
+    "lz91": {
+     "checksum": 3590,
+     "comp_paras": 3281,
+     "decompressor_size": 2067,
+     "hdr_paras": 2,
+     "inc_paras": 4130,
+     "loader_cs": 3281,
+     "maxalloc": 65535,
+     "minalloc": 6475
+    },
+    "mz": {
+     "checksum": 0,
+     "cs": 3281,
+     "header_paras": 2,
+     "ip": 14,
+     "last_page_bytes": 323,
+     "maxalloc": 65535,
+     "minalloc": 6475,
+     "overlay_number": 0,
+     "pages": 107,
+     "reloc_count": 0,
+     "reloc_offset": 28,
+     "signature": 23117,
+     "sp": 128,
+     "ss": 7541
+    },
+    "sha256": "b155c58e0da60ee3ead58c1fa220c8132a0f401938e25390827197039f15910a",
+    "size": 54595
+   },
+   "unpacked": {
+    "canonical_mz_sha256": "f02d00a9e0c7de1917ce8cc9a7d9180d7263e57d763d5e9cb413d91f2c5c283b",
+    "canonical_mz_size": 124946,
+    "cs": 0,
+    "image_sha256": "e88ac9c380bb271b936c5ed0f40af4e3caf3b69fa5008a1d374de9beec37737c",
+    "image_size": 118290,
+    "ip": 0,
+    "max_extra_paras": 65535,
+    "min_extra_paras": 2206,
+    "reloc_count": 1584,
+    "relocs_ordered_key": "e248e6746a4bd84e26bc072d154a408a6efbe28d567f51f5de459a87bc1770a6",
+    "relocs_sorted_key": "e248e6746a4bd84e26bc072d154a408a6efbe28d567f51f5de459a87bc1770a6",
+    "sp": 230,
+    "ss": 9584
+   }
+  },
+  "dn3": {
+   "packed": {
+    "file": "DN3.EXE",
+    "lz91": {
+     "checksum": 3590,
+     "comp_paras": 3271,
+     "decompressor_size": 2071,
+     "hdr_paras": 2,
+     "inc_paras": 4111,
+     "loader_cs": 3271,
+     "maxalloc": 65535,
+     "minalloc": 6456
+    },
+    "mz": {
+     "checksum": 0,
+     "cs": 3271,
+     "header_paras": 2,
+     "ip": 14,
+     "last_page_bytes": 167,
+     "maxalloc": 65535,
+     "minalloc": 6456,
+     "overlay_number": 0,
+     "pages": 107,
+     "reloc_count": 0,
+     "reloc_offset": 28,
+     "signature": 23117,
+     "sp": 128,
+     "ss": 7512
+    },
+    "sha256": "7966ca89c1010322f4ce14b15019369c44044941808c8662b92298ba5381b802",
+    "size": 54439
+   },
+   "unpacked": {
+    "canonical_mz_sha256": "72194cac0cd8ca7a97c1751831134a9169c4804df1a7be3a98650ec85ab67b04",
+    "canonical_mz_size": 124486,
+    "cs": 0,
+    "image_sha256": "913821fe997dd0078c82758f7d952fa376267798c3e06585aa04188bfecc3317",
+    "image_size": 117830,
+    "ip": 0,
+    "max_extra_paras": 65535,
+    "min_extra_paras": 2206,
+    "reloc_count": 1586,
+    "relocs_ordered_key": "18138a37fd70de3500a290bb81e22f9fd9809c08c901c2d350da31f74ad575da",
+    "relocs_sorted_key": "18138a37fd70de3500a290bb81e22f9fd9809c08c901c2d350da31f74ad575da",
+    "sp": 230,
+    "ss": 9555
+   }
+  }
+ },
+ "fixture": "Duke Nukem (\"Duke Nukum\") v2.0, episodes 1-3: DN1.EXE, DN2.EXE, DN3.EXE in assets/",
+ "policy": "Originals and derived binaries are never committed or redistributed.",
+ "unpacker": "tools/lz91.py (LZEXE 0.91 decoder); canonical_mz = UNLZEXE-compatible header layout"
+}

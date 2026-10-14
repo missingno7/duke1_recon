@@ -1,96 +1,78 @@
-# SDL3 port: step 1 notes
+# duke1 — the SDL3 port
 
-This step builds one MinGW/SDL3 executable from the unchanged DOS sources. tools/port_gen.py
-emits build/port-gen/ep1..ep3/{DUKE.H,GAME1.C,GAME2.C}. The generator lexes C tokens, so
-strings, characters, and comments are kept intact while it removes Turbo C memory/calling
-qualifiers, maps DOS integer widths, prefixes game functions and globals by episode, and
-maps runtime calls to pc_*. It packs the game's structures and substitutes any matching
-port/override/<function>.c definition at the original function's location. Generation is
-deterministic and never writes to game/.
+One executable, `duke1`, that plays all three episodes of Duke Nukum v2.0 on a modern
+system.  It runs the original program — `src/`, unchanged — on an emulated PC: the game
+still writes EGA registers, installs its timer and keyboard interrupt handlers and drives
+the PC speaker, and the platform below turns that into an SDL3 window, input and audio.
+Design and the DOS behaviours the port must reproduce: [../docs/sdl3-port.md](../docs/sdl3-port.md).
 
-Configure and build from the repository root:
+## How it is put together
 
-    cmake -S port -B build/port -G "MinGW Makefiles"
-    cmake --build build/port --parallel
+```
+src/ (GAME1.C, GAME2.C, DUKE.H)
+   |  tools/port_gen.py, once per episode -> build/port-gen/ep1..ep3 (never committed):
+   |    16-bit types kept (int -> int16_t ...), far/near/pascal dropped, every game name
+   |    prefixed ep1_/ep2_/ep3_, DOS runtime calls -> pc_*, override/ functions swapped in
+   v
+duke1.exe = episode 1 + episode 2 + episode 3 + launcher + emulated PC
+```
 
-CMake uses MinGW-w64 gcc 12 and the SDL3 3.4.16 package pinned in port/CMakeLists.txt.
-Each episode's two units compile with -O0 -fwrapv -fno-strict-aliasing -DEPISODE=n; the
-platform and launcher compile with -O2. The output is build/port/duke1.exe, with SDL3.dll
-copied beside it. CMake selects port/vga.c and port/toolbox.c when present, and compiles
-only the missing half of port/stub_vga.c as a fallback.
+| File | Part |
+|---|---|
+| `platform.h` | the contract: everything the game can reach (ports, interrupts, memory, EGA, BIOS, DOS) |
+| `launcher.c` | finds the episodes, shows the episode dialog (drawn with the game's own routines), runs the chosen one |
+| `pc_sdl.c` | SDL3: window and presentation (70 Hz, 4:3), keyboard to XT scan codes, game thread, `--script` |
+| `pc_interrupt.c` | interrupt vectors 8 and 9, CLI/STI (`disable`/`enable`), the PIT timer thread |
+| `pc_io.c` | I/O ports: PIT, keyboard controller, speaker gate, game port, EGA registers |
+| `pc_speaker.c` | PC speaker: PIT channel 2 square wave, replayed sample-exact on an SDL audio stream |
+| `pc_dos.c` | DOS and Turbo C runtime: files (case-insensitive), `delay`, `getw`/`putw`, 64 KB wrapping memory blocks |
+| `vga.c` | the EGA in mode 0Dh: four planes, sequencer, graphics controller, latches, palette, display start |
+| `toolbox.c` | the nine routines of `src/TOOLBOX.ASM` in C, with the same EGA behaviour |
+| `override/*.c` | game functions that write video memory through raw pointers, rewritten for `vga.c` |
+| `include/` | `dos.h`, `conio.h`, `alloc.h` for the translated game |
+| `tests/vga_selftest.c` | EGA write modes, latches, bit mask, set/reset; renders sample screens if the game files are present |
 
-The launcher accepts --data DIR, --episode N, and --trace. With no data path it uses the
-executable directory. It detects an episode from worldal1.dnN plus font1.dnN, starts the
-requested available episode or the first one found, and passes safe empty argv[1] and argv[2]
-slots because the historical main reads argv[1] even when argc == 1. pc_fopen resolves names
-case-insensitively in the data directory. The generator and tests do not copy the user's
-files from assets/.
+## Build
 
-The platform runs each episode on its own SDL thread and uses setjmp/longjmp in that thread
-to make pc_exit return to the launcher. A separate timer thread follows the PIT channel-0
-divisor (65536 initially, then the game's 0x2051 divisor); vector delivery waits out
-pc_disable critical sections and queues keyboard bytes while interrupts are masked. SDL
-keys become XT make/break codes, including 0xE0 for extended keys. The game port reports no
-joystick. Channel 2 and port 0x61 state are recorded; speaker output is not part of this
-step. pc_mk_fp supplies a 4 KB B800 text buffer and stops with a clear message if a direct
-A000 pointer reaches the core.
+MinGW-w64 gcc (`C:/msys64/mingw64`) and the SDL3 MinGW package (path in `CMakeLists.txt`,
+`SDL3_ROOT`); CMake 3.20 or newer:
 
-The SDL window presents the VGA backend's indexed 320x200 image with its EGA palette at
-about 70 Hz, scales it to 4:3, and toggles fullscreen with Alt+Enter. Escape/F10 and the
-window-close event feed Escape followed by the game's affirmative quit response so the game
-thread follows its own shutdown path.
+```
+cmake -S port -B build/port -G "MinGW Makefiles"
+cmake --build build/port
+```
 
-## Automation and CPU-speed timing
+Result: `build/port/duke1.exe` with `SDL3.dll` beside it (the MinGW runtime is linked in),
+and `build/port/vga_selftest.exe`.  `python tools/validate.py` builds and tests both.
 
-The launcher also accepts `--script FILE`. Each line is `<ms> key|keydown|keyup <name>`,
-`<ms> shot <file.png>`, or `<ms> quit`; key names use the DOSBox-X mapper spelling (`space`,
-`enter`, `esc`, `f1`, `up`, `a`, and so on). Times are measured from SDL/platform startup.
-`key` makes a 45 ms tap; `keydown` and `keyup` control the scan-code state separately. A `shot`
-is saved directly from the VGA backend's 320x200 RGB output, without window scaling or capture.
-The same key script can be passed to `tools/dosref.py`; `tools/portcompare.py` pairs named
-screens and emits per-frame sheets and pixel differences under `build/`.
+## Run
 
-`tools/dosref.py` was measured on the pinned DOSBox-X acceptance build with DN1 copied into
-`build/scratch/dosref/`. On `cputype=386`, `cycles=fixed 20000`, the title had reached credits
-by 6 seconds, ordering by 10 seconds, and the demo playfield by 14 seconds. The port uses that
-386/20,000-cycle run as its speed reference. `pc_spin()` is inserted once per instrumented loop
-pass and the SDL backend yields after 440 calls; the measured port run showed credits by 6
-seconds, ordering by 10 seconds, and the demo-start message by 15 seconds. The acceptance
-build's `cycles=auto` run was substantially slower on this host (credits at 18 seconds and
-ordering by 30 seconds), so it is recorded as a secondary timing observation rather than the
-calibration target. Delays and PIT tick waits retain their original timer logic.
+Copy `duke1.exe` and `SDL3.dll` into the game folder and start it, or point it at one:
 
-With multiple episode file sets present, the launcher displays a game-font episode dialog.
-`--select` forces it for capture; missing entries are dimmed. After an episode exits via the
-game's normal quit path, the launcher starts a fresh process with `--select` so all
-episode-prefixed globals return to their initial state. `--no-restart` disables that return
-path for test harnesses.
+```
+duke1.exe [--data DIR] [--episode N] [--select] [--trace]
+```
 
-The step-2 reference comparisons are recorded in `port/COMPARISON.md`; PNG sheets and
-per-frame differences stay under `build/scratch/`. Two port-only fixes were required for the
-route: `draw_ega_glyph` now consumes the row mask byte used by the original `TOOLBOX.ASM`, and
-the save-slot override uses a writable local filename because the recovered game code changes
-one character of its string literal.
+| Option | Effect |
+|---|---|
+| `--data DIR` | game files in DIR (default: the program's folder) |
+| `--episode N` | start episode N directly |
+| `--select` | always show the episode dialog |
+| `--trace` | log port, interrupt and file activity (to `duke1.log` when there is no console) |
+| `--script FILE` | timed input and screenshots, for tests (below) |
+| `--no-restart` | quitting an episode ends the program instead of returning to the dialog |
 
-## Validation notes
+Quitting an episode returns to the episode dialog (the program restarts itself, so every
+episode starts with fresh globals); closing the window ends the program at once.
 
-- MinGW configure and build succeeded; nm found ep1_main, ep2_main, and ep3_main in the same
-  executable, and the SDL3 DLL was copied.
-- Trace startup runs for episodes 1, 2, and 3 each reached vector 9 setup, channel-0 PIT
-  programming (0x36, 0x2051), vector 8 setup, and timer-handler deliveries. Runs were
-  observed for 21 seconds and then stopped by the harness; interactive Escape/window-close
-  shutdown was not exercised in those runs.
-- The supplied assets/ folder has SPEED.DN1 but no DN2/DN3 speed-setting files. Episodes 2
-  and 3 continued startup with those optional files absent.
-- python tools/standalone.py build still reported EQUAL for DN1, DN2, and DN3.
-- GCC reports warnings from the recovered source: the source's period & 0x100 byte write
-  truncates to zero, and GAME1/GAME2 declare confirm_quit_to_dos with different return types.
-  Neither warning prevented linking.
+## Testing
 
-## Contract addition proposed for the platform owner
+`--script FILE` runs lines `<ms> key|keydown|keyup <name>`, `<ms> shot <file.png>` (the exact
+320x200 picture) and `<ms> quit`; key names are DOSBox-X mapper names (`space`, `enter`,
+`esc`, `f1`, `up`, `lctrl`, `lalt`, `a` ...).  `DUKE1_AUDIO_WAV=file.wav` records everything
+the speaker plays.
 
-The core needs a bridge for VGA register I/O and palette writes. Keep
-vga_port_read(port, &value) / vga_port_write(port, value) in platform.h, with a handled
-status, plus vga_set_palette_entry(index, colour). The one-argument read adapter currently
-lets the platform core forward reads while the VGA implementation retains the handled status
-for its own retrace path.
+`tools/dosref.py` runs an original `DNn.EXE` in DOSBox-X with the same key script and
+captures frames; `tools/portcompare.py` puts the original and the port side by side.  The
+reference speed is a 386 (DOSBox-X `cycles=fixed 20000`): loops that count passes instead of
+timer ticks call `pc_spin()`, which paces them to it.

@@ -12,7 +12,7 @@ import os
 import subprocess
 from pathlib import Path
 
-from common import LAYOUT, load_json, sha256_file
+from common import CONFIG, load_json, sha256_file
 
 _VERIFIED: dict = {}
 
@@ -22,7 +22,7 @@ class ToolchainError(RuntimeError):
 
 
 def lock() -> dict:
-    return load_json(LAYOUT / "toolchain.json")
+    return load_json(CONFIG / "toolchain.json")
 
 
 def root() -> Path:

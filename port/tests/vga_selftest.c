@@ -381,7 +381,7 @@ static int test_render_assets(void)
     }
     (void)show_video_page(0);
     vga_render_indexed(pixels);
-    REQUIRE(write_indexed_png("build/workers/luna-port-b/title.png", pixels));
+    REQUIRE(write_indexed_png("build/vga-selftest/title.png", pixels));
 
     /* Follow display_title_screen's GC selection and draw_text_string's glyph offsets. */
     {
@@ -399,7 +399,7 @@ static int test_render_assets(void)
         }
     }
     vga_render_indexed(pixels);
-    REQUIRE(write_indexed_png("build/workers/luna-port-b/title-glyphs.png", pixels));
+    REQUIRE(write_indexed_png("build/vga-selftest/title-glyphs.png", pixels));
 
     /* Load border.dn1 as GAME1's loader does, then use latch-copy tile blits. */
     bios_set_mode(0x0d);
@@ -412,7 +412,7 @@ static int test_render_assets(void)
     (void)blit_planar_sprite_rows((char *)objects + 1920, 18, 68);
     (void)blit_planar_sprite_rows((char *)objects + 2560, 28, 68);
     vga_render_indexed(pixels);
-    REQUIRE(write_indexed_png("build/workers/luna-port-b/toolbox-tiles.png", pixels));
+    REQUIRE(write_indexed_png("build/vga-selftest/toolbox-tiles.png", pixels));
 
 cleanup:
     free(title);
@@ -422,16 +422,22 @@ cleanup:
     return ok;
 }
 
+/* vga.c re-enables interrupts in its BIOS services; nothing to do in the test. */
+void pc_enable(void) {}
+
 int main(void)
 {
     (void)make_dir("build");
-    (void)make_dir("build/workers");
-    (void)make_dir("build/workers/luna-port-b");
+    (void)make_dir("build/vga-selftest");
     if (!test_write_modes_and_latches())
         return 1;
     puts("PASS: VGA palette/status, write modes, latches, bit mask, set/reset, and read modes");
+    if (fopen("assets/dn.dn1", "rb") == NULL) {          /* the game files are optional here */
+        puts("SKIP: render fixtures (no assets/dn.dn1)");
+        return 0;
+    }
     if (!test_render_assets())
         return 1;
-    puts("PASS: title, glyph, border, and object0 render fixtures");
+    puts("PASS: title, glyph, border, and object0 render fixtures (PNGs in build/vga-selftest/)");
     return 0;
 }

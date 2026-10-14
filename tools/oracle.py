@@ -1,10 +1,7 @@
-"""Immutable tri-episode oracle: identify, unpack, lock, verify, cross-check.
+"""The originals: identify DN1/DN2/DN3.EXE in assets/, unpack them, check them against the lock.
 
-    python tools/oracle.py                 verify against layout/oracle.lock.json and
+    python tools/oracle.py                 verify against config/oracle.lock.json and
                                            materialise build/oracle/<ep>/
-    python tools/oracle.py --crosscheck    also execute each file's own LZEXE stub in an
-                                           x86 emulator and require the identical image,
-                                           relocation set and entry registers
     python tools/oracle.py --write-lock    bootstrap only; refuses to overwrite an
                                            existing lock
 
@@ -21,12 +18,12 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (BUILD, EPISODES, LAYOUT, asset_dir, atomic_bytes, atomic_json,  # noqa: E402
+from common import (BUILD, EPISODES, CONFIG, asset_dir, atomic_bytes, atomic_json,  # noqa: E402
                     content_key, load_json, sha256)
 import lz91  # noqa: E402
 import mz  # noqa: E402
 
-LOCK = LAYOUT / "oracle.lock.json"
+LOCK = CONFIG / "oracle.lock.json"
 OUT = BUILD / "oracle"
 EXE_NAMES = {"dn1": "DN1.EXE", "dn2": "DN2.EXE", "dn3": "DN3.EXE"}
 
@@ -74,26 +71,16 @@ def describe(ep: str) -> tuple:
     return entry, u, unpacked
 
 
-def fixture_inventory() -> dict:
-    files = {}
-    for p in sorted(asset_dir().iterdir(), key=lambda x: x.name.upper()):
-        if p.is_file():
-            b = p.read_bytes()
-            files[p.name.upper()] = {"sha256": sha256(b), "size": len(b)}
-    return files
-
-
 def construct() -> tuple:
     eps, unpacked = {}, {}
     for ep in EPISODES:
         eps[ep], u, blob = describe(ep)
         unpacked[ep] = (u, blob)
     doc = {
-        "fixture": "Duke Nukem (\"Duke Nukum\") v2.0, episodes 1-3, as supplied in assets/",
+        "fixture": "Duke Nukem (\"Duke Nukum\") v2.0, episodes 1-3: DN1.EXE, DN2.EXE, DN3.EXE in assets/",
         "policy": "Originals and derived binaries are never committed or redistributed.",
         "unpacker": "tools/lz91.py (LZEXE 0.91 decoder); canonical_mz = UNLZEXE-compatible header layout",
         "episodes": eps,
-        "fixture_files": fixture_inventory(),
     }
     return doc, unpacked
 
@@ -113,10 +100,9 @@ def verify(write_lock: bool = False) -> dict:
             raise OracleError(f"{LOCK} exists; the oracle lock is immutable")
         atomic_json(LOCK, doc)
     lock = load_json(LOCK)
-    if lock != doc:
+    if lock["episodes"] != doc["episodes"]:
         diffs = [k for k in doc["episodes"] if doc["episodes"][k] != lock["episodes"].get(k)]
-        extra = "" if lock["fixture_files"] == doc["fixture_files"] else " (fixture inventory differs)"
-        raise OracleError(f"oracle identity differs from immutable lock: {diffs}{extra}")
+        raise OracleError(f"the executables in assets/ are not the originals in {LOCK.name}: {diffs}")
     materialise(unpacked)
     return lock
 
@@ -135,30 +121,9 @@ def load_image(ep: str) -> tuple:
     return img, relocs
 
 
-def crosscheck() -> dict:
-    """Independent check: run each original LZEXE stub in a unicorn x86
-    emulator at two load segments (tools/lz91_emulate.py) and require the
-    same image, relocation set and entry registers as tools/lz91.py.
-
-    (UNLZEXE 0.5 was tried first but hangs under both MS-DOS Player and
-    DOSBox-X, even for its usage banner; see docs/oracle.md.)"""
-    import lz91_emulate
-    results = {}
-    for ep in EPISODES:
-        raw = find_asset(EXE_NAMES[ep]).read_bytes()
-        u = lz91.unpack(raw)
-        res = lz91_emulate.crosscheck(raw, u.image, u.relocs)
-        res["registers_equal"] = res["registers"] == {"cs": u.cs, "ip": u.ip, "ss": u.ss, "sp": u.sp}
-        results[ep] = res
-        if not (res["relocation_set_equal"] and res["image_equal"] and res["registers_equal"]):
-            raise OracleError(f"{ep}: emulated original stub disagrees with tools/lz91.py: {res}")
-    return results
-
-
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write-lock", action="store_true")
-    ap.add_argument("--crosscheck", action="store_true")
     a = ap.parse_args()
     lock = verify(write_lock=a.write_lock)
     for ep, e in lock["episodes"].items():
@@ -166,11 +131,6 @@ def main() -> int:
         print(f"{ep}: packed {e['packed']['sha256'][:16]} ({e['packed']['size']} B) -> image "
               f"{un['image_sha256'][:16]} ({un['image_size']} B), {un['reloc_count']} relocs, "
               f"CS:IP {un['cs']:04X}:{un['ip']:04X} SS:SP {un['ss']:04X}:{un['sp']:04X}")
-    if a.crosscheck:
-        res = crosscheck()
-        atomic_json(OUT / "crosscheck.json", res)
-        print("crosscheck: emulated original LZEXE stubs agree on image, relocation set and "
-              "entry registers for", ", ".join(res))
     print("oracle OK")
     return 0
 

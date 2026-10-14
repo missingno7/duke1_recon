@@ -1,11 +1,11 @@
-"""Rename identifiers in the standalone tree (game/) without changing the program.
+"""Rename identifiers in src/ without changing the program.
 
-    python tools/rename.py MAP.json [--dir game] [--dry-run]
+    python tools/rename.py MAP.json [--dir src] [--dry-run]
 
 MAP.json: {"functions": {old: new}, "globals": {old: new},
            "structs": {old_tag: new_tag or {"name": new_tag, "fields": {old: new}}},
            "fields": {old_tag: {old: new}}, "params": {function: {old: new}}}
-(the values may also be objects with a "name" key, as in build/workers/luna-names2/names.json).
+(the values may also be objects with a "name" key; "docs": {name: description} replaces descriptions).
 
 * Identifiers are replaced as whole C tokens outside string and character
   literals; in comments too, so notes keep pointing at the right names.
@@ -39,7 +39,7 @@ KEYWORDS = set("""auto break case char const continue default do double else enu
 long register return short signed sizeof static struct switch typedef union unsigned void volatile while
 far near huge pascal cdecl interrupt asm _cs _ds _es _ss main""".split())
 CRLF, LF = chr(13) + chr(10), chr(10)
-REGISTRY = ROOT / "layout" / "game-names.json"       # the tree has DOS line endings
+       # the tree has DOS line endings
 
 
 def flat(m: dict) -> dict:
@@ -263,20 +263,22 @@ def wrap_comment(text: str, indent: str = "", width: int = 100) -> list:
     return [f"{indent}/* {lines[0]}"] + [f"{indent}   {ln}" for ln in lines[1:-1]] + [f"{indent}   {lines[-1]} */"]
 
 
-def add_docs(text: str, docs: dict, header: bool, old_docs: dict = None) -> str:
+def add_docs(text: str, docs: dict, header: bool) -> str:
     """Put each description above its function definition or struct definition;
-    in the header, beside (or above) the global's declaration.  A description
-    previously written for the same object (old_docs) is replaced, not stacked."""
-    old_docs = old_docs or {}
+    in the header, beside (or above) the global's declaration.  The comment block
+    directly above (the previous description) is replaced, not stacked."""
     out = []
     lines = text.split(LF)
 
     def drop_above(name):
-        old = old_docs.get(name)
-        if old:
-            block = wrap_comment(old)
-            if out[-len(block):] == block:
-                del out[-len(block):]
+        """Remove a standalone comment block (lines '/* ...' and '   ...') ending right above."""
+        if not out or not out[-1].rstrip().endswith("*/") or not out[-1].startswith(("/*", "   ")):
+            return
+        k = len(out) - 1
+        while k > 0 and not out[k].startswith("/*") and out[k].startswith("   "):
+            k -= 1
+        if out[k].startswith("/*"):
+            del out[k:]
 
     for i, ln in enumerate(lines):
         doc = key = None
@@ -325,12 +327,9 @@ def alias_block(aliases: dict) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("map")
-    ap.add_argument("--dir", default=str(ROOT / "game"))
+    ap.add_argument("--dir", default=str(ROOT / "src"))
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--record", action="store_true",
-                    help="also update layout/game-names.json (names and descriptions by logical id)")
     a = ap.parse_args()
-    registry = json.loads(REGISTRY.read_text(encoding="utf-8")) if REGISTRY.exists() else {}
     m = json.loads(Path(a.map).read_text(encoding="utf-8-sig"))
     d = Path(a.dir)
     files = {p.name: p.read_bytes().decode("latin-1").replace(CRLF, LF)
@@ -410,57 +409,15 @@ def main() -> int:
     # 5. one-line descriptions
     if m.get("docs"):
         new_name = {**glob, **{f"struct {k}": f"struct {v}" for k, v in tags.items()}}
-        current = {**registry.get("functions", {}), **registry.get("globals", {}),
-                   **{f"struct {k}": "struct " + (v["name"] if isinstance(v, dict) else v)
-                      for k, v in registry.get("structs", {}).items()}}
-
-        def final(k):                                 # a logical id or a current name -> the name after this run
-            cur = current.get(k, k)
-            return new_name.get(cur, cur)
-        docs = {final(k): v for k, v in m["docs"].items() if v}
-        old_docs = {final(k): v for k, v in registry.get("docs", {}).items() if v and k in m["docs"]}
+        docs = {new_name.get(k, k): v for k, v in m["docs"].items() if v}
         for n in csrc:
-            files[n] = add_docs(files[n], docs, n == "DUKE.H", old_docs)
+            files[n] = add_docs(files[n], docs, n == "DUKE.H")
     if a.dry_run:
         return 0
     for name, text in files.items():
         (d / name).write_bytes(text.replace(LF, CRLF).encode("latin-1"))      # DOS line endings
     print(f"renamed {len(mapping)} identifiers in {len(files)} files")
-    if a.record and registry:
-        record(registry, glob, tags, fmaps, m)
     return 0
-
-
-def record(registry: dict, glob: dict, tags: dict, fmaps: dict, m: dict) -> None:
-    """Compose this run's renames into layout/game-names.json (logical id -> name)."""
-    for sec in ("functions", "globals"):
-        for k, v in registry.get(sec, {}).items():
-            registry[sec][k] = glob.get(v, v)
-    for k, v in registry.get("structs", {}).items():
-        cur = v["name"] if isinstance(v, dict) else v
-        if isinstance(v, dict):
-            v["name"] = tags.get(cur, cur)
-            fm = fmaps.get(cur, {})
-            v["fields"] = {f: fm.get(n, n) for f, n in (v.get("fields") or {}).items()}
-        else:
-            registry["structs"][k] = tags.get(cur, cur)
-    params = registry.setdefault("params", {})
-    for f in list(params):
-        if f in glob:
-            params[glob[f]] = params.pop(f)
-    for f, pm in (m.get("params") or {}).items():
-        f = glob.get(f, f)
-        cur = params.setdefault(f, {})
-        inv = {n: o for o, n in cur.items()}
-        for o, n in flat(pm).items():
-            cur[inv.get(o, o)] = n
-    current = {**{v: k for k, v in registry.get("functions", {}).items()},
-               **{v: k for k, v in registry.get("globals", {}).items()}}
-    for k, v in (m.get("docs") or {}).items():
-        lid = k if k in registry.get("functions", {}) or k in registry.get("globals", {}) or k.startswith("struct ")             else current.get(glob.get(k, k), k)
-        registry.setdefault("docs", {})[lid] = v
-    REGISTRY.write_text(json.dumps(registry, indent=1, sort_keys=True), encoding="utf-8")
-    print("recorded in", REGISTRY.relative_to(ROOT))
 
 
 if __name__ == "__main__":

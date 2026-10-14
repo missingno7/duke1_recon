@@ -1,64 +1,34 @@
-# Agent rules (supervisor and workers)
+# Working in this repository
 
-## Roles
+`src/` is the game and the only copy of it.  `port/` runs it on SDL3.  Read `README.md`
+first; `docs/turbo-c.md` before changing code in `src/`.
 
-* **Supervisor** (one interactive session): plans waves, launches workers, runs
-  intake, promotes, curates blockers, changes shared headers/tools/profiles,
-  commits. Canonical source, recipes, symbol aliases, profiles, the oracle lock
-  and acceptance tools have exactly one writer, enforced by the canonical lock in
-  `tools/promote.py`.
-* **Workers** (independent agents, e.g. GPT-6 Luna xhigh via the codex-workers
-  skill): each owns `build/workers/<worker>/<task>/` and nothing else.
+## Rules
 
-## Worker rules
+1. **`src/` stays the original program.**  After any change to `src/`, `python
+   tools/build.py` must print EQUAL for dn1, dn2 and dn3.  Use `tools/rename.py` for
+   renames (it keeps uninitialised globals on their hash-neutral storage names).  No inline
+   assembly, no byte emission, nothing that manufactures equality.
+2. **Port behaviour goes into `port/`** (platform code, `port/override/`,
+   `tools/port_gen.py`), never into `src/`.  Fix a port difference where the DOS semantics
+   live (see `docs/sdl3-port.md`, "DOS semantics the port must reproduce").
+3. **The game files are not ours.**  `assets/` (the original executables, graphics,
+   levels, the user's settings and saves) is ignored by git; never commit, copy into
+   tracked paths, or redistribute any of it or anything derived from it (unpacked images,
+   rendered sprites, captures).  Work on copies under `build/`.
+4. **`src/` files keep CRLF line endings** (Turbo C 2.0 needs them); `.gitattributes`
+   stops git from rewriting them.
+5. Before committing: `python tools/validate.py` (originals present, DOS build EQUAL, port
+   builds, EGA self-test passes).
 
-1. Write only inside your task directory. Never modify `src/`, `recipes/`,
-   `layout/`, `evidence/`, `include/`, `tools/`, `tests/`, `probes/`, `assets/`.
-   Never run `tools/promote.py`, `git commit`, or delete lock files.
-2. Every compile goes through `tools/search.py ... --worker NAME --receipt ...`.
-   It is isolated, content-addressed and recorded; repeated experiments are
-   answered from the database. Do not run the DOS tools by hand.
-3. No inline `asm`, `#pragma inline`, byte emission, object editing, or anything
-   that manufactures equality. Never alter the oracle or the tool pins.
-4. One controlled change per attempt; say what you expect it to change.
-5. Stop at EQUAL; or when `search.py` reports *identical emission* for three
-   hypotheses in one family; or when you can name the concrete mechanism and the
-   next discriminating experiment (that is a blocker, see categories in
-   `tools/db.py`). A large function, a first diff or an ugly residual is not a
-   blocker.
-6. Report steering (dummy locals/fields that only force offsets) in `notes`.
-7. Finish with `result.json` (schema in your PROMPT.md) and a reply of at most
-   15 lines.
+## Tools
 
-## Naming in candidate source
-
-* Functions: logical ids `g1_XXXX`, `g2_XXXX`, `asm_XXXX` (frame offset in DN1).
-* Globals: `d_XXXX`, the DN1 DGROUP offset; the proof binds them per episode.
-* Library: real CL.LIB names (`outport`, `fopen`, ...).
-* Semantic names come later through `layout/symbols.json` aliases (supervisor).
-
-## Candidate format
-
-Declarations and empty stub definitions, then a line `/*@body*/`, then exactly
-the definition of the target. Callees the original reaches with
-`push cs; call near` must be defined before the marker (a stub is enough);
-far-called callees must only be declared (see rule CALL-FORMS).
-
-## Supervisor loop
-
-```bash
-python tools/tasks.py plan
-python tools/tasks.py wave 4                    # packets + cx launch commands
-# launch each printed command as its own background task
-python tools/tasks.py intake                    # re-verifies every claim fresh; never promotes
-# review each candidate: no #define/cast views of globals, no fake typedefs, literals for text,
-# no offsets from unrelated symbols; fix by hand if needed and re-run search.py
-python tools/promote.py --batch LIST.txt        # FUNCTION CANDIDATE per line; one lock, one re-proof
-python tools/decls.py                           # conflicting prototypes/types across accepted files
-python tools/validate.py --write-progress && git commit
-```
-
-Grow the wave only when compile throughput and intake keep up. When two workers
-report the same mechanism, stop dispatching that family, fix the shared
-mechanism (header, profile, tool) once, encode it in `evidence/compiler-rules.json`
-or a test, then release the blocked tasks (`tools/db.py resolve`).
+| Tool | Purpose |
+|---|---|
+| `tools/build.py` | build DN1/DN2/DN3.EXE from `src/` and compare with the originals |
+| `tools/validate.py` | everything that must hold before a commit |
+| `tools/oracle.py` | check the original executables in `assets/` against `config/oracle.lock.json` |
+| `tools/rename.py` | rename functions, globals, structs, fields, parameters; replace descriptions |
+| `tools/port_gen.py` | translate `src/` per episode for the port (run by CMake) |
+| `tools/dosref.py`, `tools/portcompare.py` | run the original in DOSBox-X with a key script; compare with the port |
+| `tcc.py`, `toolchain.py`, `repack.py`, `lz91.py`, `mz.py`, `common.py` | the pinned toolchain, LZEXE, EXE format; used by the above |

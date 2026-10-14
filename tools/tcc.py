@@ -25,7 +25,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import BUILD, INCLUDE, LAYOUT, atomic_json, content_key, load_json, sha256, sha256_file  # noqa: E402
+from common import BUILD, CONFIG, atomic_json, content_key, load_json, sha256, sha256_file  # noqa: E402
 import toolchain  # noqa: E402
 
 CACHE = BUILD / "cc-cache"
@@ -46,7 +46,7 @@ class Receipt:
 
 
 def profiles() -> dict:
-    return load_json(LAYOUT / "profiles.json")["profiles"]
+    return load_json(CONFIG / "profiles.json")["profiles"]
 
 
 def profile_flags(profile: str) -> list:
@@ -67,10 +67,6 @@ def _stage_headers() -> dict:
     for rel in sorted(toolchain.lock()["files"]):
         if rel.startswith("INCLUDE/"):
             files[rel] = toolchain.tool(rel).read_bytes()
-    if INCLUDE.is_dir():
-        for p in sorted(INCLUDE.glob("*")):
-            if p.is_file():
-                files[p.name.upper()] = p.read_bytes()
     del tc
     return files
 
@@ -243,7 +239,7 @@ if __name__ == "__main__":
     ap.add_argument("--flags", nargs="*", default=None)
     ap.add_argument("--fresh", action="store_true")
     a = ap.parse_args()
-    fl = a.flags if a.flags is not None else profile_flags(a.profile or load_json(LAYOUT / "profiles.json")["default"])
+    fl = a.flags if a.flags is not None else profile_flags(a.profile or load_json(CONFIG / "profiles.json")["default"])
     r = compile_c(Path(a.source).read_text("latin-1"), fl, fresh=a.fresh)
     print(json.dumps({"ok": r.ok, "key": r.key, "cached": r.cached, "dir": str(r.directory)}, indent=1))
     print(r.log)

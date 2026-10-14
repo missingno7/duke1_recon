@@ -1,5 +1,0 @@
-{
- "source": "src/asm/toolbox.asm",
- "segment": "ASM_TEXT",
- "note": "The assembly unit is one TASM 1.0 module (/MX) whose _TEXT combines with C0's _TEXT (frame 0). Proven by `python tools/tubuild.py ASM_TEXT`: the whole 1082-byte contribution (data header and 9 procedures) is equal in every episode."
-}

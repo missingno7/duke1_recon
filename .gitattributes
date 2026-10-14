@@ -1,2 +1,2 @@
-# Hashes in layout/ and recipes/ are computed over exact bytes; never let git rewrite line endings.
+# src/ must keep its CRLF line endings (Turbo C 2.0 needs them): never let git rewrite line endings.
 * -text
