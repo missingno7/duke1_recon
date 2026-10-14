@@ -94,6 +94,7 @@ const uint8_t *vga_palette_registers(void);
    CGA colours with intensity in bit 4), and the visible picture as 0xAARRGGBB pixels. */
 uint32_t vga_colour_rgb(uint8_t register_value);
 void     vga_render_rgb(uint32_t *out_320x200);
+void     vga_render_rgb_page(uint16_t page_start, uint32_t *out_320x200);
 void     vga_vertical_retrace_wait(void);              /* blocks until the next display refresh */
 /* Change a text span's stored palette index in the visible planar page. Text coordinates are
    the game's 40-column by 25-row grid; the launcher uses this to dim unavailable episodes. */
@@ -103,6 +104,15 @@ void     vga_replace_colour_in_text_span(uint8_t from, uint8_t to, int x, int y,
 /* Enhanced renderer capture hooks.  Game-call instrumentation is generated into the build
    tree; the canonical DOS sources and their prototypes remain untouched. */
 void     capture_begin_gameplay_frame(int16_t scroll_x, int16_t map_y_offset);
+void     capture_publish_intermediate_gameplay_frame(int16_t drawing_page);
+void     capture_set_modal_capture_active(int active);
+void     capture_snapshot_wide_tiles(const uint16_t *tile_map, int16_t map_y_offset,
+                                    uint16_t animation_phase);
+void     capture_end_tile_strip(void);
+int      port_is_world_position_outside_wide_view(int world_x, int world_y,
+                                                   int original_result);
+int      port_is_world_position_outside_wide_if_active(int world_x, int world_y,
+                                                        int original_result);
 int16_t  blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t y);
 
 /* ---- video BIOS (INT 10h) ---- */

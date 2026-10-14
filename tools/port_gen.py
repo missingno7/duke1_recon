@@ -9,6 +9,7 @@ Generated files belong in the build tree and are never canonical game sources.
 from __future__ import annotations
 
 import argparse
+import csv
 import re
 import sys
 from dataclasses import dataclass
@@ -539,9 +540,212 @@ def instrument_gameplay_capture(source: str) -> str:
     opening = source.find("{", start, end)
     if opening < 0:
         raise ValueError("draw_animated_level_strip has no body")
-    return (source[:opening + 1] +
-            "\n    capture_begin_gameplay_frame(level_scroll_x, level_map_y_offset);" +
-            source[opening + 1:])
+    source = (source[:opening + 1] +
+              "\n    capture_begin_gameplay_frame(level_scroll_x, level_map_y_offset);" +
+              source[opening + 1:])
+    # The map and tile pixels are sampled after the animation phase advances, so the wide
+    # renderer sees the same animated source frame as the ordinary strip draw below.
+    match = re.search(r"(?m)^\s*do\s*\{", source[opening + 1:end + 120])
+    if match is None:
+        raise ValueError("could not find tile-strip loop for wide-map capture")
+    position = opening + 1 + match.start()
+    source = (source[:position] +
+              "    capture_snapshot_wide_tiles(level_tile_map, level_map_y_offset, world_animation_phase);\n" +
+              source[position:])
+    end_match = re.search(r"(?m)^\s*outport\(0x3ce,\s*5\);", source[opening + 1:end + 160])
+    if end_match is None:
+        raise ValueError("could not find tile-strip end for wide-map capture")
+    end_position = opening + 1 + end_match.start()
+    return source[:end_position] + "    capture_end_tile_strip();\n" + source[end_position:]
+
+
+def instrument_modal_capture(source: str) -> str:
+    """Publish an interim native frame from the page being drawn while a gameplay dialog
+    waits for input.  The final page flip still publishes the completed frame as usual."""
+    definition = next((item for item in function_definitions(source)
+                       if item[0] == "wait_input_animated_sprite"), None)
+    if definition is None:
+        return source
+    _, start, end = definition
+    opening_brace = source.find("{", start, end)
+    if opening_brace < 0:
+        raise ValueError("wait_input_animated_sprite has no body")
+    source = (source[:opening_brace + 1] +
+              "\n    capture_set_modal_capture_active(1);" +
+              source[opening_brace + 1:])
+    definition = next(item for item in function_definitions(source)
+                      if item[0] == "wait_input_animated_sprite")
+    _, start, end = definition
+    tokens = lex(source)
+
+    def matching(index: int, left: str, right: str) -> int | None:
+        if index is None or tokens[index].text != left:
+            return None
+        depth = 1
+        for pos in range(index + 1, len(tokens)):
+            token = tokens[pos]
+            if token.kind in {"string", "char", "line", "block"}:
+                continue
+            if token.text == left: depth += 1
+            elif token.text == right:
+                depth -= 1
+                if depth == 0: return pos
+        return None
+
+    for pos, token in enumerate(tokens):
+        if token.start < start or token.start >= end or token.kind != "ident" or token.text != "while":
+            continue
+        opening = significant(tokens, pos + 1)
+        condition_end = matching(opening, "(", ")") if opening is not None else None
+        body_open = significant(tokens, condition_end + 1) if condition_end is not None else None
+        body_end = matching(body_open, "{", "}") if body_open is not None else None
+        if body_end is None:
+            continue
+        insert_at = tokens[body_end].start
+        source = (source[:insert_at] +
+                  "        capture_publish_intermediate_gameplay_frame(draw_page_index);\n" +
+                  source[insert_at:])
+        definition = next(item for item in function_definitions(source)
+                          if item[0] == "wait_input_animated_sprite")
+        _, start, end = definition
+        closing_brace = source.rfind("}", start, end)
+        if closing_brace < 0:
+            raise ValueError("wait_input_animated_sprite has no closing brace")
+        return (source[:closing_brace] +
+                "    capture_publish_intermediate_gameplay_frame(draw_page_index);\n"
+                "    capture_set_modal_capture_active(0);\n" + source[closing_brace:])
+    raise ValueError("could not find the animated input loop for interim gameplay capture")
+
+
+def classify_view_test_calls(source: str, source_name: str) -> tuple[str, list[dict[str, str]]]:
+    """Classify each view-test call by the code its result controls, then route it to the
+    wide draw-view seam or the conditional behavior seam.  Unclear cases stay behavior."""
+    tokens = lex(source)
+
+    def matching(index: int, left: str, right: str) -> int | None:
+        if index is None or index >= len(tokens) or tokens[index].text != left:
+            return None
+        depth = 1
+        for pos in range(index + 1, len(tokens)):
+            token = tokens[pos]
+            if token.kind in {"string", "char", "line", "block"}:
+                continue
+            if token.text == left:
+                depth += 1
+            elif token.text == right:
+                depth -= 1
+                if depth == 0:
+                    return pos
+        return None
+
+    def statement_end(index: int) -> int | None:
+        index = significant(tokens, index) if index is not None else None
+        if index is None:
+            return None
+        if tokens[index].text == "{":
+            close = matching(index, "{", "}")
+            return close + 1 if close is not None else None
+        parens = brackets = braces = 0
+        for pos in range(index, len(tokens)):
+            token = tokens[pos]
+            if token.kind in {"string", "char", "line", "block"}:
+                continue
+            if token.text == "(": parens += 1
+            elif token.text == ")": parens -= 1
+            elif token.text == "[": brackets += 1
+            elif token.text == "]": brackets -= 1
+            elif token.text == "{": braces += 1
+            elif token.text == "}":
+                if braces == 0:
+                    return pos
+                braces -= 1
+            elif token.text == ";" and parens == brackets == braces == 0:
+                return pos + 1
+        return None
+
+    definitions = function_definitions(source)
+    if_conditions: list[tuple[int, int]] = []
+    for pos, token in enumerate(tokens):
+        if token.kind == "ident" and token.text == "if":
+            opening = significant(tokens, pos + 1)
+            closing = matching(opening, "(", ")") if opening is not None else None
+            if opening is not None and closing is not None:
+                if_conditions.append((opening, closing))
+
+    calls: list[tuple[int, int, str]] = []
+    report: list[dict[str, str]] = []
+    side_effect_ops = {"=", "++", "--", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>="}
+    control_effects = {"continue", "break", "return", "goto"}
+    drawing_calls = {"blit_planar_sprite_rows", "copy_planar_video_region"}
+
+    for pos, token in enumerate(tokens):
+        if token.kind != "ident" or token.text != "is_world_position_outside_view":
+            continue
+        opening = significant(tokens, pos + 1)
+        if opening is None or tokens[opening].text != "(":
+            continue
+        closing = matching(opening, "(", ")")
+        if closing is None:
+            continue
+        after_call = significant(tokens, closing + 1)
+        if after_call is not None and tokens[after_call].text == "{":
+            continue  # the function definition, not a call
+
+        containing = [(a, b) for a, b in if_conditions if a < pos < b]
+        branch = min(containing, key=lambda span: span[1] - span[0]) if containing else None
+        kind = "behaviour"
+        reason = "not the direct condition of a drawing-only if branch"
+        if branch:
+            body_start = significant(tokens, branch[1] + 1)
+            body_end = statement_end(body_start)
+            if body_start is not None and body_end is not None:
+                body = tokens[body_start:body_end]
+                significant_body = [t for t in body if t.kind not in {"space", "line", "block"}]
+                texts = [t.text for t in significant_body]
+                called: list[str] = []
+                for local, part in enumerate(body):
+                    if part.kind != "ident":
+                        continue
+                    after = significant(body, local + 1)
+                    if after is not None and body[after].text == "(":
+                        called.append(part.text)
+                effects = set(texts) & control_effects
+                if set(texts) & side_effect_ops:
+                    effects.add("state assignment/update")
+                other_calls = {name for name in called
+                               if name not in drawing_calls and name not in {"if", "for", "while", "switch", "sizeof"}
+                               and not name.isupper()}
+                effects.update(other_calls)
+                if any(name in drawing_calls for name in called) and not effects:
+                    kind = "draw"
+                    reason = "controlled branch only issues draw calls"
+                elif effects:
+                    reason = "controlled branch also performs: " + ", ".join(sorted(effects))
+                else:
+                    reason = "controlled branch does not issue a draw call"
+
+        function = next((name for name, start, end in definitions if start <= token.start < end), "<file-scope>")
+        line = str(source.count("\n", 0, token.start) + 1)
+        column = str(token.start - source.rfind("\n", 0, token.start))
+        report.append({"source": source_name, "line": line, "column": column,
+                       "function": function, "classification": kind, "reason": reason})
+
+        if kind == "draw":
+            args = source[tokens[opening].end:tokens[closing].start]
+            calls.append((token.start, tokens[closing].end,
+                          "port_is_world_position_outside_wide_view(" + args +
+                          ", is_world_position_outside_view(" + args + "))"))
+        else:
+            # Keep the original test available as the fallback result; the helper substitutes
+            # the wide bounds only when wide_activity is enabled.
+            args = source[tokens[opening].end:tokens[closing].start]
+            calls.append((token.start, tokens[closing].end,
+                          "port_is_world_position_outside_wide_if_active(" + args +
+                          ", is_world_position_outside_view(" + args + "))"))
+
+    for start, end, replacement in sorted(calls, reverse=True):
+        source = source[:start] + replacement + source[end:]
+    return source, report
 
 
 def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
@@ -558,6 +762,7 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
         globals_.update(re.findall(r"\bd_[0-9A-Fa-f]{4}_?\b", uncomment(raw)))
     prefixes = functions | globals_
 
+    view_test_report: list[dict[str, str]] = []
     for episode in (1, 2, 3):
         ep_dir = output_dir / f"ep{episode}"
         ep_dir.mkdir(parents=True, exist_ok=True)
@@ -588,6 +793,10 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
         sprite_site = 1
         for source_path in game_paths:
             raw = replace_overrides(raw_units[source_path], source_path, override_dir)
+            raw, classified = classify_view_test_calls(raw, source_path.name)
+            if episode == 1:
+                view_test_report.extend(classified)
+            raw = instrument_modal_capture(raw)
             raw = inject_pc_spin(raw)
             raw, site_count = tag_sprite_draw_calls(raw, sprite_site)
             sprite_site += site_count
@@ -595,6 +804,15 @@ def generate(source_dir: Path, output_dir: Path, override_dir: Path) -> None:
                 raw = instrument_gameplay_capture(raw)
             translated = translate(raw, episode, prefixes)
             (ep_dir / source_path.name).write_text(translated, encoding="latin1", newline="\n")
+
+    review_dir = output_dir.parent / "workers" / "luna-wide"
+    review_dir.mkdir(parents=True, exist_ok=True)
+    report_path = review_dir / "view-test-classification.csv"
+    with report_path.open("w", encoding="utf-8", newline="") as report_file:
+        writer = csv.DictWriter(report_file,
+                                fieldnames=["source", "line", "column", "function", "classification", "reason"])
+        writer.writeheader()
+        writer.writerows(view_test_report)
 
 
 def main() -> int:

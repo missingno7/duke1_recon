@@ -25,8 +25,15 @@ static SDL_Renderer *bound_renderer;
 static SDL_Texture *target_texture;
 static SDL_Texture *ega_texture;
 static SDL_Texture *overlay_texture;
+static SDL_Texture *wide_texture;
 static uint32_t overlay_pixels[CAPTURE_WIDTH * CAPTURE_HEIGHT];
+static uint32_t *wide_pixels;
+static size_t wide_pixels_capacity;
+static int wide_texture_width;
 static unsigned replacement_slot;
+
+enum { WIDE_PLAYFIELD_LEFT = 16, WIDE_HUD_WIDTH = 95, WIDE_PLAYFIELD_TOP = 16,
+       WIDE_PLAYFIELD_HEIGHT = 160, WIDE_ORIGINAL_PLAYFIELD_WIDTH = 224 };
 
 static uint64_t image_hash(const CaptureCommand *command)
 {
@@ -150,6 +157,190 @@ int native_renderer_init(SDL_Renderer *renderer)
     return 1;
 }
 
+static int ensure_wide_texture(int width)
+{
+    if (wide_texture && wide_texture_width == width)
+        return 1;
+    if (wide_texture)
+        SDL_DestroyTexture(wide_texture);
+    wide_texture = SDL_CreateTexture(bound_renderer, SDL_PIXELFORMAT_ARGB8888,
+                                     SDL_TEXTUREACCESS_STREAMING, width, CAPTURE_HEIGHT);
+    wide_texture_width = wide_texture ? width : 0;
+    if (!wide_texture)
+        return 0;
+    (void)SDL_SetTextureBlendMode(wide_texture, SDL_BLENDMODE_NONE);
+    (void)SDL_SetTextureScaleMode(wide_texture, SDL_SCALEMODE_NEAREST);
+    return 1;
+}
+
+static int ensure_wide_pixels(int width)
+{
+    size_t needed = (size_t)width * CAPTURE_HEIGHT;
+    uint32_t *resized;
+    if (needed <= wide_pixels_capacity)
+        return 1;
+    resized = (uint32_t *)realloc(wide_pixels, needed * sizeof(*wide_pixels));
+    if (!resized)
+        return 0;
+    wide_pixels = resized;
+    wide_pixels_capacity = needed;
+    return 1;
+}
+
+static uint32_t palette_pixel(const CaptureFrame *frame, uint8_t index)
+{
+    return 0xff000000u | (frame->palette_rgb[index & 0x0fu] & 0x00ffffffu);
+}
+
+static void draw_wide_tile(const CaptureFrame *frame, int canvas_width, int playfield_width,
+                           int camera_left, int map_row, int map_column,
+                           const uint8_t *indices)
+{
+    int tile_world_x = map_column * 16;
+    int tile_screen_x = WIDE_PLAYFIELD_LEFT + tile_world_x - camera_left;
+    int x0 = tile_screen_x < WIDE_PLAYFIELD_LEFT ? WIDE_PLAYFIELD_LEFT : tile_screen_x;
+    int x1 = tile_screen_x + 16;
+    int clip_right = WIDE_PLAYFIELD_LEFT + playfield_width;
+    int y0 = WIDE_PLAYFIELD_TOP + map_row * 16;
+    int y, x;
+    if (x1 > clip_right) x1 = clip_right;
+    if (x0 >= x1 || y0 >= WIDE_PLAYFIELD_TOP + WIDE_PLAYFIELD_HEIGHT)
+        return;
+    for (y = 0; y < 16; ++y) {
+        int screen_y = y0 + y;
+        if (screen_y >= CAPTURE_HEIGHT || screen_y < WIDE_PLAYFIELD_TOP || screen_y >= 176)
+            continue;
+        for (x = x0; x < x1; ++x) {
+            unsigned source_x = (unsigned)(x - tile_screen_x);
+            wide_pixels[screen_y * canvas_width + x] =
+                palette_pixel(frame, indices[y * 16u + source_x]);
+        }
+    }
+}
+
+static void draw_wide_commands(const CaptureFrame *frame, int canvas_width,
+                               int playfield_width, int32_t camera_left)
+{
+    int clip_left = WIDE_PLAYFIELD_LEFT;
+    int clip_right = WIDE_PLAYFIELD_LEFT + playfield_width;
+    unsigned index;
+    for (index = 0; index < frame->command_count; ++index) {
+        const CaptureCommand *command = &frame->commands[index];
+        int x0, y0, y, x;
+        if (command->type == CAPTURE_BITMAP)
+            continue; /* the wide map snapshot supplies every tile, including the old view */
+        x0 = WIDE_PLAYFIELD_LEFT + command->world_x - (int)camera_left;
+        y0 = WIDE_PLAYFIELD_TOP + command->world_y - frame->camera_y;
+        for (y = 0; y < command->height; ++y) {
+            int screen_y = y0 + y;
+            if (screen_y < WIDE_PLAYFIELD_TOP || screen_y >= 176 || screen_y >= CAPTURE_HEIGHT)
+                continue;
+            for (x = 0; x < command->width; ++x) {
+                int screen_x = x0 + x;
+                unsigned source = (unsigned)y * command->width + (unsigned)x;
+                if (screen_x < clip_left || screen_x >= clip_right ||
+                    screen_x < 0 || screen_x >= canvas_width || !command->opaque[source])
+                    continue;
+                wide_pixels[screen_y * canvas_width + screen_x] =
+                    palette_pixel(frame, command->pixels[source]);
+            }
+        }
+    }
+}
+
+static void compose_wide_frame(const CaptureFrame *frame, int width)
+{
+    int playfield_width = width - 111;
+    int hud_start = width - WIDE_HUD_WIDTH;
+    int camera_left = capture_wide_camera_left(frame, width);
+    int overlay_shift = (playfield_width - WIDE_ORIGINAL_PLAYFIELD_WIDTH) / 2;
+    int row, column;
+    size_t pixel_count = (size_t)width * CAPTURE_HEIGHT;
+    for (size_t p = 0; p < pixel_count; ++p)
+        wide_pixels[p] = 0xff000000u;
+
+    if (frame->wide_snapshot_valid) {
+        int first_map_column = camera_left / 16;
+        for (row = 0; row < CAPTURE_MAP_ROWS; ++row) {
+            for (column = 0; column < CAPTURE_MAP_COLUMNS; ++column) {
+                int world_column = column;
+                int tile_world_x = world_column * 16;
+                uint16_t tile = frame->wide_map_tiles[row][column];
+                const uint8_t *indices;
+                if (tile_world_x + 16 <= camera_left || tile_world_x >= camera_left + playfield_width)
+                    continue;
+                if (tile <= 0x20u) {
+                    int backdrop_column = (column - first_map_column) % CAPTURE_BACKDROP_COLUMNS;
+                    if (backdrop_column < 0) backdrop_column += CAPTURE_BACKDROP_COLUMNS;
+                    indices = frame->wide_backdrop_pixels[row][backdrop_column][tile == 0x20u ? 1 : 0];
+                } else {
+                    indices = frame->wide_tile_pixels[row][column];
+                }
+                draw_wide_tile(frame, width, playfield_width, camera_left, row, column, indices);
+            }
+        }
+        draw_wide_commands(frame, width, playfield_width, camera_left);
+    }
+
+    /* Text and dialogs remain centred over the original 224-pixel view. */
+    for (row = 0; row < CAPTURE_HEIGHT; ++row) {
+        for (column = 0; column < CAPTURE_WIDTH; ++column) {
+            int destination_x;
+            if (!frame->draw_mask[row * CAPTURE_WIDTH + column])
+                continue;
+            destination_x = column + overlay_shift;
+            if (destination_x >= 0 && destination_x < width)
+                wide_pixels[row * width + destination_x] = frame->ega_rgba[row * CAPTURE_WIDTH + column];
+        }
+    }
+
+    /* Keep the source EGA pixels for the fixed corners and live HUD, repeat only the plain
+       top/bottom strips, and re-centre the F1 plate beneath the widened playfield. */
+    for (row = 0; row < 16; ++row) {
+        int x;
+        for (x = 0; x <= 28; ++x)
+            wide_pixels[row * width + x] = frame->ega_rgba[row * CAPTURE_WIDTH + x];
+        for (x = 29; x < hud_start; ++x) {
+            int source_x = 29 + (x - 29) % 196;
+            wide_pixels[row * width + x] = frame->ega_rgba[row * CAPTURE_WIDTH + source_x];
+        }
+        for (x = 0; x < WIDE_HUD_WIDTH; ++x)
+            wide_pixels[row * width + hud_start + x] =
+                frame->ega_rgba[row * CAPTURE_WIDTH + 225 + x];
+    }
+    for (row = WIDE_PLAYFIELD_TOP; row < 176; ++row) {
+        int x;
+        for (x = 0; x < WIDE_PLAYFIELD_LEFT; ++x)
+            wide_pixels[row * width + x] = frame->ega_rgba[row * CAPTURE_WIDTH + x];
+        for (x = 0; x < WIDE_HUD_WIDTH; ++x)
+            wide_pixels[row * width + hud_start + x] =
+                frame->ega_rgba[row * CAPTURE_WIDTH + 225 + x];
+    }
+    {
+        int plate_start = WIDE_PLAYFIELD_LEFT + (playfield_width - 63) / 2;
+        int plate_end = plate_start + 63;
+        for (row = 176; row < CAPTURE_HEIGHT; ++row) {
+            int x;
+            for (x = 0; x < 15; ++x)
+                wide_pixels[row * width + x] = frame->ega_rgba[row * CAPTURE_WIDTH + x];
+            for (x = 15; x < plate_start; ++x) {
+                int source_x = 15 + (x - 15) % 74;
+                wide_pixels[row * width + x] = frame->ega_rgba[row * CAPTURE_WIDTH + source_x];
+            }
+            for (x = 0; x < 63; ++x)
+                wide_pixels[row * width + plate_start + x] =
+                    frame->ega_rgba[row * CAPTURE_WIDTH + 89 + x];
+            for (x = plate_end; x < hud_start; ++x) {
+                int source_x = 152 + (x - plate_end) % 73;
+                wide_pixels[row * width + x] = frame->ega_rgba[row * CAPTURE_WIDTH + source_x];
+            }
+            for (x = 0; x < WIDE_HUD_WIDTH; ++x)
+                wide_pixels[row * width + hud_start + x] =
+                    frame->ega_rgba[row * CAPTURE_WIDTH + 225 + x];
+        }
+    }
+}
+
 void native_renderer_shutdown(void)
 {
     unsigned i;
@@ -162,11 +353,17 @@ void native_renderer_shutdown(void)
     if (target_texture) SDL_DestroyTexture(target_texture);
     if (ega_texture) SDL_DestroyTexture(ega_texture);
     if (overlay_texture) SDL_DestroyTexture(overlay_texture);
-    target_texture = ega_texture = overlay_texture = NULL;
+    if (wide_texture) SDL_DestroyTexture(wide_texture);
+    free(wide_pixels);
+    wide_pixels = NULL;
+    wide_pixels_capacity = 0;
+    wide_texture_width = 0;
+    target_texture = ega_texture = overlay_texture = wide_texture = NULL;
     bound_renderer = NULL;
 }
 
 SDL_Texture *native_renderer_render(const CaptureFrame *frame,
+                                   int canvas_width,
                                    uint32_t *readback_argb)
 {
     SDL_FRect destination = { 0.0f, 0.0f, (float)CAPTURE_WIDTH, (float)CAPTURE_HEIGHT };
@@ -177,6 +374,18 @@ SDL_Texture *native_renderer_render(const CaptureFrame *frame,
     int success = 0;
     if (!frame || !frame->gameplay || !target_texture || !ega_texture || !overlay_texture)
         return NULL;
+    if (canvas_width > 335 && frame->wide_snapshot_valid) {
+        size_t count = (size_t)canvas_width * CAPTURE_HEIGHT;
+        if (!ensure_wide_pixels(canvas_width) || !ensure_wide_texture(canvas_width))
+            return NULL;
+        compose_wide_frame(frame, canvas_width);
+        if (!SDL_UpdateTexture(wide_texture, NULL, wide_pixels,
+                               canvas_width * (int)sizeof(uint32_t)))
+            return NULL;
+        if (readback_argb)
+            memcpy(readback_argb, wide_pixels, count * sizeof(uint32_t));
+        return wide_texture;
+    }
     if (!SDL_UpdateTexture(ega_texture, NULL, frame->ega_rgba,
                            CAPTURE_WIDTH * (int)sizeof(uint32_t)))
         return NULL;

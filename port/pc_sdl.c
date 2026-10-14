@@ -32,6 +32,9 @@ static int fullscreen;
 static int window_open;
 static uint32_t rgba_frame[320u * 200u];
 static uint32_t native_readback[320u * 200u];
+static uint32_t *script_shot_pixels;
+static size_t script_shot_capacity;
+static char pending_script_shot[4096];
 static int renderer_override = -1;
 static int verify_native;
 static int verify_episode;
@@ -67,6 +70,9 @@ static struct scripted_release scripted_releases[64];
 static uint64_t script_origin;
 static unsigned pc_spin_iterations;
 static void save_windowed_size(void);
+static int renderer_is_enhanced(void);
+static int native_canvas_width(int out_w, int out_h);
+static int take_script_shot(char *path, size_t capacity);
 
 #define PC_SPIN_BATCH 440u
 
@@ -319,22 +325,35 @@ static int write_png_chunk(FILE *file, const char type[4], const uint8_t *data, 
            fwrite(crc_bytes, 1, sizeof(crc_bytes), file) == sizeof(crc_bytes);
 }
 
-static int save_rgb_png_pixels(const char *path, const uint32_t *pixels) {
+static int save_rgb_png_pixels_sized(const char *path, const uint32_t *pixels,
+                                     unsigned width, unsigned height) {
     static const uint8_t signature[8] = { 137, 80, 78, 71, 13, 10, 26, 10 };
-    uint8_t ihdr[13] = { 0, 0, 1, 64, 0, 0, 0, 200, 8, 2, 0, 0, 0 };
-    const size_t raw_size = 200u * (1u + 320u * 3u);
-    const size_t blocks = (raw_size + 65534u) / 65535u;
-    const size_t z_size = 2u + raw_size + blocks * 5u + 4u;
-    uint8_t *raw = (uint8_t *)malloc(raw_size);
-    uint8_t *zdata = (uint8_t *)malloc(z_size);
+    uint8_t ihdr[13] = { 0, 0, 0, 0, 0, 0, 0, 0, 8, 2, 0, 0, 0 };
+    size_t raw_size;
+    uint8_t *raw = NULL;
+    uint8_t *zdata = NULL;
     FILE *file;
     size_t out = 0, source = 0;
     uint32_t adler_a = 1, adler_b = 0;
     int ok = 0;
-    if (!raw || !zdata || !pixels) goto done;
-    for (unsigned y = 0; y < 200; ++y) {
+    if (!width || !height || width > 4096 || height > 200 || !pixels) goto done;
+    raw_size = (size_t)height * (1u + (size_t)width * 3u);
+    {
+        size_t blocks = (raw_size + 65534u) / 65535u;
+        size_t z_size = 2u + raw_size + blocks * 5u + 4u;
+        free(raw);
+        free(zdata);
+        raw = (uint8_t *)malloc(raw_size);
+        zdata = (uint8_t *)malloc(z_size);
+        if (!raw || !zdata) goto done;
+    }
+    ihdr[0] = (uint8_t)(width >> 24); ihdr[1] = (uint8_t)(width >> 16);
+    ihdr[2] = (uint8_t)(width >> 8); ihdr[3] = (uint8_t)width;
+    ihdr[4] = (uint8_t)(height >> 24); ihdr[5] = (uint8_t)(height >> 16);
+    ihdr[6] = (uint8_t)(height >> 8); ihdr[7] = (uint8_t)height;
+    for (unsigned y = 0; y < height; ++y) {
         raw[out++] = 0;
-        for (unsigned x = 0; x < 320; ++x) {
+        for (unsigned x = 0; x < width; ++x) {
             uint32_t pixel = pixels[source++];
             raw[out++] = (uint8_t)(pixel >> 16);
             raw[out++] = (uint8_t)(pixel >> 8);
@@ -370,6 +389,10 @@ done:
     free(raw);
     free(zdata);
     return ok;
+}
+
+static int save_rgb_png_pixels(const char *path, const uint32_t *pixels) {
+    return save_rgb_png_pixels_sized(path, pixels, 320, 200);
 }
 
 static int save_rgb_png(const char *path) {
@@ -501,8 +524,9 @@ static void process_script_events(void) {
             send_script_key(event->key, 0, event->extended);
             break;
         case SCRIPT_SHOT:
-            if (!save_rgb_png(event->argument)) fprintf(stderr, "Could not write script shot %s\n", event->argument);
-            else fprintf(stderr, "[port] shot %s\n", event->argument);
+            if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+            (void)snprintf(pending_script_shot, sizeof(pending_script_shot), "%s", event->argument);
+            if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
             break;
         case SCRIPT_QUIT:
             save_windowed_size();
@@ -545,6 +569,102 @@ static void classic_presentation_rect(int out_w, int out_h, SDL_FRect *destinati
     destination->h = height;
 }
 
+static float configured_aspect_ratio(int out_w, int out_h)
+{
+    switch (pc_settings.aspect) {
+    case PC_ASPECT_4_3: return 4.0f / 3.0f;
+    case PC_ASPECT_16_10: return 16.0f / 10.0f;
+    case PC_ASPECT_16_9: return 16.0f / 9.0f;
+    case PC_ASPECT_21_9: return 21.0f / 9.0f;
+    case PC_ASPECT_32_9: return 32.0f / 9.0f;
+    case PC_ASPECT_AUTO:
+    default:
+        return out_h > 0 ? (float)out_w / (float)out_h : 4.0f / 3.0f;
+    }
+}
+
+static int native_canvas_width(int out_w, int out_h)
+{
+    double pixel_height = pc_settings.pixel_aspect == PC_PIXEL_ASPECT_SQUARE ? 1.0 : 1.2;
+    double width = 200.0 * pixel_height * configured_aspect_ratio(out_w, out_h);
+    int rounded = (int)floor(width + 0.5);
+    if (rounded < 320) rounded = 320;
+    if (rounded > 4096) rounded = 4096;
+    return rounded;
+}
+
+static void enhanced_presentation_rect(int out_w, int out_h, int canvas_width,
+                                      SDL_FRect *destination)
+{
+    float canvas_height = 200.0f *
+        (pc_settings.pixel_aspect == PC_PIXEL_ASPECT_SQUARE ? 1.0f : 1.2f);
+    float scale;
+    if (out_w <= 0 || out_h <= 0 || canvas_width <= 0) {
+        *destination = (SDL_FRect){ 0, 0, 0, 0 };
+        return;
+    }
+    scale = (float)out_w / (float)canvas_width;
+    if ((float)out_h / canvas_height < scale)
+        scale = (float)out_h / canvas_height;
+    if (pc_settings.integer_scale) {
+        int scale_x = out_w / canvas_width;
+        int scale_y = (int)((float)out_h / canvas_height);
+        int whole = scale_x < scale_y ? scale_x : scale_y;
+        if (whole >= 1)
+            scale = (float)whole;
+    }
+    destination->w = canvas_width * scale;
+    destination->h = canvas_height * scale;
+    destination->x = ((float)out_w - destination->w) * 0.5f;
+    destination->y = ((float)out_h - destination->h) * 0.5f;
+}
+
+static int ensure_script_shot_pixels(size_t needed)
+{
+    uint32_t *resized;
+    if (needed <= script_shot_capacity)
+        return 1;
+    resized = (uint32_t *)realloc(script_shot_pixels, needed * sizeof(*script_shot_pixels));
+    if (!resized)
+        return 0;
+    script_shot_pixels = resized;
+    script_shot_capacity = needed;
+    return 1;
+}
+
+static int has_script_shot(void)
+{
+    int pending;
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    pending = pending_script_shot[0] != 0;
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+    return pending;
+}
+
+static int take_script_shot(char *path, size_t capacity)
+{
+    int pending;
+    if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
+    pending = pending_script_shot[0] != 0;
+    if (pending) {
+        (void)snprintf(path, capacity, "%s", pending_script_shot);
+        pending_script_shot[0] = 0;
+    }
+    if (launcher_key_mutex) SDL_UnlockMutex(launcher_key_mutex);
+    return pending;
+}
+
+static void save_pending_script_shot(const uint32_t *pixels, unsigned width, unsigned height)
+{
+    char path[4096];
+    if (!take_script_shot(path, sizeof(path)))
+        return;
+    if (!save_rgb_png_pixels_sized(path, pixels, width, height))
+        fprintf(stderr, "Could not write script shot %s\n", path);
+    else
+        fprintf(stderr, "[port] shot %s (%ux%u native canvas)\n", path, width, height);
+}
+
 static int ensure_sharp_texture(int width, int height) {
     if (sharp_texture && sharp_width == width && sharp_height == height) return 1;
     if (sharp_texture) SDL_DestroyTexture(sharp_texture);
@@ -560,6 +680,8 @@ static void render_classic_picture(void) {
     int out_w = 0, out_h = 0;
     SDL_FRect destination;
     vga_render_rgb(rgba_frame);         /* palette decoded the way the current mode shows it */
+    if (has_script_shot())
+        save_pending_script_shot(rgba_frame, 320, 200);
     (void)SDL_UpdateTexture(screen_texture, NULL, rgba_frame, 320 * (int)sizeof(uint32_t));
     (void)SDL_GetRenderOutputSize(renderer, &out_w, &out_h);
     classic_presentation_rect(out_w, out_h, &destination);
@@ -631,14 +753,42 @@ static void verify_native_frame(const CaptureFrame *frame) {
 }
 
 static void render_enhanced_picture(void) {
+    int out_w = 0, out_h = 0;
+    int canvas_width, picture_width;
     int current_frame_is_gameplay = 0;
-    const CaptureFrame *frame = capture_acquire_latest(&current_frame_is_gameplay);
+    const CaptureFrame *frame;
     SDL_Texture *picture = NULL;
+    uint32_t *readback = NULL;
+    int shot_pending = has_script_shot();
+    char shot_path[4096];
+    int shot_path_ready = 0;
+    (void)SDL_GetRenderOutputSize(renderer, &out_w, &out_h);
+    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
+                              pc_settings.wide_activity);
+    canvas_width = pc_settings.widescreen && renderer_is_enhanced() ?
+        native_canvas_width(out_w, out_h) : CAPTURE_WIDTH;
+    capture_set_wide_canvas_width(canvas_width);
+    if (shot_pending && ensure_script_shot_pixels((size_t)canvas_width * CAPTURE_HEIGHT))
+        readback = script_shot_pixels;
+    frame = capture_acquire_latest(&current_frame_is_gameplay);
     int have_frame = frame != NULL;
-    if (frame && current_frame_is_gameplay)
-        picture = native_renderer_render(frame, verify_native ? native_readback : NULL);
-    if (verify_native && picture && frame && current_frame_is_gameplay)
+    if (frame && current_frame_is_gameplay) {
+        uint32_t *verify_buffer = verify_native && canvas_width == CAPTURE_WIDTH ? native_readback : NULL;
+        picture = native_renderer_render(frame, canvas_width, verify_buffer ? verify_buffer : readback);
+        if (picture && shot_pending && readback && verify_buffer)
+            memcpy(readback, verify_buffer, CAPTURE_WIDTH * CAPTURE_HEIGHT * sizeof(uint32_t));
+    }
+    if (verify_native && canvas_width == CAPTURE_WIDTH && picture && frame && current_frame_is_gameplay)
         verify_native_frame(frame);
+    picture_width = canvas_width;
+    if (canvas_width > 335 && (!frame || !frame->wide_snapshot_valid))
+        picture_width = CAPTURE_WIDTH;
+    if (shot_pending && readback && picture) {
+        shot_path_ready = take_script_shot(shot_path, sizeof(shot_path));
+        if (shot_path_ready && !save_rgb_png_pixels_sized(shot_path, readback,
+                                                          (unsigned)picture_width, 200))
+            fprintf(stderr, "Could not write script shot %s\n", shot_path);
+    }
     if (have_frame)
         capture_release_latest();
     if (!picture) {
@@ -646,16 +796,38 @@ static void render_enhanced_picture(void) {
         return;
     }
 
-    int out_w = 0, out_h = 0;
     SDL_FRect destination;
-    (void)SDL_GetRenderOutputSize(renderer, &out_w, &out_h);
-    classic_presentation_rect(out_w, out_h, &destination);
+    enhanced_presentation_rect(out_w, out_h, picture_width, &destination);
     (void)SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     (void)SDL_RenderClear(renderer);
-    (void)SDL_SetTextureScaleMode(picture,
-        pc_settings.filter == PC_FILTER_LINEAR ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
-    (void)SDL_RenderTexture(renderer, picture, NULL, &destination);
+    if (pc_settings.filter == PC_FILTER_SHARP) {
+        int canvas_h = classic_canvas_height();
+        int scale_x = (int)(destination.w / (float)picture_width);
+        int scale_y = (int)(destination.h / (float)canvas_h);
+        int scale = scale_x < scale_y ? scale_x : scale_y;
+        if (scale < 1) scale = 1;
+        if (ensure_sharp_texture(picture_width * scale, canvas_h * scale)) {
+            SDL_FRect staging = { 0, 0, (float)(picture_width * scale), (float)(canvas_h * scale) };
+            (void)SDL_SetTextureScaleMode(picture, SDL_SCALEMODE_NEAREST);
+            (void)SDL_SetRenderTarget(renderer, sharp_texture);
+            (void)SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            (void)SDL_RenderClear(renderer);
+            (void)SDL_RenderTexture(renderer, picture, NULL, &staging);
+            (void)SDL_SetRenderTarget(renderer, NULL);
+            (void)SDL_SetTextureScaleMode(sharp_texture, SDL_SCALEMODE_LINEAR);
+            (void)SDL_RenderTexture(renderer, sharp_texture, NULL, &destination);
+        } else {
+            (void)SDL_SetTextureScaleMode(picture, SDL_SCALEMODE_NEAREST);
+            (void)SDL_RenderTexture(renderer, picture, NULL, &destination);
+        }
+    } else {
+        (void)SDL_SetTextureScaleMode(picture,
+            pc_settings.filter == PC_FILTER_LINEAR ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST);
+        (void)SDL_RenderTexture(renderer, picture, NULL, &destination);
+    }
     (void)SDL_RenderPresent(renderer);
+    if (shot_path_ready)
+        fprintf(stderr, "[port] shot %s (%dx200 native canvas)\n", shot_path, picture_width);
 }
 
 static void render_frame(void) {
@@ -763,6 +935,8 @@ int platform_init(const char *data_dir) {
         return 0;
     }
     capture_set_enhanced(renderer_is_enhanced());
+    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
+                              pc_settings.wide_activity);
     pc_speaker_set_stereo(pc_settings.stereo);
     window = SDL_CreateWindow("Duke Nukum v2.0", pc_settings.window_width, pc_settings.window_height, SDL_WINDOW_RESIZABLE);
     if (!window) {
@@ -824,6 +998,8 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
     SDL_Thread *thread;
     if (!entry) return -1;
     capture_set_enhanced(renderer_is_enhanced());
+    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
+                              pc_settings.wide_activity);
     call.entry = entry;
     call.argc = argc;
     call.argv = argv;

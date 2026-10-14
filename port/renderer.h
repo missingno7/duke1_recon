@@ -10,6 +10,7 @@
 int native_renderer_init(SDL_Renderer *renderer);
 void native_renderer_shutdown(void);
 SDL_Texture *native_renderer_render(const CaptureFrame *frame,
+                                    int canvas_width,
                                     uint32_t *readback_argb);
 
 #endif

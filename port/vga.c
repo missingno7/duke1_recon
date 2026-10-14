@@ -285,7 +285,7 @@ uint16_t vga_display_start(void)
     return result;
 }
 
-void vga_render_indexed(uint8_t *out_320x200)
+void vga_render_indexed_page(uint8_t *out_320x200, uint16_t page_start)
 {
     unsigned y;
     if (out_320x200 == NULL)
@@ -294,7 +294,7 @@ void vga_render_indexed(uint8_t *out_320x200)
     for (y = 0; y < VGA_HEIGHT; ++y) {
         unsigned x;
         for (x = 0; x < VGA_WIDTH; ++x) {
-            uint16_t offset = (uint16_t)(display_start + y * 40u + x / 8u);
+            uint16_t offset = (uint16_t)(page_start + y * 40u + x / 8u);
             uint8_t mask = (uint8_t)(0x80u >> (x & 7u));
             uint8_t color = 0;
             unsigned plane;
@@ -305,6 +305,11 @@ void vga_render_indexed(uint8_t *out_320x200)
         }
     }
     unlock_vga();
+}
+
+void vga_render_indexed(uint8_t *out_320x200)
+{
+    vga_render_indexed_page(out_320x200, vga_display_start());
 }
 
 const uint8_t *vga_palette_registers(void)
@@ -330,19 +335,24 @@ uint32_t vga_colour_rgb(uint8_t value)
     }
 }
 
-void vga_render_rgb(uint32_t *out_320x200)
+void vga_render_rgb_page(uint16_t page_start, uint32_t *out_320x200)
 {
     static uint8_t indexed[320 * 200];
     uint32_t colours[16];
     const uint8_t *regs;
     int i;
 
-    vga_render_indexed(indexed);
+    vga_render_indexed_page(indexed, page_start);
     regs = vga_palette_registers();
     for (i = 0; i < 16; ++i)
         colours[i] = 0xff000000u | vga_colour_rgb(regs[i]);
     for (i = 0; i < 320 * 200; ++i)
         out_320x200[i] = colours[indexed[i] & 0x0f];
+}
+
+void vga_render_rgb(uint32_t *out_320x200)
+{
+    vga_render_rgb_page(vga_display_start(), out_320x200);
 }
 
 void vga_vertical_retrace_wait(void)

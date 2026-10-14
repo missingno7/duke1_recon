@@ -145,6 +145,9 @@ static int timer_worker(void *unused) {
     const uint64_t frequency = SDL_GetPerformanceFrequency();
     uint64_t next_tick = SDL_GetPerformanceCounter();
     (void)unused;
+    /* The PIT drives the game clock and every speaker note: on a busy machine a normal-priority
+       thread gets its ticks late, which stretches tones and stutters the game. */
+    (void)SDL_SetCurrentThreadPriority(SDL_THREAD_PRIORITY_TIME_CRITICAL);
     while (SDL_GetAtomicInt(&timer_running)) {
         uint32_t divisor = atomic_load(&pc_pit0_divisor);
         if (!divisor) divisor = 65536u;
