@@ -11,8 +11,8 @@ banner  db      23 dup (0Ah), 0Dh, 0Ah, 'Version 1.0 EGA/VGA'
         db      'ProGraphx EGA/VGA Toolbox', 0Dh, 0Ah, 1Ah
 c_0247  dw      0                       ; read by every drawing routine
         db      01h, 00h, 00h, 00h, 00h, 27h, 00h, 00h, 00h, 0C7h, 00h, 00h, 00h, 3Fh, 01h
-        PUBLIC  _asm_0258
-_asm_0258 PROC  FAR
+        PUBLIC  _set_video_mode
+_set_video_mode PROC  FAR
         push    bp
         mov     bp, sp
         mov     ax, [bp+6]
@@ -60,10 +60,10 @@ L_0274:
         xor     ah, ah
         int     10h
         retf
-_asm_0258 ENDP
+_set_video_mode ENDP
 ; asm_029d: set VGA mode 1000h using the two byte parameters
-        PUBLIC  _asm_029d
-_asm_029d PROC  FAR
+        PUBLIC  _set_vga_mode_with_parameters
+_set_vga_mode_with_parameters PROC  FAR
         push    bp
         mov     bp, sp
         mov     ax, 1000h
@@ -72,9 +72,9 @@ _asm_029d PROC  FAR
         int     10h
         pop     bp
         retf
-_asm_029d ENDP
-        PUBLIC  _asm_02ad
-_asm_02ad PROC  FAR
+_set_vga_mode_with_parameters ENDP
+        PUBLIC  _blit_bitmap_to_video_page
+_blit_bitmap_to_video_page PROC  FAR
         push    bp
         mov     bp, sp
         push    ds
@@ -144,9 +144,9 @@ L_page_ready:
         pop     ds
         pop     bp
         retf
-_asm_02ad ENDP
-        PUBLIC  _asm_0315
-_asm_0315 PROC FAR
+_blit_bitmap_to_video_page ENDP
+        PUBLIC  _copy_planar_video_region
+_copy_planar_video_region PROC FAR
         push    bp
         mov     bp, sp
         push    ds
@@ -319,10 +319,10 @@ wait_set:
         pop     ds
         pop     bp
         retn
-_asm_0315 ENDP
+_copy_planar_video_region ENDP
 ; asm_0424: write two planar glyph rows to VGA memory
-        PUBLIC  _asm_0424
-_asm_0424 PROC  FAR
+        PUBLIC  _blit_planar_sprite_rows
+_blit_planar_sprite_rows PROC  FAR
         push    bp
         mov     bp, sp
         push    ds
@@ -410,10 +410,10 @@ row_loop_0424:
         pop     ds
         pop     bp
         retf
-_asm_0424 ENDP
+_blit_planar_sprite_rows ENDP
 
-        PUBLIC  _asm_04c5
-_asm_04c5 PROC  FAR
+        PUBLIC  _draw_ega_glyph
+_draw_ega_glyph PROC  FAR
         push    bp
         mov     bp, sp
         push    ds
@@ -477,10 +477,10 @@ row_loop_04c5:
         pop     ds
         pop     bp
         retf
-_asm_04c5 ENDP
+_draw_ega_glyph ENDP
 
-        PUBLIC  _asm_053c
-_asm_053c PROC FAR
+        PUBLIC  _blit_planar_masked_glyph
+_blit_planar_masked_glyph PROC FAR
         push    bp
         mov     bp, sp
         push    ds
@@ -540,7 +540,7 @@ row_loop_053c:
         pop     ds
         pop     bp
         retf
-_asm_053c ENDP
+_blit_planar_masked_glyph ENDP
 
 page_io_wait PROC FAR
         push    bp
@@ -581,17 +581,17 @@ wait_retrace_high:
         retf
 page_io_wait ENDP
 ; asm_05eb: store the page argument into the shared draw-page variable (c_0247)
-        PUBLIC  _asm_05eb
-_asm_05eb PROC  FAR
+        PUBLIC  _select_draw_page
+_select_draw_page PROC  FAR
         push    bp
         mov     bp, sp
         mov     ax, [bp+6]
         mov     cs:c_0247, ax
         pop     bp
         retf
-_asm_05eb ENDP
-        PUBLIC  _asm_05f7
-_asm_05f7 PROC  FAR
+_select_draw_page ENDP
+        PUBLIC  _show_video_page
+_show_video_page PROC  FAR
         push    bp
         mov     bp, sp
         mov     ax, [bp+6]
@@ -599,6 +599,6 @@ _asm_05f7 PROC  FAR
         int     10h
         pop     bp
         retf
-_asm_05f7 ENDP
+_show_video_page ENDP
 _TEXT   ENDS
         END

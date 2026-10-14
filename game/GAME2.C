@@ -29,247 +29,247 @@
 
 
 /* 0xa0f4; accepted scalar type. */
-void interrupt far (*d_a0f4_)(void);
+void interrupt far (*previous_timer_interrupt_vector)(void);
 /* 0xa0f8; accepted scalar type. */
-int d_a0f8_;
+int player_contact_state;
 /* 0xa0fa; accepted scalar type. */
-char d_a0fa_;
+char last_keyboard_scan_code;
 /* 0xa0fb; accepted scalar type. */
-char far *d_a0fb_;
+char far *sprite_pixel_data_pointer;
 /* 0xa0ff; array extent from address gap. */
-struct g1_54e1_record d_a0ff_[100];
+struct actor_300d_record actor_300d_records[100];
 /* 0xa357; array extent from address gap. */
-struct g1_79d9_record d_a357_[100];
+struct actor_301e_record actor_301e_records[100];
 /* 0xa677; accepted scalar type. */
-int d_a677_;
+int actor_3040_active_state;
 /* 0xa679; accepted scalar type. */
-int d_a679_;
+int player_sprite_refresh_state;
 /* 0xa67b; accepted scalar type. */
-int d_a67b_;
+int actor_3008_world_x;
 /* 0xa67d; accepted scalar type. */
-char d_a67d_;
+char keyboard_backspace_pressed;
 /* 0xa67e; accepted scalar type. */
-int d_a67e_;
+int actor_3008_world_y;
 /* 0xa680; array extent from address gap. */
-struct g1_af94_record d_a680_[100];
+struct actor_303c_record actor_303c_records[100];
 /* 0xa8d8; accepted scalar type. */
-char d_a8d8_;
+char sound_interrupt_active_state;
 /* 0xa8d9; accepted scalar type. */
-char d_a8d9_;
+char keyboard_interrupt_state;
 /* 0xa8da; array extent from address gap. */
-struct g1_3882_record d_a8da_[100];
+struct actor_3001_record actor_3001_records[100];
 /* 0xab32; array extent from address gap. */
-struct g1_5d6f_record d_ab32_[20];
+struct actor_300f_record actor_300f_records[20];
 /* 0xabd2; accepted scalar type. */
-int d_abd2_;
+int formation_active_object_count;
 /* 0xabd4; array extent from address gap. */
-int d_abd4_[9];
+int formation_object_x_positions[9];
 /* 0xabe6; accepted scalar type. */
-int d_abe6_;
+int formation_world_x_accumulator;
 /* UNREFERENCED: [0xabe8,0xabec) has no accepted object start or direct DS reference. */
-char d_abe8_[4];
+char formation_x_auxiliary_bytes[4];
 /* 0xabec; array extent from address gap. */
-struct g1_5b0b_record d_abec_[100];
+struct actor_300e_record actor_300e_records[100];
 /* 0xae44; array extent from address gap. */
-struct g1_a218_record d_ae44_[100];
+struct actor_3031_record actor_3031_records[100];
 /* 0xb09c; array extent from address gap. */
-int d_b09c_[9];
+int formation_object_y_positions[9];
 /* 0xb0ae; accepted scalar type. */
-int d_b0ae_;
+int formation_world_y_accumulator;
 /* UNREFERENCED: [0xb0b0,0xb0b4) has no accepted object start or direct DS reference. */
-char d_b0b0_[4];
+char formation_y_auxiliary_bytes[4];
 /* 0xb0b4; array extent from address gap. */
-struct g1_5f0c_record d_b0b4_[100];
+struct actor_3010_record actor_3010_records[100];
 /* 0xb3d4; accepted scalar type. */
-int d_b3d4_;
+int actor_3033_active_state;
 /* 0xb3d6; array extent from address gap. */
-struct t_b3d6 d_b3d6_[100];
+struct actor_301a_record actor_301a_records[100];
 /* 0xb62e; accepted scalar type. */
-int d_b62e_;
+int actor_3019_world_x;
 /* 0xb630; accepted scalar type. */
-int d_b630_;
+int actor_3042_world_x;
 /* 0xb632; accepted scalar type. */
-int d_b632_;
+int actor_3019_world_y;
 /* 0xb634; accepted scalar type. */
-int d_b634_;
+int actor_3042_world_y;
 /* 0xb636; accepted scalar type. */
-int d_b636_;
+int formation_update_enabled;
 /* 0xb638; accepted scalar type. */
-char far *d_b638_;
+char far *episode_graphics_buffer;
 /* 0xb63c; array extent from address gap. */
-struct t_b63c d_b63c_[16];
+struct moving_actor_record moving_actor_records[16];
 /* 0xb6bc; array extent from address gap. */
-struct g1_4f91_record d_b6bc_[100];
+struct actor_300c_record actor_300c_records[100];
 /* 0xb9dc; accepted scalar type. */
-int d_b9dc_;
+int ending_sequence_enabled;
 /* 0xb9de; array extent from address gap. */
-struct t_b9de d_b9de_[200];
+struct level_tile_animation_record level_tile_animation_records[200];
 /* 0xc01e; array extent from address gap. */
-struct g1_7163_record d_c01e_[100];
+struct actor_3018_record actor_3018_records[100];
 /* 0xc276; accepted scalar type. */
-int d_c276_;
+int actor_3041_world_x;
 /* 0xc278; accepted scalar type. */
-char d_c278_;
+char demo_file_load_success;
 /* 0xc279; accepted scalar type. */
-int d_c279_;
+int actor_302f_world_x;
 /* 0xc27b; accepted scalar type. */
-int d_c27b_;
+int actor_3030_world_x;
 /* 0xc27d; accepted scalar type. */
-char far *d_c27d_;
+char far *badguy_graphics_buffer;
 /* 0xc281; accepted scalar type. */
-int d_c281_;
+int actor_3019_enabled;
 /* 0xc283; accepted scalar type. */
-int d_c283_;
+int actor_3042_active_state;
 /* 0xc285; accepted scalar type. */
-char far *d_c285_;
+char far *credits_graphics_buffer;
 /* 0xc289; accepted scalar type. */
-int d_c289_;
+int actor_3041_world_y;
 /* 0xc28b; accepted scalar type. */
-int d_c28b_;
+int actor_302f_world_y;
 /* 0xc28d; accepted scalar type. */
-int d_c28d_;
+int actor_3030_world_y;
 /* 0xc28f; accepted scalar type. */
-char far *d_c28f_;
+char far *ending_graphics_buffer;
 /* 0xc293; accepted scalar type. */
-int d_c293_;
+int actor_3042_hint_state;
 /* 0xc295; accepted scalar type. */
-int d_c295_;
+int world_actor_count;
 /* 0xc297; accepted scalar type. */
-int d_c297_;
+int joystick_configuration_mode;
 /* 0xc299; array extent from address gap. */
-struct Record d_c299_[100];
+struct actor_3002_record actor_3002_records[100];
 /* 0xc681; accepted scalar type. */
-int d_c681_;
+int actor_3041_active_state;
 /* 0xc683; accepted scalar type. */
-char d_c683_;
+char player_level_transition_state;
 /* 0xc684; accepted scalar type. */
-int d_c684_;
+int actor_302f_active_state;
 /* 0xc686; accepted scalar type. */
-int d_c686_;
+int actor_302f_interaction_phase;
 /* 0xc688; accepted scalar type. */
-int d_c688_;
+int actor_3030_active_state;
 /* 0xc68a; accepted scalar type. */
-int d_c68a_;
+int actor_302f_animation_phase;
 /* 0xc68c; accepted scalar type. */
-char d_c68c_;
+char control_up_pressed;
 /* 0xc68d; accepted scalar type. */
-int d_c68d_;
+int actor_302b_world_x;
 /* 0xc68f; accepted scalar type. */
-int d_c68f_;
+int actor_302b_world_y;
 /* 0xc691; array extent from address gap. */
-struct record d_c691_[100];
+struct actor_302a_record actor_302a_records[100];
 /* 0xc8e9; accepted scalar type. */
-int d_c8e9_;
+int actor_302b_active_state;
 /* 0xc8eb; array extent from address gap. */
-struct t_c8eb d_c8eb_[7];
+struct collision_effect_record object_collision_pool_records[7];
 /* 0xc915; array extent from address gap. */
-struct g1_9757_row d_c915_[100];
+struct actor_302d_record actor_302d_records[100];
 /* 0xcb6d; array extent from address gap. */
-struct t_cb6d d_cb6d_[9];
+struct world_actor_record world_actor_records[9];
 /* 0xcbb5; array extent from address gap. */
-char far *d_cbb5_[50];
+char far *sound_sample_pointer_table[50];
 /* 0xcc7d; accepted scalar type. */
-char far *d_cc7d_;
+char far *vga_upper_page_pointer;
 /* 0xcc81; accepted scalar type. */
-char d_cc81_;
+char control_confirmation_state;
 /* 0xcc82; accepted scalar type. */
-int d_cc82_;
+int actor_3020_active_state;
 /* 0xcc84; array extent from address gap. */
-struct g1_c1b2_record d_cc84_[200];
+struct actor_3058_record actor_3058_records[200];
 /* 0xd134; accepted scalar type. */
-char d_d134_;
+char control_down_pressed;
 /* 0xd135; accepted scalar type. */
-char d_d135_;
+char control_fire_pressed;
 /* 0xd136; accepted scalar type. */
-int d_d136_;
+int actor_3019_width;
 /* 0xd138; accepted scalar type. */
-char d_d138_;
+char control_jump_pressed;
 /* 0xd139; accepted scalar type. */
-int d_d139_;
+int actor_302f_interaction_state;
 /* 0xd13b; accepted scalar type. */
-int d_d13b_;
+int actor_3030_interaction_state;
 /* 0xd13d; accepted scalar type. */
-int d_d13d_;
+int actor_3035_world_x;
 /* 0xd13f; accepted scalar type. */
-char d_d13f_;
+char control_left_pressed;
 /* 0xd140; accepted scalar type. */
-int d_d140_;
+int actor_3035_world_y;
 /* 0xd142; accepted scalar type. */
-int d_d142_;
+int actor_3042_animation_counter;
 /* 0xd144; accepted scalar type. */
-unsigned int d_d144_;
+unsigned int player_sprite_animation_index;
 /* 0xd146; accepted scalar type. */
-int d_d146_;
+int actor_3041_interaction_state;
 /* 0xd148; accepted scalar type. */
-char d_d148_;
+char keyboard_control_lock_state;
 /* 0xd149; array extent from address gap. */
-int d_d149_[1];
+int secret_code_character_0[1];
 /* 0xd14b; accepted scalar type. */
-int d_d14b_;
+int secret_code_character_1;
 /* 0xd14d; accepted scalar type. */
-int d_d14d_;
+int secret_code_character_2;
 /* UNREFERENCED: [0xd14f,0xd155) has no accepted object start or direct DS reference. */
-char d_d14f_[6];
+char secret_code_input_buffer[6];
 /* 0xd155; accepted scalar type. */
-int d_d155_;
+int actor_3019_animation_state;
 /* 0xd157; array extent from address gap. */
-struct t_b9de d_d157_[15];
+struct level_tile_animation_record actor_3048_records[15];
 /* 0xd1cf; array extent from address gap. */
-struct t_d1cf d_d1cf_[20];
+struct pickup_object_record free_object_pool_records[20];
 /* 0xd247; accepted scalar type. */
-int d_d247_;
+int player_gameplay_state;
 /* 0xd249; array extent from address gap. */
-int d_d249_[12];
+int formation_object_active_flags[12];
 /* 0xd261; array extent from address gap. */
-struct g1_6e71_record d_d261_[100];
+struct actor_3016_record actor_3016_records[100];
 /* 0xd4b9; accepted scalar type. */
-int d_d4b9_;
+int actor_3019_screen_x;
 /* 0xd4bb; accepted scalar type. */
-int d_d4bb_;
+int actor_3019_map_row;
 /* 0xd4bd; accepted scalar type. */
-int d_d4bd_;
+int door_lock_world_x;
 /* 0xd4bf; accepted scalar type. */
-char d_d4bf_;
+char player_projectile_state;
 /* 0xd4c0; accepted scalar type. */
-char d_d4c0_;
+char control_right_pressed;
 /* 0xd4c1; accepted scalar type. */
-int d_d4c1_;
+int door_lock_world_y;
 /* 0xd4c3; array extent from address gap. */
-struct s8 d_d4c3_[21];
+struct ambient_object_record ambient_object_records[21];
 /* 0xd56b; accepted scalar type. */
-char d_d56b_;
+char joystick_enabled;
 /* 0xd56c; accepted scalar type. */
-int d_d56c_;
+int actor_3042_open_state;
 /* 0xd56e; accepted scalar type. */
-int d_d56e_;
+int actor_302b_animation_counter;
 /* 0xd570; accepted scalar type. */
-int d_d570_;
+int door_or_key_interaction_state;
 /* 0xd572; accepted scalar type. */
-int d_d572_;
+int actor_302b_open_state;
 /* 0xd574; accepted scalar type. */
-int d_d574_;
+int secret_block_world_x;
 /* 0xd576; accepted scalar type. */
-char d_d576_;
+char player_invulnerability_state;
 /* 0xd577; accepted scalar type. */
-int d_d577_;
+int secret_block_world_y;
 /* 0xd579; accepted scalar type. */
-char d_d579_;
+char current_sound_priority;
 /* 0xd57a; accepted scalar type. */
-int d_d57a_;
+int actor_3037_bonus_state;
 /* 0xd57c; accepted scalar type. */
-int d_d57c_;
+int level_progress_word;
 /* 0xd57e; array extent from address gap. */
-int d_d57e_[100];
+int actor_300d_auxiliary_states[100];
 /* 0xd646; array extent from address gap. */
-int d_d646_[100];
+int actor_3001_tile_below_records[100];
 /* 0xd70e; accepted scalar type. */
-int d_d70e_;
+int actor_3044_entity_count;
 /* 0xd710; accepted scalar type. */
-char far *d_d710_;
+char far *secondary_sound_bank_buffer;
 /* 0xd714; accepted scalar type. */
-char far *d_d714_;
+char far *primary_sound_bank_buffer;
 /* 0xd718; accepted scalar type. */
-int d_d718_;
+int bios_timer_chain_divider;
 
 /* ---- initialised data ---- */
 
@@ -278,14 +278,14 @@ int d_d718_;
    open the unit's literal pool (rule DATA-LAYOUT).  Proven by
    `python tools/tubuild.py G2_TEXT --data`.  d_0cd1 is not referenced by any code. */
 #if EPISODE == 1
-char d_0b46 = 1;
+char hint_mode_enabled = 1;
 #elif EPISODE == 2
-char d_0b46 = 0;
+char hint_mode_enabled = 0;
 #else
-char d_0b46 = 0;
+char hint_mode_enabled = 0;
 #endif
 #if EPISODE == 1
-char far *d_0b47[22] = {
+char far *episode_drop_filename_table[22] = {
     "drop0.dn1",
     "drop3.dn1",
     "drop0.dn1",
@@ -310,7 +310,7 @@ char far *d_0b47[22] = {
     "drop9.dn1"
 };
 #elif EPISODE == 2
-char far *d_0b47[22] = {
+char far *episode_drop_filename_table[22] = {
     "drop8.dn2",
     "drop9.dn2",
     "drop9.dn2",
@@ -335,7 +335,7 @@ char far *d_0b47[22] = {
     "drop9.dn2"
 };
 #elif EPISODE == 3
-char far *d_0b47[22] = {
+char far *episode_drop_filename_table[22] = {
     "drop0.dn3",
     "drop10.dn3",
     "drop10.dn3",
@@ -360,9 +360,9 @@ char far *d_0b47[22] = {
     "drop9.dn3"
 };
 #endif
-int d_0b9f = 0;
+int credits_scroll_position = 0;
 #if EPISODE == 1
-char far *d_0ba1[76] = {
+char far *episode_level_start_text_table[76] = {
     "\0",
     "\0",
     "\0",
@@ -441,7 +441,7 @@ char far *d_0ba1[76] = {
     "                        "
 };
 #elif EPISODE == 2
-char far *d_0ba1[76] = {
+char far *episode_level_start_text_table[76] = {
     "\0",
     "\0",
     "\0",
@@ -520,7 +520,7 @@ char far *d_0ba1[76] = {
     "                        "
 };
 #elif EPISODE == 3
-char far *d_0ba1[76] = {
+char far *episode_level_start_text_table[76] = {
     "\0",
     "\0",
     "\0",
@@ -600,74 +600,82 @@ char far *d_0ba1[76] = {
 };
 #endif
 unsigned char d_0cd1[16] = { 0 };
-unsigned char d_0ce1[35] = { 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 0, 0, 0, 0 };
-char d_0d04[550] = "                           DUKE NUKUM is one of the best, feature-packed games ever made for an IBM PC! It beats Nintendo easily!    DUKE NUKUM features:     Incredible animation,   One megabyte of graphics, dual scrolling playfields,  arcade sound effects,     and much, much more...! A built in Hint Mode makes learning the game easy!    Supports joystick, too.   You'll find dozens of    secret rooms with prizes. Duke can somersault and   cling onto ceilings with     his special hooks.       GET DUKE NUKUM NOW!                             ";
-int d_0f2a = 0;
+unsigned char credits_glyph_color_sequence[35] = { 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 2, 1, 2, 3, 0, 0, 0, 0 };
+char credits_scroll_text[550] = "                           DUKE NUKUM is one of the best, feature-packed games ever made for an IBM PC! It beats Nintendo easily!    DUKE NUKUM features:     Incredible animation,   One megabyte of graphics, dual scrolling playfields,  arcade sound effects,     and much, much more...! A built in Hint Mode makes learning the game easy!    Supports joystick, too.   You'll find dozens of    secret rooms with prizes. Duke can somersault and   cling onto ceilings with     his special hooks.       GET DUKE NUKUM NOW!                             ";
+int current_sound_sample_position = 0;
 
-void pascal g2_0009(int a0)
+/* Visits all 16 palette registers in order, setting each to color value 23 with the requested
+   delay. */
+void pascal set_palette_entries_to_23(int a0)
 {
     register int i;
 
     for (i = 0; i < 16; ++i) {
         delay(a0);
-        asm_029d(i, 0x17);
+        set_vga_mode_with_parameters(i, 0x17);
     }
 }
 
-void pascal g2_0036(register int a0)
+/* Restores the 16 EGA palette registers to the source's default color values, with a delay
+   between writes. */
+void pascal restore_ega_palette(register int a0)
 {
-    asm_029d(0, 0);
+    set_vga_mode_with_parameters(0, 0);
     delay(a0);
-    asm_029d(1, 1);
+    set_vga_mode_with_parameters(1, 1);
     delay(a0);
-    asm_029d(2, 2);
+    set_vga_mode_with_parameters(2, 2);
     delay(a0);
-    asm_029d(3, 3);
+    set_vga_mode_with_parameters(3, 3);
     delay(a0);
-    asm_029d(4, 4);
+    set_vga_mode_with_parameters(4, 4);
     delay(a0);
-    asm_029d(5, 5);
+    set_vga_mode_with_parameters(5, 5);
     delay(a0);
-    asm_029d(6, 6);
+    set_vga_mode_with_parameters(6, 6);
     delay(a0);
-    asm_029d(7, 7);
+    set_vga_mode_with_parameters(7, 7);
     delay(a0);
-    asm_029d(8, 16);
+    set_vga_mode_with_parameters(8, 16);
     delay(a0);
-    asm_029d(9, 17);
+    set_vga_mode_with_parameters(9, 17);
     delay(a0);
-    asm_029d(10, 18);
+    set_vga_mode_with_parameters(10, 18);
     delay(a0);
-    asm_029d(11, 19);
+    set_vga_mode_with_parameters(11, 19);
     delay(a0);
-    asm_029d(12, 20);
+    set_vga_mode_with_parameters(12, 20);
     delay(a0);
-    asm_029d(13, 21);
+    set_vga_mode_with_parameters(13, 21);
     delay(a0);
-    asm_029d(14, 22);
+    set_vga_mode_with_parameters(14, 22);
     delay(a0);
-    asm_029d(15, 23);
+    set_vga_mode_with_parameters(15, 23);
     delay(a0);
 }
 
-/* g2_01a9 candidate */
-void pascal g2_01a9(int value)
+/* clear_palette_entries candidate */
+/* Clears all 16 palette registers to color value zero, with the requested delay between writes. */
+void pascal clear_palette_entries(int value)
 {
     register int i;
 
     for (i = 0; i < 16; ++i) {
         delay(value);
-        asm_029d(i, 0);
+        set_vga_mode_with_parameters(i, 0);
     }
 }
 
-void g2_01d5(void)
+/* Selects the requested drawing page and makes that page visible. */
+void select_and_show_video_page(void)
 {
-    asm_05eb(!d_6e0a_);
-    asm_05f7(d_6e0a_);
+    select_draw_page(!draw_page_index);
+    show_video_page(draw_page_index);
 }
 
-void pascal g2_01f5(int mode, int far *a1, int far *a2)
+/* Measures the two selected joystick-axis discharge times and stores the counts through the
+   output pointers. */
+void pascal sample_joystick_axes(int mode, int far *a1, int far *a2)
 {
     int second;
     int mask1;
@@ -685,7 +693,7 @@ void pascal g2_01f5(int mode, int far *a1, int far *a2)
     *a1 = 0;
     *a2 = 0;
     disable();
-    /* Discharge the game-port timing capacitors before reading the axes. */
+    /* Discharge the game-port timing capacitors before joystick_button_sample the axes. */
     outportb(0x201, inportb(0x201));
     do {
         state = inportb(0x201);
@@ -697,7 +705,8 @@ void pascal g2_01f5(int mode, int far *a1, int far *a2)
     enable();
 }
 
-void pascal g2_0286(int a0)
+/* Clears a rectangular region of the selected planar video page. */
+void pascal clear_video_page_region(int a0)
 {
     register int si;
     register int di;
@@ -705,723 +714,765 @@ void pascal g2_0286(int a0)
     /* Select all VGA planes and write mode 1 for the clear. */
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
-    asm_05eb(0);
-    asm_05f7(0);
+    select_draw_page(0);
+    show_video_page(0);
     for (di = 0; di < 25; di++) {
         for (si = 0; si < 20; si++) {
-            asm_02ad(a0, si * 2 + di * 640);
+            blit_bitmap_to_video_page(a0, si * 2 + di * 640);
         }
     }
 }
 
-void g2_02f4(void)
+/* Displays the ordering page one screen or message and waits for the associated input when
+   required. */
+void show_ordering_page_one(void)
 {
-    g2_01a9(20);
-    g2_0286(0x1710);
-    g2_37b6("          ORDERING INFORMATION          ", 0, 0);
-    g2_37b6("      Duke Nukum consists of three      ", 0, 2);
-    g2_37b6("    unique and challenging episodes!    ", 0, 3);
-    g2_37b6("                                        ", 0, 4);
-    g2_37b6(" Episode ONE:    Shrapnel City          ", 0, 5);
-    g2_37b6(" Episode TWO:    Mission: Moonbase      ", 0, 6);
-    g2_37b6(" Episode THREE:  Trapped in the Future! ", 0, 7);
-    g2_37b6("                                        ", 0, 8);
-    g2_37b6("  You can order each episode for $15.   ", 0, 9);
-    g2_37b6("  Or for only $30, you'll receive all   ", 0, 10);
-    g2_37b6("     three episodes, and also get:      ", 0, 11);
-    g2_37b6("                                        ", 0, 12);
-    g2_37b6(" 1) The \"Secret Hints and Tips\" sheet!  ", 0, 13);
-    g2_37b6(" 2) A \"Cheat Mode\" password that will   ", 0, 14);
-    g2_37b6("    give you FULL FIREPOWER and ALL THE ", 0, 15);
-    g2_37b6("    KEYS to each level!                 ", 0, 16);
-    g2_37b6(" 3) Several HOT new bonus games!        ", 0, 17);
-    g2_37b6("                                        ", 0, 18);
-    g2_37b6("   Each episode is set in an entirely   ", 0, 19);
-    g2_37b6(" new location, with exciting challenges ", 0, 20);
-    g2_37b6(" and of course, more adventure than any ", 0, 21);
-    g2_37b6("       human can possibly handle!       ", 0, 22);
-    g2_37b6("  Press any key for more information... ", 0, 24);
-    g2_0036(20);
+    clear_palette_entries(20);
+    clear_video_page_region(0x1710);
+    draw_text_string("          ORDERING INFORMATION          ", 0, 0);
+    draw_text_string("      Duke Nukum consists of three      ", 0, 2);
+    draw_text_string("    unique and challenging episodes!    ", 0, 3);
+    draw_text_string("                                        ", 0, 4);
+    draw_text_string(" Episode ONE:    Shrapnel City          ", 0, 5);
+    draw_text_string(" Episode TWO:    Mission: Moonbase      ", 0, 6);
+    draw_text_string(" Episode THREE:  Trapped in the Future! ", 0, 7);
+    draw_text_string("                                        ", 0, 8);
+    draw_text_string("  You can order each episode for $15.   ", 0, 9);
+    draw_text_string("  Or for only $30, you'll receive all   ", 0, 10);
+    draw_text_string("     three episodes, and also get:      ", 0, 11);
+    draw_text_string("                                        ", 0, 12);
+    draw_text_string(" 1) The \"Secret Hints and Tips\" sheet!  ", 0, 13);
+    draw_text_string(" 2) A \"Cheat Mode\" password that will   ", 0, 14);
+    draw_text_string("    give you FULL FIREPOWER and ALL THE ", 0, 15);
+    draw_text_string("    KEYS to each level!                 ", 0, 16);
+    draw_text_string(" 3) Several HOT new bonus games!        ", 0, 17);
+    draw_text_string("                                        ", 0, 18);
+    draw_text_string("   Each episode is set in an entirely   ", 0, 19);
+    draw_text_string(" new location, with exciting challenges ", 0, 20);
+    draw_text_string(" and of course, more adventure than any ", 0, 21);
+    draw_text_string("       human can possibly handle!       ", 0, 22);
+    draw_text_string("  Press any key for more information... ", 0, 24);
+    restore_ega_palette(20);
 }
 
-void g2_0491(void)
+/* Displays the ordering page two screen or message and waits for the associated input when
+   required. */
+void show_ordering_page_two(void)
 {
-    g2_0286(0x1710);
-    g2_37b6("          ORDERING INFORMATION          ", 0, 0);
-    g2_37b6("  Order NOW by sending a check or money ", 0, 2);
-    g2_37b6("   order for $30 (add $3 shipping) to:  ", 0, 3);
-    g2_37b6("                                        ", 0, 4);
-    g2_37b6("            Apogee Software             ", 0, 5);
-    g2_37b6("            P.O. Box 476389             ", 0, 6);
-    g2_37b6("         Garland, TX  75047  (USA)      ", 0, 7);
-    g2_37b6("                                        ", 0, 8);
-    g2_37b6("  Order NOW toll free:  1-800-852-5659  ", 0, 9);
-    g2_37b6("    (Visa and MasterCard accepted!)     ", 0, 10);
-    g2_37b6("                                        ", 0, 11);
-    g2_37b6("   Specify disk size:  5.25\" or 3.5\".   ", 0, 12);
-    g2_37b6("                                        ", 0, 13);
-    g2_37b6("  Foreign orders: Please read the file  ", 0, 14);
-    g2_37b6("    FOREIGN.DOC to place your order.    ", 0, 15);
-    g2_37b6("                                        ", 0, 16);
-    g2_37b6(" Order today and continue your exciting ", 0, 17);
-    g2_37b6(" adventures as Duke Nukum.  Once again, ", 0, 18);
-    g2_37b6("  for $33 (including shipping) you'll   ", 0, 19);
-    g2_37b6("  get all three updated episodes, the   ", 0, 20);
-    g2_37b6("     cheat mode, and the hints and      ", 0, 21);
-    g2_37b6("       tricks sheet.  Thank you!        ", 0, 22);
-    g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81_ == 0) {
-        while ((d_a0fa_ & 0x80) == 0) {
+    clear_video_page_region(0x1710);
+    draw_text_string("          ORDERING INFORMATION          ", 0, 0);
+    draw_text_string("  Order NOW by sending a check or money ", 0, 2);
+    draw_text_string("   order for $30 (add $3 shipping) to:  ", 0, 3);
+    draw_text_string("                                        ", 0, 4);
+    draw_text_string("            Apogee Software             ", 0, 5);
+    draw_text_string("            P.O. Box 476389             ", 0, 6);
+    draw_text_string("         Garland, TX  75047  (USA)      ", 0, 7);
+    draw_text_string("                                        ", 0, 8);
+    draw_text_string("  Order NOW toll free:  1-800-852-5659  ", 0, 9);
+    draw_text_string("    (Visa and MasterCard accepted!)     ", 0, 10);
+    draw_text_string("                                        ", 0, 11);
+    draw_text_string("   Specify disk size:  5.25\" or 3.5\".   ", 0, 12);
+    draw_text_string("                                        ", 0, 13);
+    draw_text_string("  Foreign orders: Please read the file  ", 0, 14);
+    draw_text_string("    FOREIGN.DOC to place your order.    ", 0, 15);
+    draw_text_string("                                        ", 0, 16);
+    draw_text_string(" Order today and continue your exciting ", 0, 17);
+    draw_text_string(" adventures as Duke Nukum.  Once again, ", 0, 18);
+    draw_text_string("  for $33 (including shipping) you'll   ", 0, 19);
+    draw_text_string("  get all three updated episodes, the   ", 0, 20);
+    draw_text_string("     cheat mode, and the hints and      ", 0, 21);
+    draw_text_string("       tricks sheet.  Thank you!        ", 0, 22);
+    draw_text_string("             Press any key.             ", 0, 24);
+    if (control_confirmation_state == 0) {
+        while ((last_keyboard_scan_code & 0x80) == 0) {
         }
     }
 }
 
-/* g2_062c candidate */
-void g2_062c(void)
+/* show_story_game_instructions candidate */
+/* Displays the story game instructions screen or message and waits for the associated input when
+   required. */
+void show_story_game_instructions(void)
 {
-    g2_01a9(20);
-    g2_0286(0x1710);
-    g2_37b6("                THE STORY               ", 0, 0);
-    g2_37b6("The year is 1997.  Doctor Proton and his", 0, 2);
-    g2_37b6(" army of Techbots have taken control of ", 0, 3);
-    g2_37b6("Earth's largest city.   Once a respected", 0, 4);
-    g2_37b6("    genius and scientist, Dr. Proton    ", 0, 5);
-    g2_37b6(" (he changed his name from Blunderwitz  ", 0, 6);
-    g2_37b6(" early in his career) decided he could  ", 0, 7);
-    g2_37b6("   rule Earth with a new world order.   ", 0, 8);
-    g2_37b6("                                        ", 0, 9);
-    g2_37b6("After a terrible radiation accident that", 0, 10);
-    g2_37b6(" altered his brain,  Dr. Proton took to ", 0, 11);
-    g2_37b6("  the underworld and developed an army  ", 0, 12);
-    g2_37b6(" of advanced robots -- called Techbots. ", 0, 13);
-    g2_37b6("  The Techbots are extremely dangerous, ", 0, 14);
-    g2_37b6(" and guard Dr. Proton's secret hideout. ", 0, 15);
-    g2_37b6("    Every attempt by the military to    ", 0, 16);
-    g2_37b6(" overcome Dr. Proton ended in disaster. ", 0, 17);
-    g2_37b6("   It seems Dr. Proton's plan to rule   ", 0, 18);
-    g2_37b6("        Earth is well underway...       ", 0, 19);
-    g2_37b6("             Press any key.             ", 0, 24);
-    g2_0036(20);
-    if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0) {
+    clear_palette_entries(20);
+    clear_video_page_region(0x1710);
+    draw_text_string("                THE STORY               ", 0, 0);
+    draw_text_string("The year is 1997.  Doctor Proton and his", 0, 2);
+    draw_text_string(" army of Techbots have taken control of ", 0, 3);
+    draw_text_string("Earth's largest city.   Once a respected", 0, 4);
+    draw_text_string("    genius and scientist, Dr. Proton    ", 0, 5);
+    draw_text_string(" (he changed his name from Blunderwitz  ", 0, 6);
+    draw_text_string(" early in his career) decided he could  ", 0, 7);
+    draw_text_string("   rule Earth with a new world order.   ", 0, 8);
+    draw_text_string("                                        ", 0, 9);
+    draw_text_string("After a terrible radiation accident that", 0, 10);
+    draw_text_string(" altered his brain,  Dr. Proton took to ", 0, 11);
+    draw_text_string("  the underworld and developed an army  ", 0, 12);
+    draw_text_string(" of advanced robots -- called Techbots. ", 0, 13);
+    draw_text_string("  The Techbots are extremely dangerous, ", 0, 14);
+    draw_text_string(" and guard Dr. Proton's secret hideout. ", 0, 15);
+    draw_text_string("    Every attempt by the military to    ", 0, 16);
+    draw_text_string(" overcome Dr. Proton ended in disaster. ", 0, 17);
+    draw_text_string("   It seems Dr. Proton's plan to rule   ", 0, 18);
+    draw_text_string("        Earth is well underway...       ", 0, 19);
+    draw_text_string("             Press any key.             ", 0, 24);
+    restore_ega_palette(20);
+    if (control_confirmation_state == 0)
+        while ((last_keyboard_scan_code & 0x80) == 0) {
         }
-    g2_2870(39, 24);
-    g2_0286(0x1710);
-    g2_37b6("                THE STORY               ", 0, 0);
-    g2_37b6("   Self-proclaimed hero Duke Nukum is   ", 0, 2);
-    g2_37b6("   Earth's final chance. Hired by the   ", 0, 3);
-    g2_37b6("    CIA, Duke has orders to stop Dr.    ", 0, 4);
-    g2_37b6("    Proton and rid the world of this    ", 0, 5);
-    g2_37b6("  latest madman.  Armed only with his   ", 0, 6);
-    g2_37b6("  pistol and his can-do attitude, Duke  ", 0, 7);
-    g2_37b6("  is the one person who might stand a   ", 0, 8);
-    g2_37b6("            chance of success.          ", 0, 9);
-    g2_26d5();
-    if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0) {
+    wait_input_animated_sprite(39, 24);
+    clear_video_page_region(0x1710);
+    draw_text_string("                THE STORY               ", 0, 0);
+    draw_text_string("   Self-proclaimed hero Duke Nukum is   ", 0, 2);
+    draw_text_string("   Earth's final chance. Hired by the   ", 0, 3);
+    draw_text_string("    CIA, Duke has orders to stop Dr.    ", 0, 4);
+    draw_text_string("    Proton and rid the world of this    ", 0, 5);
+    draw_text_string("  latest madman.  Armed only with his   ", 0, 6);
+    draw_text_string("  pistol and his can-do attitude, Duke  ", 0, 7);
+    draw_text_string("  is the one person who might stand a   ", 0, 8);
+    draw_text_string("            chance of success.          ", 0, 9);
+    show_episode_story_intro();
+    if (control_confirmation_state == 0)
+        while ((last_keyboard_scan_code & 0x80) == 0) {
         }
-    g2_2870(39, 24);
-    g2_0286(0x1710);
-    g2_37b6("           KEYBOARD CONTROLS            ", 0, 0);
-    g2_37b6("                                        ", 0, 1);
-    g2_37b6(" The following keys control Duke:       ", 0, 2);
-    g2_37b6("   LEFT ARROW  - Move Left              ", 0, 3);
-    g2_37b6("   RIGHT ARROW - Move Right             ", 0, 4);
-    g2_37b6("   CTRL        - Jump Upward            ", 0, 5);
-    g2_37b6("   ALT         - Fire Nuclear Pistol    ", 0, 6);
-    g2_37b6("                                        ", 0, 7);
-    g2_37b6(" The UP ARROW is the ACTION KEY, which  ", 0, 8);
-    g2_37b6(" will enable Duke to:                   ", 0, 9);
-    g2_37b6("                                        ", 0, 10);
-    g2_37b6("   1) Activate elevators, teleporters,  ", 0, 11);
-    g2_37b6("      and time machines.                ", 0, 12);
-    g2_37b6("   2) Read notes or monitors.           ", 0, 13);
-    g2_37b6("   3) Open doors.                       ", 0, 14);
-    g2_37b6("   4) Insert access cards, keys, and    ", 0, 15);
-    g2_37b6("      other useful objects.             ", 0, 16);
-    g2_37b6("                                        ", 0, 17);
-    g2_37b6(" Note: When Duke has the grappling      ", 0, 18);
-    g2_37b6(" hooks the UP ARROW will swing him      ", 0, 19);
-    g2_37b6(" above a ledge if there is room.        ", 0, 20);
-    g2_37b6("                                        ", 0, 21);
-    g2_37b6(" Keyboard controls can be altered       ", 0, 22);
-    g2_37b6(" within the \"Game Setup\" menu option.   ", 0, 23);
-    g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0) {
+    wait_input_animated_sprite(39, 24);
+    clear_video_page_region(0x1710);
+    draw_text_string("           KEYBOARD CONTROLS            ", 0, 0);
+    draw_text_string("                                        ", 0, 1);
+    draw_text_string(" The following keys control Duke:       ", 0, 2);
+    draw_text_string("   LEFT ARROW  - Move Left              ", 0, 3);
+    draw_text_string("   RIGHT ARROW - Move Right             ", 0, 4);
+    draw_text_string("   CTRL        - Jump Upward            ", 0, 5);
+    draw_text_string("   ALT         - Fire Nuclear Pistol    ", 0, 6);
+    draw_text_string("                                        ", 0, 7);
+    draw_text_string(" The UP ARROW is the ACTION KEY, which  ", 0, 8);
+    draw_text_string(" will enable Duke to:                   ", 0, 9);
+    draw_text_string("                                        ", 0, 10);
+    draw_text_string("   1) Activate elevators, teleporters,  ", 0, 11);
+    draw_text_string("      and time machines.                ", 0, 12);
+    draw_text_string("   2) Read notes or monitors.           ", 0, 13);
+    draw_text_string("   3) Open doors.                       ", 0, 14);
+    draw_text_string("   4) Insert access cards, keys, and    ", 0, 15);
+    draw_text_string("      other useful objects.             ", 0, 16);
+    draw_text_string("                                        ", 0, 17);
+    draw_text_string(" Note: When Duke has the grappling      ", 0, 18);
+    draw_text_string(" hooks the UP ARROW will swing him      ", 0, 19);
+    draw_text_string(" above a ledge if there is room.        ", 0, 20);
+    draw_text_string("                                        ", 0, 21);
+    draw_text_string(" Keyboard controls can be altered       ", 0, 22);
+    draw_text_string(" within the \"Game Setup\" menu option.   ", 0, 23);
+    draw_text_string("             Press any key.             ", 0, 24);
+    if (control_confirmation_state == 0)
+        while ((last_keyboard_scan_code & 0x80) == 0) {
         }
-    g2_2870(39, 24);
-    g2_0286(0x1710);
-    g2_37b6("         IMPORTANT INFORMATION          ", 0, 0);
-    g2_37b6("Duke Nukum needs food and soft drinks   ", 0, 2);
-    g2_37b6("to keep him healthy!  Grab all the food ", 0, 3);
-    g2_37b6("and drinks you can find (sometimes      ", 0, 4);
-    g2_37b6("hidden in boxes).                       ", 0, 5);
-    g2_37b6("Duke is armed with a CIA prototype      ", 0, 7);
-    g2_37b6("Nuclear Pistol, which has proved to be  ", 0, 8);
-    g2_37b6("extremely powerful in field tests. Let's", 0, 9);
-    g2_37b6("hope it works in an actual mission!     ", 0, 10);
-    g2_37b6("Dr. Proton has built several nuclear    ", 0, 12);
-    g2_37b6("reactors to provide power for all of    ", 0, 13);
-    g2_37b6("his Techbots and traps.  Duke should    ", 0, 14);
-    g2_37b6("consider destroying these reactors a    ", 0, 15);
-    g2_37b6("high priority.                          ", 0, 16);
-    g2_37b6("It's possible that Duke will find many  ", 0, 18);
-    g2_37b6("useful objects.  For example, keys can  ", 0, 19);
-    g2_37b6("open doors, boots can help Duke jump    ", 0, 20);
-    g2_37b6("higher, and extra pistols will increase ", 0, 21);
-    g2_37b6("Duke's firepower. ", 0, 22);
-    g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0) {
+    wait_input_animated_sprite(39, 24);
+    clear_video_page_region(0x1710);
+    draw_text_string("         IMPORTANT INFORMATION          ", 0, 0);
+    draw_text_string("Duke Nukum needs food and soft drinks   ", 0, 2);
+    draw_text_string("to keep him healthy!  Grab all the food ", 0, 3);
+    draw_text_string("and drinks you can find (sometimes      ", 0, 4);
+    draw_text_string("hidden in boxes).                       ", 0, 5);
+    draw_text_string("Duke is armed with a CIA prototype      ", 0, 7);
+    draw_text_string("Nuclear Pistol, which has proved to be  ", 0, 8);
+    draw_text_string("extremely powerful in field tests. Let's", 0, 9);
+    draw_text_string("hope it works in an actual mission!     ", 0, 10);
+    draw_text_string("Dr. Proton has built several nuclear    ", 0, 12);
+    draw_text_string("reactors to provide power for all of    ", 0, 13);
+    draw_text_string("his Techbots and traps.  Duke should    ", 0, 14);
+    draw_text_string("consider destroying these reactors a    ", 0, 15);
+    draw_text_string("high priority.                          ", 0, 16);
+    draw_text_string("It's possible that Duke will find many  ", 0, 18);
+    draw_text_string("useful objects.  For example, keys can  ", 0, 19);
+    draw_text_string("open doors, boots can help Duke jump    ", 0, 20);
+    draw_text_string("higher, and extra pistols will increase ", 0, 21);
+    draw_text_string("Duke's firepower. ", 0, 22);
+    draw_text_string("             Press any key.             ", 0, 24);
+    if (control_confirmation_state == 0)
+        while ((last_keyboard_scan_code & 0x80) == 0) {
         }
-    g2_2870(39, 24);
-    g2_0286(0x1710);
-    g2_37b6("         IMPORTANT INFORMATION          ", 0, 0);
-    g2_37b6("Duke has unlimited chances (lives) to   ", 0, 2);
-    g2_37b6("complete his mission, but every time    ", 0, 3);
-    g2_37b6("Duke dies he will have to restart the   ", 0, 4);
-    g2_37b6("current level from the beginning.  Duke ", 0, 5);
-    g2_37b6("should consume drinks and food to keep  ", 0, 6);
-    g2_37b6("his health high.                        ", 0, 7);
-    g2_37b6("Each level Duke completes will bring    ", 0, 9);
-    g2_37b6("him closer to finding Dr. Proton.  But  ", 0, 10);
-    g2_37b6("Dr. Proton will watch Duke's every move ", 0, 11);
-    g2_37b6("with an advanced security system (notice", 0, 12);
-    g2_37b6("the video cameras that follow your every", 0, 13);
-    g2_37b6("move!).  Destroying every camera on a   ", 0, 14);
-    g2_37b6("level will earn you a secret bonus.     ", 0, 15);
-    g2_37b6("There are several other secret bonuses  ", 0, 16);
-    g2_37b6("you might discover.                     ", 0, 17);
-    g2_37b6("You can only save and restore Duke's    ", 0, 19);
-    g2_37b6("progress in the small hallways between  ", 0, 20);
-    g2_37b6("levels.  Hint:  You should save after   ", 0, 21);
-    g2_37b6("each level you complete.                ", 0, 22);
-    g2_37b6("             Press any key.             ", 0, 24);
-    if (d_cc81_ == 0)
-        while ((d_a0fa_ & 0x80) == 0) {
+    wait_input_animated_sprite(39, 24);
+    clear_video_page_region(0x1710);
+    draw_text_string("         IMPORTANT INFORMATION          ", 0, 0);
+    draw_text_string("Duke has unlimited chances (lives) to   ", 0, 2);
+    draw_text_string("complete his mission, but every time    ", 0, 3);
+    draw_text_string("Duke dies he will have to restart the   ", 0, 4);
+    draw_text_string("current level from the beginning.  Duke ", 0, 5);
+    draw_text_string("should consume drinks and food to keep  ", 0, 6);
+    draw_text_string("his health high.                        ", 0, 7);
+    draw_text_string("Each level Duke completes will bring    ", 0, 9);
+    draw_text_string("him closer to finding Dr. Proton.  But  ", 0, 10);
+    draw_text_string("Dr. Proton will watch Duke's every move ", 0, 11);
+    draw_text_string("with an advanced security system (notice", 0, 12);
+    draw_text_string("the video cameras that follow your every", 0, 13);
+    draw_text_string("move!).  Destroying every camera on a   ", 0, 14);
+    draw_text_string("level will earn you a secret bonus.     ", 0, 15);
+    draw_text_string("There are several other secret bonuses  ", 0, 16);
+    draw_text_string("you might discover.                     ", 0, 17);
+    draw_text_string("You can only save and restore Duke's    ", 0, 19);
+    draw_text_string("progress in the small hallways between  ", 0, 20);
+    draw_text_string("levels.  Hint:  You should save after   ", 0, 21);
+    draw_text_string("each level you complete.                ", 0, 22);
+    draw_text_string("             Press any key.             ", 0, 24);
+    if (control_confirmation_state == 0)
+        while ((last_keyboard_scan_code & 0x80) == 0) {
         }
-    g2_2870(39, 24);
-    g2_01a9(10);
+    wait_input_animated_sprite(39, 24);
+    clear_palette_entries(10);
 }
 
-void g2_0d39(void)
+/* Displays the save success message screen or message and waits for the associated input when
+   required. */
+void show_save_success_message(void)
 {
-    g2_3d8c(2, 3, 1);
-    g2_37b6("   Your game is SAVED.  ", 3, 7);
-    g2_37b6("      Press ENTER:      ", 3, 8);
+    draw_framed_dialog_box(2, 3, 1);
+    draw_text_string("   Your game is SAVED.  ", 3, 7);
+    draw_text_string("      Press ENTER:      ", 3, 8);
     do {
-        g2_2870(26, 8);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
-    d_02fb = 0;
-    g2_01d5();
+        wait_input_animated_sprite(26, 8);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_0d97(void)
+/* Displays the save failure message screen or message and waits for the associated input when
+   required. */
+void show_save_failure_message(void)
 {
-    g2_3d8c(2, 3, 2);
-    g2_37b6("   Incorrect number.    ", 3, 7);
-    g2_37b6("Your game was NOT saved.", 3, 8);
-    g2_37b6("                        ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("   Incorrect number.    ", 3, 7);
+    draw_text_string("Your game was NOT saved.", 3, 8);
+    draw_text_string("                        ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
-    d_02fb = 0;
-    g2_01d5();
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_0e19(void)
+/* Displays the save unavailable message screen or message and waits for the associated input
+   when required. */
+void show_save_unavailable_message(void)
 {
-    g2_3d8c(7, 3, 2);
-    g2_37b6("This option will be     ", 8, 7);
-    g2_37b6("available after you play", 8, 8);
-    g2_37b6("the first level.        ", 8, 9);
-    g2_37b6("      Press ENTER:      ", 8, 10);
+    draw_framed_dialog_box(7, 3, 2);
+    draw_text_string("This option will be     ", 8, 7);
+    draw_text_string("available after you play", 8, 8);
+    draw_text_string("the first level.        ", 8, 9);
+    draw_text_string("      Press ENTER:      ", 8, 10);
     do {
-        g2_2870(31, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
-    d_02fb = 0;
-    g2_01d5();
+        wait_input_animated_sprite(31, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_0e98(void)
+/* Displays the secret-tip card about card key and waits for player input. */
+void show_secret_tip_card_key(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Find the key", 3, 7);
-    g2_37b6("that goes here and press", 3, 8);
-    g2_37b6("the UP ARROW.           ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Find the key", 3, 7);
+    draw_text_string("that goes here and press", 3, 8);
+    draw_text_string("the UP ARROW.           ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_02fb = 0;
-    g2_01d5();
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_0f2a(void)
+/* Displays the secret-tip card about read notes and waits for player input. */
+void show_secret_tip_read_notes(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Press the UP", 3, 7);
-    g2_37b6("ARROW to read the notes.", 3, 8);
-    g2_37b6("                        ", 3, 8);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Press the UP", 3, 7);
+    draw_text_string("ARROW to read the notes.", 3, 8);
+    draw_text_string("                        ", 3, 8);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_0fc1(void)
+/* Displays the secret-tip card about elevator and waits for player input. */
+void show_secret_tip_elevator(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Press the UP", 3, 7);
-    g2_37b6("ARROW to activate the   ", 3, 8);
-    g2_37b6("ELEVATORS.              ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Press the UP", 3, 7);
+    draw_text_string("ARROW to activate the   ", 3, 8);
+    draw_text_string("ELEVATORS.              ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void pascal g2_1058(register int a0)
+/* Toggles the sound setting, redraws its status, and waits for the toggle key to be released. */
+void pascal toggle_sound_setting(register int a0)
 {
-    g2_3d8c(a0, 3, 2);
+    draw_framed_dialog_box(a0, 3, 2);
     outport(0x3ce, 5);
-    while (d_a0fa_ == 0x1f) {
+    while (last_keyboard_scan_code == 0x1f) {
     }
-    g2_37b6("       Sound toggle", a0, 7);
-    if (d_0097 = !d_0097) {
-        g2_37b6("     The sound is ON", a0, 9);
+    draw_text_string("       Sound toggle", a0, 7);
+    if (sound_enabled = !sound_enabled) {
+        draw_text_string("     The sound is ON", a0, 9);
     } else {
-        g2_37b6("     The sound is OFF", a0, 9);
+        draw_text_string("     The sound is OFF", a0, 9);
         outportb(0x61, inportb(0x61) & 0xfd);
     }
     delay(300);
-    g2_2870(a0 + 24, 10);
-    while (d_a0fa_ == 0x1f) {
+    wait_input_animated_sprite(a0 + 24, 10);
+    while (last_keyboard_scan_code == 0x1f) {
     }
 }
 
-void pascal g2_10f0(register int a0)
+/* Toggles hint mode and updates the displayed hint state. */
+void pascal toggle_hint_mode(register int a0)
 {
-    g2_3d8c(a0, 3, 2);
+    draw_framed_dialog_box(a0, 3, 2);
     outport(0x3ce, 5);
-    while (d_a0fa_ == 0x23) {
+    while (last_keyboard_scan_code == 0x23) {
     }
-    g2_37b6("       Hint toggle ", a0, 7);
-    d_0b46 = !d_0b46;
-    if (d_0b46) {
-        g2_37b6("     Hint mode is ON", a0, 9);
-        d_5a11_ = 1;
-        d_5c6b_ = 1;
-        d_5554_ = 1;
-        d_637e_ = 1;
-        d_5ec8_ = 1;
-        d_555a_ = 1;
-        d_555c_ = 1;
-        d_5553_ = 1;
-        d_555b_ = 1;
-        d_68f7_ = 1;
-        d_5555_ = 1;
-        d_5c6a_ = 1;
+    draw_text_string("       Hint toggle ", a0, 7);
+    hint_mode_enabled = !hint_mode_enabled;
+    if (hint_mode_enabled) {
+        draw_text_string("     Hint mode is ON", a0, 9);
+        hint_revealed_object_7 = 1;
+        hint_revealed_object_9 = 1;
+        hint_revealed_object_2 = 1;
+        hint_revealed_object_11 = 1;
+        hint_revealed_object_10 = 1;
+        hint_revealed_object_4 = 1;
+        hint_revealed_object_6 = 1;
+        hint_revealed_object_1 = 1;
+        hint_revealed_object_5 = 1;
+        transporter_hint_pending = 1;
+        hint_revealed_object_3 = 1;
+        hint_revealed_object_8 = 1;
     } else {
-        g2_37b6("     Hint mode is OFF", a0, 9);
-        d_5a11_ = 0;
-        d_5c6b_ = 0;
-        d_5554_ = 0;
-        d_637e_ = 0;
-        d_5ec8_ = 0;
-        d_555a_ = 0;
-        d_555c_ = 0;
-        d_5553_ = 0;
-        d_555b_ = 0;
-        d_68f7_ = 0;
-        d_5555_ = 0;
-        d_5c6a_ = 0;
+        draw_text_string("     Hint mode is OFF", a0, 9);
+        hint_revealed_object_7 = 0;
+        hint_revealed_object_9 = 0;
+        hint_revealed_object_2 = 0;
+        hint_revealed_object_11 = 0;
+        hint_revealed_object_10 = 0;
+        hint_revealed_object_4 = 0;
+        hint_revealed_object_6 = 0;
+        hint_revealed_object_1 = 0;
+        hint_revealed_object_5 = 0;
+        transporter_hint_pending = 0;
+        hint_revealed_object_3 = 0;
+        hint_revealed_object_8 = 0;
     }
-    g2_2870(a0 + 24, 10);
-    while (d_a0fa_ == 0x23) {
+    wait_input_animated_sprite(a0 + 24, 10);
+    while (last_keyboard_scan_code == 0x23) {
     }
 }
 
-void pascal g2_11f2(register int a0)
+/* Displays the paused state and waits for the player to resume or select another input. */
+void pascal pause_until_resume_input(register int a0)
 {
-    g2_3d8c(a0, 3, 1);
+    draw_framed_dialog_box(a0, 3, 1);
     outport(0x3ce, 5);
-    g2_37b6("       Game PAUSED. ", a0, 7);
-    while (d_a0fa_ == 0x19) {
+    draw_text_string("       Game PAUSED. ", a0, 7);
+    while (last_keyboard_scan_code == 0x19) {
     }
-    g2_2870(a0 + 24, 8);
+    wait_input_animated_sprite(a0 + 24, 8);
 }
 
-void pascal g2_1241(register int a0)
+/* Prompts the player for the for save slot and records the response. */
+void pascal prompt_for_save_slot(register int a0)
 {
-    g2_3d8c(a0, 3, 2);
-    g2_37b6("      Save a game.      ", a0, 7);
-    g2_37b6("    Which game number   ", a0, 8);
-    g2_37b6("  do you want to save?  ", a0, 9);
-    g2_37b6("      Choose (1-9):     ", a0, 10);
-    while (d_a0fa_ == 0x1f) {
+    draw_framed_dialog_box(a0, 3, 2);
+    draw_text_string("      Save a game.      ", a0, 7);
+    draw_text_string("    Which game number   ", a0, 8);
+    draw_text_string("  do you want to save?  ", a0, 9);
+    draw_text_string("      Choose (1-9):     ", a0, 10);
+    while (last_keyboard_scan_code == 0x1f) {
     }
-    g2_2870(a0 + 20, 10);
+    wait_input_animated_sprite(a0 + 20, 10);
 }
 
-void pascal g2_12ad(register int a0)
+/* Prompts the player for the for restore slot and records the response. */
+void pascal prompt_for_restore_slot(register int a0)
 {
-    g2_3d8c(a0, 3, 2);
-    g2_37b6("      Restore a game.   ", a0, 7);
-    g2_37b6("    Which game number   ", a0, 8);
-    g2_37b6("  do you want to load?  ", a0, 9);
-    g2_37b6("      Choose (1-9):     ", a0, 10);
-    while (d_a0fa_ == 0x13) {
+    draw_framed_dialog_box(a0, 3, 2);
+    draw_text_string("      Restore a game.   ", a0, 7);
+    draw_text_string("    Which game number   ", a0, 8);
+    draw_text_string("  do you want to load?  ", a0, 9);
+    draw_text_string("      Choose (1-9):     ", a0, 10);
+    while (last_keyboard_scan_code == 0x13) {
     }
-    g2_2870(a0 + 20, 10);
+    wait_input_animated_sprite(a0 + 20, 10);
 }
 
-void g2_1319(void)
+/* Restores the prior timer vector, reprograms PIT channel zero, and silences the PC speaker. */
+void restore_timer_interrupt_vector(void)
 {
     outportb(0x43, 0x36);
     outportb(0x40, 0);
     outportb(0x40, 0);
-    setvect(8, d_a0f4_);
+    setvect(8, previous_timer_interrupt_vector);
     outportb(0x61, inportb(0x61) & 0xfd);
 }
 
-void pascal g2_1340(register int a0, register int a1)
+/* Waits for the for keyboard or joystick condition or input event. */
+void pascal wait_for_keyboard_or_joystick(register int a0, register int a1)
 {
     char x;
     char y;
 
-    d_a0fa_ = 0;
+    last_keyboard_scan_code = 0;
     x = inportb(0x201) & 0x10;
     y = inportb(0x201) & 0x20;
-    while (d_a0fa_ == 0 && x != 0 && y != 0) {
+    while (last_keyboard_scan_code == 0 && x != 0 && y != 0) {
         x = inportb(0x201) & 0x10;
         y = inportb(0x201) & 0x20;
-        asm_0424(d_a0fb_ + 0x3520, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3520, a0, a1 * 8);
         delay(5);
-        asm_0424(d_a0fb_ + 0x35c0, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x35c0, a0, a1 * 8);
         delay(5);
-        asm_0424(d_a0fb_ + 0x3660, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3660, a0, a1 * 8);
         delay(5);
-        asm_0424(d_a0fb_ + 0x3700, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3700, a0, a1 * 8);
         delay(5);
     }
-    asm_0424(d_a0fb_ + 0x37a0, a0, a1 * 8);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x37a0, a0, a1 * 8);
 }
 
-void g2_1454(void)
+/* Draws the get ready message using the active page and graphics resources. */
+void draw_get_ready_message(void)
 {
-    d_6e0a_ = 0;
-    g2_3d8c(2, 5, 1);
-    g2_37b6("     Get ready Duke,    ", 3, 11);
-    g2_37b6("    you're going in!!   ", 3, 12);
+    draw_page_index = 0;
+    draw_framed_dialog_box(2, 5, 1);
+    draw_text_string("     Get ready Duke,    ", 3, 11);
+    draw_text_string("    you're going in!!   ", 3, 12);
 }
 
-void pascal g2_148f(register int a0)
+/* Draws the game setup menu using the active page and graphics resources. */
+void pascal draw_game_setup_menu(register int a0)
 {
-    g2_37b6("        GAME SETUP", a0, 6);
-    g2_37b6("      J)oystick mode", a0, 8);
-    g2_37b6("      K)eyboard mode", a0, 9);
-    g2_37b6("      S)ound toggle", a0, 10);
-    g2_37b6("      H)int toggle", a0, 11);
+    draw_text_string("        GAME SETUP", a0, 6);
+    draw_text_string("      J)oystick mode", a0, 8);
+    draw_text_string("      K)eyboard mode", a0, 9);
+    draw_text_string("      S)ound toggle", a0, 10);
+    draw_text_string("      H)int toggle", a0, 11);
 }
 
-void g2_14e6(void)
+/* Displays the level restart prompt and returns the player's choice. */
+void confirm_level_restart(void)
 {
     do {
-    } while (d_a0fa_ == 0x44);
-    g2_3d8c(2, 1, 1);
-    g2_37b6("Are you sure you want to", 3, 3);
-    g2_37b6("RESTART the level(Y/N)? ", 3, 4);
-    g2_2870(26, 4);
-    d_d4c0_ = 0;
-    d_d134_ = 0;
+    } while (last_keyboard_scan_code == 0x44);
+    draw_framed_dialog_box(2, 1, 1);
+    draw_text_string("Are you sure you want to", 3, 3);
+    draw_text_string("RESTART the level(Y/N)? ", 3, 4);
+    wait_input_animated_sprite(26, 4);
+    control_right_pressed = 0;
+    control_down_pressed = 0;
 }
 
-void g2_1534(void)
+/* Displays the secret-tip card about soda and waits for player input. */
+void show_secret_tip_soda(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Drink soda  ", 3, 7);
-    g2_37b6("to increase your health!", 3, 8);
-    g2_37b6("                        ", 3, 8);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Drink soda  ", 3, 7);
+    draw_text_string("to increase your health!", 3, 8);
+    draw_text_string("                        ", 3, 8);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_15c9(void)
+/* Displays the secret-tip card about turkey and waits for player input. */
+void show_secret_tip_turkey(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Eat turkey  ", 3, 7);
-    g2_37b6("to increase your health!", 3, 8);
-    g2_37b6("                        ", 3, 8);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Eat turkey  ", 3, 7);
+    draw_text_string("to increase your health!", 3, 8);
+    draw_text_string("                        ", 3, 8);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_165e(void)
+/* Displays the secret-tip card about nuclear and waits for player input. */
+void show_secret_tip_nuclear(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: The nuclear ", 3, 7);
-    g2_37b6("molecule increases your ", 3, 8);
-    g2_37b6("health to maximum!      ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: The nuclear ", 3, 7);
+    draw_text_string("molecule increases your ", 3, 8);
+    draw_text_string("health to maximum!      ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_16f3(void)
+/* Displays the secret-tip card about open door and waits for player input. */
+void show_secret_tip_open_door(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Press the UP", 3, 7);
-    g2_37b6("ARROW to open the DOOR.", 3, 8);
-    g2_37b6("                        ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Press the UP", 3, 7);
+    draw_text_string("ARROW to open the DOOR.", 3, 8);
+    draw_text_string("                        ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_178a(void)
+/* Displays the secret-tip card about robohand and waits for player input. */
+void show_secret_tip_robohand(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Press the UP", 3, 7);
-    g2_37b6("ARROW here after you   ", 3, 8);
-    g2_37b6("have found the ROBOHAND.", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Press the UP", 3, 7);
+    draw_text_string("ARROW here after you   ", 3, 8);
+    draw_text_string("have found the ROBOHAND.", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_1821(void)
+/* Displays the secret-tip card about access card and waits for player input. */
+void show_secret_tip_access_card(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Find the    ", 3, 7);
-    g2_37b6("ACCESS CARD and press   ", 3, 8);
-    g2_37b6("the UP ARROW here.      ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Find the    ", 3, 7);
+    draw_text_string("ACCESS CARD and press   ", 3, 8);
+    draw_text_string("the UP ARROW here.      ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_18b8(void)
+/* Displays the secret-tip card about transporter and waits for player input. */
+void show_secret_tip_transporter(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Press the UP", 3, 7);
-    g2_37b6("ARROW to activate the   ", 3, 8);
-    g2_37b6("TRANSPORTER.            ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Press the UP", 3, 7);
+    draw_text_string("ARROW to activate the   ", 3, 8);
+    draw_text_string("TRANSPORTER.            ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void pascal g2_194d(register int a0)
+/* Draws the keyboard binding values using the active page and graphics resources. */
+void pascal draw_keyboard_binding_values(register int a0)
 {
-    g2_37b6(d_00a1[(unsigned char)d_02f4].field, a0 + 17, 9);
-    g2_37b6(d_00a1[(unsigned char)d_02f5].field, a0 + 17, 10);
-    g2_37b6(d_00a1[(unsigned char)d_02f6].field, a0 + 17, 11);
-    g2_37b6(d_00a1[(unsigned char)d_02f7].field, a0 + 17, 12);
-    g2_37b6(d_00a1[(unsigned char)d_02f8].field, a0 + 17, 13);
-    g2_37b6(d_00a1[(unsigned char)d_02f9].field, a0 + 17, 14);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_up].display_label, a0 + 17, 9);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_down].display_label, a0 + 17, 10);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_left].display_label, a0 + 17, 11);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_right].display_label, a0 + 17, 12);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_fire].display_label, a0 + 17, 13);
+    draw_text_string(keyboard_character_map_entries[(unsigned char)key_binding_jump].display_label, a0 + 17, 14);
 }
 
-void pascal g2_1a0d(register int a0)
+/* Draws the in game help menu using the active page and graphics resources. */
+void pascal draw_in_game_help_menu(register int a0)
 {
-    g2_37b6("      DUKE HELP MENU", a0, 4);
-    g2_37b6("      --------------", a0, 5);
-    g2_37b6("      S)ave a game", a0, 7);
-    g2_37b6("      I)nstructions", a0, 8);
-    g2_37b6("      G)ame Setup", a0, 9);
-    g2_37b6("      H)igh scores", a0, 10);
-    g2_37b6("    F10) Restart Level", a0, 11);
+    draw_text_string("      DUKE HELP MENU", a0, 4);
+    draw_text_string("      --------------", a0, 5);
+    draw_text_string("      S)ave a game", a0, 7);
+    draw_text_string("      I)nstructions", a0, 8);
+    draw_text_string("      G)ame Setup", a0, 9);
+    draw_text_string("      H)igh scores", a0, 10);
+    draw_text_string("    F10) Restart Level", a0, 11);
 }
 
-void g2_1a82(void)
+/* Displays the secret-tip card about insert card and waits for player input. */
+void show_secret_tip_insert_card(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: Find the    ", 3, 7);
-    g2_37b6("ACCESS CARD first and   ", 3, 8);
-    g2_37b6("then insert it in here. ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: Find the    ", 3, 7);
+    draw_text_string("ACCESS CARD first and   ", 3, 8);
+    draw_text_string("then insert it in here. ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void g2_1b19(void)
+/* Displays the secret-tip card about lock key and waits for player input. */
+void show_secret_tip_lock_key(void)
 {
-    d_a0fa_ = 0;
-    g1_0042(0x19);
-    g2_3d8c(2, 3, 2);
-    g2_37b6("Secret Tip: You need the", 3, 7);
-    g2_37b6("correct key before      ", 3, 8);
-    g2_37b6("you can use this lock.  ", 3, 9);
-    g2_37b6("      Press ENTER:      ", 3, 10);
+    last_keyboard_scan_code = 0;
+    request_priority_sound_effect(0x19);
+    draw_framed_dialog_box(2, 3, 2);
+    draw_text_string("Secret Tip: You need the", 3, 7);
+    draw_text_string("correct key before      ", 3, 8);
+    draw_text_string("you can use this lock.  ", 3, 9);
+    draw_text_string("      Press ENTER:      ", 3, 10);
     enable();
     do {
-        g2_2870(26, 10);
-        d_d4c0_ = 0;
-        d_d134_ = 0;
-    } while (d_a0fa_ != 0x1c);
+        wait_input_animated_sprite(26, 10);
+        control_right_pressed = 0;
+        control_down_pressed = 0;
+    } while (last_keyboard_scan_code != 0x1c);
     disable();
-    d_a0fa_ = 0;
-    d_02fb = 0;
-    g2_01d5();
+    last_keyboard_scan_code = 0;
+    timer_tick_counter = 0;
+    select_and_show_video_page();
 }
 
-void pascal g2_1bb0(register int a0)
+/* Displays the save location warning screen or message and waits for the associated input when
+   required. */
+void pascal show_save_location_warning(register int a0)
 {
-    g2_3d8c(a0, 2, 2);
-    g2_37b6(" You can only save a game", a0, 6);
-    g2_37b6("  in the main hallways.", a0, 7);
+    draw_framed_dialog_box(a0, 2, 2);
+    draw_text_string(" You can only save a game", a0, 6);
+    draw_text_string("  in the main hallways.", a0, 7);
     do {
-    } while (d_a0fa_ == 0x1f);
-    g2_2870(a0 + 24, 7);
+    } while (last_keyboard_scan_code == 0x1f);
+    wait_input_animated_sprite(a0 + 24, 7);
 }
 
-void pascal g2_1bfb(register int a0)
+/* Displays the keyboard controls help screen or message and waits for the associated input when
+   required. */
+void pascal show_keyboard_controls_help(register int a0)
 {
-    g2_37b6("Important Keys:         ", a0 + 1, 4);
-    g2_37b6("  CTRL - Jump           ", a0 + 1, 5);
-    g2_37b6("  ALT  - Fire           ", a0 + 1, 6);
-    g2_37b6("  Cursor Keys - Move Man", a0 + 1, 7);
-    g2_37b6("  Up Cursor - Action Key", a0 + 1, 8);
-    g2_37b6("                        ", a0 + 1, 9);
-    g2_37b6("Change keys by choosing ", a0 + 1, 10);
-    g2_37b6("option \"K\" in HELP MENU.", a0 + 1, 11);
-    g2_37b6("                        ", a0 + 1, 12);
-    g2_37b6("  \"S\" - Toggle Sound    ", a0 + 1, 13);
-    g2_37b6("  \"H\" - Toggle Hint Mode", a0 + 1, 14);
-    g2_37b6("  F10 - Restart Level   ", a0 + 1, 15);
-    g2_37b6("  ESC - Quit Game       ", a0 + 1, 16);
-    g2_37b6("  \"<\" - Decrease Speed  ", a0 + 1, 17);
-    g2_37b6("  \">\" - Increase Speed  ", a0 + 1, 18);
-    g2_37b6("                        ", a0 + 1, 19);
-    g2_37b6("     Press any key.     ", a0 + 1, 20);
-    while ((d_a0fa_ & 0x80) == 0) {
+    draw_text_string("Important Keys:         ", a0 + 1, 4);
+    draw_text_string("  CTRL - Jump           ", a0 + 1, 5);
+    draw_text_string("  ALT  - Fire           ", a0 + 1, 6);
+    draw_text_string("  Cursor Keys - Move Man", a0 + 1, 7);
+    draw_text_string("  Up Cursor - Action Key", a0 + 1, 8);
+    draw_text_string("                        ", a0 + 1, 9);
+    draw_text_string("Change keys by choosing ", a0 + 1, 10);
+    draw_text_string("option \"K\" in HELP MENU.", a0 + 1, 11);
+    draw_text_string("                        ", a0 + 1, 12);
+    draw_text_string("  \"S\" - Toggle Sound    ", a0 + 1, 13);
+    draw_text_string("  \"H\" - Toggle Hint Mode", a0 + 1, 14);
+    draw_text_string("  F10 - Restart Level   ", a0 + 1, 15);
+    draw_text_string("  ESC - Quit Game       ", a0 + 1, 16);
+    draw_text_string("  \"<\" - Decrease Speed  ", a0 + 1, 17);
+    draw_text_string("  \">\" - Increase Speed  ", a0 + 1, 18);
+    draw_text_string("                        ", a0 + 1, 19);
+    draw_text_string("     Press any key.     ", a0 + 1, 20);
+    while ((last_keyboard_scan_code & 0x80) == 0) {
     }
 }
 
-void pascal g2_1d40(int a0)
+/* Draws the high score table using the active page and graphics resources. */
+void pascal draw_high_score_table(int a0)
 {
     char buffer[20];
     register int i;
 
-    g2_2d58(a0);
-    g2_37b6(" --- HIGH  SCORES ---", a0 + 2, 3);
+    draw_text_panel_background(a0);
+    draw_text_string(" --- HIGH  SCORES ---", a0 + 2, 3);
     for (i = 0; i < 8; ++i) {
         ltoa((long)i + 1L, buffer, 10);
-        g2_37b6(buffer, a0 + 2, i * 2 + 5);
-        g2_37b6(".", a0 + 3, i * 2 + 5);
-        ltoa(d_4fa2_[i], buffer, 10);
-        g2_37b6(buffer, a0 + 6, i * 2 + 5);
-        g2_37b6(d_5008_[i], a0 + 14, i * 2 + 5);
+        draw_text_string(buffer, a0 + 2, i * 2 + 5);
+        draw_text_string(".", a0 + 3, i * 2 + 5);
+        ltoa(high_score_values[i], buffer, 10);
+        draw_text_string(buffer, a0 + 6, i * 2 + 5);
+        draw_text_string(high_score_player_names[i], a0 + 14, i * 2 + 5);
     }
 }
 
-void g2_1e1b(void)
+/* Writes the high score table to the game's selected file or data buffer. */
+void save_high_score_table(void)
 {
     FILE *stream;
     register int i;
@@ -1434,105 +1485,117 @@ void g2_1e1b(void)
     stream = fopen("HIGHS.dn3", "w+");
 #endif
     for (i = 0; i < 10; i++) {
-        fprintf(stream, "%lu", d_4fa2_[i]);
-        fprintf(stream, "%s\n", d_5008_[i]);
+        fprintf(stream, "%lu", high_score_values[i]);
+        fprintf(stream, "%s\n", high_score_player_names[i]);
     }
     fclose(stream);
 }
 
-void g2_1e97(void)
+/* Programs PIT channel zero and installs the timer-and-sound handler at interrupt vector 8. */
+void install_timer_interrupt(void)
 {
     outportb(0x43, 0x36);
     outportb(0x40, 0x51);
     outportb(0x40, 0x20);
     disable();
-    d_a8d8_ = 0;
-    d_d579_ = 0;
-    d_02fb = 0;
-    d_0097 = 1;
-    d_a0f4_ = getvect(8);
-    setvect(8, g2_25fc);
+    sound_interrupt_active_state = 0;
+    current_sound_priority = 0;
+    timer_tick_counter = 0;
+    sound_enabled = 1;
+    previous_timer_interrupt_vector = getvect(8);
+    setvect(8, timer_sound_interrupt_handler);
     enable();
 }
 
-void pascal g2_1ee1(int a0)
+/* Displays the instruction screen screen or message and waits for the associated input when
+   required. */
+void pascal show_instruction_screen(int a0)
 {
-    g2_2d58(a0);
+    draw_text_panel_background(a0);
     outport(0x3ce, 5);
-    g2_37b6("       Instructions ", a0, 3);
-    g2_1bfb(a0);
-    g2_2870(26, 20);
+    draw_text_string("       Instructions ", a0, 3);
+    show_keyboard_controls_help(a0);
+    wait_input_animated_sprite(26, 20);
 }
 
-void g2_1f24(void)
+/* Displays the loading status screen or message and waits for the associated input when
+   required. */
+void show_loading_status(void)
 {
-    g2_3d8c(7, 5, 1);
-    g2_37b6("   Loading Duke Nukum,", 8, 11);
-    g2_37b6("      please wait...  ", 8, 12);
+    draw_framed_dialog_box(7, 5, 1);
+    draw_text_string("   Loading Duke Nukum,", 8, 11);
+    draw_text_string("      please wait...  ", 8, 12);
 }
 
-void pascal g2_1f5a(int a0)
+/* Displays the joystick mode status screen or message and waits for the associated input when
+   required. */
+void pascal show_joystick_mode_status(int a0)
 {
-    g2_3d8c(a0, 3, 7);
+    draw_framed_dialog_box(a0, 3, 7);
     outport(0x3ce, 5);
-    g2_37b6("      Joystick mode", a0, 7);
+    draw_text_string("      Joystick mode", a0, 7);
     delay(100);
 }
 
-void g2_1f9c(void)
+/* Draws the current planar sprite using the active page and graphics resources. */
+void draw_current_planar_sprite(void)
 {
-    asm_05eb(d_6e0a_);
-    asm_0424(d_a0fb_ + 0x2800, 0x24, d_9b38_ + 0xa0);
-    asm_05eb(!d_6e0a_);
-    asm_0424(d_a0fb_ + 0x2800, 0x24, d_9b38_ + 0xa0);
+    select_draw_page(draw_page_index);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2800, 0x24, episode_sprite_resource_table + 0xa0);
+    select_draw_page(!draw_page_index);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2800, 0x24, episode_sprite_resource_table + 0xa0);
 }
 
-void pascal g2_1ffa(char far* bitmap)
+/* Draws the alternate planar sprite using the active page and graphics resources. */
+void pascal draw_alternate_planar_sprite(char far* bitmap)
 {
-    asm_05eb(d_6e0a_);
-    asm_0424(bitmap, d_9682_ + 0x1e, d_9b38_ + 0xa0);
-    asm_05eb(!d_6e0a_);
-    asm_0424(bitmap, d_9682_ + 0x1e, d_9b38_ + 0xa0);
-    d_9682_ += 2;
+    select_draw_page(draw_page_index);
+    blit_planar_sprite_rows(bitmap, alternate_sprite_draw_offset + 0x1e, episode_sprite_resource_table + 0xa0);
+    select_draw_page(!draw_page_index);
+    blit_planar_sprite_rows(bitmap, alternate_sprite_draw_offset + 0x1e, episode_sprite_resource_table + 0xa0);
+    alternate_sprite_draw_offset += 2;
 }
 
-void g2_205f(char far *filename)
+/* Writes the keyboard bindings to the game's selected file or data buffer. */
+void save_keyboard_bindings(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "wb");
-    fputc(d_02f4, stream);
-    fputc(d_02f5, stream);
-    fputc(d_02f6, stream);
-    fputc(d_02f7, stream);
-    fputc(d_02f8, stream);
-    fputc(d_02f9, stream);
+    fputc(key_binding_up, stream);
+    fputc(key_binding_down, stream);
+    fputc(key_binding_left, stream);
+    fputc(key_binding_right, stream);
+    fputc(key_binding_fire, stream);
+    fputc(key_binding_jump, stream);
     fclose(stream);
 }
 
-void g2_2104(char far *filename)
+/* Loads the keyboard bindings from the caller-selected file or resource. */
+void load_keyboard_bindings(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
     if (stream) {
-        d_02f4 = fgetc(stream);
-        d_02f5 = fgetc(stream);
-        d_02f6 = fgetc(stream);
-        d_02f7 = fgetc(stream);
-        d_02f8 = fgetc(stream);
-        d_02f9 = fgetc(stream);
+        key_binding_up = fgetc(stream);
+        key_binding_down = fgetc(stream);
+        key_binding_left = fgetc(stream);
+        key_binding_right = fgetc(stream);
+        key_binding_fire = fgetc(stream);
+        key_binding_jump = fgetc(stream);
     }
     fclose(stream);
 }
 
-void pascal g2_219d(char a0)
+/* Restores the game state from slot from its saved state. */
+void pascal restore_game_state_from_slot(char a0)
 {
     char previous;
     FILE *stream;
     char far *filename;
 
-    previous = d_a0fa_;
+    previous = last_keyboard_scan_code;
 #if EPISODE == 1
     filename = "saved .dn1";
 #elif EPISODE == 2
@@ -1543,69 +1606,72 @@ void pascal g2_219d(char a0)
     filename[5] = a0;
     stream = fopen(filename, "rb");
     if (stream == 0) {
-        g2_3d8c(7, 2, 1);
-        g2_37b6("     Game not found!!", 7, 5);
+        draw_framed_dialog_box(7, 2, 1);
+        draw_text_string("     Game not found!!", 7, 5);
         fclose(stream);
-        while (d_a0fa_ == previous) {
+        while (last_keyboard_scan_code == previous) {
         }
-        d_a0fa_ = 0;
-        while (d_a0fa_ == 0) {
+        last_keyboard_scan_code = 0;
+        while (last_keyboard_scan_code == 0) {
         }
-        d_5318_ = 1;
+        game_session_abort_flag = 1;
         return;
     }
-    d_5318_ = 0;
-    d_009d = getw(stream);
-    d_009f = getw(stream);
-    d_0099 = getw(stream);
-    d_009b = getw(stream);
-    d_02fa = getw(stream);
-    d_c295_ = getw(stream);
-    d_798a_ = getw(stream);
-    d_a0f8_ = getw(stream);
-    d_4ed4_ = getw(stream);
-    d_cc82_ = getw(stream);
-    d_5a11_ = getw(stream);
-    d_5c6b_ = getw(stream);
-    d_5554_ = getw(stream);
-    d_637e_ = getw(stream);
-    d_5ec8_ = getw(stream);
-    d_555a_ = getw(stream);
-    d_555b_ = getw(stream);
-    d_68f7_ = getw(stream);
-    d_555c_ = getw(stream);
-    d_5553_ = getw(stream);
-    d_5555_ = getw(stream);
-    d_5c6a_ = getw(stream);
-    if (d_0b46 == 0) {
-        d_5a11_ = d_5c6b_ = d_5554_ = d_637e_ = d_5ec8_ = d_555a_ = d_555b_ = d_68f7_ = d_555c_ = d_5553_ = d_5555_ = d_5c6a_ = 0;
+    game_session_abort_flag = 0;
+    level_scroll_x = getw(stream);
+    level_map_y_offset = getw(stream);
+    player_screen_x = getw(stream);
+    player_screen_y = getw(stream);
+    current_level_index = getw(stream);
+    world_actor_count = getw(stream);
+    access_card_or_door_state = getw(stream);
+    player_contact_state = getw(stream);
+    title_graphic_frame_index = getw(stream);
+    actor_3020_active_state = getw(stream);
+    hint_revealed_object_7 = getw(stream);
+    hint_revealed_object_9 = getw(stream);
+    hint_revealed_object_2 = getw(stream);
+    hint_revealed_object_11 = getw(stream);
+    hint_revealed_object_10 = getw(stream);
+    hint_revealed_object_4 = getw(stream);
+    hint_revealed_object_5 = getw(stream);
+    transporter_hint_pending = getw(stream);
+    hint_revealed_object_6 = getw(stream);
+    hint_revealed_object_1 = getw(stream);
+    hint_revealed_object_3 = getw(stream);
+    hint_revealed_object_8 = getw(stream);
+    if (hint_mode_enabled == 0) {
+        hint_revealed_object_7 = hint_revealed_object_9 = hint_revealed_object_2 = hint_revealed_object_11 = hint_revealed_object_10 = hint_revealed_object_4 = hint_revealed_object_5 = transporter_hint_pending = hint_revealed_object_6 = hint_revealed_object_1 = hint_revealed_object_3 = hint_revealed_object_8 = 0;
     }
-    fscanf(stream, "%ld", &d_68f8_);
+    fscanf(stream, "%ld", &player_score);
     fclose(stream);
 }
 
-void g2_23f7(void)
+/* Draws the high score name screen using the active page and graphics resources. */
+void draw_high_score_name_screen(void)
 {
-    g2_37b6("       High Score       ", 8, 5);
-    g2_37b6("------------------------", 8, 6);
-    g2_37b6("                        ", 8, 7);
-    g2_37b6("Enter your name into the", 8, 8);
-    g2_37b6("Duke Nukum Hame of FAME.", 8, 9);
-    g2_37b6("       ----------       ", 8, 11);
-    g2_37b6(" Press ENTER when done. ", 8, 13);
+    draw_text_string("       High Score       ", 8, 5);
+    draw_text_string("------------------------", 8, 6);
+    draw_text_string("                        ", 8, 7);
+    draw_text_string("Enter your name into the", 8, 8);
+    draw_text_string("Duke Nukum Hame of FAME.", 8, 9);
+    draw_text_string("       ----------       ", 8, 11);
+    draw_text_string(" Press ENTER when done. ", 8, 13);
 }
 
-void g2_2473(void)
+/* Waits for the controller button condition or input event. */
+void wait_controller_button(void)
 {
-    g2_3d8c(7, 0, 1);
-    if (d_cc81_ != 0) {
-        g2_37b6("\040\040\040\040\040Press a button..\040\040\040", 7, 1);
+    draw_framed_dialog_box(7, 0, 1);
+    if (control_confirmation_state != 0) {
+        draw_text_string("\040\040\040\040\040Press a button..\040\040\040", 7, 1);
     } else {
-        g2_37b6("\040\040\040\040\040\040Press any key.\040\040\040\040", 7, 1);
+        draw_text_string("\040\040\040\040\040\040Press any key.\040\040\040\040", 7, 1);
     }
 }
 
-void g2_24b1(void)
+/* Loads the high score table from the caller-selected file or resource. */
+void load_high_score_table(void)
 {
     FILE *stream;
     register int i;
@@ -1618,138 +1684,146 @@ void g2_24b1(void)
     stream = fopen("HIGHS.dn3", "r");
 #endif
     if (stream == 0) {
-        d_4fa2_[0] = 40000L;
-        strcpy(d_5008_[0], "TODD");
-        d_4fa6_[0] = 30000L;
-        strcpy(d_5008_[1], "SCOTT");
-        d_4faa_[0] = 20000L;
-        strcpy(d_5008_[2], "GEORGE");
-        d_4fae_[0] = 10000L;
-        strcpy(d_5008_[3], "AL");
-        d_4fb2_[0] = 500L;
-        strcpy(d_5008_[4], "JOHN");
+        high_score_values[0] = 40000L;
+        strcpy(high_score_player_names[0], "TODD");
+        high_score_entry_1_alias[0] = 30000L;
+        strcpy(high_score_player_names[1], "SCOTT");
+        high_score_entry_2_alias[0] = 20000L;
+        strcpy(high_score_player_names[2], "GEORGE");
+        high_score_entry_3_alias[0] = 10000L;
+        strcpy(high_score_player_names[3], "AL");
+        high_score_entry_4_alias[0] = 500L;
+        strcpy(high_score_player_names[4], "JOHN");
     } else {
         for (i = 0; i < 10; i++) {
-            fscanf(stream, "%lu", &d_4fa2_[i]);
-            fscanf(stream, "%[^\n]s", d_5008_[i]);
+            fscanf(stream, "%lu", &high_score_values[i]);
+            fscanf(stream, "%[^\n]s", high_score_player_names[i]);
         }
     }
     fclose(stream);
 }
 
-void g2_25cd(void)
+/* Samples joystick button bits and marks the joystick connected only when both tested buttons
+   are released. */
+void detect_joystick_connection(void)
 {
     char first;
     char second;
 
-    d_d56b_ = 1;
+    joystick_enabled = 1;
     first = inportb(0x201) & 0x10;
     second = inportb(0x201) & 0x20;
     if (first == 0) {
-        d_d56b_ = 0;
+        joystick_enabled = 0;
     } else if (second == 0) {
-        d_d56b_ = 0;
+        joystick_enabled = 0;
     }
 }
 
-void interrupt g2_25fc(void)
+/* Advances the game tick, plays the next queued PC-speaker period, and chains the BIOS timer at
+   its divider. */
+void interrupt timer_sound_interrupt_handler(void)
 {
     register unsigned int period;
 
-    if (d_530b_ != 0) {
-        d_530b_ = 0;
-        d_0f2a = 0;
-        d_a8d8_ = 1;
+    if (pending_sound_priority_flag != 0) {
+        pending_sound_priority_flag = 0;
+        current_sound_sample_position = 0;
+        sound_interrupt_active_state = 1;
     }
 
-    if (((int far *)d_cbb5_[(unsigned char)d_531b_])[d_0f2a] == -1) {
-        d_a8d8_ = 0;
-        d_d579_ = 0;
+    if (((int far *)sound_sample_pointer_table[(unsigned char)pending_sound_effect_index])[current_sound_sample_position] == -1) {
+        sound_interrupt_active_state = 0;
+        current_sound_priority = 0;
         outportb(0x61, inportb(0x61) & 0xfd);
     }
 
-    if (d_a8d8_ != 0) {
-        period = ((int far *)d_cbb5_[(unsigned char)d_531b_])[d_0f2a];
-        if (period == 0 && d_0097 != 0) {
+    if (sound_interrupt_active_state != 0) {
+        period = ((int far *)sound_sample_pointer_table[(unsigned char)pending_sound_effect_index])[current_sound_sample_position];
+        if (period == 0 && sound_enabled != 0) {
             outportb(0x61, inportb(0x61) & 0xfc);
-        } else if (d_0097 != 0) {
+        } else if (sound_enabled != 0) {
             outportb(0x43, 0xb6);
             outportb(0x42, period & 0x100);
             outportb(0x42, period >> 8);
             outportb(0x61, inportb(0x61) | 3);
         }
-        ++d_0f2a;
+        ++current_sound_sample_position;
     } else {
         outportb(0x61, inportb(0x61) & 0xfd);
     }
 
-    ++d_02fb;
-    ++d_d718_;
-    if (d_d718_ == 8) {
-        d_d718_ = 0;
-        d_a0f4_();
+    ++timer_tick_counter;
+    ++bios_timer_chain_divider;
+    if (bios_timer_chain_divider == 8) {
+        bios_timer_chain_divider = 0;
+        previous_timer_interrupt_vector();
     } else {
         outportb(0x20, 0x20);
     }
 }
 
-void g2_26d5(void)
+/* Displays the episode story intro screen or message and waits for the associated input when
+   required. */
+void show_episode_story_intro(void)
 {
 #if EPISODE == 1
-    g2_37b6("      EPISODE ONE:  SHRAPNEL CITY       ", 0, 12);
-    g2_37b6("  Your mission as Duke Nukum:  A plane  ", 0, 14);
-    g2_37b6(" will fly over Dr. Proton's sieged city ", 0, 15);
-    g2_37b6("   and drop Duke on a huge skyscraper.  ", 0, 16);
-    g2_37b6(" Duke must proceed to Dr. Proton's well ", 0, 17);
-    g2_37b6(" guarded hideout believed to be hidden  ", 0, 18);
-    g2_37b6("  deep underground. Dr. Proton must be  ", 0, 19);
-    g2_37b6("    stopped or the world is doomed!     ", 0, 20);
-    g2_37b6("             Press any key.             ", 0, 24);
+    draw_text_string("      EPISODE ONE:  SHRAPNEL CITY       ", 0, 12);
+    draw_text_string("  Your mission as Duke Nukum:  A plane  ", 0, 14);
+    draw_text_string(" will fly over Dr. Proton's sieged city ", 0, 15);
+    draw_text_string("   and drop Duke on a huge skyscraper.  ", 0, 16);
+    draw_text_string(" Duke must proceed to Dr. Proton's well ", 0, 17);
+    draw_text_string(" guarded hideout believed to be hidden  ", 0, 18);
+    draw_text_string("  deep underground. Dr. Proton must be  ", 0, 19);
+    draw_text_string("    stopped or the world is doomed!     ", 0, 20);
+    draw_text_string("             Press any key.             ", 0, 24);
 #elif EPISODE == 2
-    g2_37b6("    EPISODE TWO - MISSION: MOONBASE     ", 0, 11);
-    g2_37b6("   When we last saw Duke he had just    ", 0, 13);
-    g2_37b6("   barely survived an encounter with    ", 0, 14);
-    g2_37b6("  Dr. Proton. Somehow, Duke managed to  ", 0, 15);
-    g2_37b6(" penetrate Proton's captured city, beat ", 0, 16);
-    g2_37b6(" his Techbot guards,  and forced Proton ", 0, 17);
-    g2_37b6("     to flee to his moonbase. Using    ", 0, 18);
-    g2_37b6("  Dr. Proton's time transport machine,  ", 0, 19);
-    g2_37b6("  Duke has decided to chase him to the  ", 0, 20);
-    g2_37b6("   Moon, and stop him cold...  (well,   ", 0, 21);
-    g2_37b6("      at least that's the plan!)        ", 0, 22);
-    g2_37b6("             Press any key.             ", 0, 24);
+    draw_text_string("    EPISODE TWO - MISSION: MOONBASE     ", 0, 11);
+    draw_text_string("   When we last saw Duke he had just    ", 0, 13);
+    draw_text_string("   barely survived an encounter with    ", 0, 14);
+    draw_text_string("  Dr. Proton. Somehow, Duke managed to  ", 0, 15);
+    draw_text_string(" penetrate Proton's captured city, beat ", 0, 16);
+    draw_text_string(" his Techbot guards,  and forced Proton ", 0, 17);
+    draw_text_string("     to flee to his moonbase. Using    ", 0, 18);
+    draw_text_string("  Dr. Proton's time transport machine,  ", 0, 19);
+    draw_text_string("  Duke has decided to chase him to the  ", 0, 20);
+    draw_text_string("   Moon, and stop him cold...  (well,   ", 0, 21);
+    draw_text_string("      at least that's the plan!)        ", 0, 22);
+    draw_text_string("             Press any key.             ", 0, 24);
 #else
-    g2_37b6(" EPISODE THREE:  TRAPPED IN THE FUTURE! ", 0, 11);
-    g2_37b6("    Again, Duke foiled the mad plans    ", 0, 12);
-    g2_37b6("    of Dr. Proton.  His secret lunar    ", 0, 13);
-    g2_37b6("  fortress now wrecked, Dr. Proton has  ", 0, 14);
-    g2_37b6(" transported himself back to Earth, and ", 0, 15);
-    g2_37b6("  used his time machine to hide in the  ", 0, 16);
-    g2_37b6("   Earth's future. There he will once   ", 0, 17);
-    g2_37b6("  again create a huge army of Techbots  ", 0, 18);
-    g2_37b6("   that will allow him to control the   ", 0, 19);
-    g2_37b6(" world.  Of course, Duke will not stand ", 0, 20);
-    g2_37b6("   for this, and although he'd rather   ", 0, 21);
-    g2_37b6("   watch Oprah,  he heads off to stop   ", 0, 22);
-    g2_37b6("       Dr. Proton one more time...      ", 0, 23);
-    g2_37b6("             Press any key.             ", 0, 24);
+    draw_text_string(" EPISODE THREE:  TRAPPED IN THE FUTURE! ", 0, 11);
+    draw_text_string("    Again, Duke foiled the mad plans    ", 0, 12);
+    draw_text_string("    of Dr. Proton.  His secret lunar    ", 0, 13);
+    draw_text_string("  fortress now wrecked, Dr. Proton has  ", 0, 14);
+    draw_text_string(" transported himself back to Earth, and ", 0, 15);
+    draw_text_string("  used his time machine to hide in the  ", 0, 16);
+    draw_text_string("   Earth's future. There he will once   ", 0, 17);
+    draw_text_string("  again create a huge army of Techbots  ", 0, 18);
+    draw_text_string("   that will allow him to control the   ", 0, 19);
+    draw_text_string(" world.  Of course, Duke will not stand ", 0, 20);
+    draw_text_string("   for this, and although he'd rather   ", 0, 21);
+    draw_text_string("   watch Oprah,  he heads off to stop   ", 0, 22);
+    draw_text_string("       Dr. Proton one more time...      ", 0, 23);
+    draw_text_string("             Press any key.             ", 0, 24);
 #endif
 }
 
 /* Wait out an 0xE0 extended-key prefix in the keyboard byte, then return it
    with the release bit cleared (interrupts left disabled). */
-char g2_276f(void)
+/* Consumes an extended-key prefix and returns the normalized keyboard scan code. */
+char normalize_extended_key_code(void)
 {
-    if (d_a0fa_ == 0xe0) {
-        while (d_a0fa_ == 0xe0) {
+    if (last_keyboard_scan_code == 0xe0) {
+        while (last_keyboard_scan_code == 0xe0) {
         }
         disable();
-        return d_a0fa_ & 0x7f;
+        return last_keyboard_scan_code & 0x7f;
     }
-    return d_a0fa_;
+    return last_keyboard_scan_code;
 }
 
-void pascal g2_2789(long value, int x, int page)
+/* Converts an unsigned score to digits and draws it with the numeric glyph resource. */
+void pascal draw_unsigned_score_value(long value, int x, int page)
 {
     char text[16];
     register int si;
@@ -1759,129 +1833,134 @@ void pascal g2_2789(long value, int x, int page)
     di = strlen(text);
     si = di - 1;
     for (; si >= 0; --si) {
-        asm_05eb(1);
-        asm_053c(d_6b54_ + (text[di - si - 1] - '0') * 40 + 0x410,
-                 x - si, page * 8);
-        asm_05eb(0);
-        asm_053c(d_6b54_ + (text[di - si - 1] - '0') * 40 + 0x410,
-                 x - si, page * 8);
+        select_draw_page(1);
+        blit_planar_masked_glyph(font_glyph_data_buffer + (text[di - si - 1] - '0') * 40 + 0x410,
+                                 x - si, page * 8);
+        select_draw_page(0);
+        blit_planar_masked_glyph(font_glyph_data_buffer + (text[di - si - 1] - '0') * 40 + 0x410,
+                                 x - si, page * 8);
     }
-    asm_05eb(!d_6e0a_);
+    select_draw_page(!draw_page_index);
 }
 
 /* Wait for a key or joystick button, cycling a 4-frame animation at (x, y). */
-void pascal g2_2870(register int a0, register int a1)
+/* Waits for keyboard or joystick input while cycling the four-frame sprite animation at the
+   requested position. */
+void pascal wait_input_animated_sprite(register int a0, register int a1)
 {
     char x = 1;
     char y = 1;
 
-    d_a0fa_ = 0;
-    if (d_d56b_ != 0) {
-        g1_1076();
+    last_keyboard_scan_code = 0;
+    if (joystick_enabled != 0) {
+        wait_joystick_button_release();
         x = inportb(0x201) & 0x10;
         y = inportb(0x201) & 0x20;
     }
-    while (d_a0fa_ == 0 && x != 0 && y != 0) {
-        if (d_d56b_ != 0) {
+    while (last_keyboard_scan_code == 0 && x != 0 && y != 0) {
+        if (joystick_enabled != 0) {
             x = inportb(0x201) & 0x10;
             y = inportb(0x201) & 0x20;
         }
-        asm_0424(d_a0fb_ + 0x3520, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3520, a0, a1 * 8);
         delay(5);
-        asm_0424(d_a0fb_ + 0x35c0, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x35c0, a0, a1 * 8);
         delay(5);
-        asm_0424(d_a0fb_ + 0x3660, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3660, a0, a1 * 8);
         delay(5);
-        asm_0424(d_a0fb_ + 0x3700, a0, a1 * 8);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3700, a0, a1 * 8);
         delay(5);
     }
-    asm_0424(d_a0fb_ + 0x37a0, a0, a1 * 8);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x37a0, a0, a1 * 8);
 }
 
-void g2_29a2(void)
+/* Draws the fixed planar background and border template into the selected video page. */
+void draw_video_page_template(void)
 {
     register int si;
 
     si = 0x280;
     outport(0x3ce, 0x105);
     do {
-        asm_02ad(0x3000, si);
-        asm_02ad(0x3020, si + 0x1c);
+        blit_bitmap_to_video_page(0x3000, si);
+        blit_bitmap_to_video_page(0x3020, si + 0x1c);
         si += 0x280;
     } while (si < 0x1b80);
     si = 2;
     do {
-        asm_02ad(0x3040, si);
-        asm_02ad(0x3060, si + 0x1b80);
+        blit_bitmap_to_video_page(0x3040, si);
+        blit_bitmap_to_video_page(0x3060, si + 0x1b80);
         si += 2;
     } while (si < 0x1c);
-    asm_02ad(0x31c0, 0x141c);
-    asm_02ad(0x31c0, 0x065c);
-    asm_02ad(0x31c0, 0x0c9c);
-    asm_02ad(0x3080, 0);
-    asm_02ad(0x30a0, 0x001c);
-    asm_02ad(0x30c0, 0x1b9c);
-    asm_02ad(0x30e0, 0x1b80);
-    asm_02ad(0x3340, 0x1b8b);
-    asm_02ad(0x3360, 0x1b8d);
-    asm_02ad(0x3380, 0x1b8f);
-    asm_02ad(0x33a0, 0x1b91);
+    blit_bitmap_to_video_page(0x31c0, 0x141c);
+    blit_bitmap_to_video_page(0x31c0, 0x065c);
+    blit_bitmap_to_video_page(0x31c0, 0x0c9c);
+    blit_bitmap_to_video_page(0x3080, 0);
+    blit_bitmap_to_video_page(0x30a0, 0x001c);
+    blit_bitmap_to_video_page(0x30c0, 0x1b9c);
+    blit_bitmap_to_video_page(0x30e0, 0x1b80);
+    blit_bitmap_to_video_page(0x3340, 0x1b8b);
+    blit_bitmap_to_video_page(0x3360, 0x1b8d);
+    blit_bitmap_to_video_page(0x3380, 0x1b8f);
+    blit_bitmap_to_video_page(0x33a0, 0x1b91);
 }
 
-void g2_2ab9(void)
+/* Draws the framed page template on both video pages before a menu or dialog is shown. */
+void draw_page_frame_template(void)
 {
     register int si;
     register int di;
 
     di = 0;
     outport(0x3ce, 0x0105);
-    g2_29a2();
+    draw_video_page_template();
     do {
         ++di;
-        asm_05eb(di - 1);
-        asm_02ad(0x3080, 0);
-        asm_02ad(0x30a0, 0x001c);
-        asm_02ad(0x30c0, 0x1b9c);
-        asm_02ad(0x30e0, 0x1b80);
-        asm_02ad(0x3100, 0x001e);
-        asm_02ad(0x3100, 0x0020);
-        asm_02ad(0x3100, 0x0022);
-        asm_02ad(0x3100, 0x0024);
-        asm_02ad(0x3120, 0x0026);
-        asm_02ad(0x3160, 0x1ba6);
+        select_draw_page(di - 1);
+        blit_bitmap_to_video_page(0x3080, 0);
+        blit_bitmap_to_video_page(0x30a0, 0x001c);
+        blit_bitmap_to_video_page(0x30c0, 0x1b9c);
+        blit_bitmap_to_video_page(0x30e0, 0x1b80);
+        blit_bitmap_to_video_page(0x3100, 0x001e);
+        blit_bitmap_to_video_page(0x3100, 0x0020);
+        blit_bitmap_to_video_page(0x3100, 0x0022);
+        blit_bitmap_to_video_page(0x3100, 0x0024);
+        blit_bitmap_to_video_page(0x3120, 0x0026);
+        blit_bitmap_to_video_page(0x3160, 0x1ba6);
         for (si = 0x0280; si < 0x1b80; si += 0x0280)
-            asm_02ad(0x3140, si + 0x0026);
-        asm_02ad(0x3100, 0x141e);
-        asm_02ad(0x3100, 0x0c9e);
-        asm_02ad(0x3100, 0x1420);
-        asm_02ad(0x3100, 0x0ca0);
-        asm_02ad(0x3100, 0x1422);
-        asm_02ad(0x3100, 0x0ca2);
-        asm_02ad(0x3100, 0x1424);
-        asm_02ad(0x3100, 0x0ca4);
-        asm_02ad(0x31e0, 0x1426);
-        asm_02ad(0x31e0, 0x0ca6);
-        asm_02ad(0x3100, 0x1b9e);
-        asm_02ad(0x3100, 0x1ba0);
-        asm_02ad(0x3100, 0x1ba2);
-        asm_02ad(0x3100, 0x1ba4);
-        asm_02ad(0x3100, 0x065e);
-        asm_02ad(0x3480, 0x0660);
-        asm_02ad(0x34a0, 0x0662);
-        asm_02ad(0x3100, 0x0664);
-        asm_02ad(0x34c0, 0x0020);
-        asm_02ad(0x34e0, 0x0022);
-        asm_02ad(0x33c0, 0x141f);
-        asm_02ad(0x33e0, 0x1421);
-        asm_02ad(0x3400, 0x1423);
-        asm_02ad(0x3420, 0x0c9f);
-        asm_02ad(0x3440, 0x0ca1);
-        asm_02ad(0x3460, 0x0ca3);
-        asm_02ad(0x31e0, 0x0666);
+            blit_bitmap_to_video_page(0x3140, si + 0x0026);
+        blit_bitmap_to_video_page(0x3100, 0x141e);
+        blit_bitmap_to_video_page(0x3100, 0x0c9e);
+        blit_bitmap_to_video_page(0x3100, 0x1420);
+        blit_bitmap_to_video_page(0x3100, 0x0ca0);
+        blit_bitmap_to_video_page(0x3100, 0x1422);
+        blit_bitmap_to_video_page(0x3100, 0x0ca2);
+        blit_bitmap_to_video_page(0x3100, 0x1424);
+        blit_bitmap_to_video_page(0x3100, 0x0ca4);
+        blit_bitmap_to_video_page(0x31e0, 0x1426);
+        blit_bitmap_to_video_page(0x31e0, 0x0ca6);
+        blit_bitmap_to_video_page(0x3100, 0x1b9e);
+        blit_bitmap_to_video_page(0x3100, 0x1ba0);
+        blit_bitmap_to_video_page(0x3100, 0x1ba2);
+        blit_bitmap_to_video_page(0x3100, 0x1ba4);
+        blit_bitmap_to_video_page(0x3100, 0x065e);
+        blit_bitmap_to_video_page(0x3480, 0x0660);
+        blit_bitmap_to_video_page(0x34a0, 0x0662);
+        blit_bitmap_to_video_page(0x3100, 0x0664);
+        blit_bitmap_to_video_page(0x34c0, 0x0020);
+        blit_bitmap_to_video_page(0x34e0, 0x0022);
+        blit_bitmap_to_video_page(0x33c0, 0x141f);
+        blit_bitmap_to_video_page(0x33e0, 0x1421);
+        blit_bitmap_to_video_page(0x3400, 0x1423);
+        blit_bitmap_to_video_page(0x3420, 0x0c9f);
+        blit_bitmap_to_video_page(0x3440, 0x0ca1);
+        blit_bitmap_to_video_page(0x3460, 0x0ca3);
+        blit_bitmap_to_video_page(0x31e0, 0x0666);
     } while (di == 1);
 }
 
-void pascal g2_2d58(int a0)
+/* Draws the text panel background using the active page and graphics resources. */
+void pascal draw_text_panel_background(int a0)
 {
     register int si;
     register int di;
@@ -1889,32 +1968,34 @@ void pascal g2_2d58(int a0)
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
     if (a0 == 2)
-        asm_05eb(d_6e0a_);
+        select_draw_page(draw_page_index);
     else
-        asm_05eb(0);
+        select_draw_page(0);
 
     for (si = 0; si < 10; si++) {
         for (di = a0; di < a0 + 26; di += 2)
-            asm_02ad(0x3220, si * 640 + di + 640);
+            blit_bitmap_to_video_page(0x3220, si * 640 + di + 640);
     }
 
-    asm_02ad(0x3240, a0 + 640);
-    asm_02ad(0x3260, a0 + 664);
-    asm_02ad(0x3280, a0 + 0x1900);
-    asm_02ad(0x32a0, a0 + 0x1918);
+    blit_bitmap_to_video_page(0x3240, a0 + 640);
+    blit_bitmap_to_video_page(0x3260, a0 + 664);
+    blit_bitmap_to_video_page(0x3280, a0 + 0x1900);
+    blit_bitmap_to_video_page(0x32a0, a0 + 0x1918);
 
     for (si = 0x500; si < 0x16a8; si += 640) {
-        asm_02ad(0x32c0, si + a0);
-        asm_02ad(0x32e0, si + a0 + 24);
+        blit_bitmap_to_video_page(0x32c0, si + a0);
+        blit_bitmap_to_video_page(0x32e0, si + a0 + 24);
     }
 
     for (si = 0x282; si < 0x298; si += 2) {
-        asm_02ad(0x3300, si + a0);
-        asm_02ad(0x3320, si + a0 + 0x1680);
+        blit_bitmap_to_video_page(0x3300, si + a0);
+        blit_bitmap_to_video_page(0x3320, si + a0 + 0x1680);
     }
 }
 
-void pascal g2_2e8c(char x, char y, char far *text, char attribute)
+/* Writes the supplied text and attribute bytes directly to the requested B800 text-memory
+   position. */
+void pascal draw_text_at_video_address(char x, char y, char far *text, char attribute)
 {
     register int i = 0;
     char far *screen = (char far *)MK_FP(0xB800, 0);
@@ -1926,289 +2007,302 @@ void pascal g2_2e8c(char x, char y, char far *text, char attribute)
     }
 }
 
-/* g2_2f04 reconstructed candidate */
-void g2_2f04(void)
+/* print_ordering_information reconstructed candidate */
+/* Prints the episode-specific ordering information and license text in text mode. */
+void print_ordering_information(void)
 {
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 #if EPISODE == 1
-    g2_2e8c(0, 0, "\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0", 31);
-    g2_2e8c(0, 1, "\xB0\xB0\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF", 31);
-    g2_2e8c(0, 2, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(9, 2, "\x48\x4F\x57\x20\x54\x4F\x20\x4F\x52\x44\x45\x52\x20\x54\x48\x45\x20\x52\x45\x4D\x41\x49\x4E\x49\x4E\x47\x20\x54\x57\x4F\x20\x49\x4E\x43\x52\x45\x44\x49\x42\x4C\x45\x20\x45\x50\x49\x53\x4F\x44\x45\x53\x20\x4F\x46\x20\x44\x55\x4B\x45\x20\x4E\x55\x4B\x55\x4D", 30);
-    g2_2e8c(0, 3, "\xB0\xB0\xC6\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xB5", 31);
-    g2_2e8c(0, 4, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 5, "\xB0\xB0\xB3\x20\x54\x68\x65\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x76\x6F\x6C\x75\x6D\x65\x73\x20\x6F\x66\x20\x44\x55\x4B\x45\x20\x4E\x55\x4B\x55\x4D\x20\x68\x61\x76\x65\x20\x6D\x6F\x72\x65\x20\x6E\x65\x77\x20\x67\x72\x61\x70\x68\x69\x63\x73\x20\x74\x68\x61\x6E\x20\x61\x6C\x6C\x20\x62\x75\x74\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 6, "\xB0\xB0\xB3\x20\x74\x68\x65\x20\x6C\x61\x72\x67\x65\x73\x74\x20\x63\x6F\x6D\x6D\x65\x72\x63\x69\x61\x6C\x20\x67\x61\x6D\x65\x73\x21\x20\x20\x49\x6E\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x74\x77\x6F\x20\x79\x6F\x75\x27\x6C\x6C\x20\x74\x72\x61\x76\x65\x6C\x20\x74\x6F\x20\x74\x68\x65\x20\x6D\x6F\x6F\x6E\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 7, "\xB0\xB0\xB3\x20\x61\x6E\x64\x20\x62\x61\x74\x74\x6C\x65\x20\x44\x72\x2E\x20\x50\x72\x6F\x74\x6F\x6E\x20\x61\x73\x20\x68\x65\x20\x70\x6C\x61\x6E\x73\x20\x68\x69\x73\x20\x73\x65\x63\x6F\x6E\x64\x20\x61\x73\x73\x61\x75\x6C\x74\x20\x6F\x6E\x20\x45\x61\x72\x74\x68\x2E\x20\x20\x41\x6E\x64\x20\x69\x6E\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 8, "\xB0\xB0\xB3\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x74\x68\x72\x65\x65\x20\x79\x6F\x75\x27\x6C\x6C\x20\x77\x61\x72\x70\x20\x74\x6F\x20\x74\x68\x65\x20\x45\x61\x72\x74\x68\x27\x73\x20\x66\x75\x74\x75\x72\x65\x20\x74\x6F\x20\x73\x74\x6F\x70\x20\x44\x72\x2E\x20\x50\x72\x6F\x74\x6F\x6E\x20\x66\x72\x6F\x6D\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 9, "\xB0\xB0\xB3\x20\x63\x6F\x6D\x70\x6C\x65\x74\x69\x6E\x67\x20\x68\x69\x73\x20\x6D\x61\x6E\x69\x61\x63\x61\x6C\x20\x70\x6C\x61\x6E\x20\x74\x6F\x20\x72\x75\x6C\x65\x20\x74\x68\x65\x20\x77\x6F\x72\x6C\x64\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 10, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 11, "\xB0\xB0\xB3\x20\x59\x6F\x75\x20\x6D\x61\x79\x20\x6F\x72\x64\x65\x72\x20\x74\x68\x65\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x76\x6F\x6C\x75\x6D\x65\x73\x20\x6F\x66\x20\x44\x55\x4B\x45\x20\x4E\x55\x4B\x55\x4D\x20\x66\x6F\x72\x20\x6F\x6E\x6C\x79\x20\x24\x33\x30\x20\x28\x70\x6C\x75\x73\x20\x24\x33\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 12, "\xB0\xB0\xB3\x20\x73\x68\x69\x70\x70\x69\x6E\x67\x20\x70\x6C\x65\x61\x73\x65\x29\x2E\x20\x20\x59\x6F\x75\x27\x6C\x6C\x20\x61\x6C\x73\x6F\x20\x67\x65\x74\x20\x74\x68\x65\x20\x63\x75\x72\x72\x65\x6E\x74\x20\x76\x65\x72\x73\x69\x6F\x6E\x20\x6F\x66\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x6E\x65\x2C\x20\x74\x68\x65\x20\xB3", 31);
-    g2_2e8c(0, 13, "\xB0\xB0\xB3\x20\x73\x65\x63\x72\x65\x74\x20\x63\x68\x65\x61\x74\x20\x63\x6F\x64\x65\x2C\x20\x74\x68\x65\x20\x68\x69\x6E\x74\x73\x20\x61\x6E\x64\x20\x74\x72\x69\x63\x6B\x73\x20\x73\x68\x65\x65\x74\x2C\x20\x70\x6C\x75\x73\x20\x61\x63\x63\x65\x73\x73\x20\x74\x6F\x20\x74\x68\x65\x20\x41\x70\x6F\x67\x65\x65\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 14, "\xB0\xB0\xB3\x20\x68\x69\x6E\x74\x73\x20\x6C\x69\x6E\x65\x21\x20\x20\x50\x4C\x55\x53\x2C\x20\x79\x6F\x75\x27\x6C\x6C\x20\x67\x65\x74\x20\x73\x65\x76\x65\x72\x61\x6C\x20\x6F\x66\x20\x41\x70\x6F\x67\x65\x65\x27\x73\x20\x61\x6D\x61\x7A\x69\x6E\x67\x20\x6E\x65\x77\x20\x67\x61\x6D\x65\x73\x21\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 15, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 16, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(4, 16, "\x4F\x72\x64\x65\x72\x20\x4E\x4F\x57\x20\x62\x79\x20\x63\x61\x6C\x6C\x69\x6E\x67\x20\x54\x4F\x4C\x4C\x20\x46\x52\x45\x45\x3A\x20\x20\x31\x2D\x38\x30\x30\x2D\x38\x35\x32\x2D\x35\x36\x35\x39\x20\x20\x28\x56\x69\x73\x61\x20\x61\x6E\x64\x20\x4D\x61\x73\x74\x65\x72\x43\x61\x72\x64\x29", 30);
-    g2_2e8c(0, 17, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 18, "\xB0\xB0\xB3\x20\x4F\x72\x20\x6D\x61\x69\x6C\x20\x6F\x72\x64\x65\x72\x20\x74\x6F\x3A\x20\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x07\x20\x50\x2E\x4F\x2E\x20\x42\x6F\x78\x20\x34\x37\x36\x33\x38\x39\x20\x07\x20\x47\x61\x72\x6C\x61\x6E\x64\x2C\x20\x54\x58\x20\x37\x35\x30\x34\x37\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 19, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(2, 20, "\xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9", 31);
+    draw_text_at_video_address(0, 0, "\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0", 31);
+    draw_text_at_video_address(0, 1, "\xB0\xB0\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF", 31);
+    draw_text_at_video_address(0, 2, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(9, 2, "\x48\x4F\x57\x20\x54\x4F\x20\x4F\x52\x44\x45\x52\x20\x54\x48\x45\x20\x52\x45\x4D\x41\x49\x4E\x49\x4E\x47\x20\x54\x57\x4F\x20\x49\x4E\x43\x52\x45\x44\x49\x42\x4C\x45\x20\x45\x50\x49\x53\x4F\x44\x45\x53\x20\x4F\x46\x20\x44\x55\x4B\x45\x20\x4E\x55\x4B\x55\x4D", 30);
+    draw_text_at_video_address(0, 3, "\xB0\xB0\xC6\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xB5", 31);
+    draw_text_at_video_address(0, 4, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 5, "\xB0\xB0\xB3\x20\x54\x68\x65\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x76\x6F\x6C\x75\x6D\x65\x73\x20\x6F\x66\x20\x44\x55\x4B\x45\x20\x4E\x55\x4B\x55\x4D\x20\x68\x61\x76\x65\x20\x6D\x6F\x72\x65\x20\x6E\x65\x77\x20\x67\x72\x61\x70\x68\x69\x63\x73\x20\x74\x68\x61\x6E\x20\x61\x6C\x6C\x20\x62\x75\x74\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 6, "\xB0\xB0\xB3\x20\x74\x68\x65\x20\x6C\x61\x72\x67\x65\x73\x74\x20\x63\x6F\x6D\x6D\x65\x72\x63\x69\x61\x6C\x20\x67\x61\x6D\x65\x73\x21\x20\x20\x49\x6E\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x74\x77\x6F\x20\x79\x6F\x75\x27\x6C\x6C\x20\x74\x72\x61\x76\x65\x6C\x20\x74\x6F\x20\x74\x68\x65\x20\x6D\x6F\x6F\x6E\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 7, "\xB0\xB0\xB3\x20\x61\x6E\x64\x20\x62\x61\x74\x74\x6C\x65\x20\x44\x72\x2E\x20\x50\x72\x6F\x74\x6F\x6E\x20\x61\x73\x20\x68\x65\x20\x70\x6C\x61\x6E\x73\x20\x68\x69\x73\x20\x73\x65\x63\x6F\x6E\x64\x20\x61\x73\x73\x61\x75\x6C\x74\x20\x6F\x6E\x20\x45\x61\x72\x74\x68\x2E\x20\x20\x41\x6E\x64\x20\x69\x6E\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 8, "\xB0\xB0\xB3\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x74\x68\x72\x65\x65\x20\x79\x6F\x75\x27\x6C\x6C\x20\x77\x61\x72\x70\x20\x74\x6F\x20\x74\x68\x65\x20\x45\x61\x72\x74\x68\x27\x73\x20\x66\x75\x74\x75\x72\x65\x20\x74\x6F\x20\x73\x74\x6F\x70\x20\x44\x72\x2E\x20\x50\x72\x6F\x74\x6F\x6E\x20\x66\x72\x6F\x6D\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 9, "\xB0\xB0\xB3\x20\x63\x6F\x6D\x70\x6C\x65\x74\x69\x6E\x67\x20\x68\x69\x73\x20\x6D\x61\x6E\x69\x61\x63\x61\x6C\x20\x70\x6C\x61\x6E\x20\x74\x6F\x20\x72\x75\x6C\x65\x20\x74\x68\x65\x20\x77\x6F\x72\x6C\x64\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 10, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 11, "\xB0\xB0\xB3\x20\x59\x6F\x75\x20\x6D\x61\x79\x20\x6F\x72\x64\x65\x72\x20\x74\x68\x65\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x76\x6F\x6C\x75\x6D\x65\x73\x20\x6F\x66\x20\x44\x55\x4B\x45\x20\x4E\x55\x4B\x55\x4D\x20\x66\x6F\x72\x20\x6F\x6E\x6C\x79\x20\x24\x33\x30\x20\x28\x70\x6C\x75\x73\x20\x24\x33\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 12, "\xB0\xB0\xB3\x20\x73\x68\x69\x70\x70\x69\x6E\x67\x20\x70\x6C\x65\x61\x73\x65\x29\x2E\x20\x20\x59\x6F\x75\x27\x6C\x6C\x20\x61\x6C\x73\x6F\x20\x67\x65\x74\x20\x74\x68\x65\x20\x63\x75\x72\x72\x65\x6E\x74\x20\x76\x65\x72\x73\x69\x6F\x6E\x20\x6F\x66\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x6E\x65\x2C\x20\x74\x68\x65\x20\xB3", 31);
+    draw_text_at_video_address(0, 13, "\xB0\xB0\xB3\x20\x73\x65\x63\x72\x65\x74\x20\x63\x68\x65\x61\x74\x20\x63\x6F\x64\x65\x2C\x20\x74\x68\x65\x20\x68\x69\x6E\x74\x73\x20\x61\x6E\x64\x20\x74\x72\x69\x63\x6B\x73\x20\x73\x68\x65\x65\x74\x2C\x20\x70\x6C\x75\x73\x20\x61\x63\x63\x65\x73\x73\x20\x74\x6F\x20\x74\x68\x65\x20\x41\x70\x6F\x67\x65\x65\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 14, "\xB0\xB0\xB3\x20\x68\x69\x6E\x74\x73\x20\x6C\x69\x6E\x65\x21\x20\x20\x50\x4C\x55\x53\x2C\x20\x79\x6F\x75\x27\x6C\x6C\x20\x67\x65\x74\x20\x73\x65\x76\x65\x72\x61\x6C\x20\x6F\x66\x20\x41\x70\x6F\x67\x65\x65\x27\x73\x20\x61\x6D\x61\x7A\x69\x6E\x67\x20\x6E\x65\x77\x20\x67\x61\x6D\x65\x73\x21\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 15, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 16, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(4, 16, "\x4F\x72\x64\x65\x72\x20\x4E\x4F\x57\x20\x62\x79\x20\x63\x61\x6C\x6C\x69\x6E\x67\x20\x54\x4F\x4C\x4C\x20\x46\x52\x45\x45\x3A\x20\x20\x31\x2D\x38\x30\x30\x2D\x38\x35\x32\x2D\x35\x36\x35\x39\x20\x20\x28\x56\x69\x73\x61\x20\x61\x6E\x64\x20\x4D\x61\x73\x74\x65\x72\x43\x61\x72\x64\x29", 30);
+    draw_text_at_video_address(0, 17, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 18, "\xB0\xB0\xB3\x20\x4F\x72\x20\x6D\x61\x69\x6C\x20\x6F\x72\x64\x65\x72\x20\x74\x6F\x3A\x20\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x07\x20\x50\x2E\x4F\x2E\x20\x42\x6F\x78\x20\x34\x37\x36\x33\x38\x39\x20\x07\x20\x47\x61\x72\x6C\x61\x6E\x64\x2C\x20\x54\x58\x20\x37\x35\x30\x34\x37\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 19, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(2, 20, "\xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9", 31);
 #elif EPISODE == 2
-    g2_2e8c(0, 0, "\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0", 31);
-    g2_2e8c(0, 1, "\xB0\xB0\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF", 31);
-    g2_2e8c(0, 2, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(9, 2, "\x4E\x4F\x54\x49\x43\x45\x3A\x20\x20\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x49\x53\x20\x4E\x4F\x54\x20\x53\x48\x41\x52\x45\x57\x41\x52\x45\x2C\x20\x46\x52\x45\x45\x57\x41\x52\x45\x20\x4F\x52\x20\x50\x55\x42\x4C\x49\x43\x20\x44\x4F\x4D\x41\x49\x4E\x21", 30);
-    g2_2e8c(0, 3, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(8, 3, "\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x4D\x41\x59\x20\x4F\x4E\x4C\x59\x20\x42\x45\x20\x44\x49\x53\x54\x52\x49\x42\x55\x54\x45\x44\x20\x42\x59\x20\x41\x50\x4F\x47\x45\x45\x20\x53\x4F\x46\x54\x57\x41\x52\x45\x20\x50\x52\x4F\x44\x55\x43\x54\x49\x4F\x4E\x53\x2E", 30);
-    g2_2e8c(0, 4, "\xB0\xB0\xC6\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xB5", 31);
-    g2_2e8c(0, 5, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 6, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x4F\x6E\x6C\x79\x20\x74\x68\x65\x20\x66\x69\x72\x73\x74\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x69\x73\x20\x61\x76\x61\x69\x6C\x61\x62\x6C\x65\x20\x61\x73\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x2E\x20\x54\x68\x65\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 7, "\xB0\xB0\xB3\x20\x20\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x28\x69\x6E\x63\x6C\x75\x64\x69\x6E\x67\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x29\x20\x61\x72\x65\x20\x6F\x6E\x6C\x79\x20\x73\x6F\x6C\x64\x20\x20\xB3", 31);
-    g2_2e8c(0, 8, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x63\x6F\x6D\x6D\x65\x72\x63\x69\x61\x6C\x6C\x79\x20\x62\x79\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x6F\x72\x20\x61\x6E\x20\x61\x75\x74\x68\x6F\x72\x69\x7A\x65\x64\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x6F\x72\x2E\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 9, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 10, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x42\x75\x6C\x6C\x65\x74\x69\x6E\x20\x62\x6F\x61\x72\x64\x73\x2C\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x20\x76\x65\x6E\x64\x6F\x72\x73\x2C\x20\x75\x73\x65\x72\x73\x20\x67\x72\x6F\x75\x70\x73\x20\x61\x6E\x64\x20\x63\x6C\x75\x62\x73\x20\x6D\x61\x79\x20\x6E\x6F\x74\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 11, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x65\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 12, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 13, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x63\x6F\x6E\x73\x69\x73\x74\x73\x20\x6F\x66\x20\x74\x68\x72\x65\x65\x20\x75\x6E\x69\x71\x75\x65\x20\x61\x6E\x64\x20\x65\x78\x63\x69\x74\x69\x6E\x67\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x3A\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 14, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x53\x68\x72\x61\x70\x6E\x65\x6C\x20\x43\x69\x74\x79\x20\x20\x07\x20\x20\x4D\x69\x73\x73\x69\x6F\x6E\x3A\x20\x4D\x6F\x6F\x6E\x62\x61\x73\x65\x20\x20\x07\x20\x20\x54\x72\x61\x70\x70\x65\x64\x20\x69\x6E\x20\x74\x68\x65\x20\x46\x75\x74\x75\x72\x65\x21\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 15, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 16, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x54\x6F\x20\x6F\x72\x64\x65\x72\x20\x74\x68\x65\x20\x63\x6F\x6D\x70\x6C\x65\x74\x65\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x74\x72\x69\x6C\x6F\x67\x79\x2C\x20\x63\x61\x6C\x6C\x20\x31\x2D\x38\x30\x30\x2D\x38\x35\x32\x2D\x35\x36\x35\x39\x2E\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 17, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 18, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x4F\x72\x20\x77\x72\x69\x74\x65\x3A\x20\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x07\x20\x50\x2E\x4F\x2E\x20\x42\x6F\x78\x20\x34\x37\x36\x33\x38\x39\x20\x07\x20\x47\x61\x72\x6C\x61\x6E\x64\x2C\x20\x54\x58\x20\x37\x35\x30\x34\x37\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 19, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(2, 20, "\xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9", 31);
+    draw_text_at_video_address(0, 0, "\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0", 31);
+    draw_text_at_video_address(0, 1, "\xB0\xB0\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF", 31);
+    draw_text_at_video_address(0, 2, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(9, 2, "\x4E\x4F\x54\x49\x43\x45\x3A\x20\x20\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x49\x53\x20\x4E\x4F\x54\x20\x53\x48\x41\x52\x45\x57\x41\x52\x45\x2C\x20\x46\x52\x45\x45\x57\x41\x52\x45\x20\x4F\x52\x20\x50\x55\x42\x4C\x49\x43\x20\x44\x4F\x4D\x41\x49\x4E\x21", 30);
+    draw_text_at_video_address(0, 3, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(8, 3, "\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x4D\x41\x59\x20\x4F\x4E\x4C\x59\x20\x42\x45\x20\x44\x49\x53\x54\x52\x49\x42\x55\x54\x45\x44\x20\x42\x59\x20\x41\x50\x4F\x47\x45\x45\x20\x53\x4F\x46\x54\x57\x41\x52\x45\x20\x50\x52\x4F\x44\x55\x43\x54\x49\x4F\x4E\x53\x2E", 30);
+    draw_text_at_video_address(0, 4, "\xB0\xB0\xC6\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xB5", 31);
+    draw_text_at_video_address(0, 5, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 6, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x4F\x6E\x6C\x79\x20\x74\x68\x65\x20\x66\x69\x72\x73\x74\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x69\x73\x20\x61\x76\x61\x69\x6C\x61\x62\x6C\x65\x20\x61\x73\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x2E\x20\x54\x68\x65\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 7, "\xB0\xB0\xB3\x20\x20\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x28\x69\x6E\x63\x6C\x75\x64\x69\x6E\x67\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x29\x20\x61\x72\x65\x20\x6F\x6E\x6C\x79\x20\x73\x6F\x6C\x64\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 8, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x63\x6F\x6D\x6D\x65\x72\x63\x69\x61\x6C\x6C\x79\x20\x62\x79\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x6F\x72\x20\x61\x6E\x20\x61\x75\x74\x68\x6F\x72\x69\x7A\x65\x64\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x6F\x72\x2E\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 9, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 10, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x42\x75\x6C\x6C\x65\x74\x69\x6E\x20\x62\x6F\x61\x72\x64\x73\x2C\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x20\x76\x65\x6E\x64\x6F\x72\x73\x2C\x20\x75\x73\x65\x72\x73\x20\x67\x72\x6F\x75\x70\x73\x20\x61\x6E\x64\x20\x63\x6C\x75\x62\x73\x20\x6D\x61\x79\x20\x6E\x6F\x74\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 11, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x65\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 12, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 13, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x63\x6F\x6E\x73\x69\x73\x74\x73\x20\x6F\x66\x20\x74\x68\x72\x65\x65\x20\x75\x6E\x69\x71\x75\x65\x20\x61\x6E\x64\x20\x65\x78\x63\x69\x74\x69\x6E\x67\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x3A\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 14, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x53\x68\x72\x61\x70\x6E\x65\x6C\x20\x43\x69\x74\x79\x20\x20\x07\x20\x20\x4D\x69\x73\x73\x69\x6F\x6E\x3A\x20\x4D\x6F\x6F\x6E\x62\x61\x73\x65\x20\x20\x07\x20\x20\x54\x72\x61\x70\x70\x65\x64\x20\x69\x6E\x20\x74\x68\x65\x20\x46\x75\x74\x75\x72\x65\x21\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 15, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 16, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x54\x6F\x20\x6F\x72\x64\x65\x72\x20\x74\x68\x65\x20\x63\x6F\x6D\x70\x6C\x65\x74\x65\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x74\x72\x69\x6C\x6F\x67\x79\x2C\x20\x63\x61\x6C\x6C\x20\x31\x2D\x38\x30\x30\x2D\x38\x35\x32\x2D\x35\x36\x35\x39\x2E\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 17, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 18, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x4F\x72\x20\x77\x72\x69\x74\x65\x3A\x20\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x07\x20\x50\x2E\x4F\x2E\x20\x42\x6F\x78\x20\x34\x37\x36\x33\x38\x39\x20\x07\x20\x47\x61\x72\x6C\x61\x6E\x64\x2C\x20\x54\x58\x20\x37\x35\x30\x34\x37\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 19, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(2, 20, "\xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9", 31);
 #elif EPISODE == 3
-    g2_2e8c(0, 0, "\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0", 31);
-    g2_2e8c(0, 1, "\xB0\xB0\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF", 31);
-    g2_2e8c(0, 2, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(9, 2, "\x4E\x4F\x54\x49\x43\x45\x3A\x20\x20\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x49\x53\x20\x4E\x4F\x54\x20\x53\x48\x41\x52\x45\x57\x41\x52\x45\x2C\x20\x46\x52\x45\x45\x57\x41\x52\x45\x20\x4F\x52\x20\x50\x55\x42\x4C\x49\x43\x20\x44\x4F\x4D\x41\x49\x4E\x21", 30);
-    g2_2e8c(0, 3, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(8, 3, "\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x4D\x41\x59\x20\x4F\x4E\x4C\x59\x20\x42\x45\x20\x44\x49\x53\x54\x52\x49\x42\x55\x54\x45\x44\x20\x42\x59\x20\x41\x50\x4F\x47\x45\x45\x20\x53\x4F\x46\x54\x57\x41\x52\x45\x20\x50\x52\x4F\x44\x55\x43\x54\x49\x4F\x4E\x53\x2E", 30);
-    g2_2e8c(0, 4, "\xB0\xB0\xC6\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xB5", 31);
-    g2_2e8c(0, 5, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 6, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x4F\x6E\x6C\x79\x20\x74\x68\x65\x20\x66\x69\x72\x73\x74\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x69\x73\x20\x61\x76\x61\x69\x6C\x61\x62\x6C\x65\x20\x61\x73\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x2E\x20\x54\x68\x65\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 7, "\xB0\xB0\xB3\x20\x20\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x28\x69\x6E\x63\x6C\x75\x64\x69\x6E\x67\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x29\x20\x61\x72\x65\x20\x6F\x6E\x6C\x79\x20\x73\x6F\x6C\x64\x20\x20\xB3", 31);
-    g2_2e8c(0, 8, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x63\x6F\x6D\x6D\x65\x72\x63\x69\x61\x6C\x6C\x79\x20\x62\x79\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x6F\x72\x20\x61\x6E\x20\x61\x75\x74\x68\x6F\x72\x69\x7A\x65\x64\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x6F\x72\x2E\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 9, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 10, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x42\x75\x6C\x6C\x65\x74\x69\x6E\x20\x62\x6F\x61\x72\x64\x73\x2C\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x20\x76\x65\x6E\x64\x6F\x72\x73\x2C\x20\x75\x73\x65\x72\x73\x20\x67\x72\x6F\x75\x70\x73\x20\x61\x6E\x64\x20\x63\x6C\x75\x62\x73\x20\x6D\x61\x79\x20\x6E\x6F\x74\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 11, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x65\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 12, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 13, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x63\x6F\x6E\x73\x69\x73\x74\x73\x20\x6F\x66\x20\x74\x68\x72\x65\x65\x20\x75\x6E\x69\x71\x75\x65\x20\x61\x6E\x64\x20\x65\x78\x63\x69\x74\x69\x6E\x67\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x3A\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 14, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x53\x68\x72\x61\x70\x6E\x65\x6C\x20\x43\x69\x74\x79\x20\x20\x07\x20\x20\x4D\x69\x73\x73\x69\x6F\x6E\x3A\x20\x4D\x6F\x6F\x6E\x62\x61\x73\x65\x20\x20\x07\x20\x20\x54\x72\x61\x70\x70\x65\x64\x20\x69\x6E\x20\x74\x68\x65\x20\x46\x75\x74\x75\x72\x65\x21\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 15, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 16, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x54\x6F\x20\x6F\x72\x64\x65\x72\x20\x74\x68\x65\x20\x63\x6F\x6D\x70\x6C\x65\x74\x65\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x74\x72\x69\x6C\x6F\x67\x79\x2C\x20\x63\x61\x6C\x6C\x20\x31\x2D\x38\x30\x30\x2D\x38\x35\x32\x2D\x35\x36\x35\x39\x2E\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 17, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 18, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x4F\x72\x20\x77\x72\x69\x74\x65\x3A\x20\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x07\x20\x50\x2E\x4F\x2E\x20\x42\x6F\x78\x20\x34\x37\x36\x33\x38\x39\x20\x07\x20\x47\x61\x72\x6C\x61\x6E\x64\x2C\x20\x54\x58\x20\x37\x35\x30\x34\x37\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(0, 19, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
-    g2_2e8c(2, 20, "\xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9", 31);
+    draw_text_at_video_address(0, 0, "\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0\xB0", 31);
+    draw_text_at_video_address(0, 1, "\xB0\xB0\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF", 31);
+    draw_text_at_video_address(0, 2, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(9, 2, "\x4E\x4F\x54\x49\x43\x45\x3A\x20\x20\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x49\x53\x20\x4E\x4F\x54\x20\x53\x48\x41\x52\x45\x57\x41\x52\x45\x2C\x20\x46\x52\x45\x45\x57\x41\x52\x45\x20\x4F\x52\x20\x50\x55\x42\x4C\x49\x43\x20\x44\x4F\x4D\x41\x49\x4E\x21", 30);
+    draw_text_at_video_address(0, 3, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(8, 3, "\x54\x48\x49\x53\x20\x47\x41\x4D\x45\x20\x4D\x41\x59\x20\x4F\x4E\x4C\x59\x20\x42\x45\x20\x44\x49\x53\x54\x52\x49\x42\x55\x54\x45\x44\x20\x42\x59\x20\x41\x50\x4F\x47\x45\x45\x20\x53\x4F\x46\x54\x57\x41\x52\x45\x20\x50\x52\x4F\x44\x55\x43\x54\x49\x4F\x4E\x53\x2E", 30);
+    draw_text_at_video_address(0, 4, "\xB0\xB0\xC6\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xB5", 31);
+    draw_text_at_video_address(0, 5, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 6, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x4F\x6E\x6C\x79\x20\x74\x68\x65\x20\x66\x69\x72\x73\x74\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x69\x73\x20\x61\x76\x61\x69\x6C\x61\x62\x6C\x65\x20\x61\x73\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x2E\x20\x54\x68\x65\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 7, "\xB0\xB0\xB3\x20\x20\x20\x66\x69\x6E\x61\x6C\x20\x74\x77\x6F\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x28\x69\x6E\x63\x6C\x75\x64\x69\x6E\x67\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x29\x20\x61\x72\x65\x20\x6F\x6E\x6C\x79\x20\x73\x6F\x6C\x64\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 8, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x63\x6F\x6D\x6D\x65\x72\x63\x69\x61\x6C\x6C\x79\x20\x62\x79\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x6F\x72\x20\x61\x6E\x20\x61\x75\x74\x68\x6F\x72\x69\x7A\x65\x64\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x6F\x72\x2E\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 9, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 10, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x42\x75\x6C\x6C\x65\x74\x69\x6E\x20\x62\x6F\x61\x72\x64\x73\x2C\x20\x73\x68\x61\x72\x65\x77\x61\x72\x65\x20\x76\x65\x6E\x64\x6F\x72\x73\x2C\x20\x75\x73\x65\x72\x73\x20\x67\x72\x6F\x75\x70\x73\x20\x61\x6E\x64\x20\x63\x6C\x75\x62\x73\x20\x6D\x61\x79\x20\x6E\x6F\x74\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 11, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x64\x69\x73\x74\x72\x69\x62\x75\x74\x65\x20\x74\x68\x69\x73\x20\x65\x70\x69\x73\x6F\x64\x65\x20\x6F\x66\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x2E\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 12, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 13, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x63\x6F\x6E\x73\x69\x73\x74\x73\x20\x6F\x66\x20\x74\x68\x72\x65\x65\x20\x75\x6E\x69\x71\x75\x65\x20\x61\x6E\x64\x20\x65\x78\x63\x69\x74\x69\x6E\x67\x20\x65\x70\x69\x73\x6F\x64\x65\x73\x3A\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 14, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x53\x68\x72\x61\x70\x6E\x65\x6C\x20\x43\x69\x74\x79\x20\x20\x07\x20\x20\x4D\x69\x73\x73\x69\x6F\x6E\x3A\x20\x4D\x6F\x6F\x6E\x62\x61\x73\x65\x20\x20\x07\x20\x20\x54\x72\x61\x70\x70\x65\x64\x20\x69\x6E\x20\x74\x68\x65\x20\x46\x75\x74\x75\x72\x65\x21\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 15, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 16, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x54\x6F\x20\x6F\x72\x64\x65\x72\x20\x74\x68\x65\x20\x63\x6F\x6D\x70\x6C\x65\x74\x65\x20\x44\x75\x6B\x65\x20\x4E\x75\x6B\x75\x6D\x20\x74\x72\x69\x6C\x6F\x67\x79\x2C\x20\x63\x61\x6C\x6C\x20\x31\x2D\x38\x30\x30\x2D\x38\x35\x32\x2D\x35\x36\x35\x39\x2E\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 17, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 18, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x4F\x72\x20\x77\x72\x69\x74\x65\x3A\x20\x20\x41\x70\x6F\x67\x65\x65\x20\x53\x6F\x66\x74\x77\x61\x72\x65\x20\x07\x20\x50\x2E\x4F\x2E\x20\x42\x6F\x78\x20\x34\x37\x36\x33\x38\x39\x20\x07\x20\x47\x61\x72\x6C\x61\x6E\x64\x2C\x20\x54\x58\x20\x37\x35\x30\x34\x37\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(0, 19, "\xB0\xB0\xB3\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\xB3", 31);
+    draw_text_at_video_address(2, 20, "\xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9", 31);
 #endif
 }
 
-void pascal g2_30b0(char far *filename)
+/* Loads the credits bitmap into an allocated planar-image buffer. */
+void pascal load_credits_graphics(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    d_c285_ = malloc(32001);
-    if (d_c285_)
-        fread(d_c285_, 32000, 1, stream);
+    credits_graphics_buffer = malloc(32001);
+    if (credits_graphics_buffer)
+        fread(credits_graphics_buffer, 32000, 1, stream);
     fclose(stream);
 }
 
-void g2_3114(void)
+/* Clears the video page so it can be reused. */
+void clear_video_page(void)
 {
     register int x;
     register int y;
 
     outport(0x3c4, 0x0f02);
-    asm_05eb(0);
+    select_draw_page(0);
     for (y = 0; y < 25; y++) {
         for (x = 0; x < 40; x += 2) {
-            asm_02ad(0, y * 640 + x);
+            blit_bitmap_to_video_page(0, y * 640 + x);
         }
     }
 }
 
-void g2_315d(void)
+/* Copies the loaded credits bitmap planes into video memory and displays the resulting page. */
+void display_credits_bitmap(void)
 {
     char far *video = (char far *)0xa0000000L;
     register int i;
 
-    g2_3114();
+    clear_video_page();
     outport(0x3ce, 5);
-    asm_05eb(0);
-    asm_05f7(1);
+    select_draw_page(0);
+    show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
     for (i = 0; i < 8000; ++i)
-        video[i] = d_c285_[i];
+        video[i] = credits_graphics_buffer[i];
     outport(0x3c4, 0x0202);
     for (i = 0; i < 8000; ++i)
-        video[i] = d_c285_[i + 8000];
+        video[i] = credits_graphics_buffer[i + 8000];
     outport(0x3c4, 0x0402);
     for (i = 0; i < 8000; ++i)
-        video[i] = d_c285_[i + 16000];
+        video[i] = credits_graphics_buffer[i + 16000];
     outport(0x3c4, 0x0802);
     for (i = 0; i < 8000; ++i)
-        video[i] = d_c285_[i + 24000];
-    asm_05f7(0);
+        video[i] = credits_graphics_buffer[i + 24000];
+    show_video_page(0);
 }
 
-void pascal g2_3252(char far *filename)
+/* Loads the episode gameplay bitmap into its allocated planar-image buffer. */
+void pascal load_episode_graphics_b638(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    d_b638_ = malloc(32001);
-    if (d_b638_ != 0) {
-        fread(d_b638_, 32000, 1, stream);
+    episode_graphics_buffer = malloc(32001);
+    if (episode_graphics_buffer != 0) {
+        fread(episode_graphics_buffer, 32000, 1, stream);
     }
     fclose(stream);
 }
 
-void g2_32b6(void)
+/* Copies the loaded gameplay bitmap planes into video memory and displays the resulting page. */
+void display_episode_bitmap_b638(void)
 {
     char far *screen = (char far *)MK_FP(0xa000, 0);
     register int si;
 
-    g2_3114();
+    clear_video_page();
     outport(0x3ce, 5);
-    asm_05eb(0);
-    asm_05f7(1);
+    select_draw_page(0);
+    show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
     for (si = 0; si < 8000; ++si)
-        screen[si] = d_b638_[si];
+        screen[si] = episode_graphics_buffer[si];
     outport(0x3c4, 0x0202);
     for (si = 0; si < 8000; ++si)
-        screen[si] = d_b638_[si + 8000];
+        screen[si] = episode_graphics_buffer[si + 8000];
     outport(0x3c4, 0x0402);
     for (si = 0; si < 8000; ++si)
-        screen[si] = d_b638_[si + 16000];
+        screen[si] = episode_graphics_buffer[si + 16000];
     outport(0x3c4, 0x0802);
     for (si = 0; si < 8000; ++si)
-        screen[si] = d_b638_[si + 24000];
-    asm_05f7(0);
+        screen[si] = episode_graphics_buffer[si + 24000];
+    show_video_page(0);
 }
 
-void pascal g2_33ab(char far *filename)
+/* Loads the bad-guy bitmap into its allocated planar-image buffer. */
+void pascal load_badguy_graphics(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    d_c27d_ = malloc(32001);
-    if (d_c27d_ != 0) {
-        fread(d_c27d_, 32000, 1, stream);
+    badguy_graphics_buffer = malloc(32001);
+    if (badguy_graphics_buffer != 0) {
+        fread(badguy_graphics_buffer, 32000, 1, stream);
     }
     fclose(stream);
 }
 
-void g2_340f(void)
+/* Copies the loaded bad-guy bitmap planes into video memory and displays the resulting page. */
+void display_badguy_bitmap(void)
 {
     register int si;
     char far *video = (char far *)MK_FP(0xA000, 0);
 
-    g2_3114();
+    clear_video_page();
     outport(0x3ce, 5);
-    asm_05eb(0);
-    asm_05f7(1);
+    select_draw_page(0);
+    show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
     for (si = 0; si < 8000; ++si)
-        video[si] = d_c27d_[si];
+        video[si] = badguy_graphics_buffer[si];
     outport(0x3c4, 0x0202);
     for (si = 0; si < 8000; ++si)
-        video[si] = d_c27d_[si + 8000];
+        video[si] = badguy_graphics_buffer[si + 8000];
     outport(0x3c4, 0x0402);
     for (si = 0; si < 8000; ++si)
-        video[si] = d_c27d_[si + 16000];
+        video[si] = badguy_graphics_buffer[si + 16000];
     outport(0x3c4, 0x0802);
     for (si = 0; si < 8000; ++si)
-        video[si] = d_c27d_[si + 24000];
-    asm_05f7(0);
+        video[si] = badguy_graphics_buffer[si + 24000];
+    show_video_page(0);
 }
 
-void pascal g2_3504(char far *filename)
+/* Loads the Duke bitmap into its allocated planar-image buffer. */
+void pascal load_duke_graphics(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    d_a0bb_ = malloc(32001);
-    if (d_a0bb_ != 0) {
-        fread(d_a0bb_, 32000, 1, stream);
+    duke_graphics_buffer = malloc(32001);
+    if (duke_graphics_buffer != 0) {
+        fread(duke_graphics_buffer, 32000, 1, stream);
     }
     fclose(stream);
 }
 
-void g2_3568(void)
+/* Copies the loaded Duke bitmap planes into video memory and displays the resulting page. */
+void display_duke_bitmap(void)
 {
     register int i;
     char far *video = (char far *)MK_FP(0xa000, 0);
 
-    g2_3114();
+    clear_video_page();
     outport(0x3ce, 5);
-    asm_05eb(0);
-    asm_05f7(1);
+    select_draw_page(0);
+    show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb_[i];
+        video[i] = duke_graphics_buffer[i];
     }
     outport(0x3c4, 0x0202);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb_[i + 8000];
+        video[i] = duke_graphics_buffer[i + 8000];
     }
     outport(0x3c4, 0x0402);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb_[i + 16000];
+        video[i] = duke_graphics_buffer[i + 16000];
     }
     outport(0x3c4, 0x0802);
     for (i = 0; i < 8000; ++i) {
-        video[i] = d_a0bb_[i + 24000];
+        video[i] = duke_graphics_buffer[i + 24000];
     }
-    asm_05f7(0);
+    show_video_page(0);
 }
 
-void pascal g2_365d(char far *filename)
+/* Loads the ending bitmap into its allocated planar-image buffer. */
+void pascal load_ending_graphics(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    d_c28f_ = malloc(32001);
-    if (d_c28f_) {
-        fread(d_c28f_, 32000, 1, stream);
+    ending_graphics_buffer = malloc(32001);
+    if (ending_graphics_buffer) {
+        fread(ending_graphics_buffer, 32000, 1, stream);
     }
     fclose(stream);
 }
 
-void g2_36c1(void)
+/* Copies the loaded ending bitmap planes into video memory and displays the resulting page. */
+void display_ending_bitmap(void)
 {
     char far *vram;
     register int si;
 
     vram = MK_FP(0xa000, 0);
-    g2_3114();
+    clear_video_page();
     outport(0x3ce, 5);
-    asm_05eb(0);
-    asm_05f7(1);
+    select_draw_page(0);
+    show_video_page(1);
     /* Copy each 8,000-byte chunk to its VGA plane. */
     outport(0x3c4, 0x0102);
     for (si = 0; si < 8000; si++)
-        vram[si] = d_c28f_[si];
+        vram[si] = ending_graphics_buffer[si];
     outport(0x3c4, 0x0202);
     for (si = 0; si < 8000; si++)
-        vram[si] = d_c28f_[si + 8000];
+        vram[si] = ending_graphics_buffer[si + 8000];
     outport(0x3c4, 0x0402);
     for (si = 0; si < 8000; si++)
-        vram[si] = d_c28f_[si + 16000];
+        vram[si] = ending_graphics_buffer[si + 16000];
     outport(0x3c4, 0x0802);
     for (si = 0; si < 8000; si++)
-        vram[si] = d_c28f_[si + 24000];
-    asm_05f7(0);
+        vram[si] = ending_graphics_buffer[si + 24000];
+    show_video_page(0);
 }
 
-void pascal g2_37b6(char far *text, register int x, int y)
+/* Draws a null-terminated text string with the EGA font glyphs at the requested position. */
+void pascal draw_text_string(char far *text, register int x, int y)
 {
     register int i;
 
@@ -2216,199 +2310,216 @@ void pascal g2_37b6(char far *text, register int x, int y)
     outport(0x3ce, 5);
     for (; text[i] != 0; ++i) {
         if (text[i] >= 'a') {
-            asm_04c5(d_6b54_ + (text[i] - 'a') * 40 + 0xac8,
-                     x + i, y * 8);
+            draw_ega_glyph(font_glyph_data_buffer + (text[i] - 'a') * 40 + 0xac8,
+                           x + i, y * 8);
         } else {
-            asm_04c5(d_6b54_ + (text[i] - ' ') * 40 + 0x190,
-                     x + i, y * 8);
+            draw_ega_glyph(font_glyph_data_buffer + (text[i] - ' ') * 40 + 0x190,
+                           x + i, y * 8);
         }
     }
 }
 
-void pascal g2_385b(char a0, int a1, int a2)
+/* Draws one mapped character glyph at the requested text position. */
+void pascal draw_text_character_at_position(char a0, int a1, int a2)
 {
     if (a0 >= 'a') {
-        asm_04c5(d_6b54_ + (a0 - 'a') * 40 + 0xac8, a1, a2);
+        draw_ega_glyph(font_glyph_data_buffer + (a0 - 'a') * 40 + 0xac8, a1, a2);
     } else {
-        asm_04c5(d_6b54_ + (a0 - ' ') * 40 + 0x190, a1, a2);
+        draw_ega_glyph(font_glyph_data_buffer + (a0 - ' ') * 40 + 0x190, a1, a2);
     }
 }
 
 #if EPISODE == 1 || EPISODE == 2
-/* g2_38be: at this place in the DN1, DN2 source */
-void pascal g2_38be(register int a0)
+/* draw_main_menu: at this place in the DN1, DN2 source */
+/* Draws the main menu; the source has a DN3-specific menu body and a shared DN1/DN2 body. */
+void pascal draw_main_menu(register int a0)
 {
-    g2_37b6("      DUKE MAIN MENU", a0, 6);
-    g2_37b6("      --------------", a0, 7);
-    g2_37b6("   S)tart a new game", a0, 9);
-    g2_37b6("   R)estore an old game", a0, 10);
-    g2_37b6("   I)nstructions", a0, 11);
-    g2_37b6("   O)rdering information", a0, 12);
-    g2_37b6("   G)ame setup", a0, 13);
-    g2_37b6("   H)igh scores", a0, 14);
-    g2_37b6("   P)reviews/Main Demo!", a0, 15);
-    g2_37b6("   V)iew user demo", a0, 16);
-    g2_37b6("   T)itle screen", a0, 17);
-    g2_37b6("   C)redits", a0, 18);
-    g2_37b6("   Q)uit to DOS", a0, 19);
+    draw_text_string("      DUKE MAIN MENU", a0, 6);
+    draw_text_string("      --------------", a0, 7);
+    draw_text_string("   S)tart a new game", a0, 9);
+    draw_text_string("   R)estore an old game", a0, 10);
+    draw_text_string("   I)nstructions", a0, 11);
+    draw_text_string("   O)rdering information", a0, 12);
+    draw_text_string("   G)ame setup", a0, 13);
+    draw_text_string("   H)igh scores", a0, 14);
+    draw_text_string("   P)reviews/Main Demo!", a0, 15);
+    draw_text_string("   V)iew user demo", a0, 16);
+    draw_text_string("   T)itle screen", a0, 17);
+    draw_text_string("   C)redits", a0, 18);
+    draw_text_string("   Q)uit to DOS", a0, 19);
 }
 #endif
 
-void pascal g2_3980(char far *filename)
+/* Loads the primary sound bank and builds the first 24 sample pointers and sound priorities. */
+void pascal load_primary_sound_bank(char far *filename)
 {
     FILE *stream;
     register int i;
 
     stream = fopen(filename, "rb");
-    d_d714_ = malloc(9300);
-    fread(d_d714_, 9300, 1, stream);
+    primary_sound_bank_buffer = malloc(9300);
+    fread(primary_sound_bank_buffer, 9300, 1, stream);
     fclose(stream);
-    /* Header words follow each 16-byte record. */
+    /* Header words follow each 16-byte actor_302a_record. */
     /* Keep the nested shifts; i * 16 changes Turbo C output. */
     for (i = 0; i < 24; ++i) {
-        d_cbb5_[i] = d_d714_ + (((struct g2_3980_record far *)(d_d714_ + ((((i << 1) << 1) << 1) << 1)))->f[8] >> 1 << 1);
-        d_4fce_[i] = ((struct g2_3980_record far *)(d_d714_ + ((((i << 1) << 1) << 1) << 1)))->f[9];
+        sound_sample_pointer_table[i] = primary_sound_bank_buffer + (((struct sound_bank_index_record far *)(primary_sound_bank_buffer + ((((i << 1) << 1) << 1) << 1)))->index_words[8] >> 1 << 1);
+        sound_effect_priority_table[i] = ((struct sound_bank_index_record far *)(primary_sound_bank_buffer + ((((i << 1) << 1) << 1) << 1)))->index_words[9];
     }
 }
 
-void pascal g2_3a38(char far *filename)
+/* Loads the secondary sound bank and builds the next 24 sample pointers and sound priorities. */
+void pascal load_secondary_sound_bank(char far *filename)
 {
     FILE *stream;
     register int i;
 
     stream = fopen(filename, "rb");
-    d_d710_ = malloc(8500);
-    fread(d_d710_, 8000, 1, stream);
+    secondary_sound_bank_buffer = malloc(8500);
+    fread(secondary_sound_bank_buffer, 8000, 1, stream);
     fclose(stream);
-    /* Header words follow each 16-byte record. */
+    /* Header words follow each 16-byte actor_302a_record. */
     /* Keep the nested shifts; i * 16 changes Turbo C output. */
     for (i = 0; i < 24; ++i) {
-        d_cbb5_[i + 24] = d_d710_ + (((*((unsigned int far *)((char far *)d_d710_ + ((((i << 1) << 1) << 1) << 1) + 16))) >> 1) << 1);
-        d_4fe6_[i] = *((unsigned char far *)((char far *)d_d710_ + ((((i << 1) << 1) << 1) << 1) + 16));
+        sound_sample_pointer_table[i + 24] = secondary_sound_bank_buffer + (((*((unsigned int far *)((char far *)secondary_sound_bank_buffer + ((((i << 1) << 1) << 1) << 1) + 16))) >> 1) << 1);
+        secondary_sound_priority_table[i] = *((unsigned char far *)((char far *)secondary_sound_bank_buffer + ((((i << 1) << 1) << 1) << 1) + 16));
     }
 }
 
-void g2_3af3(void)
+/* Displays the credit screen screen or message and waits for the associated input when required. */
+void show_credit_screen(void)
 {
-    g2_3d8c(7, 3, 6);
-    g2_37b6("     APOGEE SOFTWARE    ", 8, 8);
-    g2_37b6("       PRODUCTIONS      ", 8, 9);
-    g2_37b6("          - - -         ", 8, 10);
-    g2_37b6("        A game by       ", 8, 12);
-    g2_37b6("      Todd Replogle     ", 8, 13);
-    g2_37b6("       Version 2.0      ", 8, 15);
+    draw_framed_dialog_box(7, 3, 6);
+    draw_text_string("     APOGEE SOFTWARE    ", 8, 8);
+    draw_text_string("       PRODUCTIONS      ", 8, 9);
+    draw_text_string("          - - -         ", 8, 10);
+    draw_text_string("        A game by       ", 8, 12);
+    draw_text_string("      Todd Replogle     ", 8, 13);
+    draw_text_string("       Version 2.0      ", 8, 15);
 #if EPISODE == 3
-    g2_37b6("   Copyright  (c) 1991   ", 8, 17);
+    draw_text_string("   Copyright  (c) 1991   ", 8, 17);
 #else
-    g2_37b6("   Copyright  (c) 1991  ", 8, 17);
+    draw_text_string("   Copyright  (c) 1991  ", 8, 17);
 #endif
 }
 
-void g2_3b79(void)
+/* Draws the planar sprite frame using the active page and graphics resources. */
+void draw_planar_sprite_frame(void)
 {
-    asm_05eb(d_6e0a_);
-    asm_0424(d_a0fb_ + 0x4c40, 0x24, d_9b38_ + 0xa0);
-    asm_05eb(!d_6e0a_);
-    asm_0424(d_a0fb_ + 0x4c40, 0x24, d_9b38_ + 0xa0);
+    select_draw_page(draw_page_index);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4c40, 0x24, episode_sprite_resource_table + 0xa0);
+    select_draw_page(!draw_page_index);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4c40, 0x24, episode_sprite_resource_table + 0xa0);
 }
 
-void g2_3bd7(void)
+/* Displays the proton episode dialogue screen or message and waits for the associated input when
+   required. */
+void show_proton_episode_dialogue(void)
 {
-    g2_3d8c(0, 9, 2);
+    draw_framed_dialog_box(0, 9, 2);
 #if EPISODE == 1
-    g2_37b6("So you're the pitiful   ", 1, 19);
-    g2_37b6("hero they sent to stop  ", 1, 20);
-    g2_37b6("me.  I, Dr. Proton, will", 1, 21);
-    g2_37b6("soon rule the world!    ", 1, 22);
+    draw_text_string("So you're the pitiful   ", 1, 19);
+    draw_text_string("hero they sent to stop  ", 1, 20);
+    draw_text_string("me.  I, Dr. Proton, will", 1, 21);
+    draw_text_string("soon rule the world!    ", 1, 22);
 #elif EPISODE == 2
-    g2_37b6("So Duke, you managed to ", 1, 19);
-    g2_37b6("find my secret moonbase.", 1, 20);
-    g2_37b6("My Techbots will soon", 1, 21);
-    g2_37b6("be the end of you.", 1, 22);
+    draw_text_string("So Duke, you managed to ", 1, 19);
+    draw_text_string("find my secret moonbase.", 1, 20);
+    draw_text_string("My Techbots will soon", 1, 21);
+    draw_text_string("be the end of you.", 1, 22);
 #else
-    g2_37b6("Now that I've warped to ", 1, 19);
-    g2_37b6("Earth's future, Duke the", 1, 20);
-    g2_37b6("Fluke cannot stop me.", 1, 21);
+    draw_text_string("Now that I've warped to ", 1, 19);
+    draw_text_string("Earth's future, Duke the", 1, 20);
+    draw_text_string("Fluke cannot stop me.", 1, 21);
 #endif
-    g2_2870(24, 22);
+    wait_input_animated_sprite(24, 22);
 }
 
-void g2_3c38(void)
+/* Displays the duke episode dialogue screen or message and waits for the associated input when
+   required. */
+void show_duke_episode_dialogue(void)
 {
-    g2_3d8c(10, 9, 2);
+    draw_framed_dialog_box(10, 9, 2);
 #if EPISODE == 1
-    g2_37b6("You're wrong, Proton    ", 11, 19);
-    g2_37b6("breath.  I'll be done   ", 11, 20);
-    g2_37b6("with you and still have ", 11, 21);
-    g2_37b6("time to watch Oprah!    ", 11, 22);
+    draw_text_string("You're wrong, Proton    ", 11, 19);
+    draw_text_string("breath.  I'll be done   ", 11, 20);
+    draw_text_string("with you and still have ", 11, 21);
+    draw_text_string("time to watch Oprah!    ", 11, 22);
 #elif EPISODE == 2
-    g2_37b6("Your Techbots were", 11, 19);
-    g2_37b6("beaten on Earth and I'll", 11, 20);
-    g2_37b6("defeat them here. Your", 11, 21);
-    g2_37b6("terror will soon end.", 11, 22);
+    draw_text_string("Your Techbots were", 11, 19);
+    draw_text_string("beaten on Earth and I'll", 11, 20);
+    draw_text_string("defeat them here. Your", 11, 21);
+    draw_text_string("terror will soon end.", 11, 22);
 #else
-    g2_37b6("I need to find Dr.", 11, 19);
-    g2_37b6("Proton's time machine", 11, 20);
-    g2_37b6("or Earth is doomed!", 11, 21);
+    draw_text_string("I need to find Dr.", 11, 19);
+    draw_text_string("Proton's time machine", 11, 20);
+    draw_text_string("or Earth is doomed!", 11, 21);
 #endif
-    g2_2870(34, 22);
+    wait_input_animated_sprite(34, 22);
 }
 
-void g2_3c9a(void)
+/* Displays the player death message screen or message and waits for the associated input when
+   required. */
+void show_player_death_message(void)
 {
-    g2_37b6("     You have died.", 3, 3);
-    g2_37b6("Bringing you back to the", 3, 4);
-    g2_37b6("   last main hallway.", 3, 5);
-    g2_37b6("      Press ENTER:", 3, 6);
+    draw_text_string("     You have died.", 3, 3);
+    draw_text_string("Bringing you back to the", 3, 4);
+    draw_text_string("   last main hallway.", 3, 5);
+    draw_text_string("      Press ENTER:", 3, 6);
 }
 
-void g2_3cdc(void)
+/* Displays the cheat mode message screen or message and waits for the associated input when
+   required. */
+void show_cheat_mode_message(void)
 {
-    g2_37b6("You are now cheating.", 3, 3);
-    g2_37b6("You have full fire power", 3, 4);
-    g2_37b6("and all the keys.", 3, 5);
-    g2_37b6("Have Fun!", 3, 6);
+    draw_text_string("You are now cheating.", 3, 3);
+    draw_text_string("You have full fire power", 3, 4);
+    draw_text_string("and all the keys.", 3, 5);
+    draw_text_string("Have Fun!", 3, 6);
 }
 
 #if EPISODE == 3
-/* g2_38be: at this place in the DN3 source */
-void pascal g2_38be(register int a0)
+/* draw_main_menu: at this place in the DN3 source */
+/* Draws the main menu; the source has a DN3-specific menu body and a shared DN1/DN2 body. */
+void pascal draw_main_menu(register int a0)
 {
-    g2_37b6("      DUKE MAIN MENU", a0, 6);
-    g2_37b6("      --------------", a0, 7);
-    g2_37b6("   S)tart a new game", a0, 9);
-    g2_37b6("   R)estore an old game", a0, 10);
-    g2_37b6("   I)nstructions", a0, 11);
-    g2_37b6("   O)rdering information", a0, 12);
-    g2_37b6("   G)ame setup", a0, 13);
-    g2_37b6("   H)igh scores", a0, 14);
-    g2_37b6("   P)reviews/Main Demo!", a0, 15);
-    g2_37b6("   V)iew user demo", a0, 16);
-    g2_37b6("   T)itle screen", a0, 17);
-    g2_37b6("   C)redits", a0, 18);
-    g2_37b6("   Q)uit to DOS", a0, 19);
+    draw_text_string("      DUKE MAIN MENU", a0, 6);
+    draw_text_string("      --------------", a0, 7);
+    draw_text_string("   S)tart a new game", a0, 9);
+    draw_text_string("   R)estore an old game", a0, 10);
+    draw_text_string("   I)nstructions", a0, 11);
+    draw_text_string("   O)rdering information", a0, 12);
+    draw_text_string("   G)ame setup", a0, 13);
+    draw_text_string("   H)igh scores", a0, 14);
+    draw_text_string("   P)reviews/Main Demo!", a0, 15);
+    draw_text_string("   V)iew user demo", a0, 16);
+    draw_text_string("   T)itle screen", a0, 17);
+    draw_text_string("   C)redits", a0, 18);
+    draw_text_string("   Q)uit to DOS", a0, 19);
 }
 #endif
 
-void pascal g2_3d1e(register int a0)
+/* Displays the quit confirmation and returns whether the player chose to exit to DOS. */
+void pascal confirm_quit_to_dos(register int a0)
 {
-    g2_3d8c(a0, 5, 1);
-    g2_37b6("Are you sure you want to", a0 + 1, 11);
-    g2_37b6("         quit?          ", a0 + 1, 12);
-    while (d_a0fa_ == 1) {
+    draw_framed_dialog_box(a0, 5, 1);
+    draw_text_string("Are you sure you want to", a0 + 1, 11);
+    draw_text_string("         quit?          ", a0 + 1, 12);
+    while (last_keyboard_scan_code == 1) {
     }
-    g2_2870(a0 + 16, 12);
-    d_d4c0_ = 0;
-    d_d134_ = 0;
-    if (d_a0fa_ == 0x15)
+    wait_input_animated_sprite(a0 + 16, 12);
+    control_right_pressed = 0;
+    control_down_pressed = 0;
+    if (last_keyboard_scan_code == 0x15)
         return 1;
-    d_a0fa_ = 0;
+    last_keyboard_scan_code = 0;
     return 0;
 }
 
-/* Apparently draws a framed box from border tiles (asm_02ad) at column a2, row a1
+/* Apparently draws a framed box from border tiles (blit_bitmap_to_video_page) at column a2, row a1
    (pascal; parameters are listed in declaration order a2, a1, a0). */
-void pascal g2_3d8c(int a2, int a1, int a0)
+/* Draws a framed dialog panel from the border-tile graphics. */
+void pascal draw_framed_dialog_box(int a2, int a1, int a0)
 {
     register int si;
     register int di;
@@ -2417,162 +2528,168 @@ void pascal g2_3d8c(int a2, int a1, int a0)
     outport(0x3c4, 0x0f02);
     outport(0x3ce, 0x0105);
     if (a2 == 2)
-        asm_05eb(d_6e0a_);
+        select_draw_page(draw_page_index);
     else
-        asm_05eb(0);
+        select_draw_page(0);
 
     for (si = 0; a0 * 16 * 40 > si; si += 640) {
-        asm_02ad(0x32c0, a1 * 16 * 40 + (si + a2));
-        asm_02ad(0x32e0, a1 * 16 * 40 + (si + a2) + 24);
+        blit_bitmap_to_video_page(0x32c0, a1 * 16 * 40 + (si + a2));
+        blit_bitmap_to_video_page(0x32e0, a1 * 16 * 40 + (si + a2) + 24);
     }
     for (di = 2; di < 23; di += 2)
         for (si = 0; a0 * 16 * 40 > si; si += 640)
-            asm_02ad(0x3220, a1 * 16 * 40 + a2 + di + si);
+            blit_bitmap_to_video_page(0x3220, a1 * 16 * 40 + a2 + di + si);
 
-    asm_02ad(0x3240, a1 * 16 * 40 + a2);
-    asm_02ad(0x3260, a1 * 16 * 40 + a2 + 24);
-    asm_02ad(0x3280, (a1 * 16 * 40 + a2) + a0 * 16 * 40);
-    asm_02ad(0x32a0, (a1 * 16 * 40 + a2) + a0 * 16 * 40 + 24);
+    blit_bitmap_to_video_page(0x3240, a1 * 16 * 40 + a2);
+    blit_bitmap_to_video_page(0x3260, a1 * 16 * 40 + a2 + 24);
+    blit_bitmap_to_video_page(0x3280, (a1 * 16 * 40 + a2) + a0 * 16 * 40);
+    blit_bitmap_to_video_page(0x32a0, (a1 * 16 * 40 + a2) + a0 * 16 * 40 + 24);
 
     for (di = 0; di < 22; di += 2) {
-        asm_02ad(0x3300, a1 * 16 * 40 + (di + a2) + 2);
-        asm_02ad(0x3320, (a0 * 16 * 40 + di + a2) + a1 * 16 * 40 + 2);
+        blit_bitmap_to_video_page(0x3300, a1 * 16 * 40 + (di + a2) + 2);
+        blit_bitmap_to_video_page(0x3320, (a0 * 16 * 40 + di + a2) + a1 * 16 * 40 + 2);
     }
 }
 
-void g2_3f68(void)
+/* Advances the credits scroll position and draws the next row of credits text with its color
+   sequence. */
+void animate_credits_scroll(void)
 {
     register int i;
 
-    if (d_0b9f < 40)
-        ++d_0b9f;
-    if (d_0b9f == 40) {
-        d_5305_ += 2;
-        if (d_5305_ % 26 == 0)
-            d_0b9f = 0;
-        if (d_5305_ > 494)
-            d_5305_ = 0;
+    if (credits_scroll_position < 40)
+        ++credits_scroll_position;
+    if (credits_scroll_position == 40) {
+        credits_text_position += 2;
+        if (credits_text_position % 26 == 0)
+            credits_scroll_position = 0;
+        if (credits_text_position > 494)
+            credits_text_position = 0;
     }
-    ++d_039f;
-    if (d_039f == 4)
-        d_039f = 0;
+    ++credit_scroll_delay;
+    if (credit_scroll_delay == 4)
+        credit_scroll_delay = 0;
     for (i = 0; i < 26; ++i)
-        g2_385b(d_0d04[d_5305_ + i], i + 2,
-                d_0ce1[d_039f + i] + 0xa2);
+        draw_text_character_at_position(credits_scroll_text[credits_text_position + i], i + 2,
+                                        credits_glyph_color_sequence[credit_scroll_delay + i] + 0xa2);
 }
 
-void g2_3fe1(void)
+/* Waits for the for pause key release condition or input event. */
+void wait_for_pause_key_release(void)
 {
-    while (d_a0fa_ == 0x18) {
+    while (last_keyboard_scan_code == 0x18) {
     }
 #if EPISODE != 3
-    g2_3114();
+    clear_video_page();
 #endif
 }
 
-void g2_3fed(void)
+/* Displays the instructions heading screen or message and waits for the associated input when
+   required. */
+void show_instructions_heading(void)
 {
-    while (d_a0fa_ == 0x17) {
+    while (last_keyboard_scan_code == 0x17) {
     }
-    g2_3114();
-    g2_37b6("Instructions", 14, 0);
+    clear_video_page();
+    draw_text_string("Instructions", 14, 0);
 }
 
-void pascal g2_4009(register int a0)
+/* Prompts for a replacement scan code for one keyboard action and redraws its binding label. */
+void pascal remap_keyboard_action(register int a0)
 {
-    d_cc81_ = 0;
+    control_confirmation_state = 0;
     for (;;) {
 #if EPISODE == 1
-        d_a0fa_ = 0;
+        last_keyboard_scan_code = 0;
 #endif
-        g2_3d8c(a0, 3, 7);
+        draw_framed_dialog_box(a0, 3, 7);
         outport(0x3ce, 5);
-        g2_42a3(a0);
-        g2_194d(a0);
-        g2_37b6("Modify which action?", a0 + 1, 15);
-        g2_37b6("choose(1-6):", a0 + 1, 16);
-        g2_37b6("  Press 'ESC' to exit.", a0 + 1, 20);
+        draw_keyboard_mode_settings(a0);
+        draw_keyboard_binding_values(a0);
+        draw_text_string("Modify which action?", a0 + 1, 15);
+        draw_text_string("choose(1-6):", a0 + 1, 16);
+        draw_text_string("  Press 'ESC' to exit.", a0 + 1, 20);
         for (;;) {
-            while (d_a0fa_ == 0x25) {
+            while (last_keyboard_scan_code == 0x25) {
             }
-            g2_2870(a0 + 14, 16);
-            if (d_a0fa_ == 1)
+            wait_input_animated_sprite(a0 + 14, 16);
+            if (last_keyboard_scan_code == 1)
                 return;
-            switch (d_a0fa_) {
+            switch (last_keyboard_scan_code) {
             case 2:
-                g2_37b6("Modifying UP.          ", a0 + 1, 18);
-                g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 2) {
+                draw_text_string("Modifying UP.          ", a0 + 1, 18);
+                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                while (last_keyboard_scan_code == 2) {
                 }
-                g2_2870(a0 + 16, 19);
-                if (d_a0fa_ != 1) {
-                    d_a0fa_ = g2_276f();
-                    d_02f4 = d_a0fa_;
+                wait_input_animated_sprite(a0 + 16, 19);
+                if (last_keyboard_scan_code != 1) {
+                    last_keyboard_scan_code = normalize_extended_key_code();
+                    key_binding_up = last_keyboard_scan_code;
                     enable();
                     break;
                 }
                 break;
             case 3:
-                g2_37b6("Modifying DOWN.          ", a0 + 1, 18);
-                g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 3) {
+                draw_text_string("Modifying DOWN.          ", a0 + 1, 18);
+                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                while (last_keyboard_scan_code == 3) {
                 }
-                g2_2870(a0 + 16, 19);
-                if (d_a0fa_ != 1) {
-                    d_a0fa_ = g2_276f();
-                    d_02f5 = d_a0fa_;
+                wait_input_animated_sprite(a0 + 16, 19);
+                if (last_keyboard_scan_code != 1) {
+                    last_keyboard_scan_code = normalize_extended_key_code();
+                    key_binding_down = last_keyboard_scan_code;
                     enable();
                     break;
                 }
                 break;
             case 4:
-                g2_37b6("Modifying LEFT.          ", a0 + 1, 18);
-                g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 4) {
+                draw_text_string("Modifying LEFT.          ", a0 + 1, 18);
+                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                while (last_keyboard_scan_code == 4) {
                 }
-                g2_2870(a0 + 16, 19);
-                if (d_a0fa_ != 1) {
-                    d_a0fa_ = g2_276f();
-                    d_02f6 = d_a0fa_;
+                wait_input_animated_sprite(a0 + 16, 19);
+                if (last_keyboard_scan_code != 1) {
+                    last_keyboard_scan_code = normalize_extended_key_code();
+                    key_binding_left = last_keyboard_scan_code;
                     enable();
                     break;
                 }
                 break;
             case 5:
-                g2_37b6("Modifying RIGHT.          ", a0 + 1, 18);
-                g2_37b6("  hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 5) {
+                draw_text_string("Modifying RIGHT.          ", a0 + 1, 18);
+                draw_text_string("  hit new key:            ", a0 + 1, 19);
+                while (last_keyboard_scan_code == 5) {
                 }
-                g2_2870(a0 + 16, 19);
-                if (d_a0fa_ != 1) {
-                    d_a0fa_ = g2_276f();
-                    d_02f7 = d_a0fa_;
+                wait_input_animated_sprite(a0 + 16, 19);
+                if (last_keyboard_scan_code != 1) {
+                    last_keyboard_scan_code = normalize_extended_key_code();
+                    key_binding_right = last_keyboard_scan_code;
                     enable();
                     break;
                 }
                 break;
             case 6:
-                g2_37b6("Modifying FIRE.          ", a0 + 1, 18);
-                g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 6) {
+                draw_text_string("Modifying FIRE.          ", a0 + 1, 18);
+                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                while (last_keyboard_scan_code == 6) {
                 }
-                g2_2870(a0 + 16, 19);
-                if (d_a0fa_ != 1) {
-                    d_a0fa_ = g2_276f();
-                    d_02f8 = d_a0fa_;
+                wait_input_animated_sprite(a0 + 16, 19);
+                if (last_keyboard_scan_code != 1) {
+                    last_keyboard_scan_code = normalize_extended_key_code();
+                    key_binding_fire = last_keyboard_scan_code;
                     enable();
                     break;
                 }
                 break;
             case 7:
-                g2_37b6("Modifying JUMP.          ", a0 + 1, 18);
-                g2_37b6("  Hit new key:            ", a0 + 1, 19);
-                while (d_a0fa_ == 7) {
+                draw_text_string("Modifying JUMP.          ", a0 + 1, 18);
+                draw_text_string("  Hit new key:            ", a0 + 1, 19);
+                while (last_keyboard_scan_code == 7) {
                 }
-                g2_2870(a0 + 16, 19);
-                if (d_a0fa_ != 1) {
-                    d_a0fa_ = g2_276f();
-                    d_02f9 = d_a0fa_;
+                wait_input_animated_sprite(a0 + 16, 19);
+                if (last_keyboard_scan_code != 1) {
+                    last_keyboard_scan_code = normalize_extended_key_code();
+                    key_binding_jump = last_keyboard_scan_code;
                     enable();
                     break;
                 }
@@ -2583,197 +2700,211 @@ void pascal g2_4009(register int a0)
     }
 }
 
-void pascal g2_42a3(register int a0)
+/* Draws the keyboard mode settings using the active page and graphics resources. */
+void pascal draw_keyboard_mode_settings(register int a0)
 {
-    g2_37b6("      KEYBOARD MODE", a0, 7);
-    g2_37b6("                        ", a0 + 1, 8);
-    g2_37b6("  1.  Up     :", a0 + 1, 9);
-    g2_37b6("  2.  Down   :", a0 + 1, 10);
-    g2_37b6("  3.  Left   :", a0 + 1, 11);
-    g2_37b6("  4.  Right  :", a0 + 1, 12);
-    g2_37b6("  5.  Fire   :", a0 + 1, 13);
-    g2_37b6("  6.  Jump   :", a0 + 1, 14);
+    draw_text_string("      KEYBOARD MODE", a0, 7);
+    draw_text_string("                        ", a0 + 1, 8);
+    draw_text_string("  1.  Up     :", a0 + 1, 9);
+    draw_text_string("  2.  Down   :", a0 + 1, 10);
+    draw_text_string("  3.  Left   :", a0 + 1, 11);
+    draw_text_string("  4.  Right  :", a0 + 1, 12);
+    draw_text_string("  5.  Fire   :", a0 + 1, 13);
+    draw_text_string("  6.  Jump   :", a0 + 1, 14);
 }
 
 /* Dr. Proton taunt shown at the end of a level; text differs per episode. */
-void g2_4334(void)
+/* Displays the proton level end dialogue screen or message and waits for the associated input
+   when required. */
+void show_proton_level_end_dialogue(void)
 {
-    g2_3d8c(0, 9, 2);
+    draw_framed_dialog_box(0, 9, 2);
 #if EPISODE == 1
-    g2_37b6("You may have defeated me", 1, 19);
-    g2_37b6("on Earth, but on the    ", 1, 20);
-    g2_37b6("Moon I can make plans   ", 1, 21);
-    g2_37b6("for my ulimate attack!  ", 1, 22);
+    draw_text_string("You may have defeated me", 1, 19);
+    draw_text_string("on Earth, but on the    ", 1, 20);
+    draw_text_string("Moon I can make plans   ", 1, 21);
+    draw_text_string("for my ulimate attack!  ", 1, 22);
 #elif EPISODE == 2
-    g2_37b6("Duke, your lucky ways   ", 1, 19);
-    g2_37b6("annoy me.  I see now    ", 1, 20);
-    g2_37b6("how best to be rid of", 1, 21);
-    g2_37b6("of your pesky presence.", 1, 22);
+    draw_text_string("Duke, your lucky ways   ", 1, 19);
+    draw_text_string("annoy me.  I see now    ", 1, 20);
+    draw_text_string("how best to be rid of", 1, 21);
+    draw_text_string("of your pesky presence.", 1, 22);
 #else
-    g2_37b6("You will never get me,  ", 1, 19);
-    g2_37b6("Duke!  Watch your self", 1, 20);
-    g2_37b6("you here!.", 1, 21);
+    draw_text_string("You will never get me,  ", 1, 19);
+    draw_text_string("Duke!  Watch your self", 1, 20);
+    draw_text_string("you here!.", 1, 21);
 #endif
-    g2_2870(24, 22);
+    wait_input_animated_sprite(24, 22);
 }
 
-void g2_4394(void)
+/* Displays the proton transition dialogue screen or message and waits for the associated input
+   when required. */
+void show_proton_transition_dialogue(void)
 {
-    g2_3d8c(10, 9, 2);
+    draw_framed_dialog_box(10, 9, 2);
 #if EPISODE == 1
-    g2_37b6("Proton, you coward!  You", 11, 19);
-    g2_37b6("can run but you can't   ", 11, 20);
-    g2_37b6("hide!                   ", 11, 21);
-    g2_37b6("                        ", 11, 22);
+    draw_text_string("Proton, you coward!  You", 11, 19);
+    draw_text_string("can run but you can't   ", 11, 20);
+    draw_text_string("hide!                   ", 11, 21);
+    draw_text_string("                        ", 11, 22);
 #elif EPISODE == 2
-    g2_37b6("There's IS no place to", 11, 19);
-    g2_37b6("hide from me.  Running", 11, 20);
-    g2_37b6("back to Earth will not", 11, 21);
-    g2_37b6("save you.", 11, 22);
+    draw_text_string("There's IS no place to", 11, 19);
+    draw_text_string("hide from me.  Running", 11, 20);
+    draw_text_string("back to Earth will not", 11, 21);
+    draw_text_string("save you.", 11, 22);
 #else
-    g2_37b6("You'll not get away", 11, 19);
-    g2_37b6("butthead!", 11, 20);
-    g2_37b6("", 11, 21);
+    draw_text_string("You'll not get away", 11, 19);
+    draw_text_string("butthead!", 11, 20);
+    draw_text_string("", 11, 21);
 #endif
-    g2_2870(34, 22);
+    wait_input_animated_sprite(34, 22);
 }
 
-void g2_43f5(void)
+/* Displays the proton future dialogue screen or message and waits for the associated input when
+   required. */
+void show_proton_future_dialogue(void)
 {
-    g2_3d8c(0, 9, 2);
+    draw_framed_dialog_box(0, 9, 2);
 #if EPISODE == 1
-    g2_37b6("Once my forces are     ", 1, 19);
-    g2_37b6("together, I'll be back ", 1, 20);
-    g2_37b6("to rule Earth.         ", 1, 21);
+    draw_text_string("Once my forces are     ", 1, 19);
+    draw_text_string("together, I'll be back ", 1, 20);
+    draw_text_string("to rule Earth.         ", 1, 21);
 #elif EPISODE == 2
-    g2_37b6("But escaping to Earth's", 1, 19);
-    g2_37b6("future will!  Then my", 1, 20);
-    g2_37b6("Techbot army can build", 1, 21);
-    g2_37b6("and return victorious!", 1, 22);
+    draw_text_string("But escaping to Earth's", 1, 19);
+    draw_text_string("future will!  Then my", 1, 20);
+    draw_text_string("Techbot army can build", 1, 21);
+    draw_text_string("and return victorious!", 1, 22);
 #else
-    g2_37b6("Butthead, it's buthead!!", 1, 19);
-    g2_37b6("                     ", 1, 20);
-    g2_37b6("     ", 1, 21);
+    draw_text_string("Butthead, it's buthead!!", 1, 19);
+    draw_text_string("                     ", 1, 20);
+    draw_text_string("     ", 1, 21);
 #endif
-    g2_2870(24, 22);
+    wait_input_animated_sprite(24, 22);
 }
 
-void g2_4444(void)
+/* Displays the duke level end dialogue screen or message and waits for the associated input when
+   required. */
+void show_duke_level_end_dialogue(void)
 {
-    g2_3d8c(10, 9, 2);
+    draw_framed_dialog_box(10, 9, 2);
 #if EPISODE == 1
-    g2_37b6("Not if I can stop you ", 11, 19);
-    g2_37b6("first...              ", 11, 20);
-    g2_37b6("                      ", 11, 21);
-    g2_37b6("     Here I come!     ", 11, 22);
+    draw_text_string("Not if I can stop you ", 11, 19);
+    draw_text_string("first...              ", 11, 20);
+    draw_text_string("                      ", 11, 21);
+    draw_text_string("     Here I come!     ", 11, 22);
 #elif EPISODE == 2
-    g2_37b6("Not if I can find a way", 11, 19);
-    g2_37b6("to stop you...even if", 11, 20);
-    g2_37b6("I have to follow you", 11, 21);
-    g2_37b6("into the future...!", 11, 22);
+    draw_text_string("Not if I can find a way", 11, 19);
+    draw_text_string("to stop you...even if", 11, 20);
+    draw_text_string("I have to follow you", 11, 21);
+    draw_text_string("into the future...!", 11, 22);
 #else
-    g2_37b6("The spelling of yours", 11, 19);
-    g2_37b6("is getting better!", 11, 20);
-    g2_37b6("", 11, 21);
+    draw_text_string("The spelling of yours", 11, 19);
+    draw_text_string("is getting better!", 11, 20);
+    draw_text_string("", 11, 21);
 #endif
-    g2_2870(34, 22);
+    wait_input_animated_sprite(34, 22);
 }
 
-void g2_44a5(void)
+/* Displays the game completion message screen or message and waits for the associated input when
+   required. */
+void show_game_completion_message(void)
 {
-    g2_3d8c(10, 9, 2);
+    draw_framed_dialog_box(10, 9, 2);
 #if EPISODE == 1 || EPISODE == 2
-    g2_37b6("I won it all!!!!!!!", 11, 19);
-    g2_37b6("         ", 11, 20);
-    g2_37b6("", 11, 21);
+    draw_text_string("I won it all!!!!!!!", 11, 19);
+    draw_text_string("         ", 11, 20);
+    draw_text_string("", 11, 21);
 #else
-    g2_37b6("Finally, Earth is free", 11, 19);
-    g2_37b6("from Dr. Proton and", 11, 20);
-    g2_37b6("his Techbot menace.", 11, 21);
-    g2_37b6("", 11, 22);
+    draw_text_string("Finally, Earth is free", 11, 19);
+    draw_text_string("from Dr. Proton and", 11, 20);
+    draw_text_string("his Techbot menace.", 11, 21);
+    draw_text_string("", 11, 22);
 #endif
-    g2_2870(34, 22);
+    wait_input_animated_sprite(34, 22);
 }
 
-void pascal g2_44f5(register int a0)
+/* Prompts the player for the joystick calibration and records the response. */
+void pascal prompt_joystick_calibration(register int a0)
 {
-    g2_37b6(" Hold the joystick in the", a0, 9);
-    g2_37b6(" upper left and press a", a0, 10);
-    g2_37b6(" button.", a0, 11);
+    draw_text_string(" Hold the joystick in the", a0, 9);
+    draw_text_string(" upper left and press a", a0, 10);
+    draw_text_string(" button.", a0, 11);
 }
 
-void pascal g2_452b(register int a0)
+/* Displays the next episode promotion screen or message and waits for the associated input when
+   required. */
+void pascal show_next_episode_promotion(register int a0)
 {
-    g2_3114();
-    g1_0042(0x2c);
+    clear_video_page();
+    request_priority_sound_effect(0x2c);
 #if EPISODE == 1
-    g2_3d8c(a0, 2, 7);
-    g2_37b6("     TO BE CONTINUED     ", a0 + 1, 5);
-    g2_37b6("------------------------", a0 + 1, 6);
-    g2_37b6("In episode two, Duke     ", a0 + 1, 8);
-    g2_37b6("rockets to the moon to   ", a0 + 1, 9);
-    g2_37b6("infiltrate Dr. Proton's  ", a0 + 1, 10);
-    g2_37b6("massive lunar fortress.  ", a0 + 1, 11);
-    g2_37b6("                         ", a0 + 1, 12);
-    g2_37b6("Continue your adventure  ", a0 + 1, 13);
-    g2_37b6("in \"Mission: Moonbase\",  ", a0 + 1, 14);
-    g2_37b6("where you'll encounter:  ", a0 + 1, 15);
-    g2_37b6("New levels, new puzzles,", a0 + 1, 16);
-    g2_37b6("new graphics, and more   ", a0 + 1, 17);
-    g2_37b6("non-stop action.         ", a0 + 1, 18);
+    draw_framed_dialog_box(a0, 2, 7);
+    draw_text_string("     TO BE CONTINUED     ", a0 + 1, 5);
+    draw_text_string("------------------------", a0 + 1, 6);
+    draw_text_string("In episode two, Duke     ", a0 + 1, 8);
+    draw_text_string("rockets to the moon to   ", a0 + 1, 9);
+    draw_text_string("infiltrate Dr. Proton's  ", a0 + 1, 10);
+    draw_text_string("massive lunar fortress.  ", a0 + 1, 11);
+    draw_text_string("                         ", a0 + 1, 12);
+    draw_text_string("Continue your adventure  ", a0 + 1, 13);
+    draw_text_string("in \"Mission: Moonbase\",  ", a0 + 1, 14);
+    draw_text_string("where you'll encounter:  ", a0 + 1, 15);
+    draw_text_string("New levels, new puzzles,", a0 + 1, 16);
+    draw_text_string("new graphics, and more   ", a0 + 1, 17);
+    draw_text_string("non-stop action.         ", a0 + 1, 18);
 #elif EPISODE == 2
-    g2_3d8c(a0, 2, 7);
-    g2_37b6("     TO BE CONTINUED    ", a0 + 1, 5);
-    g2_37b6("------------------------", a0 + 1, 6);
-    g2_37b6("Once again you've given ", a0 + 1, 8);
-    g2_37b6("Dr. Proton a major set- ", a0 + 1, 9);
-    g2_37b6("back, by destroying his ", a0 + 1, 10);
-    g2_37b6("lunar fortress.         ", a0 + 1, 11);
-    g2_37b6("                        ", a0 + 1, 12);
-    g2_37b6("Continue your adventure ", a0 + 1, 13);
-    g2_37b6("in \"Trapped in the      ", a0 + 1, 14);
-    g2_37b6("Future\"!  Duke must     ", a0 + 1, 15);
-    g2_37b6("chase Dr. Proton into   ", a0 + 1, 16);
-    g2_37b6("Earth's future to stop  ", a0 + 1, 17);
-    g2_37b6("the largest threat yet! ", a0 + 1, 18);
+    draw_framed_dialog_box(a0, 2, 7);
+    draw_text_string("     TO BE CONTINUED    ", a0 + 1, 5);
+    draw_text_string("------------------------", a0 + 1, 6);
+    draw_text_string("Once again you've given ", a0 + 1, 8);
+    draw_text_string("Dr. Proton a major set- ", a0 + 1, 9);
+    draw_text_string("back, by destroying his ", a0 + 1, 10);
+    draw_text_string("lunar fortress.         ", a0 + 1, 11);
+    draw_text_string("                        ", a0 + 1, 12);
+    draw_text_string("Continue your adventure ", a0 + 1, 13);
+    draw_text_string("in \"Trapped in the      ", a0 + 1, 14);
+    draw_text_string("Future\"!  Duke must     ", a0 + 1, 15);
+    draw_text_string("chase Dr. Proton into   ", a0 + 1, 16);
+    draw_text_string("Earth's future to stop  ", a0 + 1, 17);
+    draw_text_string("the largest threat yet! ", a0 + 1, 18);
 #else
-    g2_3d8c(a0, 1, 10);
-    g2_37b6("    CONGRATULATIONS     ", a0 + 1, 3);
-    g2_37b6("------------------------", a0 + 1, 4);
-    g2_37b6(" Dr. Proton is finally  ", a0 + 1, 6);
-    g2_37b6("       defeated!        ", a0 + 1, 7);
-    g2_37b6("                        ", a0 + 1, 8);
-    g2_37b6("Using Proton's time warp", a0 + 1, 9);
-    g2_37b6(" device Duke returns to ", a0 + 1, 10);
-    g2_37b6(" Earth's present and is ", a0 + 1, 11);
-    g2_37b6("presented the key to the", a0 + 1, 12);
-    g2_37b6(" city he saved. (Yeah.) ", a0 + 1, 13);
-    g2_37b6(" Did you locate all the ", a0 + 1, 15);
-    g2_37b6("  hidden rooms on each  ", a0 + 1, 16);
-    g2_37b6("  level?  On your next  ", a0 + 1, 17);
-    g2_37b6("   Apogee games order   ", a0 + 1, 18);
-    g2_37b6("please tell us your best", a0 + 1, 19);
-    g2_37b6(" Duke Nukum high score. ", a0 + 1, 20);
-    g2_37b6("                        ", a0 + 1, 21);
-    g2_37b6(" Thank you for playing! ", a0 + 1, 22);
+    draw_framed_dialog_box(a0, 1, 10);
+    draw_text_string("    CONGRATULATIONS     ", a0 + 1, 3);
+    draw_text_string("------------------------", a0 + 1, 4);
+    draw_text_string(" Dr. Proton is finally  ", a0 + 1, 6);
+    draw_text_string("       defeated!        ", a0 + 1, 7);
+    draw_text_string("                        ", a0 + 1, 8);
+    draw_text_string("Using Proton's time warp", a0 + 1, 9);
+    draw_text_string(" device Duke returns to ", a0 + 1, 10);
+    draw_text_string(" Earth's present and is ", a0 + 1, 11);
+    draw_text_string("presented the key to the", a0 + 1, 12);
+    draw_text_string(" city he saved. (Yeah.) ", a0 + 1, 13);
+    draw_text_string(" Did you locate all the ", a0 + 1, 15);
+    draw_text_string("  hidden rooms on each  ", a0 + 1, 16);
+    draw_text_string("  level?  On your next  ", a0 + 1, 17);
+    draw_text_string("   Apogee games order   ", a0 + 1, 18);
+    draw_text_string("please tell us your best", a0 + 1, 19);
+    draw_text_string(" Duke Nukum high score. ", a0 + 1, 20);
+    draw_text_string("                        ", a0 + 1, 21);
+    draw_text_string(" Thank you for playing! ", a0 + 1, 22);
 #endif
-    g2_0036(15);
-    if (d_cc81_ == 0) {
-        while ((d_a0fa_ & 0x80) == 0) {
+    restore_ega_palette(15);
+    if (control_confirmation_state == 0) {
+        while ((last_keyboard_scan_code & 0x80) == 0) {
         }
     }
 #if EPISODE == 3
-    g2_2870(a0 + 24, 22);
+    wait_input_animated_sprite(a0 + 24, 22);
 #else
-    g2_2870(a0 + 24, 18);
+    wait_input_animated_sprite(a0 + 24, 18);
 #endif
-    g2_01a9(15);
-    g2_3fe1();
-    g2_02f4();
-    g2_2870(39, 24);
-    g2_3114();
-    g2_0491();
-    g2_2870(39, 24);
-    g2_2870(39, 24);
+    clear_palette_entries(15);
+    wait_for_pause_key_release();
+    show_ordering_page_one();
+    wait_input_animated_sprite(39, 24);
+    clear_video_page();
+    show_ordering_page_two();
+    wait_input_animated_sprite(39, 24);
+    wait_input_animated_sprite(39, 24);
 }
 

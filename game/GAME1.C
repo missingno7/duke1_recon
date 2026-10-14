@@ -4,7 +4,7 @@
 #include "duke.h"
 
 #undef abs
-#define G1_4D42_ROW(i) (*((struct G1_4D42_RECORD *)&d_0650[(i) * 6]))
+#define ACTOR_TILE_OFFSETS(i) (*((struct actor_tile_graphic_offsets *)&multi_tile_actor_sprite_offsets[(i) * 6]))
 
 #if EPISODE == 1
 #define F_BORDER0 "border.dn1"
@@ -94,146 +94,146 @@
 
 /* ---- uninitialised data (BSS) ---- */
 
-/* G1 BSS definitions in ascending DN1 address order. The six-byte g1_0c52 struct-return static precedes these globals at 0x4eca. */
+/* G1 BSS definitions in ascending DN1 address order. The six-byte configure_joystick_axes struct-return static precedes these globals at 0x4eca. */
 
-int d_4ed0_;
-int d_4ed2_;
-int d_4ed4_;
-int d_4ed6_;
-int d_4ed8_;
-int d_4eda_[100];
-long d_4fa2_[1];
-long d_4fa6_[1];
-long d_4faa_[1];
-long d_4fae_[1];
-long d_4fb2_[7];
-char d_4fce_[24];
-char d_4fe6_[26];
-int d_5000_;
-int d_5002_;
-int d_5004_;
-int d_5006_;
-char d_5008_[10][11];
-/* UNREFERENCED: [0x5076,0x5081), 11 bytes after the 110-byte d_5008_[10][11] table; no accepted symbol starts or direct or based DS references land here. */
-char d_5076_[11];
-int d_5081_[100];
-int d_5149_;
-void (far *d_514b_[100])(void);
-int d_52db_;
-struct t_52dd d_52dd_[5];
-int d_5305_;
-int d_5307_;
-int d_5309_;
-char d_530b_;
-int d_530c_;
-char d_530e_;
-char d_530f_;
-int d_5310_;
-int d_5312_;
-int d_5314_;
-int d_5316_;
-char d_5318_;
-int d_5319_;
-char d_531b_;
-int d_531c_;
-int d_531e_;
-struct t_5320 d_5320_[17];
-struct t_551e d_551e_[7];
-int d_5548_;
-int d_554a_;
-char d_554c_;
-int d_554d_;
-char d_554f_;
-char d_5550_;
-char d_5551_;
-char d_5552_;
-char d_5553_;
-char d_5554_;
-char d_5555_;
-void interrupt far (*d_5556_)(void);
-char d_555a_;
-char d_555b_;
-char d_555c_;
-struct g1_6445_record d_555d_[100];
-void far *d_5a0d_;
-char d_5a11_;
-struct g1_6b82_record d_5a12_[100];
-char d_5c6a_;
-char d_5c6b_;
-struct g1_a30a_record d_5c6c_[100];
-char far *d_5ec4_;
-char d_5ec8_;
-struct g1_8069_record d_5ec9_[100];
-char d_6379_;
-char far *d_637a_;
-char d_637e_;
-struct G1_4874_item d_637f_[100];
-struct g1_376f_record d_669f_[100];
-char d_68f7_;
-long d_68f8_;
-struct g1_87bf_record d_68fc_[100];
-char far *d_6b54_;
-struct s_bccb d_6b58_[15];
-struct g1_3e06_record d_6bb2_[100];
-char d_6e0a_;
-struct g1_9986_record d_6e0b_[100];
-struct g1_899e_record d_7063_[20];
-struct g1_6afd_record d_70db_[100];
-struct t_726b d_726b_[100];
-struct g1_aac2_record d_73fb_[100];
-char d_771b_;
-int d_771c_[3];
-int d_7722_[3];
-char d_7728_;
-unsigned int far *d_7729_;
-char d_772d_;
-struct g1_43fa_record d_772e_[100];
-char far *d_7986_;
-int d_798a_;
-struct g1_7647_record d_798c_[100];
-struct g1_8506_record d_7cac_[100];
-int d_7f04_;
-struct g1_892b_record d_7f06_[1000];
-int d_9676_[3];
-int d_967c_[3];
-int d_9682_;
-void far *d_9684_;
-struct g1_9698_record d_9688_[100];
-struct g1_7b68_record d_9818_[100];
-int d_9b38_;
-struct g1_4638_entry d_9b3a_[100];
-int d_9d92_;
-int d_9d94_;
-int d_9d96_;
-char d_9d98_;
-struct g1_784b_record d_9d99_[100];
-int d_a0b9_;
-char far *d_a0bb_;
-struct g1_a75c_record d_a0bf_[6];
-char far *d_a0ef_;
-char d_a0f3_;
+int game_speed_setting;
+int current_weapon_state;
+int title_graphic_frame_index;
+int level_play_state;
+int hidden_object_state;
+int actor_300e_object_state_table[100];
+long high_score_values[1];
+long high_score_entry_1_alias[1];
+long high_score_entry_2_alias[1];
+long high_score_entry_3_alias[1];
+long high_score_entry_4_alias[7];
+char sound_effect_priority_table[24];
+char secondary_sound_priority_table[26];
+int secret_block_state;
+int player_animation_lock_state;
+int level_hazard_count;
+int level_loading_state;
+char high_score_player_names[10][11];
+/* UNREFERENCED: [0x5076,0x5081), 11 bytes after the 110-byte high_score_player_names[10][11] table; no accepted symbol starts or direct or based DS references land here. */
+char high_score_name_edit_buffer[11];
+int actor_300c_object_marker_table[100];
+int actor_3035_state;
+void (far *level_update_callback_table[100])(void);
+int actor_3035_animation_state;
+struct projectile_record projectile_records[5];
+int credits_text_position;
+int actor_3035_active_state;
+int actor_3037_object_count;
+char pending_sound_priority_flag;
+int actor_3037_animation_state;
+char user_demo_recording_state;
+char secret_block_collision_state;
+int actor_3013_formation_state;
+int actor_303b_update_state;
+int exit_lock_animation_state;
+int secret_block_animation_state;
+char game_session_abort_flag;
+int actor_3048_object_count;
+char pending_sound_effect_index;
+int actor_302a_update_state;
+int level_object_pool_531e_count;
+struct contact_flash_effect_record level_collision_sound_records[17];
+struct animated_actor_pool_record animated_actor_pool_records[7];
+int actor_3048_entity_count;
+int actor_3042_interaction_state;
+char selected_save_slot;
+int keyboard_hotkey_count;
+char control_hint_up_flag;
+char control_hint_down_flag;
+char control_hint_left_flag;
+char control_hint_right_flag;
+char hint_revealed_object_1;
+char hint_revealed_object_2;
+char hint_revealed_object_3;
+void interrupt far (*saved_keyboard_interrupt_vector)(void);
+char hint_revealed_object_4;
+char hint_revealed_object_5;
+char hint_revealed_object_6;
+struct actor_3012_record actor_3012_records[100];
+void far *user_demo_buffer;
+char hint_revealed_object_7;
+struct actor_3015_record actor_3015_records[100];
+char hint_revealed_object_8;
+char hint_revealed_object_9;
+struct falling_hazard_record falling_hazard_records[100];
+char far *player_sprite_resource_buffer;
+char hint_revealed_object_10;
+struct actor_3022_record actor_3022_records[100];
+char active_sprite_draw_flag;
+char far *sprite_graphics_buffer;
+char hint_revealed_object_11;
+struct actor_300b_record actor_300b_records[100];
+struct actor_3000_record actor_3000_records[100];
+char transporter_hint_pending;
+long player_score;
+struct actor_3024_record actor_3024_records[100];
+char far *font_glyph_data_buffer;
+struct actor_3044_record actor_3044_records[15];
+struct actor_3007_record actor_3007_records[100];
+char draw_page_index;
+struct actor_302e_record actor_302e_records[100];
+struct actor_3029_record actor_3029_records[20];
+struct actor_3014_record actor_3014_records[100];
+struct actor_3021_record actor_3021_records[100];
+struct actor_303b_record actor_303b_records[100];
+char keyboard_key_d_pressed;
+int joystick_x_axis_threshold_low[3];
+int joystick_y_axis_threshold_low[3];
+char keyboard_key_g_pressed;
+unsigned int far *level_tile_map;
+char keyboard_key_o_pressed;
+struct actor_3009_record actor_3009_records[100];
+char far *vga_lower_page_pointer;
+int access_card_or_door_state;
+struct actor_301b_record actor_301b_records[100];
+struct actor_3023_record actor_3023_records[100];
+int actor_3034_active_state;
+struct animated_level_tile_record animated_level_tile_records[1000];
+int joystick_x_axis_threshold_high[3];
+int joystick_y_axis_threshold_high[3];
+int alternate_sprite_draw_offset;
+void far *saved_demo_buffer;
+struct actor_302c_record actor_302c_records[100];
+struct actor_301f_record actor_301f_records[100];
+int episode_sprite_resource_table;
+struct actor_300a_record actor_300a_records[100];
+int actor_3040_world_x;
+int actor_3040_world_y;
+int actor_3034_world_x;
+char fire_button_latch;
+struct actor_301d_record actor_301d_records[100];
+int actor_3034_world_y;
+char far *duke_graphics_buffer;
+struct actor_3037_record actor_3037_records[6];
+char far *object_sprite_buffer;
+char jump_button_latch;
 
 /* ---- initialised data ---- */
 
 /* G1 initialised data, DGROUP 0x0094..0x03a3, in definition order (rule DATA-LAYOUT).
    Proven with tail.c by `python tools/tubuild.py G1_TEXT --data`. */
-char d_0094 = 0x00;
+char menu_action_state = 0x00;
 
-int d_0095 = 0;
+int demo_mode_enabled = 0;
 
-char d_0097 = 0x00;
+char sound_enabled = 0x00;
 
-char d_0098 = 0x00;
+char demo_mode_state = 0x00;
 
-int d_0099 = 16;
+int player_screen_x = 16;
 
-int d_009b = 64;
+int player_screen_y = 64;
 
-int d_009d = 0;
+int level_scroll_x = 0;
 
-int d_009f = 0;
+int level_map_y_offset = 0;
 
-struct g1_0008_row d_00a1[85] = {
+struct keyboard_character_map_entry keyboard_character_map_entries[85] = {
     { 0x4e, 0x55, 0x4c, 0x4c, 0x00, 0x00, 0x00 },
     { 0x45, 0x53, 0x43, 0x00, 0x00, 0x00, 0x00 },
     { 0x31, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
@@ -321,23 +321,23 @@ struct g1_0008_row d_00a1[85] = {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
 };
 
-char d_02f4 = 0x48;
+char key_binding_up = 0x48;
 
-char d_02f5 = 0x50;
+char key_binding_down = 0x50;
 
-char d_02f6 = 0x4b;
+char key_binding_left = 0x4b;
 
-char d_02f7 = 0x4d;
+char key_binding_right = 0x4d;
 
-char d_02f8 = 0x38;
+char key_binding_fire = 0x38;
 
-char d_02f9 = 0x1d;
+char key_binding_jump = 0x1d;
 
-char d_02fa = 0x00;
+char current_level_index = 0x00;
 
-int d_02fb = 0;
+int timer_tick_counter = 0;
 
-int d_02fd[40] = {
+int formation_x_delta_table[40] = {
     0, -1, -1, -2, -2, -2, -1, -1,
     0, 1, 1, 2, 2, 2, 1, 1,
     1, 1, 1, 1, 1, 2, 1, 1,
@@ -345,7 +345,7 @@ int d_02fd[40] = {
     0, 0, 0, 0, 0, 0, 0, 0
 };
 
-int d_034d[40] = {
+int formation_y_delta_table[40] = {
     1, 1, 1, 1, 0, -1, -1, -1,
     -2, -1, -1, -1, 0, 1, 1, 1,
     1, 1, 1, 1, 1, 0, -1, -1,
@@ -353,80 +353,88 @@ int d_034d[40] = {
     0, 0, 0, 0, 0, 0, 0, 0
 };
 
-int d_039d = 0;
+int chain_keyboard_interrupt = 0;
 
-int d_039f = 0;
+int credit_scroll_delay = 0;
 
-int d_03a1 = 0;
+int title_graphic_animation_state = 0;
 
-char d_03a3 = 0x00;
+char restore_saved_game_requested = 0x00;
 
-void pascal g1_0008(char a0, int a1, int a2)
+/* Looks up the display string for one key code and draws its first character at the requested
+   position. */
+void pascal draw_text_character(char a0, int a1, int a2)
 {
     char text[2];
 
-    text[0] = d_00a1[(unsigned char)a0].field[0];
+    text[0] = keyboard_character_map_entries[(unsigned char)a0].display_label[0];
     text[1] = 0;
-    g2_37b6(text, a1, a2);
+    draw_text_string(text, a1, a2);
 }
 
-void pascal g1_0042(int a0)
+/* Queues the requested sound effect when its priority is at least the priority of the current
+   sound. */
+void pascal request_priority_sound_effect(int a0)
 {
     disable();
-    if (d_4fce_[a0] >= d_d579_) {
-        d_d579_ = d_4fce_[a0];
-        d_530b_ = 1;
-        d_531b_ = a0;
-        d_a8d8_ = 0;
+    if (sound_effect_priority_table[a0] >= current_sound_priority) {
+        current_sound_priority = sound_effect_priority_table[a0];
+        pending_sound_priority_flag = 1;
+        pending_sound_effect_index = a0;
+        sound_interrupt_active_state = 0;
     }
     enable();
 }
 
-void g1_006f(int a)
+/* Opens joystick setup and runs the calibration flow for the selected setup screen. */
+void select_joystick_configuration(int a)
 {
-    g2_1f5a(a);
-    g1_0e30(1, a);
+    show_joystick_mode_status(a);
+    calibrate_joystick_controls(1, a);
 }
 
-void pascal g1_008a(register int a0)
+/* Displays game setup choices and dispatches joystick, keyboard, sound, or hint changes. */
+void pascal handle_game_setup_input(register int a0)
 {
-    g2_3d8c(a0, 2, 4);
+    draw_framed_dialog_box(a0, 2, 4);
     outport(0x3ce, 5);
-    g2_148f(a0);
+    draw_game_setup_menu(a0);
     delay(100);
     do {
-        g2_2870(a0 + 0x18, 0x0c);
-        if (d_a0fa_ == 0x24) {
-            g1_006f(a0);
+        wait_input_animated_sprite(a0 + 0x18, 0x0c);
+        if (last_keyboard_scan_code == 0x24) {
+            select_joystick_configuration(a0);
             return;
         }
-        if (d_a0fa_ == 0x25) {
-            g2_4009(a0);
+        if (last_keyboard_scan_code == 0x25) {
+            remap_keyboard_action(a0);
             return;
         }
-        if (d_a0fa_ == 0x1f) {
-            g2_1058(a0);
+        if (last_keyboard_scan_code == 0x1f) {
+            toggle_sound_setting(a0);
             return;
         }
-        if (d_a0fa_ == 0x23) {
-            g2_10f0(a0);
+        if (last_keyboard_scan_code == 0x23) {
+            toggle_hint_mode(a0);
             return;
         }
-    } while (d_a0fa_ != 0x1c && d_a0fa_ != 1 && d_a0fa_ != 0x39);
+    } while (last_keyboard_scan_code != 0x1c && last_keyboard_scan_code != 1 && last_keyboard_scan_code != 0x39);
 }
 
-unsigned char pascal g1_0126(int a0)
+/* Reads a restore-slot choice and accepts the scan codes for slots 1 through 9. */
+unsigned char pascal read_restore_slot_digit(int a0)
 {
-    g2_12ad(a0);
-    if (d_a0fa_ >= 2 && d_a0fa_ <= 10) {
-        d_554c_ = d_a0fa_ + 0x2f;
+    prompt_for_restore_slot(a0);
+    if (last_keyboard_scan_code >= 2 && last_keyboard_scan_code <= 10) {
+        selected_save_slot = last_keyboard_scan_code + 0x2f;
         return 1;
     }
     return 0;
 }
 
 /* Save the game state to SAVEDn.DNx (n = slot character). */
-void pascal g1_0151(char a0)
+/* Writes the current game state to the selected SAVED slot file. */
+void pascal save_game_state_to_slot(char a0)
 {
     FILE *stream;
     char *name;
@@ -439,96 +447,98 @@ void pascal g1_0151(char a0)
 #endif
     name[5] = a0;
     stream = fopen(name, "wb");
-    putw(d_009d, stream);
-    putw(d_009f, stream);
-    putw(d_0099, stream);
-    putw(d_009b, stream);
-    putw(d_02fa, stream);
-    putw(d_c295_, stream);
-    putw(d_798a_, stream);
-    putw(d_a0f8_, stream);
-    putw(d_4ed4_, stream);
-    putw(d_cc82_, stream);
-    putw(d_5a11_, stream);
-    putw(d_5c6b_, stream);
-    putw(d_5554_, stream);
-    putw(d_637e_, stream);
-    putw(d_5ec8_, stream);
-    putw(d_555a_, stream);
-    putw(d_555b_, stream);
-    putw(d_68f7_, stream);
-    putw(d_555c_, stream);
-    putw(d_5553_, stream);
-    putw(d_5555_, stream);
-    putw(d_5c6a_, stream);
-    fprintf(stream, "%ld\n", d_68f8_);
+    putw(level_scroll_x, stream);
+    putw(level_map_y_offset, stream);
+    putw(player_screen_x, stream);
+    putw(player_screen_y, stream);
+    putw(current_level_index, stream);
+    putw(world_actor_count, stream);
+    putw(access_card_or_door_state, stream);
+    putw(player_contact_state, stream);
+    putw(title_graphic_frame_index, stream);
+    putw(actor_3020_active_state, stream);
+    putw(hint_revealed_object_7, stream);
+    putw(hint_revealed_object_9, stream);
+    putw(hint_revealed_object_2, stream);
+    putw(hint_revealed_object_11, stream);
+    putw(hint_revealed_object_10, stream);
+    putw(hint_revealed_object_4, stream);
+    putw(hint_revealed_object_5, stream);
+    putw(transporter_hint_pending, stream);
+    putw(hint_revealed_object_6, stream);
+    putw(hint_revealed_object_1, stream);
+    putw(hint_revealed_object_3, stream);
+    putw(hint_revealed_object_8, stream);
+    fprintf(stream, "%ld\n", player_score);
     fclose(stream);
 }
 
-char pascal g1_0351(int a0)
+/* Prompts for a save slot and saves the current game when the input is valid. */
+char pascal prompt_and_save_game(int a0)
 {
-    g2_1241(a0);
-    if (d_a0fa_ >= 2 && d_a0fa_ <= 10) {
-        g1_0151(d_a0fa_ + 0x2f);
+    prompt_for_save_slot(a0);
+    if (last_keyboard_scan_code >= 2 && last_keyboard_scan_code <= 10) {
+        save_game_state_to_slot(last_keyboard_scan_code + 0x2f);
         return 1;
     }
     return 0;
 }
 
-void pascal g1_037e(register int a0)
+/* Displays the in-game help menu and handles its input and page changes. */
+void pascal handle_in_game_help_menu(register int a0)
 {
     outport(0x3ce, 0x105);
     for (;;) {
-        g2_3d8c(a0, 1, 5);
+        draw_framed_dialog_box(a0, 1, 5);
         outport(0x3ce, 5);
-        g2_1a0d(a0);
+        draw_in_game_help_menu(a0);
         delay(100);
         for (;;) {
-            g2_2870(0x1a, 0x0c);
-            if (d_a0fa_ == 1 || d_a0fa_ == 0x39 || d_a0fa_ == 0x1c) {
-                d_02fb = 0;
+            wait_input_animated_sprite(0x1a, 0x0c);
+            if (last_keyboard_scan_code == 1 || last_keyboard_scan_code == 0x39 || last_keyboard_scan_code == 0x1c) {
+                timer_tick_counter = 0;
                 return;
             }
-            if (d_a0fa_ == 0x1f) {
-                if (d_02fa % 2 == 0) {
-                    g2_1bb0(a0);
-                    d_02fb = 0;
+            if (last_keyboard_scan_code == 0x1f) {
+                if (current_level_index % 2 == 0) {
+                    show_save_location_warning(a0);
+                    timer_tick_counter = 0;
                     return;
                 }
-                if (g1_0351(a0)) {
-                    g2_0d39();
-                    d_02fb = 0;
+                if (prompt_and_save_game(a0)) {
+                    show_save_success_message();
+                    timer_tick_counter = 0;
                     return;
                 }
-                g2_0d97();
+                show_save_failure_message();
                 break;
             }
-            if (d_a0fa_ == 0x23) {
-                g2_1d40(a0);
-                while (d_a0fa_ == 0x23)
+            if (last_keyboard_scan_code == 0x23) {
+                draw_high_score_table(a0);
+                while (last_keyboard_scan_code == 0x23)
                     ;
-                g2_2870(a0 + 0x18, 0x14);
-                d_02fb = 0;
+                wait_input_animated_sprite(a0 + 0x18, 0x14);
+                timer_tick_counter = 0;
                 return;
             }
-            if (d_a0fa_ == 0x17) {
-                g2_1ee1(a0);
-                d_02fb = 0;
+            if (last_keyboard_scan_code == 0x17) {
+                show_instruction_screen(a0);
+                timer_tick_counter = 0;
                 return;
             }
-            if (d_a0fa_ == 1 || d_a0fa_ == 0x10 || d_a0fa_ == 0x39) {
-                d_a0fa_ = 0;
-                d_02fb = 0;
+            if (last_keyboard_scan_code == 1 || last_keyboard_scan_code == 0x10 || last_keyboard_scan_code == 0x39) {
+                last_keyboard_scan_code = 0;
+                timer_tick_counter = 0;
                 return;
             }
-            if (d_a0fa_ == 0x22) {
-                g1_008a(a0);
-                d_02fb = 0;
+            if (last_keyboard_scan_code == 0x22) {
+                handle_game_setup_input(a0);
+                timer_tick_counter = 0;
                 return;
             }
-            if (d_a0fa_ == 0x44) {
-                d_0094 = 1;
-                d_02fb = 0;
+            if (last_keyboard_scan_code == 0x44) {
+                menu_action_state = 1;
+                timer_tick_counter = 0;
                 return;
             }
         }
@@ -536,7 +546,8 @@ void pascal g1_037e(register int a0)
 }
 
 /* Gotos preserve the original 981-byte timer-loop layout; structured variants differed. */
-int pascal g1_049f(register int a0)
+/* Polls keyboard, joystick, and timer state while handling menu or demo input events. */
+int pascal poll_player_controls_and_events(register int a0)
 {
     unsigned long ticks;
     unsigned char button1;
@@ -545,177 +556,178 @@ int pascal g1_049f(register int a0)
     ticks = 0;
     button1 = inportb(0x201) & 0x10;
     button2 = inportb(0x201) & 0x20;
-    if (d_d56b_ == 0) {
+    if (joystick_enabled == 0) {
         button1 = 1;
         button2 = 1;
     }
-    g2_3114();
+    clear_video_page();
 
     for (;;) {
-        g2_01a9(20);
-        g2_32b6();
-        g2_0036(20);
+        clear_palette_entries(20);
+        display_episode_bitmap_b638();
+        restore_ega_palette(20);
         ticks = 0;
-        d_a0fa_ = 0;
-        while (d_a0fa_ == 0 && button1 != 0 && button2 != 0) {
-            if (d_d56b_ != 0) {
+        last_keyboard_scan_code = 0;
+        while (last_keyboard_scan_code == 0 && button1 != 0 && button2 != 0) {
+            if (joystick_enabled != 0) {
                 button1 = inportb(0x201) & 0x10;
                 button2 = inportb(0x201) & 0x20;
             }
-            if (d_02fb % 2 != 0) {
+            if (timer_tick_counter % 2 != 0) {
                 ++ticks;
                 if (ticks == 1500000UL) {
-                    d_a0fa_ = 0;
+                    last_keyboard_scan_code = 0;
                     return 5;
                 }
                 if (ticks == 1000000UL) {
-                    g2_01a9(20);
-                    g2_3fe1();
-                    g2_02f4();
-                    g2_0036(20);
+                    clear_palette_entries(20);
+                    wait_for_pause_key_release();
+                    show_ordering_page_one();
+                    restore_ega_palette(20);
                 }
                 if (ticks == 500000UL) {
-                    g2_01a9(20);
-                    g2_315d();
-                    g2_0036(20);
+                    clear_palette_entries(20);
+                    display_credits_bitmap();
+                    restore_ega_palette(20);
                 }
             }
         }
 
-        if ((d_a0fa_ == 0x10 || d_a0fa_ == 1) && ticks < 500000UL) {
-            while (d_a0fa_ == 0x10) {
+        if ((last_keyboard_scan_code == 0x10 || last_keyboard_scan_code == 1) && ticks < 500000UL) {
+            while (last_keyboard_scan_code == 0x10) {
             }
-            if (g2_3d1e(7) != 0)
+            if (confirm_quit_to_dos(7) != 0)
                 return 0;
         }
         ticks = 0;
         outport(0x3ce, 0x105);
         for (;;) {
             while (button1 == 0 || button2 == 0) {
-                if (d_d56b_ != 0) {
+                if (joystick_enabled != 0) {
                     button1 = inportb(0x201) & 0x10;
                     button2 = inportb(0x201) & 0x20;
                 }
             }
             ticks = 0;
-            g2_3d8c(a0, 2, 8);
+            draw_framed_dialog_box(a0, 2, 8);
             outport(0x3ce, 5);
-            g2_38be(a0);
-            g2_0036(15);
+            draw_main_menu(a0);
+            restore_ega_palette(15);
             L_064b:
-            d_a0fa_ = 0;
+            last_keyboard_scan_code = 0;
             goto L_067b;
 
             L_0652:
             ++ticks;
             if (ticks <= 12300000UL)
                 goto L_067b;
-            d_a0fa_ = 0;
-            g2_01a9(20);
+            last_keyboard_scan_code = 0;
+            clear_palette_entries(20);
             return 5;
 
             L_067b:
-            if (d_d56b_ != 0) {
+            if (joystick_enabled != 0) {
                 button1 = inportb(0x201) & 0x10;
                 button2 = inportb(0x201) & 0x20;
             }
-            if (d_a0fa_ == 0 && button1 != 0 && button2 != 0)
+            if (last_keyboard_scan_code == 0 && button1 != 0 && button2 != 0)
                 goto L_0652;
-            if (d_a0fa_ == 0x1f || d_a0fa_ == 0x39 || d_a0fa_ == 0x1c)
+            if (last_keyboard_scan_code == 0x1f || last_keyboard_scan_code == 0x39 || last_keyboard_scan_code == 0x1c)
                 return 1;
             if (button1 == 0 || button2 == 0) {
                 while (button1 == 0 || button2 == 0) {
-                    if (d_d56b_ != 0) {
+                    if (joystick_enabled != 0) {
                         button1 = inportb(0x201) & 0x10;
                         button2 = inportb(0x201) & 0x20;
                     }
                 }
-                if (d_cc81_ == 0 && d_d56b_ != 0)
-                    g1_006f(a0);
-                if (d_cc81_ == 0)
+                if (control_confirmation_state == 0 && joystick_enabled != 0)
+                    select_joystick_configuration(a0);
+                if (control_confirmation_state == 0)
                     continue;
-                g2_01a9(20);
+                clear_palette_entries(20);
                 return 1;
             }
 
-            if (d_a0fa_ == 0xc0 && d_d135_ != 0 && d_0095 != 0)
+            if (last_keyboard_scan_code == 0xc0 && control_fire_pressed != 0 && demo_mode_enabled != 0)
                 return 4;
-            if (d_a0fa_ == 0x2e) {
-                while (d_a0fa_ == 0x2e) {
+            if (last_keyboard_scan_code == 0x2e) {
+                while (last_keyboard_scan_code == 0x2e) {
                 }
-                g2_01a9(15);
-                g2_315d();
-                g2_0036(15);
-                d_a0fa_ = 0;
-                while (d_a0fa_ == 0) {
+                clear_palette_entries(15);
+                display_credits_bitmap();
+                restore_ega_palette(15);
+                last_keyboard_scan_code = 0;
+                while (last_keyboard_scan_code == 0) {
                 }
-            } else if (d_a0fa_ == 0x23) {
-                g2_1d40(a0);
-                while (d_a0fa_ == 0x23) {
+            } else if (last_keyboard_scan_code == 0x23) {
+                draw_high_score_table(a0);
+                while (last_keyboard_scan_code == 0x23) {
                 }
-                g2_2870(a0 + 0x18, 20);
-            } else if (d_a0fa_ == 0x2f) {
-                if (d_530e_ != 0) {
-                    g2_0e19();
+                wait_input_animated_sprite(a0 + 0x18, 20);
+            } else if (last_keyboard_scan_code == 0x2f) {
+                if (user_demo_recording_state != 0) {
+                    show_save_unavailable_message();
                 } else {
                     return 2;
                 }
-            } else if (d_a0fa_ == 0x13) {
+            } else if (last_keyboard_scan_code == 0x13) {
                 return 3;
-            } else if (d_a0fa_ == 0x19) {
+            } else if (last_keyboard_scan_code == 0x19) {
                 return 5;
-            } else if (d_a0fa_ == 0x17) {
-                g2_01a9(15);
-                g2_062c();
-            } else if (d_a0fa_ == 1 || d_a0fa_ == 0x10) {
-                while (d_a0fa_ == 0x10) {
+            } else if (last_keyboard_scan_code == 0x17) {
+                clear_palette_entries(15);
+                show_story_game_instructions();
+            } else if (last_keyboard_scan_code == 1 || last_keyboard_scan_code == 0x10) {
+                while (last_keyboard_scan_code == 0x10) {
                 }
-                if (g2_3d1e(7) != 0)
+                if (confirm_quit_to_dos(7) != 0)
                     return 0;
-            } else if (d_a0fa_ == 0x22) {
-                g1_008a(a0);
-            } else if (d_a0fa_ == 0x14) {
+            } else if (last_keyboard_scan_code == 0x22) {
+                handle_game_setup_input(a0);
+            } else if (last_keyboard_scan_code == 0x14) {
                 break;
-            } else if (d_a0fa_ == 0x18) {
-                g2_01a9(15);
-                g2_3fe1();
-                g2_02f4();
-                g2_2870(0x27, 0x18);
-                g2_3114();
-                g2_0491();
-                g2_2870(0x27, 0x18);
+            } else if (last_keyboard_scan_code == 0x18) {
+                clear_palette_entries(15);
+                wait_for_pause_key_release();
+                show_ordering_page_one();
+                wait_input_animated_sprite(0x27, 0x18);
+                clear_video_page();
+                show_ordering_page_two();
+                wait_input_animated_sprite(0x27, 0x18);
             } else {
                 goto L_064b;
             }
-            g2_01a9(15);
-            g2_32b6();
+            clear_palette_entries(15);
+            display_episode_bitmap_b638();
         }
     }
 }
 
 /* Keep the volatile parameters in sync with the declaration in DUKE.H. */
-void pascal g1_0874(volatile int a2, volatile int a1, char far *a0)
+/* Reads a line of player-name text from the keyboard into the supplied buffer. */
+void pascal read_text_entry(volatile int a2, volatile int a1, char far *a0)
 {
     register int i = 0;
 
-    d_a0fa_ = 0;
+    last_keyboard_scan_code = 0;
     for (;;) {
-        g2_2870(a2 + i + 1, a1);
-        if (d_a0fa_ == 0x1c) {
+        wait_input_animated_sprite(a2 + i + 1, a1);
+        if (last_keyboard_scan_code == 0x1c) {
             a0[i] = 0;
             return;
         }
-        if (d_a0fa_ == 0x0e) {
+        if (last_keyboard_scan_code == 0x0e) {
             if (i > 0)
                 --i;
         } else if (i < 10) {
-            if ((d_a0fa_ >= 0x10 && d_a0fa_ <= 0x19) ||
-                (d_a0fa_ >= 0x2c && d_a0fa_ <= 0x32) ||
-                (d_a0fa_ >= 0x1e && d_a0fa_ <= 0x26)) {
-                a0[i] = d_00a1[(unsigned char)d_a0fa_].field[0];
+            if ((last_keyboard_scan_code >= 0x10 && last_keyboard_scan_code <= 0x19) ||
+                (last_keyboard_scan_code >= 0x2c && last_keyboard_scan_code <= 0x32) ||
+                (last_keyboard_scan_code >= 0x1e && last_keyboard_scan_code <= 0x26)) {
+                a0[i] = keyboard_character_map_entries[(unsigned char)last_keyboard_scan_code].display_label[0];
                 ++i;
-                g1_0008(d_a0fa_, a2 + i, a1);
-            } else if (d_a0fa_ == 0x39) {
+                draw_text_character(last_keyboard_scan_code, a2 + i, a1);
+            } else if (last_keyboard_scan_code == 0x39) {
                 a0[i] = ' ';
                 ++i;
             }
@@ -724,7 +736,9 @@ void pascal g1_0874(volatile int a2, volatile int a1, char far *a0)
 }
 
 /* Goto retains the pre-test loop entry; structured loop forms emitted different code. */
-void g1_0928(void)
+/* Inserts the current score into the high-score table and prompts for the player's name when it
+   qualifies. */
+void insert_score_into_high_scores(void)
 {
     register int entry;
     register int slot;
@@ -732,21 +746,21 @@ void g1_0928(void)
     slot = 0;
     goto test;
     do {
-        if ((unsigned long)d_4fa2_[slot] < (unsigned long)d_68f8_) {
+        if ((unsigned long)high_score_values[slot] < (unsigned long)player_score) {
             entry = 10;
             while (entry > slot) {
-                d_4fa2_[entry] = d_4fa2_[entry - 1];
-                strcpy(d_5008_[entry], d_5008_[entry - 1]);
+                high_score_values[entry] = high_score_values[entry - 1];
+                strcpy(high_score_player_names[entry], high_score_player_names[entry - 1]);
                 --entry;
             }
-            d_5008_[slot][0] = 0;
-            d_4fa2_[slot] = d_68f8_;
-            g2_3d8c(7, 2, 5);
-            g1_0042(0x18);
-            g2_23f7();
-            while (d_a0fa_ == 0x15) {
+            high_score_player_names[slot][0] = 0;
+            high_score_values[slot] = player_score;
+            draw_framed_dialog_box(7, 2, 5);
+            request_priority_sound_effect(0x18);
+            draw_high_score_name_screen();
+            while (last_keyboard_scan_code == 0x15) {
             }
-            g1_0874(0x0e, 0x0b, d_5008_[slot]);
+            read_text_entry(0x0e, 0x0b, high_score_player_names[slot]);
             return;
         }
         ++slot;
@@ -755,69 +769,74 @@ void g1_0928(void)
     } while (slot < 8);
 }
 
-void g1_0a0e(void)
+/* Draws the current title-screen graphic frame on both video pages. */
+void draw_title_screen_graphic(void)
 {
     register int i;
     for (i = 0; i < 8; ++i) {
-        asm_05eb(d_6e0a_);
-        asm_0424(d_a0fb_ + 0x26c0, i + 0x1e, 0x3c);
-        if (d_4ed4_ - 1 > i)
-            asm_0424(d_a0fb_ + 0x2620, i + 0x1e, 0x3c);
-        asm_05eb(!d_6e0a_);
-        asm_0424(d_a0fb_ + 0x26c0, i + 0x1e, 0x3c);
-        if (d_4ed4_ - 1 > i)
-            asm_0424(d_a0fb_ + 0x2620, i + 0x1e, 0x3c);
-        d_03a1 = 0;
+        select_draw_page(draw_page_index);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x26c0, i + 0x1e, 0x3c);
+        if (title_graphic_frame_index - 1 > i)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2620, i + 0x1e, 0x3c);
+        select_draw_page(!draw_page_index);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x26c0, i + 0x1e, 0x3c);
+        if (title_graphic_frame_index - 1 > i)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2620, i + 0x1e, 0x3c);
+        title_graphic_animation_state = 0;
     }
 }
 
-void g1_0acc(void)
+/* Advances the title-screen graphic frame and redraws it. */
+void advance_title_screen_animation(void)
 {
-    if (d_4ed4_ < 9)
-        d_4ed4_++;
-    g1_0a0e();
+    if (title_graphic_frame_index < 9)
+        title_graphic_frame_index++;
+    draw_title_screen_graphic();
 }
 
-void g1_0adc(void)
+/* Advances and draws the active buffered screen effects. */
+void draw_buffered_screen_effect(void)
 {
     register int si;
 
-    for (si = 0; si < d_c295_; si++) {
-        asm_05eb(d_6e0a_);
-        asm_0424(d_a0fb_ + 0x1ae0, 0x21, 0x60);
-        asm_0424(d_a0fb_ + 0x500, si * 2 + 0x1e, 0x6c);
-        asm_05eb(!d_6e0a_);
-        asm_0424(d_a0fb_ + 0x1ae0, 0x21, 0x60);
-        asm_0424(d_a0fb_ + 0x500, si * 2 + 0x1e, 0x6c);
+    for (si = 0; si < world_actor_count; si++) {
+        select_draw_page(draw_page_index);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1ae0, 0x21, 0x60);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x500, si * 2 + 0x1e, 0x6c);
+        select_draw_page(!draw_page_index);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1ae0, 0x21, 0x60);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x500, si * 2 + 0x1e, 0x6c);
     }
 }
 
 /* Add to the score and redraw it on both pages (resets display on wrap to 0). */
-void pascal g1_0b85(long value)
+/* Adds the supplied amount to the player's score and redraws the score display. */
+void pascal add_and_draw_player_score(long value)
 {
     outport(0x3ce, 5);
-    d_68f8_ += value;
-    if (d_68f8_ == 0L) {
-        asm_05eb(0);
-        g2_2789(10000000L, 0x25, 3);
-        g2_2789(0L, 0x1e, 3);
-        asm_05eb(1);
-        g2_2789(10000000L, 0x25, 3);
-        g2_2789(0L, 0x1e, 3);
+    player_score += value;
+    if (player_score == 0L) {
+        select_draw_page(0);
+        draw_unsigned_score_value(10000000L, 0x25, 3);
+        draw_unsigned_score_value(0L, 0x1e, 3);
+        select_draw_page(1);
+        draw_unsigned_score_value(10000000L, 0x25, 3);
+        draw_unsigned_score_value(0L, 0x1e, 3);
     }
-    asm_05eb(0);
-    g2_2789(d_68f8_, 0x25, 3);
-    asm_05eb(1);
-    g2_2789(d_68f8_, 0x25, 3);
+    select_draw_page(0);
+    draw_unsigned_score_value(player_score, 0x25, 3);
+    select_draw_page(1);
+    draw_unsigned_score_value(player_score, 0x25, 3);
 }
 
-struct reading g1_0c52(register int mode)
+/* Samples joystick axes, maps them to directional controls, and returns the two button states. */
+struct joystick_button_sample configure_joystick_axes(register int mode)
 {
     int x;
     int y;
     int xdir;
     int ydir;
-    struct reading state;
+    struct joystick_button_sample state;
     register int sample;
 
     x = 0;
@@ -825,92 +844,92 @@ struct reading g1_0c52(register int mode)
     xdir = 0;
     ydir = 0;
 
-    g2_01f5(mode, &x, &y);
+    sample_joystick_axes(mode, &x, &y);
     if ((x > 500) | (y > 500)) {
-        x = d_9676_[mode] + 1;
-        y = d_967c_[mode] + 1;
+        x = joystick_x_axis_threshold_high[mode] + 1;
+        y = joystick_y_axis_threshold_high[mode] + 1;
     }
 
-    if (d_771c_[mode] < x)
+    if (joystick_x_axis_threshold_low[mode] < x)
         xdir = 1;
-    else if (d_9676_[mode] > x)
+    else if (joystick_x_axis_threshold_high[mode] > x)
         xdir = -1;
 
-    if (d_7722_[mode] < y)
+    if (joystick_y_axis_threshold_low[mode] < y)
         ydir = 1;
-    else if (d_967c_[mode] > y)
+    else if (joystick_y_axis_threshold_high[mode] > y)
         ydir = -1;
 
     /* Map the joystick axes to the four screen-direction flags. */
     switch (ydir * 3 + xdir) {
     case -4:
-        d_c68c_ = 1;
-        d_d13f_ = 1;
-        d_d4c0_ = 0;
-        d_d134_ = 0;
+        control_up_pressed = 1;
+        control_left_pressed = 1;
+        control_right_pressed = 0;
+        control_down_pressed = 0;
         break;
     case -3:
-        d_c68c_ = 1;
-        d_d13f_ = 0;
-        d_d4c0_ = 0;
-        d_d134_ = 0;
+        control_up_pressed = 1;
+        control_left_pressed = 0;
+        control_right_pressed = 0;
+        control_down_pressed = 0;
         break;
     case -2:
-        d_c68c_ = 1;
-        d_d13f_ = 0;
-        d_d4c0_ = 1;
-        d_d134_ = 0;
+        control_up_pressed = 1;
+        control_left_pressed = 0;
+        control_right_pressed = 1;
+        control_down_pressed = 0;
         break;
     case -1:
-        d_c68c_ = 0;
-        d_d13f_ = 1;
-        d_d4c0_ = 0;
-        d_d134_ = 0;
+        control_up_pressed = 0;
+        control_left_pressed = 1;
+        control_right_pressed = 0;
+        control_down_pressed = 0;
         break;
     case  0:
-        d_c68c_ = 0;
-        d_d13f_ = 0;
-        d_d4c0_ = 0;
-        d_d134_ = 0;
+        control_up_pressed = 0;
+        control_left_pressed = 0;
+        control_right_pressed = 0;
+        control_down_pressed = 0;
         break;
     case  1:
-        d_c68c_ = 0;
-        d_d13f_ = 0;
-        d_d4c0_ = 1;
-        d_d134_ = 0;
+        control_up_pressed = 0;
+        control_left_pressed = 0;
+        control_right_pressed = 1;
+        control_down_pressed = 0;
         break;
     case  2:
-        d_c68c_ = 0;
-        d_d13f_ = 1;
-        d_d4c0_ = 0;
-        d_d134_ = 1;
+        control_up_pressed = 0;
+        control_left_pressed = 1;
+        control_right_pressed = 0;
+        control_down_pressed = 1;
         break;
     case  3:
-        d_c68c_ = 0;
-        d_d13f_ = 0;
-        d_d4c0_ = 0;
-        d_d134_ = 1;
+        control_up_pressed = 0;
+        control_left_pressed = 0;
+        control_right_pressed = 0;
+        control_down_pressed = 1;
         break;
     case  4:
-        d_c68c_ = 0;
-        d_d13f_ = 0;
-        d_d4c0_ = 1;
-        d_d134_ = 1;
+        control_up_pressed = 0;
+        control_left_pressed = 0;
+        control_right_pressed = 1;
+        control_down_pressed = 1;
         break;
     }
 
     sample = inportb(0x201);
     if (mode == 1) {
-        state.b = ((sample & 0x10) == 0) ? 1 : 0;
-        state.c = ((sample & 0x20) == 0) ? 1 : 0;
+        state.first_button_pressed = ((sample & 0x10) == 0) ? 1 : 0;
+        state.second_button_pressed = ((sample & 0x20) == 0) ? 1 : 0;
     } else {
-        state.b = ((sample & 0x40) == 0) ? 1 : 0;
-        state.c = ((sample & 0x80) == 0) ? 1 : 0;
+        state.first_button_pressed = ((sample & 0x40) == 0) ? 1 : 0;
+        state.second_button_pressed = ((sample & 0x80) == 0) ? 1 : 0;
     }
-    if (d_c297_ != 0) {
-        sample = state.b;
-        state.b = state.c;
-        state.c = sample;
+    if (joystick_configuration_mode != 0) {
+        sample = state.first_button_pressed;
+        state.first_button_pressed = state.second_button_pressed;
+        state.second_button_pressed = sample;
     }
 
     return state;
@@ -918,11 +937,11 @@ struct reading g1_0c52(register int mode)
 
 /* ---- initialised data, placed here for the literal pool ---- */
 
-/* G1 initialised data, DGROUP 0x03a4..0x0721.  Defined after g1_0151 and before g1_0e30 so the
-   strings of the level-file table d_03a4 land at their original place in the literal pool. */
+/* G1 initialised data, DGROUP 0x03a4..0x0721.  Defined after save_game_state_to_slot and before calibrate_joystick_controls so the
+   strings of the level-file table episode_level_filename_table land at their original place in the literal pool. */
 #if EPISODE == 1
 
-char far *d_03a4[21] = {
+char far *episode_level_filename_table[21] = {
 
     "worldal1.dn1",
     "worldal2.dn1",
@@ -950,7 +969,7 @@ char far *d_03a4[21] = {
 
 #elif EPISODE == 2
 
-char far *d_03a4[21] = {
+char far *episode_level_filename_table[21] = {
 
     "worldal1.dn2",
     "worldal2.dn2",
@@ -978,7 +997,7 @@ char far *d_03a4[21] = {
 
 #elif EPISODE == 3
 
-char far *d_03a4[21] = {
+char far *episode_level_filename_table[21] = {
 
     "worldal1.dn3",
     "worldal2.dn3",
@@ -1011,208 +1030,208 @@ int d_03f8[10] = {
     0, 0
 };
 
-int d_040c = 0;
+int menu_selection_state = 0;
 
-int d_040e = 0;
+int user_demo_input_length = 0;
 
-int d_0410 = 0;
+int saved_demo_input_length = 0;
 
-int d_0412[18] = {
+int actor_motion_delta_table[18] = {
     -64, -32, -16, -8, 0, 8, 16, 16,
     32, 32, 32, 64, 64, 128, 128, 128,
     128, 128
 };
 
-char d_0436 = 0x00;
+char interaction_cooldown_state = 0x00;
 
-int d_0437 = 0;
+int world_animation_phase = 0;
 
-char d_0439 = 0x00;
+char player_death_state = 0x00;
 
-char d_043a = 0x04;
+char player_action_state = 0x04;
 
-char d_043b = 0x00;
+char player_animation_phase = 0x00;
 
-int d_043c = 0;
+int actor_3000_count = 0;
 
-int d_043e = 10;
+int collision_sound_record_count = 10;
 
-int d_0440[27] = {
+int contact_flash_delta_table_a[27] = {
     0, 0, -71, 0, -59, 0, -45, 0,
     -33, -1, -25, 0, -10, 0, -1, 0,
     13, 0, 16, -1, 19, 0, 31, 0,
     54, 0, 66
 };
 
-int d_0476[27] = {
+int contact_flash_delta_table_b[27] = {
     0, 0, -50, 1, -47, 0, -33, 1,
     -23, 0, -10, 1, 8, 0, 21, 0,
     33, 0, 46, 1, 19, 0, 29, 0,
     38, 0, 50
 };
 
-int d_04ac[27] = {
+int contact_flash_delta_table_c[27] = {
     0, 0, 1, -1, 8, -1, 17, -1,
     29, -1, 32, -1, 45, -1, 51, -1,
     65, -1, 79, -1, 79, -1, 99, -1,
     99, 0, 99
 };
 
-int d_04e2[27] = {
+int contact_flash_delta_table_d[27] = {
     0, 0, 1, 1, 3, 1, 7, 1,
     9, 1, 12, 1, 15, 1, 21, 1,
     25, 1, 29, 1, 36, 1, 40, 1,
     40, 0, 40
 };
 
-int d_0518 = 19;
+int ambient_object_count = 19;
 
-int d_051a = 4;
+int animated_actor_count = 4;
 
-int d_051c = 3;
+int projectile_count = 3;
 
-int d_051e = 5;
+int moving_object_count = 5;
 
-int d_0520 = 10;
+int pickup_object_count = 10;
 
-int d_0522 = 8;
+int moving_actor_count = 8;
 
-int d_0524 = 0;
+int actor_3001_count = 0;
 
-int d_0526 = 0;
+int actor_3002_count = 0;
 
-int d_0528 = 0;
+int actor_3006_world_x = 0;
 
-int d_052a = 0;
+int actor_3006_world_y = 0;
 
-int d_052c = 0;
+int actor_3006_state = 0;
 
-int d_052e = 0;
+int actor_3008_state = 0;
 
-int d_0530 = 0;
+int actor_3020_world_x = 0;
 
-int d_0532 = 0;
+int actor_3020_world_y = 0;
 
-int d_0534 = 0;
+int actor_3020_state = 0;
 
-int d_0536 = 0;
+int actor_3033_world_x = 0;
 
-int d_0538 = 0;
+int actor_3033_world_y = 0;
 
-int d_053a = 0;
+int actor_3033_state = 0;
 
-int d_053c = 0;
+int actor_3033_enabled = 0;
 
-int d_053e = 0;
+int actor_3007_count = 0;
 
-int d_0540 = 0;
+int actor_3009_count = 0;
 
-int d_0542 = 0;
+int actor_300a_count = 0;
 
-int d_0544 = 0;
+int actor_300b_count = 0;
 
-int d_0546[24] = {
+int moving_item_path_delta_table_a[24] = {
     0, -64, 1, -32, 1, -16, 0, -1,
     0, 0, 1, 12, 1, 24, 0, 46,
     1, 128, 0, 128, 1, 256, 0, 0
 };
 
-int d_0576[24] = {
+int moving_item_path_delta_table_b[24] = {
     0, -64, -1, -32, -1, -16, 0, -1,
     0, 0, -1, 12, -1, 24, 0, 46,
     -1, 128, -1, 128, -1, 256, 0, 0
 };
 
-int d_05a6 = 0;
+int actor_300b_screen_anim_offset = 0;
 
-int d_05a8 = 0;
+int actor_300b_animation_frame = 0;
 
-int d_05aa = 0;
+int actor_300c_count = 0;
 
-int d_05ac = 0;
+int actor_300d_count = 0;
 
-int d_05ae = 0;
+int actor_300e_animation_state = 0;
 
-int d_05b0 = 0;
+int actor_300e_animation_counter = 0;
 
-int d_05b2 = 0;
+int actor_300e_count = 0;
 
-int d_05b4 = 0;
+int actor_300f_count = 0;
 
-int d_05b6 = 0;
+int actor_3010_count = 0;
 
-int d_05b8 = 0;
+int actor_3012_count = 0;
 
-int d_05ba = 0;
+int actor_3014_count = 0;
 
-int d_05bc = 0;
+int actor_3015_count = 0;
 
-int d_05be = 0;
+int actor_3016_count = 0;
 
-int d_05c0 = 0;
+int actor_3018_count = 0;
 
-int d_05c2 = 0;
+int actor_301a_count = 0;
 
-int d_05c4 = 0;
+int actor_301b_count = 0;
 
-int d_05c6 = 0;
+int actor_301d_count = 0;
 
-int d_05c8 = 0;
+int actor_301e_count = 0;
 
-int d_05ca = 0;
+int actor_301f_count = 0;
 
-int d_05cc = 0;
+int actor_3021_count = 0;
 
-int d_05ce = 0;
+int actor_3022_count = 0;
 
-int d_05d0 = 0;
+int actor_3023_count = 0;
 
-int d_05d2 = 0;
+int actor_3024_count = 0;
 
-int d_05d4 = 0;
+int actor_3025_count = 0;
 
-int d_05d6 = 0;
+int actor_3029_count = 0;
 
-int d_05d8 = 0;
+int actor_302a_count = 0;
 
-int d_05da = 0;
+int actor_302c_count = 0;
 
-int d_05dc = 0;
+int actor_302d_count = 0;
 
-int d_05de = 0;
+int actor_302e_count = 0;
 
-int d_05e0 = 0;
+int actor_3031_count = 0;
 
-int d_05e2[14] = {
+int level_vertical_motion_table[14] = {
     128, 96, 64, 32, 8, 4, 1, -1,
     -4, -8, -32, -64, -96, -128
 };
 
-int d_05fe = 0;
+int actor_303c_count = 0;
 
-int d_0600 = 0;
+int actor_303b_count = 0;
 
-int d_0602 = 0;
+int actor_3042_animation_frame_0 = 0;
 
-int d_0604 = 0;
+int actor_3042_animation_frame_1 = 0;
 
-int d_0606 = 0;
+int actor_3042_animation_frame_2 = 0;
 
-int d_0608 = 0;
+int actor_3042_animation_frame_3 = 0;
 
-int d_060a = 0;
+int actor_3042_animation_frame_4 = 0;
 
-int d_060c = 10;
+int actor_3042_animation_frame_5 = 10;
 
-int d_060e = 0;
+int gameplay_animation_flag = 0;
 
-char d_0610 = 0x01;
+char player_airborne_state = 0x01;
 
-char d_0611 = 0x00;
+char player_damage_immunity_state = 0x00;
 
-char d_0612 = 0x00;
+char player_jump_frame = 0x00;
 
-struct row0613 d_0613[2] = {
+struct player_jump_motion_row player_jump_motion_rows[2] = {
     { { 0x0d, 0x0b, 0x09, 0x07, 0x05, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } },
     { { 0x0f, 0x0d, 0x0b, 0x09, 0x07, 0x05, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00 } }
 };
@@ -1222,24 +1241,24 @@ int d_062b[12] = {
     0, 0, 0, 0
 };
 
-char d_0643 = 0x00;
+char keyboard_modifier_state = 0x00;
 
-char d_0644 = 0x00;
+char player_sprite_draw_state = 0x00;
 
 /* not referenced by any code */
 char d_0645 = 0x50;
 
-int d_0646 = 0;
+int world_effect_sprite_offset = 0;
 
-int d_0648 = 0;
+int projectile_flash_sprite_offset = 0;
 
-int d_064a = 0;
+int ambient_object_sprite_offset = 0;
 
-int d_064c = 0;
+int contact_flash_cycle_index = 0;
 
-int d_064e = 0;
+int actor_3002_animation_phase = 0;
 
-int d_0650[36] = {
+int multi_tile_actor_sprite_offsets[36] = {
     -1, -1, 160, 320, 480, 640, -1, -1,
     160, 320, 800, 960, 1120, 1280, 1440, 1600,
     1760, 1920, -1, -1, 2080, 2240, 2400, 2560,
@@ -1247,7 +1266,7 @@ int d_0650[36] = {
     3360, 3520, 3680, 3840
 };
 
-int d_0698[34] = {
+int actor_300c_motion_delta_table[34] = {
     1, 256, 2, 128, 0, 64, 1, 32,
     0, 16, 1, 8, 0, 4, 1, 2,
     0, 1, 1, -1, 0, -2, 1, -4,
@@ -1255,126 +1274,128 @@ int d_0698[34] = {
     0, -128
 };
 
-int d_06dc = 0;
+int actor_300d_animation_phase = 0;
 
-int d_06de = 0;
+int actor_300d_animation_counter = 0;
 
-int d_06e0 = 0;
+int actor_3010_sprite_offset = 0;
 
-char d_06e2 = 0x00;
+char door_interaction_phase = 0x00;
 
-int d_06e3 = 0;
+int actor_3013_sprite_offset = 0;
 
-int d_06e5 = 0;
+int actor_3014_sprite_offset = 0;
 
-int d_06e7 = 0;
+int actor_3015_sprite_offset = 0;
 
-int d_06e9 = 0;
+int actor_3016_upper_sprite_offset = 0;
 
-int d_06eb = 640;
+int actor_3016_lower_sprite_offset = 640;
 
-int d_06ed = 0;
+int actor_301a_sprite_offset = 0;
 
-int d_06ef = 0;
+int actor_3021_sprite_offset = 0;
 
-int d_06f1 = 0;
+int actor_3022_animation_phase = 0;
 
-int d_06f3 = 0;
+int actor_3023_sprite_offset = 0;
 
-int d_06f5 = 0;
+int actor_3024_sprite_offset = 0;
 
-int d_06f7 = 0;
+int actor_3029_sprite_offset = 0;
 
-int d_06f9 = 0;
+int actor_302a_sprite_offset = 0;
 
-int d_06fb = 0;
+int actor_302b_sprite_offset = 0;
 
-char d_06fd = 0x00;
+char actor_302c_animation_phase = 0x00;
 
-int d_06fe = 0;
+int actor_302d_sprite_offset = 0;
 
-int d_0700 = 0;
+int actor_303c_animation_phase = 0;
 
-int d_0702[12] = {
+int actor_3042_motion_delta_table[12] = {
     128, 92, 64, 32, 16, 8, -8, -16,
     -32, -64, -92, -128
 };
 
-int d_071a = 0;
+int actor_3041_sprite_frame = 0;
 
-int d_071c = 0;
+int actor_3041_animation_counter = 0;
 
-int d_071e = 0;
+int actor_3041_event_pending = 0;
 
-int d_0720 = 0;
+int actor_3041_sprite_offset = 0;
 
-void g1_0e30(register int a0, int a1)
+/* Guides joystick calibration and records the measured axis thresholds. */
+void calibrate_joystick_controls(register int a0, int a1)
 {
     int dx, dy;
     int x1, y1, x2, y2;
-    struct reading text;
+    struct joystick_button_sample text;
     register int i;
 
     for (;;) {
         do {
-            text = g1_0c52(a0);
-        } while (text.b == 1 || text.c == 1);
-        g2_44f5(a1);
-        while (d_a0fa_ == 0x24) {
+            text = configure_joystick_axes(a0);
+        } while (text.first_button_pressed == 1 || text.second_button_pressed == 1);
+        prompt_joystick_calibration(a1);
+        while (last_keyboard_scan_code == 0x24) {
         }
         i = 0x0f;
         do {
             if (++i == 0x17)
                 i = 0x0f;
-            g2_01f5(a0, &x1, &y1);
-            text = g1_0c52(a0);
-            g2_1340(a1 + 9, 0x0b);
-            if (d_a0fa_ != 0)
+            sample_joystick_axes(a0, &x1, &y1);
+            text = configure_joystick_axes(a0);
+            wait_for_keyboard_or_joystick(a1 + 9, 0x0b);
+            if (last_keyboard_scan_code != 0)
                 return;
-        } while (text.b != 1 && text.c != 1);
+        } while (text.first_button_pressed != 1 && text.second_button_pressed != 1);
         do {
-            text = g1_0c52(a0);
-        } while (text.b == 1 || text.c == 1);
-        g2_37b6(" Hold the joystick in the", a1, 0x0d);
-        g2_37b6(" bottom right and press a", a1, 0x0e);
-        g2_37b6(" button.", a1, 0x0f);
+            text = configure_joystick_axes(a0);
+        } while (text.first_button_pressed == 1 || text.second_button_pressed == 1);
+        draw_text_string(" Hold the joystick in the", a1, 0x0d);
+        draw_text_string(" bottom right and press a", a1, 0x0e);
+        draw_text_string(" button.", a1, 0x0f);
         do {
             if (++i == 0x17)
                 i = 0x0f;
-            g2_01f5(a0, &x2, &y2);
-            text = g1_0c52(a0);
-            g2_1340(a1 + 9, 0x0f);
-            if (d_a0fa_ != 0)
+            sample_joystick_axes(a0, &x2, &y2);
+            text = configure_joystick_axes(a0);
+            wait_for_keyboard_or_joystick(a1 + 9, 0x0f);
+            if (last_keyboard_scan_code != 0)
                 return;
-        } while (text.b != 1 && text.c != 1);
+        } while (text.first_button_pressed != 1 && text.second_button_pressed != 1);
         do {
-            text = g1_0c52(a0);
-        } while (text.b == 1 || text.c == 1);
+            text = configure_joystick_axes(a0);
+        } while (text.first_button_pressed == 1 || text.second_button_pressed == 1);
         dx = (x2 - x1) / 6;
         dy = (y2 - y1) / 6;
-        d_9676_[a0] = x1 + dx;
-        d_771c_[a0] = x2 - dx;
-        d_967c_[a0] = y1 + dy;
-        d_7722_[a0] = y2 - dy;
-        g2_37b6(" Should button 1 (S)hoot", a1, 0x11);
-        g2_37b6(" or (J)ump?", a1, 0x12);
-        g2_2870(a1 + 0x0c, 0x12);
-        if (d_a0fa_ == 1)
+        joystick_x_axis_threshold_high[a0] = x1 + dx;
+        joystick_x_axis_threshold_low[a0] = x2 - dx;
+        joystick_y_axis_threshold_high[a0] = y1 + dy;
+        joystick_y_axis_threshold_low[a0] = y2 - dy;
+        draw_text_string(" Should button 1 (S)hoot", a1, 0x11);
+        draw_text_string(" or (J)ump?", a1, 0x12);
+        wait_input_animated_sprite(a1 + 0x0c, 0x12);
+        if (last_keyboard_scan_code == 1)
             return;
-        if (d_a0fa_ == 0x1f)
-            d_c297_ = 1;
+        if (last_keyboard_scan_code == 0x1f)
+            joystick_configuration_mode = 1;
         else
-            d_c297_ = 0;
-        d_cc81_ = 1;
-        d_d56b_ = 1;
-        while (d_a0fa_ == 0x1f || d_a0fa_ == 0x24) {
+            joystick_configuration_mode = 0;
+        control_confirmation_state = 1;
+        joystick_enabled = 1;
+        while (last_keyboard_scan_code == 0x1f || last_keyboard_scan_code == 0x24) {
         }
         return;
     }
 }
 
 /* Joystick buttons from game port 0x201: 1 = button A, 2 = button B, 0 = none. */
-int g1_1053(void)
+/* Reads the joystick game-port button bits and returns the selected button state. */
+int read_joystick_button(void)
 {
     register int v = inportb(0x201);
 
@@ -1385,38 +1406,42 @@ int g1_1053(void)
     return 0;
 }
 
-void g1_1076(void)
+/* Samples the joystick until both reported buttons have been released. */
+void wait_joystick_button_release(void)
 {
-    struct reading r;
+    struct joystick_button_sample r;
 
     do {
-        r = g1_0c52(1);
-    } while (r.b == 1 || r.c == 1);
+        r = configure_joystick_axes(1);
+    } while (r.first_button_pressed == 1 || r.second_button_pressed == 1);
 }
 
-void g1_10a5(void)
+/* Reads the joystick button port and updates the game's fire and jump control flags. */
+void update_joystick_axis_state(void)
 {
     char sample;
 
     sample = inportb(0x201);
-    if (d_c297_ != 0) {
-        d_d138_ = !(sample & 0x10);
-        d_d135_ = !(sample & 0x20);
+    if (joystick_configuration_mode != 0) {
+        control_jump_pressed = !(sample & 0x10);
+        control_fire_pressed = !(sample & 0x20);
     } else {
-        d_d138_ = !(sample & 0x20);
-        d_d135_ = !(sample & 0x10);
+        control_jump_pressed = !(sample & 0x20);
+        control_fire_pressed = !(sample & 0x10);
     }
 }
 
-void pascal g1_10fb(char far *filename, register int offset, int count)
+/* Reads a planar image resource and uploads its four data planes to the requested VGA memory
+   offset. */
+void pascal load_planar_image_file(char far *filename, register int offset, int count)
 {
     FILE *stream;
     register int i;
 
     stream = fopen(filename, "rb");
     if (filename[0] != 0) {
-        d_7986_ = MK_FP(0xa000, 0);
-        d_cc7d_ = MK_FP(0xa000, 0x4000);
+        vga_lower_page_pointer = MK_FP(0xa000, 0);
+        vga_upper_page_pointer = MK_FP(0xa000, 0x4000);
         count /= 4;
         fgetc(stream);
         fgetc(stream);
@@ -1425,28 +1450,29 @@ void pascal g1_10fb(char far *filename, register int offset, int count)
             fgetc(stream);
             /* TC 2.0 emits different code for subscripting this far pointer. */
             outport(0x3c4, 0x0102);
-            *(d_cc7d_ + i + offset) = fgetc(stream);
+            *(vga_upper_page_pointer + i + offset) = fgetc(stream);
             outport(0x3c4, 0x0202);
-            *(d_cc7d_ + i + offset) = fgetc(stream);
+            *(vga_upper_page_pointer + i + offset) = fgetc(stream);
             outport(0x3c4, 0x0402);
-            *(d_cc7d_ + i + offset) = fgetc(stream);
+            *(vga_upper_page_pointer + i + offset) = fgetc(stream);
             outport(0x3c4, 0x0802);
-            *(d_cc7d_ + i + offset) = fgetc(stream);
+            *(vga_upper_page_pointer + i + offset) = fgetc(stream);
         }
         fclose(stream);
     }
 }
 
-char g1_1247(void)
+/* Tests the player floor clearance and returns the result to its caller. */
+char test_player_floor_clearance(void)
 {
     unsigned int far *p0;
     unsigned int far *p2;
     unsigned int far *p1;
 
-    p0 = d_7729_ + ((d_0099 + d_009d - 3) >> 1) + d_009f + (((d_009b - 16) >> 4) * 128);
+    p0 = level_tile_map + ((player_screen_x + level_scroll_x - 3) >> 1) + level_map_y_offset + (((player_screen_y - 16) >> 4) * 128);
     p1 = p0;
     p2 = p0 - 128;
-    if ((d_009b >> 3) & 1)
+    if ((player_screen_y >> 3) & 1)
         p1 += 128;
     if (p0[0] > 0x17ffU)
         return 0;
@@ -1457,76 +1483,80 @@ char g1_1247(void)
     return 1;
 }
 
-unsigned char g1_12ce(void)
+/* Tests the player body clearance and returns the result to its caller. */
+unsigned char test_player_body_clearance(void)
 {
     unsigned int far *p;
     unsigned int far *r;
     unsigned int far *q;
 
-    p = d_7729_ + ((d_009d + d_0099) >> 1) + d_009f
-        + (((d_009b - 16) >> 4) * 128);
+    p = level_tile_map + ((level_scroll_x + player_screen_x) >> 1) + level_map_y_offset
+        + (((player_screen_y - 16) >> 4) * 128);
     q = p;
     r = p - 128;
-    if ((d_009b >> 3) & 1)
+    if ((player_screen_y >> 3) & 1)
         q += 128;
     if (*p > 0x17ff || *r > 0x17ff || *q > 0x17ff)
         return 0;
     return 1;
 }
 
-char g1_1352(void)
+/* Tests the map cells above the player's head and updates damage or sound state when the space
+   is blocked. */
+char test_player_head_clearance(void)
 {
     unsigned int far *p1;
     unsigned int far *p2;
 
-    p1 = d_7729_ + ((d_0099 + d_009d - 2) >> 1) + d_009f
-        + (((d_009b - 40) >> 4) * 128);
+    p1 = level_tile_map + ((player_screen_x + level_scroll_x - 2) >> 1) + level_map_y_offset
+        + (((player_screen_y - 40) >> 4) * 128);
     p2 = p1;
 
-    if ((d_0099 + d_009d) & 1)
+    if ((player_screen_x + level_scroll_x) & 1)
         ++p2;
 
     if (*p1 >= 0x2ee0 || *p2 >= 0x2ee0 ||
         (*p1 >= 0x1b80 && *p1 <= 0x1ca0) ||
         (*p2 >= 0x1b80 && *p2 <= 0x1ca0)) {
-        if (d_d576_ != 0)
+        if (player_invulnerability_state != 0)
             return 0;
-        if (d_0611 != 0)
+        if (player_damage_immunity_state != 0)
             return 0;
-        if (d_0439 == 0)
-            d_043b = 0;
-        if (d_a0f8_ != 0) {
-            d_0439 = 1;
-            d_0644 = 1;
-            g1_0042(0x1b);
+        if (player_death_state == 0)
+            player_animation_phase = 0;
+        if (player_contact_state != 0) {
+            player_death_state = 1;
+            player_sprite_draw_state = 1;
+            request_priority_sound_effect(0x1b);
         }
         else {
-            g1_0042(0x26);
+            request_priority_sound_effect(0x26);
         }
         return 0;
     }
 
-    d_0439 = 0;
+    player_death_state = 0;
     if (*p1 > 0x17ff || *p2 > 0x17ff) {
-        if (d_0439 == 0)
-            g1_0042(0x26);
+        if (player_death_state == 0)
+            request_priority_sound_effect(0x26);
         return 0;
     }
     return 1;
 }
 
 /* Gotos preserve the branch layout; structured returns emitted a 113-byte near match. */
-char g1_143e(void)
+/* Tests the player level clearance and returns the result to its caller. */
+char test_player_level_clearance(void)
 {
     unsigned int far *p1;
     unsigned int far *p2;
 
-    if (d_d576_)
+    if (player_invulnerability_state)
         goto zero_result;
 
-    p1 = d_7729_ + ((d_0099 + d_009d - 2) >> 1) + d_009f + ((d_009b >> 4) * 128);
+    p1 = level_tile_map + ((player_screen_x + level_scroll_x - 2) >> 1) + level_map_y_offset + ((player_screen_y >> 4) * 128);
     p2 = p1;
-    if ((d_0099 + d_009d) & 1)
+    if ((player_screen_x + level_scroll_x) & 1)
         p2++;
 
     if (*p1 > 0x17ff)
@@ -1541,38 +1571,39 @@ one_result:
     return 1;
 }
 
-void g1_14af(void)
+/* Draws the visible level strip from the tile map and advances its animated-tile phase. */
+void draw_animated_level_strip(void)
 {
     register int si;
     register int di;
     unsigned int far *p;
     int offset;
 
-    si = 0x282 - (d_009d & 1);
+    si = 0x282 - (level_scroll_x & 1);
     di = 0;
-    p = d_7729_ + (d_009d >> 1) + d_009f;
+    p = level_tile_map + (level_scroll_x >> 1) + level_map_y_offset;
     offset = 0x4000;
     outport(0x3ce, 0x105);
-    d_0437 += 0x20;
-    if (d_0437 == 0x80)
-        d_0437 = 0;
+    world_animation_phase += 0x20;
+    if (world_animation_phase == 0x80)
+        world_animation_phase = 0;
     do {
-        if (d_009d & 1) {
+        if (level_scroll_x & 1) {
             if (*p == 0 || p[1] == 0)
-                asm_02ad(offset, si + 1);
+                blit_bitmap_to_video_page(offset, si + 1);
             else if (*p == 0x20 || p[1] == 0x20)
-                asm_02ad(offset + 0x4100, si + 1);
+                blit_bitmap_to_video_page(offset + 0x4100, si + 1);
         } else {
             if (*p == 0)
-                asm_02ad(offset, si);
+                blit_bitmap_to_video_page(offset, si);
             else if (*p == 0x20)
-                asm_02ad(offset + 0x4100, si);
+                blit_bitmap_to_video_page(offset + 0x4100, si);
         }
         if (*p > 0x20) {
             if (*p < 0x5e0)
-                asm_02ad(*p + d_0437, si);
+                blit_bitmap_to_video_page(*p + world_animation_phase, si);
             else
-                asm_02ad(*p, si);
+                blit_bitmap_to_video_page(*p, si);
         }
         ++p;
         si += 2;
@@ -1587,95 +1618,97 @@ void g1_14af(void)
     outport(0x3ce, 5);
 }
 
-void interrupt g1_15f4(void)
+/* Handles keyboard IRQ 9 scan codes, updates held-key state, acknowledges the controller, and
+   chains when requested. */
+void interrupt keyboard_interrupt_handler(void)
 {
-    d_a0fa_ = inportb(0x60);
+    last_keyboard_scan_code = inportb(0x60);
 
-    if (d_5002_ == 0 && d_4ed2_ == 0 && d_cc81_ == 0 &&
-        d_c683_ == 0 && d_d139_ == 0 && d_d13b_ == 0) {
-        if (d_a0fa_ == d_02f4) {
-            d_c68c_ = 1;
+    if (player_animation_lock_state == 0 && current_weapon_state == 0 && control_confirmation_state == 0 &&
+        player_level_transition_state == 0 && actor_302f_interaction_state == 0 && actor_3030_interaction_state == 0) {
+        if (last_keyboard_scan_code == key_binding_up) {
+            control_up_pressed = 1;
         }
-        if (d_a0fa_ == (d_02f4 | 0x80)) {
-            d_c68c_ = 0;
+        if (last_keyboard_scan_code == (key_binding_up | 0x80)) {
+            control_up_pressed = 0;
         }
-        if (d_a0fa_ == d_02f5) {
-            d_d134_ = 1;
+        if (last_keyboard_scan_code == key_binding_down) {
+            control_down_pressed = 1;
         }
-        if (d_a0fa_ == (d_02f5 | 0x80)) {
-            d_d134_ = 0;
+        if (last_keyboard_scan_code == (key_binding_down | 0x80)) {
+            control_down_pressed = 0;
         }
-        if (d_a0fa_ == d_02f6) {
-            d_d13f_ = 1;
+        if (last_keyboard_scan_code == key_binding_left) {
+            control_left_pressed = 1;
         }
-        if (d_a0fa_ == (d_02f6 | 0x80)) {
-            d_d13f_ = 0;
+        if (last_keyboard_scan_code == (key_binding_left | 0x80)) {
+            control_left_pressed = 0;
         }
-        if (d_a0fa_ == d_02f7) {
-            d_d4c0_ = 1;
+        if (last_keyboard_scan_code == key_binding_right) {
+            control_right_pressed = 1;
         }
-        if (d_a0fa_ == (d_02f7 | 0x80)) {
-            d_d4c0_ = 0;
+        if (last_keyboard_scan_code == (key_binding_right | 0x80)) {
+            control_right_pressed = 0;
         }
-        if (d_a0fa_ == d_02f9) {
-            d_d138_ = 1;
+        if (last_keyboard_scan_code == key_binding_jump) {
+            control_jump_pressed = 1;
         }
-        if (d_a0fa_ == (d_02f9 | 0x80)) {
-            d_d138_ = 0;
+        if (last_keyboard_scan_code == (key_binding_jump | 0x80)) {
+            control_jump_pressed = 0;
         }
-        if (d_a0fa_ == d_02f8) {
-            d_d135_ = 1;
+        if (last_keyboard_scan_code == key_binding_fire) {
+            control_fire_pressed = 1;
         }
-        if (d_a0fa_ == (d_02f8 | 0x80)) {
-            d_d135_ = 0;
+        if (last_keyboard_scan_code == (key_binding_fire | 0x80)) {
+            control_fire_pressed = 0;
         }
-    }
-
-    if (d_a0fa_ == 0x33) {
-        d_0643 = 1;
-    }
-    if (d_a0fa_ == 0xb3) {
-        d_0643 = 0;
-    }
-    if (d_a0fa_ == 0x34) {
-        d_d148_ = 1;
-    }
-    if (d_a0fa_ == 0xb4) {
-        d_d148_ = 0;
-    }
-    if (d_a0fa_ == 0x0e) {
-        d_a67d_ = 1;
-    }
-    if (d_a0fa_ == 0x8e) {
-        d_a67d_ = 0;
-    }
-    if (d_a0fa_ == 0x51) {
-        d_a8d9_ = 1;
-    }
-    if (d_a0fa_ == 0xd1) {
-        d_a8d9_ = 0;
-    }
-    if (d_a0fa_ == 0x22) {
-        d_7728_ = 1;
-    }
-    if (d_a0fa_ == 0xa2) {
-        d_7728_ = 0;
-    }
-    if (d_a0fa_ == 0x18) {
-        d_772d_ = 1;
-    }
-    if (d_a0fa_ == 0x98) {
-        d_772d_ = 0;
-    }
-    if (d_a0fa_ == 0x20) {
-        d_771b_ = 1;
-    }
-    if (d_a0fa_ == 0xa0) {
-        d_771b_ = 0;
     }
 
-    if (d_039d != 0)
-        d_5556_();
+    if (last_keyboard_scan_code == 0x33) {
+        keyboard_modifier_state = 1;
+    }
+    if (last_keyboard_scan_code == 0xb3) {
+        keyboard_modifier_state = 0;
+    }
+    if (last_keyboard_scan_code == 0x34) {
+        keyboard_control_lock_state = 1;
+    }
+    if (last_keyboard_scan_code == 0xb4) {
+        keyboard_control_lock_state = 0;
+    }
+    if (last_keyboard_scan_code == 0x0e) {
+        keyboard_backspace_pressed = 1;
+    }
+    if (last_keyboard_scan_code == 0x8e) {
+        keyboard_backspace_pressed = 0;
+    }
+    if (last_keyboard_scan_code == 0x51) {
+        keyboard_interrupt_state = 1;
+    }
+    if (last_keyboard_scan_code == 0xd1) {
+        keyboard_interrupt_state = 0;
+    }
+    if (last_keyboard_scan_code == 0x22) {
+        keyboard_key_g_pressed = 1;
+    }
+    if (last_keyboard_scan_code == 0xa2) {
+        keyboard_key_g_pressed = 0;
+    }
+    if (last_keyboard_scan_code == 0x18) {
+        keyboard_key_o_pressed = 1;
+    }
+    if (last_keyboard_scan_code == 0x98) {
+        keyboard_key_o_pressed = 0;
+    }
+    if (last_keyboard_scan_code == 0x20) {
+        keyboard_key_d_pressed = 1;
+    }
+    if (last_keyboard_scan_code == 0xa0) {
+        keyboard_key_d_pressed = 0;
+    }
+
+    if (chain_keyboard_interrupt != 0)
+        saved_keyboard_interrupt_vector();
 
     /* Acknowledge the keyboard IRQ at the controller and then the PIC. */
     outportb(0x61, inportb(0x61) | 0x80);
@@ -1683,593 +1716,604 @@ void interrupt g1_15f4(void)
     outportb(0x20, 0x20);
 }
 
-void g1_17f5(int a0, int a1, int a2)
+/* Draws the player's current action sprite from the player sprite resource. */
+void draw_player_action_sprite(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 4 * 0xa0;
-    if (d_4ed2_ >= 4)
+    if (current_weapon_state >= 4)
         return;
-    if (d_5002_ != 0)
+    if (player_animation_lock_state != 0)
         return;
-    if (d_d4bf_ > 0)
-        --d_d4bf_;
-    if (a2 >= 0x20 && d_d4bf_ % 2 == 0) {
-        asm_0424((d_5ec4_+ offset), a1 - 1, a2 - 0x10);
-        asm_0424((d_5ec4_+ offset + 0xa0), a1 + 1, a2 - 0x10);
+    if (player_projectile_state > 0)
+        --player_projectile_state;
+    if (a2 >= 0x20 && player_projectile_state % 2 == 0) {
+        blit_planar_sprite_rows((player_sprite_resource_buffer+ offset), a1 - 1, a2 - 0x10);
+        blit_planar_sprite_rows((player_sprite_resource_buffer+ offset + 0xa0), a1 + 1, a2 - 0x10);
     }
     if (a2 >= 0x10) {
-        if (d_d4bf_ % 2 == 0) {
-            asm_0424((d_5ec4_+ offset + 0x140), a1 - 1, a2);
-            asm_0424((d_5ec4_+ offset + 0x1e0), a1 + 1, a2);
+        if (player_projectile_state % 2 == 0) {
+            blit_planar_sprite_rows((player_sprite_resource_buffer+ offset + 0x140), a1 - 1, a2);
+            blit_planar_sprite_rows((player_sprite_resource_buffer+ offset + 0x1e0), a1 + 1, a2);
         }
     } else {
-        d_0644 = 1;
+        player_sprite_draw_state = 1;
     }
 }
 
-void pascal g1_18d4(register int a0, int a1, int a2)
+/* Adds a world actor record at the supplied coordinates with the requested actor state. */
+void pascal spawn_world_actor(register int a0, int a1, int a2)
 {
     register int i;
-    struct t_cb6d far *p;
+    struct world_actor_record far *p;
 
-    for (i = 0; i < d_c295_; ++i) {
-        p = &d_cb6d_[i];
+    for (i = 0; i < world_actor_count; ++i) {
+        p = &world_actor_records[i];
         if (p->state == 0) {
-            g1_0042(6);
-            p->marker = 1;
+            request_priority_sound_effect(6);
+            p->contact_marker = 1;
             p->state = a2 + 1;
-            p->x = a0;
-            p->y = a1;
+            p->world_x = a0;
+            p->world_y = a1;
             return;
         }
     }
 }
 
-void g1_1933(void)
+/* Moves and draws the active moving world effects and spawns follow-up actors when they hit
+   special tiles. */
+void update_moving_world_effects(void)
 {
     register int i;
-    struct t_cb6d far *p;
+    struct world_actor_record far *p;
 
-    d_0646 += 0xa0;
-    if (d_0646 == 0x140)
-        d_0646 = 0;
+    world_effect_sprite_offset += 0xa0;
+    if (world_effect_sprite_offset == 0x140)
+        world_effect_sprite_offset = 0;
 
-    for (i = 0; i < d_c295_; ++i) {
-        p = &d_cb6d_[i];
+    for (i = 0; i < world_actor_count; ++i) {
+        p = &world_actor_records[i];
 
         if (p->state == 0)
             continue;
 
         if (p->state == 1) {
-            p->x -= 2;
-            d_530f_ = 1;
-            if (g1_367e(p->x + 1, p->y)) {
+            p->world_x -= 2;
+            secret_block_collision_state = 1;
+            if (test_level_tile_special_state(p->world_x + 1, p->world_y)) {
                 p->state = 0;
-                g1_2b86(1, p->x + 1, p->y + 64);
+                spawn_moving_actor(1, p->world_x + 1, p->world_y + 64);
                 continue;
             }
-            if (!g1_326e(p->x, p->y)) {
-                if (p->marker == 0)
-                    asm_0424(d_a0fb_ + d_0646 + 0x3c0,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 0x13);
+            if (!is_world_position_outside_view(p->world_x, p->world_y)) {
+                if (p->contact_marker == 0)
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + world_effect_sprite_offset + 0x3c0,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 0x13);
             } else {
                 p->state = 0;
             }
-            if (p->marker != 0) {
-                p->marker = 0;
-                asm_0424(d_a0fb_ + 0x1cc0,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 0x13);
+            if (p->contact_marker != 0) {
+                p->contact_marker = 0;
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1cc0,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 0x13);
             }
         }
 
         if (p->state == 5) {
-            p->x += 2;
-            d_530f_ = 1;
-            if (g1_367e(p->x, p->y)) {
+            p->world_x += 2;
+            secret_block_collision_state = 1;
+            if (test_level_tile_special_state(p->world_x, p->world_y)) {
                 p->state = 0;
-                g1_2b86(1, p->x - 1, p->y + 64);
+                spawn_moving_actor(1, p->world_x - 1, p->world_y + 64);
                 continue;
             }
-            if (!g1_326e(p->x, p->y)) {
-                if (p->marker == 0)
-                    asm_0424(d_a0fb_ + d_0646 + 0x500,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 0x13);
+            if (!is_world_position_outside_view(p->world_x, p->world_y)) {
+                if (p->contact_marker == 0)
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + world_effect_sprite_offset + 0x500,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 0x13);
             } else {
                 p->state = 0;
             }
-            if (p->marker != 0) {
-                p->marker = 0;
-                asm_0424(d_a0fb_ + 0x1d60,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 0x13);
+            if (p->contact_marker != 0) {
+                p->contact_marker = 0;
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1d60,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 0x13);
             }
         }
     }
-    d_530f_ = 0;
+    secret_block_collision_state = 0;
 }
 
-void pascal g1_1b51(void)
+/* Marks all projectile records inactive. */
+void pascal clear_projectile_pool_051c(void)
 {
     register int i;
 
-    for (i = 0; i < d_051c; i++) {
-        d_52dd_[i].used = 0;
-        d_52dd_[i].marker = 0;
+    for (i = 0; i < projectile_count; i++) {
+        projectile_records[i].active = 0;
+        projectile_records[i].projectile_marker = 0;
     }
 }
 
-void pascal g1_1b8a(register int a0, int a1, int a2)
+/* Advances active projectiles, removes blocked ones, and draws those still inside the view. */
+void pascal update_projectile_pool_051c(register int a0, int a1, int a2)
 {
     register int i;
-    struct t_52dd far *p;
-    for (i = 0; i < d_051c; ++i) {
-        p = &d_52dd_[i];
-        if (p->used == 0) {
-            p->used = a0;
-            p->x = a1;
-            p->y = a2;
-            p->marker = 1;
-            if (g1_326e(p->x, p->y) == 0)
-                g1_0042(11);
+    struct projectile_record far *p;
+    for (i = 0; i < projectile_count; ++i) {
+        p = &projectile_records[i];
+        if (p->active == 0) {
+            p->active = a0;
+            p->world_x = a1;
+            p->world_y = a2;
+            p->projectile_marker = 1;
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+                request_priority_sound_effect(11);
             return;
         }
     }
 }
 
 /* Shared success/clear targets stay as gotos because direct updates changed code size. */
-void g1_1bf6(void)
+/* Checks active projectiles against level tiles and the player, then removes or updates
+   colliding shots. */
+void resolve_projectile_collisions(void)
 {
     register int i;
-    struct t_52dd far *p;
+    struct projectile_record far *p;
 
-    d_0648 += 0xa0;
-    if (d_0648 == 0x140)
-        d_0648 = 0;
+    projectile_flash_sprite_offset += 0xa0;
+    if (projectile_flash_sprite_offset == 0x140)
+        projectile_flash_sprite_offset = 0;
 
-    for (i = 0; i < d_051c; ++i) {
-        p = &d_52dd_[i];
-        if (p->used == 0)
+    for (i = 0; i < projectile_count; ++i) {
+        p = &projectile_records[i];
+        if (p->active == 0)
             continue;
 
-        if (p->used == 1) {
-            if (g1_3513(p->x, p->y)) {
-                if (d_6379_ != 0)
+        if (p->active == 1) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y)) {
+                if (active_sprite_draw_flag != 0)
                     goto success_update;
-                if (d_d4bf_ != 0)
+                if (player_projectile_state != 0)
                     goto success_update;
-                if (g1_1247() == 0)
+                if (test_player_floor_clearance() == 0)
                     goto success_update;
-                --d_0099;
+                --player_screen_x;
                 goto success_update;
             } else {
-                --p->x;
-                if (g1_367e(p->x, p->y) != 0)
+                --p->world_x;
+                if (test_level_tile_special_state(p->world_x, p->world_y) != 0)
                     goto clear_record;
-                if (g1_367e(p->x, p->y + 64) != 0)
+                if (test_level_tile_special_state(p->world_x, p->world_y + 64) != 0)
                     goto clear_record;
-                if (g1_326e(p->x, p->y) == 0) {
-                    if (p->marker != 0) {
-                        p->marker = 0;
-                        asm_0424(d_a0fb_ + 0x1e00,
-                                 p->x - d_009d,
-                                 ((p->y - d_009f) >> 3) + 0x13);
+                if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                    if (p->projectile_marker != 0) {
+                        p->projectile_marker = 0;
+                        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1e00,
+                                                p->world_x - level_scroll_x,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 0x13);
                     } else {
-                        asm_0424(d_a0fb_ + d_0648 + 0x1860,
-                                 p->x - d_009d,
-                                 ((p->y - d_009f) >> 3) + 0x13);
+                        blit_planar_sprite_rows(sprite_pixel_data_pointer + projectile_flash_sprite_offset + 0x1860,
+                                                p->world_x - level_scroll_x,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 0x13);
                     }
                 } else {
-                    p->used = 0;
+                    p->active = 0;
                 }
             }
         }
 
-        if (p->used == 2) {
-            if (g1_3513(p->x, p->y)) {
-                if (d_6379_ == 0 && d_d4bf_ == 0 && g1_12ce())
-                    ++d_0099;
+        if (p->active == 2) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y)) {
+                if (active_sprite_draw_flag == 0 && player_projectile_state == 0 && test_player_body_clearance())
+                    ++player_screen_x;
                 success_update:
-                p->used = 0;
-                d_6379_ = 1;
+                p->active = 0;
+                active_sprite_draw_flag = 1;
             } else {
-                ++p->x;
-                if (g1_367e(p->x + 1, p->y) != 0)
+                ++p->world_x;
+                if (test_level_tile_special_state(p->world_x + 1, p->world_y) != 0)
                     goto clear_record;
-                if (g1_367e(p->x + 1, p->y + 64) != 0)
+                if (test_level_tile_special_state(p->world_x + 1, p->world_y + 64) != 0)
                     goto clear_record;
-                if (g1_326e(p->x, p->y) != 0)
+                if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
                     goto clear_record;
-                if (p->marker != 0) {
-                    p->marker = 0;
-                    asm_0424(d_a0fb_ + 0x1ea0,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 0x13);
+                if (p->projectile_marker != 0) {
+                    p->projectile_marker = 0;
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1ea0,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 0x13);
                 } else {
-                    asm_0424(d_a0fb_ + d_0648 + 0x19a0,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 0x13);
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + projectile_flash_sprite_offset + 0x19a0,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 0x13);
                 }
             }
         }
         goto loop_continue;
         clear_record:
-        p->used = 0;
+        p->active = 0;
         loop_continue:
         ;
     }
 }
 
-void g1_1e77(void)
+/* Updates player movement, level scrolling, animation, and nearby level effects. */
+void update_player_and_level_state(void)
 {
-    if (d_6379_ != 0 && d_d4bf_ != 0)
-        d_6379_ = 0;
-    if (d_03a1 == 0) {
-        if (g1_143e() != 0 && d_0610 != 0) {
-            d_0610 = 0;
-            d_0611 = 1;
+    if (active_sprite_draw_flag != 0 && player_projectile_state != 0)
+        active_sprite_draw_flag = 0;
+    if (title_graphic_animation_state == 0) {
+        if (test_player_level_clearance() != 0 && player_airborne_state != 0) {
+            player_airborne_state = 0;
+            player_damage_immunity_state = 1;
         }
-        if (d_0610 == 0 && d_0439 == 0) {
-            if (d_a679_ != 0)
-                ++d_d144_;
-            if (d_d144_ == 14) {
-                d_d144_ = 0;
-                d_a679_ = 0;
+        if (player_airborne_state == 0 && player_death_state == 0) {
+            if (player_sprite_refresh_state != 0)
+                ++player_sprite_animation_index;
+            if (player_sprite_animation_index == 14) {
+                player_sprite_animation_index = 0;
+                player_sprite_refresh_state = 0;
             }
-            if (g1_1352() == 0 && d_a679_ != 0) {
-                d_a679_ = 0;
-                d_d144_ = 0;
+            if (test_player_head_clearance() == 0 && player_sprite_refresh_state != 0) {
+                player_sprite_refresh_state = 0;
+                player_sprite_animation_index = 0;
             }
-            if (d_0611 == 0 && d_0612 < 9 && g1_1352() != 0) {
-                d_009b -= d_0613[d_798a_].cells[d_0612];
-                ++d_0612;
-                d_0644 = 0;
-                if (g1_143e() == 0) {
-                    d_0610 = 1;
-                    d_0644 = 1;
+            if (player_damage_immunity_state == 0 && player_jump_frame < 9 && test_player_head_clearance() != 0) {
+                player_screen_y -= player_jump_motion_rows[access_card_or_door_state].vertical_displacements[player_jump_frame];
+                ++player_jump_frame;
+                player_sprite_draw_state = 0;
+                if (test_player_level_clearance() == 0) {
+                    player_airborne_state = 1;
+                    player_sprite_draw_state = 1;
                     /* Snap the vertical position down to a 16-unit row boundary. */
-                    d_009b = (d_009b >> 4) << 4;
-                    g1_29d0(d_0099 + d_009d,
-                            (((d_009b - 16) >> 4) * 128) + d_009f);
-                    g1_0042(14);
-                    d_a679_ = 0;
-                    d_d144_ = 0;
+                    player_screen_y = (player_screen_y >> 4) << 4;
+                    allocate_collision_record(player_screen_x + level_scroll_x,
+                                              (((player_screen_y - 16) >> 4) * 128) + level_map_y_offset);
+                    request_priority_sound_effect(14);
+                    player_sprite_refresh_state = 0;
+                    player_sprite_animation_index = 0;
                 }
             } else {
-                d_0611 = 1;
+                player_damage_immunity_state = 1;
             }
-            if (d_0611 != 0) {
-                if (g1_143e() == 0) {
-                    d_0610 = 1;
-                    d_0644 = 1;
-                    d_0611 = 0;
-                    d_a679_ = 0;
-                    d_d144_ = 0;
-                    d_009b = (d_009b >> 4) << 4;
-                    g1_29d0(d_0099 + d_009d,
-                            (((d_009b - 16) >> 4) * 128) + d_009f);
-                    g1_0042(14);
+            if (player_damage_immunity_state != 0) {
+                if (test_player_level_clearance() == 0) {
+                    player_airborne_state = 1;
+                    player_sprite_draw_state = 1;
+                    player_damage_immunity_state = 0;
+                    player_sprite_refresh_state = 0;
+                    player_sprite_animation_index = 0;
+                    player_screen_y = (player_screen_y >> 4) << 4;
+                    allocate_collision_record(player_screen_x + level_scroll_x,
+                                              (((player_screen_y - 16) >> 4) * 128) + level_map_y_offset);
+                    request_priority_sound_effect(14);
                 } else {
-                    d_009b += 8;
+                    player_screen_y += 8;
                 }
-                if (g1_143e() == 0) {
-                    d_009b = (d_009b >> 4) << 4;
-                    g1_29d0(d_0099 + d_009d,
-                            (((d_009b - 16) >> 4) * 128) + d_009f);
-                    g1_0042(14);
-                    d_a679_ = 0;
-                    d_d144_ = 0;
-                    d_0644 = 1;
+                if (test_player_level_clearance() == 0) {
+                    player_screen_y = (player_screen_y >> 4) << 4;
+                    allocate_collision_record(player_screen_x + level_scroll_x,
+                                              (((player_screen_y - 16) >> 4) * 128) + level_map_y_offset);
+                    request_priority_sound_effect(14);
+                    player_sprite_refresh_state = 0;
+                    player_sprite_animation_index = 0;
+                    player_sprite_draw_state = 1;
                 }
-                if (d_009b >= 132) {
-                    d_009b += 8;
-                    d_0644 = 1;
-                    if (g1_143e() == 0) {
-                        d_0610 = 1;
-                        d_0612 = 0;
-                        d_0611 = 0;
-                        d_009b = (d_009b >> 4) << 4;
-                        g1_29d0(d_0099 + d_009d,
-                                (((d_009b - 16) >> 4) * 128) + d_009f);
-                        g1_0042(14);
+                if (player_screen_y >= 132) {
+                    player_screen_y += 8;
+                    player_sprite_draw_state = 1;
+                    if (test_player_level_clearance() == 0) {
+                        player_airborne_state = 1;
+                        player_jump_frame = 0;
+                        player_damage_immunity_state = 0;
+                        player_screen_y = (player_screen_y >> 4) << 4;
+                        allocate_collision_record(player_screen_x + level_scroll_x,
+                                                  (((player_screen_y - 16) >> 4) * 128) + level_map_y_offset);
+                        request_priority_sound_effect(14);
                     }
                 }
             }
         }
-        if (d_c68c_ != 0 && d_0439 != 0 && d_d576_ == 0) {
-            d_009b -= 16;
-            if (g1_1352() != 0) {
-                d_009b -= 16;
-                if (g1_1352() != 0) {
-                    d_d576_ = 3;
-                    d_0439 = 0;
+        if (control_up_pressed != 0 && player_death_state != 0 && player_invulnerability_state == 0) {
+            player_screen_y -= 16;
+            if (test_player_head_clearance() != 0) {
+                player_screen_y -= 16;
+                if (test_player_head_clearance() != 0) {
+                    player_invulnerability_state = 3;
+                    player_death_state = 0;
                 }
-                d_009b += 16;
+                player_screen_y += 16;
             } else {
-                d_d576_ = 0;
-                d_0439 = 1;
+                player_invulnerability_state = 0;
+                player_death_state = 1;
             }
-            d_009b += 16;
+            player_screen_y += 16;
         }
-        if (d_d134_ != 0 && d_0439 != 0) {
-            d_043b = 0;
-            d_0439 = 0;
+        if (control_down_pressed != 0 && player_death_state != 0) {
+            player_animation_phase = 0;
+            player_death_state = 0;
         }
-        if ((d_0439 == 0 || d_d135_ == 0) && d_d4c0_ == 0 &&
-            d_d13f_ != 0 && d_d576_ == 0) {
-            if (d_043a == 0 && g1_1247() != 0)
-                --d_0099;
-            if (d_043a != 0) {
-                d_043a = 0;
-                d_043b = 0;
-                d_a679_ = 0;
-            } else if (d_0437 == 0 || d_0437 == 0x40) {
-                if (g1_143e() == 0)
-                    g1_0042(0x16);
-                if (d_043b < 3)
-                    ++d_043b;
+        if ((player_death_state == 0 || control_fire_pressed == 0) && control_right_pressed == 0 &&
+            control_left_pressed != 0 && player_invulnerability_state == 0) {
+            if (player_action_state == 0 && test_player_floor_clearance() != 0)
+                --player_screen_x;
+            if (player_action_state != 0) {
+                player_action_state = 0;
+                player_animation_phase = 0;
+                player_sprite_refresh_state = 0;
+            } else if (world_animation_phase == 0 || world_animation_phase == 0x40) {
+                if (test_player_level_clearance() == 0)
+                    request_priority_sound_effect(0x16);
+                if (player_animation_phase < 3)
+                    ++player_animation_phase;
                 else
-                    d_043b = 0;
+                    player_animation_phase = 0;
             }
         }
-        if (d_0099 == 11) {
-            if (d_009d > 0) {
-                --d_009d;
-                ++d_0099;
+        if (player_screen_x == 11) {
+            if (level_scroll_x > 0) {
+                --level_scroll_x;
+                ++player_screen_x;
             }
-        } else if (d_0099 <= 10 && d_009d > 1) {
-            d_009d -= 2;
-            d_0099 += 2;
-            if (d_009d == 1) {
-                ++d_0099;
-                --d_009d;
+        } else if (player_screen_x <= 10 && level_scroll_x > 1) {
+            level_scroll_x -= 2;
+            player_screen_x += 2;
+            if (level_scroll_x == 1) {
+                ++player_screen_x;
+                --level_scroll_x;
             }
         }
-        if ((d_0439 == 0 || d_d135_ == 0) && d_d13f_ == 0 &&
-            d_d4c0_ != 0 && d_d576_ == 0) {
-            if (d_043a != 0 && g1_12ce() != 0)
-                ++d_0099;
-            if (d_043a == 0) {
-                d_043a = 4;
-                d_043b = 0;
-                d_a679_ = 0;
-            } else if (d_0437 == 0 || d_0437 == 0x40) {
-                if (g1_143e() == 0)
-                    g1_0042(0x16);
-                if (d_043b < 3)
-                    ++d_043b;
+        if ((player_death_state == 0 || control_fire_pressed == 0) && control_left_pressed == 0 &&
+            control_right_pressed != 0 && player_invulnerability_state == 0) {
+            if (player_action_state != 0 && test_player_body_clearance() != 0)
+                ++player_screen_x;
+            if (player_action_state == 0) {
+                player_action_state = 4;
+                player_animation_phase = 0;
+                player_sprite_refresh_state = 0;
+            } else if (world_animation_phase == 0 || world_animation_phase == 0x40) {
+                if (test_player_level_clearance() == 0)
+                    request_priority_sound_effect(0x16);
+                if (player_animation_phase < 3)
+                    ++player_animation_phase;
                 else
-                    d_043b = 0;
+                    player_animation_phase = 0;
             }
         }
-        if (d_0099 == 17) {
-            if (d_009d < 230) {
-                ++d_009d;
-                --d_0099;
+        if (player_screen_x == 17) {
+            if (level_scroll_x < 230) {
+                ++level_scroll_x;
+                --player_screen_x;
             }
-        } else if (d_0099 >= 18 && d_009d < 230) {
-            d_009d += 2;
-            d_0099 -= 2;
-            if (d_009d == 229) {
-                --d_0099;
-                ++d_009d;
+        } else if (player_screen_x >= 18 && level_scroll_x < 230) {
+            level_scroll_x += 2;
+            player_screen_x -= 2;
+            if (level_scroll_x == 229) {
+                --player_screen_x;
+                ++level_scroll_x;
             }
         }
-        if (d_0439 != 0) {
-            d_009b = (d_009b >> 4) << 4;
-            d_0611 = 1;
-            d_0610 = 0;
-            g1_1352();
+        if (player_death_state != 0) {
+            player_screen_y = (player_screen_y >> 4) << 4;
+            player_damage_immunity_state = 1;
+            player_airborne_state = 0;
+            test_player_head_clearance();
         }
-        if (d_d138_ != 0 && d_0610 != 0 && d_a0f3_ == 0 &&
-            d_0439 == 0 && d_d576_ == 0) {
-            d_0610 = 0;
-            d_0612 = 0;
-            d_0611 = 0;
-            if (d_798a_ != 0 && d_0437 == 0) {
-                if (d_d13f_ != 0 && g1_1247() != 0)
-                    d_a679_ = 1;
-                if (d_d4c0_ != 0 && g1_12ce() != 0)
-                    d_a679_ = 2;
+        if (control_jump_pressed != 0 && player_airborne_state != 0 && jump_button_latch == 0 &&
+            player_death_state == 0 && player_invulnerability_state == 0) {
+            player_airborne_state = 0;
+            player_jump_frame = 0;
+            player_damage_immunity_state = 0;
+            if (access_card_or_door_state != 0 && world_animation_phase == 0) {
+                if (control_left_pressed != 0 && test_player_floor_clearance() != 0)
+                    player_sprite_refresh_state = 1;
+                if (control_right_pressed != 0 && test_player_body_clearance() != 0)
+                    player_sprite_refresh_state = 2;
             }
-            g1_0042(13);
+            request_priority_sound_effect(13);
         }
-        if (d_d138_ != 0 && d_0439 == 0)
-            d_a0f3_ = 1;
+        if (control_jump_pressed != 0 && player_death_state == 0)
+            jump_button_latch = 1;
         else
-            d_a0f3_ = 0;
+            jump_button_latch = 0;
     }
-    g1_14af();
-    g1_a53a();
-    g1_892b();
-    g1_87bf();
-    g1_6292();
-    g1_b1fd();
-    g1_ba39();
-    g1_3882();
-    g1_a3e7();
-    g1_bdd9();
-    if (d_03a1 != 0)
+    draw_animated_level_strip();
+    update_actor_3035();
+    draw_animated_level_tile();
+    update_actor_3024();
+    handle_door_and_key_interaction();
+    update_actor_3040();
+    update_level_lock_or_exit();
+    update_actor_3001();
+    update_actor_3034();
+    update_actor_3048();
+    if (title_graphic_animation_state != 0)
         return;
-    if (d_0439 != 0 && d_d135_ == 0 && d_d576_ == 0 && d_6379_ == 0) {
-        if (d_043a == 0)
-            g1_17f5(0x1c + d_043b, d_0099, d_009b);
+    if (player_death_state != 0 && control_fire_pressed == 0 && player_invulnerability_state == 0 && active_sprite_draw_flag == 0) {
+        if (player_action_state == 0)
+            draw_player_action_sprite(0x1c + player_animation_phase, player_screen_x, player_screen_y);
         else
-            g1_17f5(0x20 + d_043b, d_0099, d_009b);
-        if ((d_d13f_ == 0 && d_d4c0_ != 0) ||
-            (d_d4c0_ == 0 && d_d13f_ != 0)) {
-            if (d_0437 == 0x20 || d_0437 == 0x60)
-                g1_0042(0x1b);
+            draw_player_action_sprite(0x20 + player_animation_phase, player_screen_x, player_screen_y);
+        if ((control_left_pressed == 0 && control_right_pressed != 0) ||
+            (control_right_pressed == 0 && control_left_pressed != 0)) {
+            if (world_animation_phase == 0x20 || world_animation_phase == 0x60)
+                request_priority_sound_effect(0x1b);
         }
     }
-    if (d_0439 != 0 && d_d135_ != 0 && d_d576_ == 0 && d_6379_ == 0) {
-        if (d_043a == 0)
-            g1_17f5(0x24, d_0099, d_009b);
+    if (player_death_state != 0 && control_fire_pressed != 0 && player_invulnerability_state == 0 && active_sprite_draw_flag == 0) {
+        if (player_action_state == 0)
+            draw_player_action_sprite(0x24, player_screen_x, player_screen_y);
         else
-            g1_17f5(0x25, d_0099, d_009b);
+            draw_player_action_sprite(0x25, player_screen_x, player_screen_y);
     }
-    if (d_d135_ != 0 && d_d13f_ == 0 && d_d4c0_ == 0 && d_0439 == 0 &&
-        d_d576_ == 0 && d_6379_ == 0)
-        d_043b = 3;
-    if (d_a679_ == 0 && d_d13f_ == 0 && d_d4c0_ == 0 && d_d135_ == 0 &&
-        d_0439 == 0 && d_d576_ == 0 && d_6379_ == 0) {
-        if (d_043a == 0)
-            d_043b = 0x0c;
+    if (control_fire_pressed != 0 && control_left_pressed == 0 && control_right_pressed == 0 && player_death_state == 0 &&
+        player_invulnerability_state == 0 && active_sprite_draw_flag == 0)
+        player_animation_phase = 3;
+    if (player_sprite_refresh_state == 0 && control_left_pressed == 0 && control_right_pressed == 0 && control_fire_pressed == 0 &&
+        player_death_state == 0 && player_invulnerability_state == 0 && active_sprite_draw_flag == 0) {
+        if (player_action_state == 0)
+            player_animation_phase = 0x0c;
         else
-            d_043b = 9;
+            player_animation_phase = 9;
     }
-    if (((d_0611 == 0 && d_0610 != 0) || g1_143e() == 0) &&
-        d_a679_ == 0 &&
-        d_0439 == 0 && d_d576_ == 0 && d_6379_ == 0)
-        g1_17f5(d_043a + d_043b, d_0099, d_009b);
-    if (d_0610 == 0 && g1_143e() != 0 && d_a679_ == 0 && d_0439 == 0 &&
-        d_d576_ == 0 && d_6379_ == 0) {
-        if (d_0611 == 0) {
-            if (d_043a == 0)
-                g1_17f5(d_043a + 8, d_0099, d_009b);
+    if (((player_damage_immunity_state == 0 && player_airborne_state != 0) || test_player_level_clearance() == 0) &&
+        player_sprite_refresh_state == 0 &&
+        player_death_state == 0 && player_invulnerability_state == 0 && active_sprite_draw_flag == 0)
+        draw_player_action_sprite(player_action_state + player_animation_phase, player_screen_x, player_screen_y);
+    if (player_airborne_state == 0 && test_player_level_clearance() != 0 && player_sprite_refresh_state == 0 && player_death_state == 0 &&
+        player_invulnerability_state == 0 && active_sprite_draw_flag == 0) {
+        if (player_damage_immunity_state == 0) {
+            if (player_action_state == 0)
+                draw_player_action_sprite(player_action_state + 8, player_screen_x, player_screen_y);
             else
-                g1_17f5(d_043a + 5, d_0099, d_009b);
-        } else if (d_043a == 0) {
-            g1_17f5(d_043a + 10, d_0099, d_009b);
+                draw_player_action_sprite(player_action_state + 5, player_screen_x, player_screen_y);
+        } else if (player_action_state == 0) {
+            draw_player_action_sprite(player_action_state + 10, player_screen_x, player_screen_y);
         } else {
-            g1_17f5(d_043a + 7, d_0099, d_009b);
+            draw_player_action_sprite(player_action_state + 7, player_screen_x, player_screen_y);
         }
     }
-    if (d_d576_ != 0 && d_6379_ == 0) {
-        --d_d576_;
-        d_009b -= 16;
-        if (d_043a == 0)
-            g1_17f5(0x28 - d_d576_, d_0099, d_009b);
+    if (player_invulnerability_state != 0 && active_sprite_draw_flag == 0) {
+        --player_invulnerability_state;
+        player_screen_y -= 16;
+        if (player_action_state == 0)
+            draw_player_action_sprite(0x28 - player_invulnerability_state, player_screen_x, player_screen_y);
         else
-            g1_17f5(0x2b - d_d576_, d_0099, d_009b);
-        if (d_d576_ == 0)
-            d_0644 = 1;
+            draw_player_action_sprite(0x2b - player_invulnerability_state, player_screen_x, player_screen_y);
+        if (player_invulnerability_state == 0)
+            player_sprite_draw_state = 1;
     }
-    if (d_a679_ != 0 && d_0439 == 0 && d_d576_ == 0 && d_6379_ == 0) {
-        if (d_a679_ == 1) {
-            switch (d_d144_) {
+    if (player_sprite_refresh_state != 0 && player_death_state == 0 && player_invulnerability_state == 0 && active_sprite_draw_flag == 0) {
+        if (player_sprite_refresh_state == 1) {
+            switch (player_sprite_animation_index) {
                 case 0:
                 case 1:
-                    g1_17f5(0x0e, d_0099, d_009b);
+                    draw_player_action_sprite(0x0e, player_screen_x, player_screen_y);
                     break;
                 case 2:
                 case 3:
-                    g1_17f5(0x0f, d_0099, d_009b);
+                    draw_player_action_sprite(0x0f, player_screen_x, player_screen_y);
                     break;
                 case 4:
                 case 5:
-                    g1_17f5(0x10, d_0099, d_009b);
+                    draw_player_action_sprite(0x10, player_screen_x, player_screen_y);
                     break;
                 case 6:
                 case 7:
-                    g1_17f5(0x11, d_0099, d_009b);
+                    draw_player_action_sprite(0x11, player_screen_x, player_screen_y);
                     break;
                 case 8:
                 case 9:
-                    g1_17f5(0x12, d_0099, d_009b);
+                    draw_player_action_sprite(0x12, player_screen_x, player_screen_y);
                     break;
                 case 10:
                 case 11:
-                    g1_17f5(0x13, d_0099, d_009b);
+                    draw_player_action_sprite(0x13, player_screen_x, player_screen_y);
                     break;
                 case 12:
                 case 13:
-                    g1_17f5(0x14, d_0099, d_009b);
+                    draw_player_action_sprite(0x14, player_screen_x, player_screen_y);
                     break;
             }
-        } else if (d_a679_ == 2) {
-            switch (d_d144_) {
+        } else if (player_sprite_refresh_state == 2) {
+            switch (player_sprite_animation_index) {
                 case 0:
                 case 1:
-                    g1_17f5(0x15, d_0099, d_009b);
+                    draw_player_action_sprite(0x15, player_screen_x, player_screen_y);
                     break;
                 case 2:
                 case 3:
-                    g1_17f5(0x16, d_0099, d_009b);
+                    draw_player_action_sprite(0x16, player_screen_x, player_screen_y);
                     break;
                 case 4:
                 case 5:
-                    g1_17f5(0x17, d_0099, d_009b);
+                    draw_player_action_sprite(0x17, player_screen_x, player_screen_y);
                     break;
                 case 6:
                 case 7:
-                    g1_17f5(0x18, d_0099, d_009b);
+                    draw_player_action_sprite(0x18, player_screen_x, player_screen_y);
                     break;
                 case 8:
                 case 9:
-                    g1_17f5(0x19, d_0099, d_009b);
+                    draw_player_action_sprite(0x19, player_screen_x, player_screen_y);
                     break;
                 case 10:
                 case 11:
-                    g1_17f5(0x1a, d_0099, d_009b);
+                    draw_player_action_sprite(0x1a, player_screen_x, player_screen_y);
                     break;
                 case 12:
                 case 13:
-                    g1_17f5(0x1b, d_0099, d_009b);
+                    draw_player_action_sprite(0x1b, player_screen_x, player_screen_y);
                     break;
             }
         }
     }
-    if (d_d135_ != 0 && d_9d98_ == 0 && d_6379_ == 0) {
-        if (d_060e == 0)
-            g1_18d4(d_0099 + d_009d,
-                    (((d_009b - 29) >> 4) * 128) + d_009f, d_043a);
-        if (d_0439 != 0) {
-            if (d_043a != 0)
-                d_043b = 5;
+    if (control_fire_pressed != 0 && fire_button_latch == 0 && active_sprite_draw_flag == 0) {
+        if (gameplay_animation_flag == 0)
+            spawn_world_actor(player_screen_x + level_scroll_x,
+                              (((player_screen_y - 29) >> 4) * 128) + level_map_y_offset, player_action_state);
+        if (player_death_state != 0) {
+            if (player_action_state != 0)
+                player_animation_phase = 5;
             else
-                d_043b = 8;
+                player_animation_phase = 8;
         }
     }
-    if (d_d135_ != 0) {
-        d_9d98_ = 1;
+    if (control_fire_pressed != 0) {
+        fire_button_latch = 1;
     } else {
-        d_9d98_ = 0;
+        fire_button_latch = 0;
     }
-    if (d_6379_ == 0 || d_d4bf_ != 0) {
+    if (active_sprite_draw_flag == 0 || player_projectile_state != 0) {
         return;
     }
-    d_d247_ = 0;
-    if (d_03a1 == 0) {
-        --d_4ed4_;
-        g1_0a0e();
+    player_gameplay_state = 0;
+    if (title_graphic_animation_state == 0) {
+        --title_graphic_frame_index;
+        draw_title_screen_graphic();
     }
-    g1_0042(15);
-    d_6379_ = 0;
-    d_d4bf_ = 0x15;
-    d_0612 = 0;
-    d_0610 = 0;
-    d_0439 = 0;
-    d_0611 = 1;
-    d_a679_ = 0;
-    d_d144_ = 0;
-    if (d_043a == 0)
-        g1_17f5(0x2c, d_0099, d_009b);
+    request_priority_sound_effect(15);
+    active_sprite_draw_flag = 0;
+    player_projectile_state = 0x15;
+    player_jump_frame = 0;
+    player_airborne_state = 0;
+    player_death_state = 0;
+    player_damage_immunity_state = 1;
+    player_sprite_refresh_state = 0;
+    player_sprite_animation_index = 0;
+    if (player_action_state == 0)
+        draw_player_action_sprite(0x2c, player_screen_x, player_screen_y);
     else
-        g1_17f5(0x2d, d_0099, d_009b);
+        draw_player_action_sprite(0x2d, player_screen_x, player_screen_y);
 }
 
-void g1_290f(void)
+/* Moves the player and vertical map offset during a level transition animation. */
+void advance_player_transition(void)
 {
-    if (d_5002_ == 0 && d_0644 != 0) {
-        if (d_009b < 100 && d_009f > 0) {
-            d_009f -= 128;
-            d_009b += 16;
-            if (d_009b >= 100)
-                d_0644 = 0;
-        } else if (d_009b > 112) {
-            d_009f += 128;
-            d_009b -= 16;
-            if (d_009b <= 112)
-                d_0644 = 0;
+    if (player_animation_lock_state == 0 && player_sprite_draw_state != 0) {
+        if (player_screen_y < 100 && level_map_y_offset > 0) {
+            level_map_y_offset -= 128;
+            player_screen_y += 16;
+            if (player_screen_y >= 100)
+                player_sprite_draw_state = 0;
+        } else if (player_screen_y > 112) {
+            level_map_y_offset += 128;
+            player_screen_y -= 16;
+            if (player_screen_y <= 112)
+                player_sprite_draw_state = 0;
         }
     }
 }
 
-void g1_295e(char far *filename, void far *buffer, unsigned int count)
+/* Skips the three-byte resource header and reads the requested byte block into a buffer. */
+void read_file_block(char far *filename, void far *buffer, unsigned int count)
 {
     FILE *stream;
 
@@ -2281,145 +2325,151 @@ void g1_295e(char far *filename, void far *buffer, unsigned int count)
     fclose(stream);
 }
 
-void pascal g1_29d0(register int a0, int a1)
+/* Adds a used coordinate record to the first free object-collision slot. */
+void pascal allocate_collision_record(register int a0, int a1)
 {
     register int i;
-    struct t_c8eb far *p;
+    struct collision_effect_record far *p;
 
-    for (i = 0; i < d_051e; ++i) {
-        p = &d_c8eb_[i];
-        if (p->used == 0) {
-            p->used = 1;
-            p->value1 = a0;
-            p->value2 = a1;
+    for (i = 0; i < moving_object_count; ++i) {
+        p = &object_collision_pool_records[i];
+        if (p->active == 0) {
+            p->active = 1;
+            p->world_x = a0;
+            p->world_y = a1;
             break;
         }
     }
 }
 
-/* Clear the first word of every 8-byte record in table d_d4c3_[0..d_0518). */
-void pascal g1_2a1d(void)
+/* Clear the first word of every 8-byte actor_302a_record in table ambient_object_records[0..ambient_object_count). */
+/* Clears the active flags in the ambient-object pool. */
+void pascal clear_ambient_object_pool(void)
 {
     register int i;
 
-    for (i = 0; i < d_0518; i++)
-        d_d4c3_[i].a = 0;
+    for (i = 0; i < ambient_object_count; i++)
+        ambient_object_records[i].active = 0;
 }
 
-void pascal g1_2a40(register int a0, int a1, int a2)
+/* Queues an ambient sprite animation with a resource offset and world coordinates. */
+void pascal queue_ambient_sprite_animation(register int a0, int a1, int a2)
 {
     register int i;
-    struct s8 far *p;
+    struct ambient_object_record far *p;
 
-    for (i = 0; i < d_0518; i++) {
-        p = &d_d4c3_[i];
-        if (p->a == 0) {
-            p->a = 1;
-            p->b = a1;
-            p->c = a2;
-            p->d = a0;
+    for (i = 0; i < ambient_object_count; i++) {
+        p = &ambient_object_records[i];
+        if (p->active == 0) {
+            p->active = 1;
+            p->world_x = a1;
+            p->world_y = a2;
+            p->sprite_offset = a0;
             break;
         }
     }
 }
 
-void g1_2a93(void)
+/* Advances, culls, and draws the queued ambient sprite animations. */
+void animate_ambient_sprite_records(void)
 {
     register int i;
-    struct s8 far *p;
+    struct ambient_object_record far *p;
 
-    d_064a += 0xa0;
-    if (d_064a > 0xa0)
-        d_064a = 0;
+    ambient_object_sprite_offset += 0xa0;
+    if (ambient_object_sprite_offset > 0xa0)
+        ambient_object_sprite_offset = 0;
 
-    for (i = 0; i < d_0518; ++i) {
-        p = &d_d4c3_[i];
-        if (g1_326e(p->b, p->c) != 0) {
-            if (p->d < 0x8c0) {
-                p->a = 0;
+    for (i = 0; i < ambient_object_count; ++i) {
+        p = &ambient_object_records[i];
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0) {
+            if (p->sprite_offset < 0x8c0) {
+                p->active = 0;
                 continue;
             }
         }
-        if (p->a == 0)
+        if (p->active == 0)
             continue;
 
-        p->c -= 8;
-        if (g1_326e(p->b, p->c) == 0) {
-            asm_0424(d_a0ef_ + p->d + d_064a,
-                     p->b - d_009d,
-                     ((p->c - d_009f) >> 3) + 0x10);
+        p->world_y -= 8;
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+            blit_planar_sprite_rows(object_sprite_buffer + p->sprite_offset + ambient_object_sprite_offset,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 0x10);
         }
-        ++p->a;
-        if (p->d < 0x8c0 && p->a == 0x28)
-            p->a = 0;
-        if (p->d >= 0x8c0 && p->a == 0x2bc)
-            p->a = 0;
+        ++p->active;
+        if (p->sprite_offset < 0x8c0 && p->active == 0x28)
+            p->active = 0;
+        if (p->sprite_offset >= 0x8c0 && p->active == 0x2bc)
+            p->active = 0;
     }
 }
 
-void pascal g1_2b86(register int a0, int a1, int a2)
+/* Creates a moving actor record with the supplied kind and world coordinates. */
+void pascal spawn_moving_actor(register int a0, int a1, int a2)
 {
     register int i;
-    struct t_b63c far *p;
+    struct moving_actor_record far *p;
 
-    for (i = 0; i < d_0522; i++) {
-        p = &d_b63c_[i];
+    for (i = 0; i < moving_actor_count; i++) {
+        p = &moving_actor_records[i];
         if (p->state == 0) {
             p->state = 1;
-            p->x = a1;
-            p->y = a2;
-            p->kind = a0;
+            p->world_x = a1;
+            p->world_y = a2;
+            p->actor_kind = a0;
             break;
         }
     }
 }
 
-void g1_2bd9(void)
+/* Advances and draws the moving-actor pool, removing actors blocked by level tiles. */
+void update_moving_actor_pool(void)
 {
     register int i;
-    struct t_b63c far *p;
+    struct moving_actor_record far *p;
 
-    for (i = 0; i < d_0522; ++i) {
-        p = &d_b63c_[i];
+    for (i = 0; i < moving_actor_count; ++i) {
+        p = &moving_actor_records[i];
         if (p->state != 0) {
-            if (g1_326e(p->x, p->y) == 0) {
-                if (p->kind == 3) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                if (p->actor_kind == 3) {
                     ++p->state;
                     if (p->state == 2) {
-                        asm_0424(d_637a_ + 0x8160,
-                                 p->x - d_009d,
-                                 ((p->y - d_009f) >> 3) + 16);
+                        blit_planar_sprite_rows(sprite_graphics_buffer + 0x8160,
+                                                p->world_x - level_scroll_x,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 16);
                     }
                     if (p->state == 4) {
-                        if (g1_326e(p->x - 1, p->y - 64) == 0)
-                            asm_0424(d_637a_ + 0x8200,
-                                     p->x - d_009d - 1,
-                                     ((p->y - d_009f) >> 3) + 8);
-                        if (g1_326e(p->x + 1, p->y - 64) == 0)
-                            asm_0424(d_637a_ + 0x82a0,
-                                     p->x - d_009d + 1,
-                                     ((p->y - d_009f) >> 3) + 8);
-                        if (g1_326e(p->x - 1, p->y + 64) == 0)
-                            asm_0424(d_637a_ + 0x8340,
-                                     p->x - d_009d - 1,
-                                     ((p->y - d_009f) >> 3) + 24);
-                        if (g1_326e(p->x + 1, p->y + 64) == 0)
-                            asm_0424(d_637a_ + 0x83e0,
-                                     p->x - d_009d + 1,
-                                     ((p->y - d_009f) >> 3) + 24);
+                        if (is_world_position_outside_view(p->world_x - 1, p->world_y - 64) == 0)
+                            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8200,
+                                                    p->world_x - level_scroll_x - 1,
+                                                    ((p->world_y - level_map_y_offset) >> 3) + 8);
+                        if (is_world_position_outside_view(p->world_x + 1, p->world_y - 64) == 0)
+                            blit_planar_sprite_rows(sprite_graphics_buffer + 0x82a0,
+                                                    p->world_x - level_scroll_x + 1,
+                                                    ((p->world_y - level_map_y_offset) >> 3) + 8);
+                        if (is_world_position_outside_view(p->world_x - 1, p->world_y + 64) == 0)
+                            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8340,
+                                                    p->world_x - level_scroll_x - 1,
+                                                    ((p->world_y - level_map_y_offset) >> 3) + 24);
+                        if (is_world_position_outside_view(p->world_x + 1, p->world_y + 64) == 0)
+                            blit_planar_sprite_rows(sprite_graphics_buffer + 0x83e0,
+                                                    p->world_x - level_scroll_x + 1,
+                                                    ((p->world_y - level_map_y_offset) >> 3) + 24);
                         p->state = 0;
                     }
                 } else {
-                    if (p->kind == 1) {
-                        asm_0424(d_637a_ + p->state * 0xa0 + 0x19a0,
-                                 p->x - d_009d,
-                                 ((p->y - d_009f) >> 3) + 16);
+                    if (p->actor_kind == 1) {
+                        blit_planar_sprite_rows(sprite_graphics_buffer + p->state * 0xa0 + 0x19a0,
+                                                p->world_x - level_scroll_x,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 16);
                     } else {
-                        if (g1_3513(p->x, p->y) != 0)
-                            d_6379_ = 1;
-                        asm_0424(d_637a_ + p->state * 0xa0 + 0x37a0,
-                                 p->x - d_009d,
-                                 ((p->y - d_009f) >> 3) + 16);
+                        if (test_player_overlap_with_object(p->world_x, p->world_y) != 0)
+                            active_sprite_draw_flag = 1;
+                        blit_planar_sprite_rows(sprite_graphics_buffer + p->state * 0xa0 + 0x37a0,
+                                                p->world_x - level_scroll_x,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 16);
                     }
                     ++p->state;
                     if (p->state == 7)
@@ -2432,258 +2482,271 @@ void g1_2bd9(void)
     }
 }
 
-void pascal g1_2e64(register int a0, int a1)
+/* Creates a used level-object record at the supplied world coordinates. */
+void pascal spawn_pickup_object(register int a0, int a1)
 {
     register int i;
-    struct t_d1cf far *p;
+    struct pickup_object_record far *p;
 
-    for (i = 0; i < d_0520; i++) {
-        p = &d_d1cf_[i];
-        if (p->used == 0) {
-            p->used = 1;
-            p->x = a0;
-            p->y = a1;
+    for (i = 0; i < pickup_object_count; i++) {
+        p = &free_object_pool_records[i];
+        if (p->active == 0) {
+            p->active = 1;
+            p->world_x = a0;
+            p->world_y = a1;
             break;
         }
     }
 }
 
-void g1_2eb1(void)
+/* Advances and draws active pickup-object records. */
+void update_pickup_object_pool(void)
 {
     register int i;
-    struct t_d1cf far *p;
+    struct pickup_object_record far *p;
 
-    for (i = 0; i < d_0520; i++) {
-        p = &d_d1cf_[i];
-        if (p->used != 0) {
-            if (g1_326e(p->x, p->y) == 0) {
-                asm_0424(d_a0fb_ + p->used * 0xa0 + 0x14a0,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
-                p->used++;
-                if (p->used == 6)
-                    p->used = 0;
+    for (i = 0; i < pickup_object_count; i++) {
+        p = &free_object_pool_records[i];
+        if (p->active != 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + p->active * 0xa0 + 0x14a0,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+                p->active++;
+                if (p->active == 6)
+                    p->active = 0;
             } else {
-                p->used = 0;
+                p->active = 0;
             }
         }
     }
 }
 
-void g1_2f4c(void)
+/* Updates and draws active collision-effect records at their stored world positions. */
+void update_collision_effect_pool(void)
 {
     register int i;
-    struct t_c8eb far *p;
+    struct collision_effect_record far *p;
 
-    for (i = 0; i < d_051e; ++i) {
-        p = &d_c8eb_[i];
-        if (p->used != 0) {
-            if (g1_326e(p->value1, p->value2) == 0) {
-                asm_0424(d_a0fb_ + p->used * 0xa0 + 0xb40,
-                         p->value1 - d_009d,
-                         ((p->value2 - d_009f) >> 3) + 16);
-                ++p->used;
-                if (p->used != 6)
+    for (i = 0; i < moving_object_count; ++i) {
+        p = &object_collision_pool_records[i];
+        if (p->active != 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + p->active * 0xa0 + 0xb40,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+                ++p->active;
+                if (p->active != 6)
                     continue;
             }
-            p->used = 0;
+            p->active = 0;
         }
     }
 }
 
-void pascal g1_2fe7(register int a0, int a1)
+/* Creates an animated-actor record with the supplied sprite frame and vertical position. */
+void pascal spawn_animated_actor_sprite(register int a0, int a1)
 {
     register int i;
-    struct t_551e far *p;
+    struct animated_actor_pool_record far *p;
 
-    for (i = 0; i < d_051a; i++) {
-        p = &d_551e_[i];
-        if (p->state == 0) {
-            p->state = 1;
-            p->value1 = a0;
-            p->value2 = a1;
+    for (i = 0; i < animated_actor_count; i++) {
+        p = &animated_actor_pool_records[i];
+        if (p->animation_state == 0) {
+            p->animation_state = 1;
+            p->sprite_frame_index = a0;
+            p->vertical_position = a1;
             break;
         }
     }
 }
 
-void pascal g1_3034(int a0, int a1, int a2)
+/* Draws the two adjacent sprite cells for an actor when each cell is inside the view. */
+void pascal draw_actor_sprite_pair(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 0x140 + 0x5b40;
-    if (g1_326e(a1, a2) == 0) {
-        asm_0424(d_637a_ + offset,
-                 a1 - d_009d,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a2) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset,
+                                a1 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
     }
-    if (g1_326e(a1 + 2, a2) == 0) {
-        asm_0424(d_637a_ + offset + 0xa0,
-                 a1 - d_009d + 2,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a2) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0,
+                                a1 - level_scroll_x + 2,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_30c9(void)
+/* Advances active animated-actor records and draws their current sprite frames. */
+void update_animated_actor_pool(void)
 {
     register int i;
-    struct t_551e far *p;
+    struct animated_actor_pool_record far *p;
 
-    for (i = 0; i < d_051a; i++) {
-        p = &d_551e_[i];
-        if (p->state != 0) {
-            p->state++;
-            p->value2 += d_0412[p->state - 2];
-            if (p->state < 16) {
-                g1_3034((p->state - 2) / 3, p->value1, p->value2);
+    for (i = 0; i < animated_actor_count; i++) {
+        p = &animated_actor_pool_records[i];
+        if (p->animation_state != 0) {
+            p->animation_state++;
+            p->vertical_position += actor_motion_delta_table[p->animation_state - 2];
+            if (p->animation_state < 16) {
+                draw_actor_sprite_pair((p->animation_state - 2) / 3, p->sprite_frame_index, p->vertical_position);
             }
-            if (p->state == 18)
-                p->state = 0;
+            if (p->animation_state == 18)
+                p->animation_state = 0;
         }
     }
 }
 
-void pascal g1_314c(int a0, int a1)
+/* Creates a four-part contact flash at the supplied world position and requests its sound
+   effect. */
+void pascal spawn_contact_flash_effect(int a0, int a1)
 {
     register int i;
-    struct t_5320 far *p;
+    struct contact_flash_effect_record far *p;
 
-    d_064c++;
-    if (d_064c > 3)
-        d_064c = 0;
-    for (i = 0; i < d_043e; i++) {
-        p = &d_5320_[i];
-        if (p->f[0] == 0) {
-            p->f[0] = 1;
-            p->f[1] = a0;
-            p->f[2] = a1;
-            p->f[3] = a0 + 1;
-            p->f[4] = a1;
-            p->f[5] = a0;
-            p->f[6] = a1 + 8;
-            p->f[7] = a0 + 1;
-            p->f[8] = a1 + 8;
-            switch (d_064c) {
+    contact_flash_cycle_index++;
+    if (contact_flash_cycle_index > 3)
+        contact_flash_cycle_index = 0;
+    for (i = 0; i < collision_sound_record_count; i++) {
+        p = &level_collision_sound_records[i];
+        if (p->effect_values[0] == 0) {
+            p->effect_values[0] = 1;
+            p->effect_values[1] = a0;
+            p->effect_values[2] = a1;
+            p->effect_values[3] = a0 + 1;
+            p->effect_values[4] = a1;
+            p->effect_values[5] = a0;
+            p->effect_values[6] = a1 + 8;
+            p->effect_values[7] = a0 + 1;
+            p->effect_values[8] = a1 + 8;
+            switch (contact_flash_cycle_index) {
             case 0:
-                p->f[9] = 0xa0;
-                p->f[10] = 0x140;
-                p->f[11] = 0x1e0;
-                p->f[12] = 0x280;
+                p->effect_values[9] = 0xa0;
+                p->effect_values[10] = 0x140;
+                p->effect_values[11] = 0x1e0;
+                p->effect_values[12] = 0x280;
                 break;
             case 1:
-                p->f[9] = 0x280;
-                p->f[10] = 0xa0;
-                p->f[11] = 0x140;
-                p->f[12] = 0x1e0;
+                p->effect_values[9] = 0x280;
+                p->effect_values[10] = 0xa0;
+                p->effect_values[11] = 0x140;
+                p->effect_values[12] = 0x1e0;
                 break;
             case 2:
-                p->f[9] = 0x140;
-                p->f[10] = 0x280;
-                p->f[11] = 0x1e0;
-                p->f[12] = 0xa0;
+                p->effect_values[9] = 0x140;
+                p->effect_values[10] = 0x280;
+                p->effect_values[11] = 0x1e0;
+                p->effect_values[12] = 0xa0;
                 break;
             case 3:
-                p->f[9] = 0x1e0;
-                p->f[10] = 0x280;
-                p->f[11] = 0x140;
-                p->f[12] = 0xa0;
+                p->effect_values[9] = 0x1e0;
+                p->effect_values[10] = 0x280;
+                p->effect_values[11] = 0x140;
+                p->effect_values[12] = 0xa0;
                 break;
             }
-            g1_0042(10);
+            request_priority_sound_effect(10);
             return;
         }
     }
 }
 
-char pascal g1_326e(int a0, int a1)
+/* Returns nonzero when a world position lies outside the current horizontal or vertical view
+   bounds. */
+char pascal is_world_position_outside_view(int a0, int a1)
 {
-    if (a0 >= d_009d &&
-        d_009d + 29 > a0 &&
-        d_009f - 64 <= a1 &&
-        d_009f + 1280 > a1)
+    if (a0 >= level_scroll_x &&
+        level_scroll_x + 29 > a0 &&
+        level_map_y_offset - 64 <= a1 &&
+        level_map_y_offset + 1280 > a1)
         return 0;
     return 1;
 }
 
-void g1_32a5(void)
+/* Advances and draws the four-part contact flash records. */
+void animate_contact_flash_effects(void)
 {
     register int i;
-    struct t_5320 far *p;
+    struct contact_flash_effect_record far *p;
 
-    for (i = 0; i < d_043e; ++i) {
-        p = &d_5320_[i];
-        if (p->f[0] != 0) {
-            if (p->f[0] != 0) {
+    for (i = 0; i < collision_sound_record_count; ++i) {
+        p = &level_collision_sound_records[i];
+        if (p->effect_values[0] != 0) {
+            if (p->effect_values[0] != 0) {
                 /* Delta tables interleave x/y values; keep the pointer offsets for TC output. */
-                p->f[1] += d_0440[p->f[0]];
-                p->f[2] += (d_0440 + 1)[p->f[0]];
-                p->f[3] += d_0476[p->f[0]];
-                p->f[4] += (d_0476 + 1)[p->f[0]];
-                p->f[5] += d_04ac[p->f[0]];
-                p->f[6] += (d_04ac + 1)[p->f[0]];
-                p->f[7] += d_04e2[p->f[0]];
-                p->f[8] += (d_04e2 + 1)[p->f[0]];
+                p->effect_values[1] += contact_flash_delta_table_a[p->effect_values[0]];
+                p->effect_values[2] += (contact_flash_delta_table_a + 1)[p->effect_values[0]];
+                p->effect_values[3] += contact_flash_delta_table_b[p->effect_values[0]];
+                p->effect_values[4] += (contact_flash_delta_table_b + 1)[p->effect_values[0]];
+                p->effect_values[5] += contact_flash_delta_table_c[p->effect_values[0]];
+                p->effect_values[6] += (contact_flash_delta_table_c + 1)[p->effect_values[0]];
+                p->effect_values[7] += contact_flash_delta_table_d[p->effect_values[0]];
+                p->effect_values[8] += (contact_flash_delta_table_d + 1)[p->effect_values[0]];
 
-                if (g1_326e(p->f[1], p->f[2]) == 0 &&
-                    g1_326e(p->f[1], p->f[2] + 128) == 0) {
-                    asm_0424(d_a0fb_ + p->f[9],
-                             p->f[1] - d_009d,
-                             ((p->f[2] - d_009f) >> 3) + 16);
+                if (is_world_position_outside_view(p->effect_values[1], p->effect_values[2]) == 0 &&
+                    is_world_position_outside_view(p->effect_values[1], p->effect_values[2] + 128) == 0) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + p->effect_values[9],
+                                            p->effect_values[1] - level_scroll_x,
+                                            ((p->effect_values[2] - level_map_y_offset) >> 3) + 16);
                 }
-                if (g1_326e(p->f[3], p->f[4]) == 0 &&
-                    g1_326e(p->f[3], p->f[4] + 128) == 0) {
-                    asm_0424(d_a0fb_ + p->f[10],
-                             p->f[3] - d_009d,
-                             ((p->f[4] - d_009f) >> 3) + 16);
+                if (is_world_position_outside_view(p->effect_values[3], p->effect_values[4]) == 0 &&
+                    is_world_position_outside_view(p->effect_values[3], p->effect_values[4] + 128) == 0) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + p->effect_values[10],
+                                            p->effect_values[3] - level_scroll_x,
+                                            ((p->effect_values[4] - level_map_y_offset) >> 3) + 16);
                 }
-                if (g1_326e(p->f[5], p->f[6]) == 0 &&
-                    g1_326e(p->f[5], p->f[6] + 128) == 0) {
-                    asm_0424(d_a0fb_ + p->f[11],
-                             p->f[5] - d_009d,
-                             ((p->f[6] - d_009f) >> 3) + 16);
+                if (is_world_position_outside_view(p->effect_values[5], p->effect_values[6]) == 0 &&
+                    is_world_position_outside_view(p->effect_values[5], p->effect_values[6] + 128) == 0) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + p->effect_values[11],
+                                            p->effect_values[5] - level_scroll_x,
+                                            ((p->effect_values[6] - level_map_y_offset) >> 3) + 16);
                 }
-                if (g1_326e(p->f[7], p->f[8]) == 0 &&
-                    g1_326e(p->f[7], p->f[8] + 128) == 0) {
-                    asm_0424(d_a0fb_ + p->f[12],
-                             p->f[7] - d_009d,
-                             ((p->f[8] - d_009f) >> 3) + 16);
+                if (is_world_position_outside_view(p->effect_values[7], p->effect_values[8]) == 0 &&
+                    is_world_position_outside_view(p->effect_values[7], p->effect_values[8] + 128) == 0) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + p->effect_values[12],
+                                            p->effect_values[7] - level_scroll_x,
+                                            ((p->effect_values[8] - level_map_y_offset) >> 3) + 16);
                 }
-                p->f[0] += 2;
-                if (p->f[0] == 23)
-                    p->f[0] = 0;
+                p->effect_values[0] += 2;
+                if (p->effect_values[0] == 23)
+                    p->effect_values[0] = 0;
             }
         }
     }
 }
 
-int g1_3513(int a0, int a1)
+/* Returns whether the supplied world position overlaps the player's current position. */
+int test_player_overlap_with_object(int a0, int a1)
 {
-    register int v = d_009b;
+    register int v = player_screen_y;
 
     /* Convert the fixed-point scroll offset to 128-unit map rows. */
     v >>= 4;
     v <<= 7;
-    v += d_009f;
+    v += level_map_y_offset;
     v -= a1;
     v++;
     v++;
 
-    if (abs(d_0099 + d_009d - a0) < 2 && v > 16 && v < 384)
+    if (abs(player_screen_x + level_scroll_x - a0) < 2 && v > 16 && v < 384)
         return 1;
     return 0;
 }
 
-char pascal g1_3558(int a0, register int a1)
+/* Finds and removes a world actor close to the supplied position, returning its former state. */
+char pascal remove_world_actor_at_position(int a0, register int a1)
 {
     register int i;
-    struct t_cb6d far *p;
+    struct world_actor_record far *p;
 
-    for (i = 0; i < d_c295_; i++) {
-        p = &d_cb6d_[i];
+    for (i = 0; i < world_actor_count; i++) {
+        p = &world_actor_records[i];
         if (p->state != 0) {
-            if (abs(p->x - a0) < 2 &&
-                p->y - a1 < 128 &&
-                p->y - a1 >= -128) {
+            if (abs(p->world_x - a0) < 2 &&
+                p->world_y - a1 < 128 &&
+                p->world_y - a1 >= -128) {
                 if (p->state == 1) {
                     p->state = 0;
                     return 1;
@@ -2699,53 +2762,56 @@ char pascal g1_3558(int a0, register int a1)
     return 0;
 }
 
-int g1_35ee(register int a0, int a1, int a2)
+/* Tests the player vertical range and returns the result to its caller. */
+int test_player_vertical_range(register int a0, int a1, int a2)
 {
     register int index;
-    index = ((d_009b >> 4) << 7) + d_009f - a2 + 2;
-    if (d_0099 + d_009d - a0 > a0 &&
-        d_0099 + d_009d - a0 < a1 &&
+    index = ((player_screen_y >> 4) << 7) + level_map_y_offset - a2 + 2;
+    if (player_screen_x + level_scroll_x - a0 > a0 &&
+        player_screen_x + level_scroll_x - a0 < a1 &&
         index > 0 &&
         index < 384)
         return 1;
     return 0;
 }
 
-int g1_363b(int a0, int a1)
+/* Tests the player x alignment and returns the result to its caller. */
+int test_player_x_alignment(int a0, int a1)
 {
-    register int v = d_009b;
+    register int v = player_screen_y;
 
     /* Convert the fixed-point scroll offset to 128-unit map rows. */
     v >>= 4;
     v <<= 7;
-    v += d_009f;
+    v += level_map_y_offset;
     v -= a1;
     v++;
     v++;
 
-    if (abs(d_0099 + d_009d - a0) == 0 && v > 0 && v < 384)
+    if (abs(player_screen_x + level_scroll_x - a0) == 0 && v > 0 && v < 384)
         return 1;
     return 0;
 }
 
 /* Keep the goto so the collision check stays in the original code order. */
-int g1_367e(register int a0, register int a1)
+/* Checks the level tile at a position and handles the special breakable-tile case. */
+int test_level_tile_special_state(register int a0, register int a1)
 {
     int far *p;
 
-    p = d_7729_ + (a0 >> 1) + ((a1 >> 7) << 7) - 1;
-    if (d_530f_ != 0) {
+    p = level_tile_map + (a0 >> 1) + ((a1 >> 7) << 7) - 1;
+    if (secret_block_collision_state != 0) {
         if (*p == 0x1800) {
             *p = 0x17e0;
-            g1_2e64(a0, a1);
+            spawn_pickup_object(a0, a1);
         } else if (p[128] == 0x1800) {
             p[128] = 0x17e0;
-            g1_2e64(a0, a1 + 128);
+            spawn_pickup_object(a0, a1 + 128);
         } else {
             goto check;
         }
-        g1_0042(42);
-        g1_0b85(10L);
+        request_priority_sound_effect(42);
+        add_and_draw_player_score(10L);
         return 1;
     }
 check:
@@ -2754,12 +2820,13 @@ check:
     return 0;
 }
 
-int g1_3714(int a0, int a1)
+/* Returns nonzero when either map cell covered by a position contains a blocking tile. */
+int is_level_position_blocked(int a0, int a1)
 {
     unsigned int far *p;
     unsigned int far *q;
 
-    p = d_7729_ + (a0 >> 1) + ((a1 >> 7) << 7) - 1;
+    p = level_tile_map + (a0 >> 1) + ((a1 >> 7) << 7) - 1;
     q = p;
     if (a0 & 1)
         q++;
@@ -2768,28 +2835,30 @@ int g1_3714(int a0, int a1)
     return 0;
 }
 
-void g1_376f(void)
+/* Updates and draws records from level-map marker 0x3000; the concrete entity identity is not
+   established by source. */
+void update_actor_3000(void)
 {
     register int i;
-    struct g1_376f_record far *p;
+    struct actor_3000_record far *p;
 
-    for (i = 0; i < d_043c; ++i) {
-        p = &d_669f_[i];
+    for (i = 0; i < actor_3000_count; ++i) {
+        p = &actor_3000_records[i];
         if (p->state != 0) {
-            if (g1_326e(p->x, p->y) == 0) {
-                if (g1_3714(p->x, p->y + 128) == 0)
-                    p->y += 128;
-                if (g1_3558(p->x, p->y) != 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+                    p->world_y += 128;
+                if (remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
                     p->state = 0;
-                    g1_314c(p->x, p->y);
-                    if (g1_3714(p->x, p->y + 128) == 0) {
-                        g1_0b85(500L);
-                        g1_2a40(0x280, p->x, p->y);
+                    spawn_contact_flash_effect(p->world_x, p->world_y);
+                    if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                        add_and_draw_player_score(500L);
+                        queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                     }
-                } else if (g1_326e(p->x, p->y) == 0) {
-                    asm_0424(d_a0fb_,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 16);
+                } else if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                 }
             }
         }
@@ -2797,350 +2866,362 @@ void g1_376f(void)
 }
 
 /* Keep the backward jump: structured flow moves the shared draw and changes matching. */
-void g1_3882(void)
+/* Updates and draws records from level-map marker 0x3001; the concrete entity identity is not
+   established by source. */
+void update_actor_3001(void)
 {
     register int si;
-    struct g1_3882_record far *p;
+    struct actor_3001_record far *p;
 
-    for (si = 0; si < d_0524; ++si) {
-        p = &d_a8da_[si];
-        if (g1_326e(p->x, p->y) == 0) {
-            if (g1_363b(p->x, p->y - 32)) {
-                if (d_555b_) {
-                    d_555b_ = 0;
-                    g2_0fc1();
+    for (si = 0; si < actor_3001_count; ++si) {
+        p = &actor_3001_records[si];
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+            if (test_player_x_alignment(p->world_x, p->world_y - 32)) {
+                if (hint_revealed_object_5) {
+                    hint_revealed_object_5 = 0;
+                    show_secret_tip_elevator();
                 }
-                if (!d_0439) {
-                    if (d_c68c_) {
-                        if (g1_1352()) {
-                            if (!d_d134_) {
-                                ++p->used;
-                                p->y -= 128;
+                if (!player_death_state) {
+                    if (control_up_pressed) {
+                        if (test_player_head_clearance()) {
+                            if (!control_down_pressed) {
+                                ++p->active;
+                                p->world_y -= 128;
                                 /* Keep this pointer form; direct subscripting changes Turbo C output. */
-                                *((d_7729_ + p->y) + (p->x >> 1) - 1) = 0x1ae0;
-                                d_009b -= 16;
-                                g1_0042(0x14);
-                                if (d_009b <= 64)
-                                    d_0644 = 1;
-                                d_0439 = 0;
-                                asm_0424(d_a0fb_ + 0x320,
-                                         p->x - d_009d,
-                                         ((p->y - d_009f) >> 3) + 16);
+                                *((level_tile_map + p->world_y) + (p->world_x >> 1) - 1) = 0x1ae0;
+                                player_screen_y -= 16;
+                                request_priority_sound_effect(0x14);
+                                if (player_screen_y <= 64)
+                                    player_sprite_draw_state = 1;
+                                player_death_state = 0;
+                                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x320,
+                                                        p->world_x - level_scroll_x,
+                                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
                             }
                         }
                     }
                 }
 draw_second:
-                asm_0424(d_a0fb_ + 0x320,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
-            } else if (p->used > 1) {
-                --p->used;
-                *((d_7729_ + p->y) + (p->x >> 1) - 1) = d_d646_[si];
-                p->y += 128;
-                asm_0424(d_a0fb_ + 0x320,
-                         p->x - d_009d,
-                         (p->y - d_009f) >> 3);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x320,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+            } else if (p->active > 1) {
+                --p->active;
+                *((level_tile_map + p->world_y) + (p->world_x >> 1) - 1) = actor_3001_tile_below_records[si];
+                p->world_y += 128;
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x320,
+                                        p->world_x - level_scroll_x,
+                                        (p->world_y - level_map_y_offset) >> 3);
                 continue;
-            } else if (p->used == 1) {
+            } else if (p->active == 1) {
                 goto draw_second;
             } else {
                 continue;
             }
-        } else if (p->used > 1) {
-            p->used--;
-            *((d_7729_ + p->y) + (p->x >> 1) - 1) = d_d646_[si];
-            p->y += 128;
+        } else if (p->active > 1) {
+            p->active--;
+            *((level_tile_map + p->world_y) + (p->world_x >> 1) - 1) = actor_3001_tile_below_records[si];
+            p->world_y += 128;
         }
     }
 }
 
 /* Keep the label loops to preserve Turbo C's original SI/DI register allocation. */
-/* g1_3a98 translation-unit declarations from skeleton2.c */
-void g1_3a98(void)
+/* update_actor_3002 translation-unit declarations from skeleton2.c */
+/* Updates and draws records from level-map marker 0x3002; the concrete entity identity is not
+   established by source. */
+void update_actor_3002(void)
 {
     register int i;
     register int j;
-    struct Record far *record;
+    struct actor_3002_record far *actor_302a_record;
     int height;
 
-    ++d_064e;
-    if (d_064e == 4)
-        d_064e = 0;
+    ++actor_3002_animation_phase;
+    if (actor_3002_animation_phase == 4)
+        actor_3002_animation_phase = 0;
     i = 0;
     goto otest;
 obody:
     {
-        record = &d_c299_[i];
-        height = record->height;
+        actor_302a_record = &actor_3002_records[i];
+        height = actor_302a_record->object_height;
         j = 0;
         goto test;
     body:
-        *(d_7729_ + record->y + record->x + (j >> 1) - 2) =
-            0x1c00 + ((d_064e & 1) << 5);
+        *(level_tile_map + actor_302a_record->map_column + actor_302a_record->map_row + (j >> 1) - 2) =
+            0x1c00 + ((actor_3002_animation_phase & 1) << 5);
         ++j;
     test:
         if (j < height)
             goto body;
 
-        if (record->state == 1) {
-            *(d_7729_ + record->y + record->x - 2) =
-                0x1b80 + (d_064e << 5);
-            *(d_7729_ + record->y + record->x + (height >> 1) - 2) =
-                0x1c40 + (d_064e << 5);
+        if (actor_302a_record->object_state == 1) {
+            *(level_tile_map + actor_302a_record->map_column + actor_302a_record->map_row - 2) =
+                0x1b80 + (actor_3002_animation_phase << 5);
+            *(level_tile_map + actor_302a_record->map_column + actor_302a_record->map_row + (height >> 1) - 2) =
+                0x1c40 + (actor_3002_animation_phase << 5);
         }
 
-        if (record->state == 0) {
-            *(d_7729_ + record->y + record->x - 2) =
-                0x1be0 - (d_064e << 5);
-            *(d_7729_ + record->y + record->x + (height >> 1) - 2) =
-                0x1ca0 - (d_064e << 5);
+        if (actor_302a_record->object_state == 0) {
+            *(level_tile_map + actor_302a_record->map_column + actor_302a_record->map_row - 2) =
+                0x1be0 - (actor_3002_animation_phase << 5);
+            *(level_tile_map + actor_302a_record->map_column + actor_302a_record->map_row + (height >> 1) - 2) =
+                0x1ca0 - (actor_3002_animation_phase << 5);
         }
 
-        if (g1_35ee(record->y - 2, record->y + height + 2,
-                    record->x - 32)) {
-            if (record->state == 0 && g1_1247())
-                --d_0099;
-            if (record->state == 1 && g1_12ce())
-                ++d_0099;
+        if (test_player_vertical_range(actor_302a_record->map_column - 2, actor_302a_record->map_column + height + 2,
+                                       actor_302a_record->map_row - 32)) {
+            if (actor_302a_record->object_state == 0 && test_player_floor_clearance())
+                --player_screen_x;
+            if (actor_302a_record->object_state == 1 && test_player_body_clearance())
+                ++player_screen_x;
         }
 
-        if (d_0439 != 0) {
-            if (g1_35ee(record->y - 2, record->y + height + 2,
-                        record->x + 96)) {
-                if (record->state == 1 && g1_1247())
-                    --d_0099;
-                if (record->state == 0 && g1_12ce())
-                    ++d_0099;
+        if (player_death_state != 0) {
+            if (test_player_vertical_range(actor_302a_record->map_column - 2, actor_302a_record->map_column + height + 2,
+                                           actor_302a_record->map_row + 96)) {
+                if (actor_302a_record->object_state == 1 && test_player_floor_clearance())
+                    --player_screen_x;
+                if (actor_302a_record->object_state == 0 && test_player_body_clearance())
+                    ++player_screen_x;
             }
         }
     }
     i++;
 otest:
-    if (i < d_0526)
+    if (i < actor_3002_count)
         goto obody;
 }
 
-void g1_3cbc(void)
+/* Updates and draws records from level-map marker 0x3006; the concrete entity identity is not
+   established by source. */
+void update_actor_3006(void)
 {
-    if (d_798a_ != 0)
+    if (access_card_or_door_state != 0)
         return;
 
-    if (g1_326e(d_0528, d_052a) != 0)
+    if (is_world_position_outside_view(actor_3006_world_x, actor_3006_world_y) != 0)
         return;
 
-    if (g1_3714(d_0528, d_052a + 128) == 0)
-        d_052a += 128;
+    if (is_level_position_blocked(actor_3006_world_x, actor_3006_world_y + 128) == 0)
+        actor_3006_world_y += 128;
 
-    if (g1_3513(d_0528, d_052a) != 0 && d_052c != 0) {
-        d_798a_ = 1;
-        g1_2a40(0x3c0, d_0528, d_052a);
-        g1_0b85(1000L);
-        g2_1ffa(d_a0fb_ + 0x640);
-        g1_0042(0x0c);
+    if (test_player_overlap_with_object(actor_3006_world_x, actor_3006_world_y) != 0 && actor_3006_state != 0) {
+        access_card_or_door_state = 1;
+        queue_ambient_sprite_animation(0x3c0, actor_3006_world_x, actor_3006_world_y);
+        add_and_draw_player_score(1000L);
+        draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x640);
+        request_priority_sound_effect(0x0c);
         return;
     }
 
-    if (d_052c == 0) {
-        if (g1_3558(d_0528, d_052a) != 0) {
-            g1_314c(d_0528, d_052a);
-            d_052c = 1;
-            if (g1_3714(d_0528, d_052a + 128) == 0) {
-                g1_0b85(500L);
-                g1_2a40(0x280, d_0528, d_052a);
+    if (actor_3006_state == 0) {
+        if (remove_world_actor_at_position(actor_3006_world_x, actor_3006_world_y) != 0) {
+            spawn_contact_flash_effect(actor_3006_world_x, actor_3006_world_y);
+            actor_3006_state = 1;
+            if (is_level_position_blocked(actor_3006_world_x, actor_3006_world_y + 128) == 0) {
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, actor_3006_world_x, actor_3006_world_y);
             }
         }
     }
 
-    if (d_052c == 0) {
-        asm_0424(d_a0fb_,
-                 d_0528 - d_009d,
-                 ((d_052a - d_009f) >> 3) + 16);
+    if (actor_3006_state == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                                actor_3006_world_x - level_scroll_x,
+                                ((actor_3006_world_y - level_map_y_offset) >> 3) + 16);
     } else {
-        asm_0424(d_a0fb_ + 0x640,
-                 d_0528 - d_009d,
-                 ((d_052a - d_009f) >> 3) + 16);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x640,
+                                actor_3006_world_x - level_scroll_x,
+                                ((actor_3006_world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_3e06(void)
+/* Updates and draws records from level-map marker 0x3007; the concrete entity identity is not
+   established by source. */
+void update_actor_3007(void)
 {
     register int i;
-    struct g1_3e06_record far *p;
+    struct actor_3007_record far *p;
 
-    d_4ed8_ = 1;
-    for (i = 0; i < d_053e; ++i) {
-        p = &d_6bb2_[i];
+    hidden_object_state = 1;
+    for (i = 0; i < actor_3007_count; ++i) {
+        p = &actor_3007_records[i];
         if (p->state == 0)
             continue;
 
-        d_4ed8_ = 0;
-        if (g1_3558(p->x, p->y) != 0 && p->state == 1) {
+        hidden_object_state = 0;
+        if (remove_world_actor_at_position(p->world_x, p->world_y) != 0 && p->state == 1) {
             p->state = 2;
-            g1_0042(0x1e);
-            g1_0b85(200L);
+            request_priority_sound_effect(0x1e);
+            add_and_draw_player_score(200L);
         }
 
         if (p->state > 1 && p->state < 10) {
             if (p->state == 9) {
                 /* Keep this address form; direct indexing changes Turbo C output. */
-                *((&d_7729_[p->y] + (p->x >> 1)) + 0x7f) =
-                    *((&d_7729_[p->y] + (p->x >> 1)) + 0xff);
-                g1_314c(p->x, p->y + 128);
+                *((&level_tile_map[p->world_y] + (p->world_x >> 1)) + 0x7f) =
+                    *((&level_tile_map[p->world_y] + (p->world_x >> 1)) + 0xff);
+                spawn_contact_flash_effect(p->world_x, p->world_y + 128);
             }
 
             if (p->state == 3)
-                g1_2b86(3, p->x, p->y + 128);
+                spawn_moving_actor(3, p->world_x, p->world_y + 128);
 
             if ((p->state & 1) != 0) {
-                if (g1_326e(p->x, p->y + 128) == 0)
-                    asm_0424(d_a0fb_ + 0xaa0,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 32);
+                if (is_world_position_outside_view(p->world_x, p->world_y + 128) == 0)
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0xaa0,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 32);
             }
             ++p->state;
         }
 
         if (p->state == 10) {
-            p->y -= 128;
-            if (p->y % 256 != 0) {
-                if (g1_326e(p->x, p->y + 128) == 0)
-                    asm_0424(d_a0fb_ + 0xa00,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 32);
-                if (g1_326e(p->x, p->y + 256) == 0)
-                    asm_0424(d_a0fb_ + 0xaa0,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 48);
+            p->world_y -= 128;
+            if (p->world_y % 256 != 0) {
+                if (is_world_position_outside_view(p->world_x, p->world_y + 128) == 0)
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0xa00,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 32);
+                if (is_world_position_outside_view(p->world_x, p->world_y + 256) == 0)
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0xaa0,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 48);
             }
         }
 
-        if (g1_326e(p->x, p->y - 384) == 0)
-            asm_0424(d_a0fb_ + 0x6e0,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) - 32);
-        if (g1_326e(p->x, p->y - 254) == 0)
-            asm_0424(d_a0fb_ + 0x780,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) - 16);
-        if (g1_326e(p->x, p->y - 128) == 0)
-            asm_0424(d_a0fb_ + 0x780,
-                     p->x - d_009d,
-                     (p->y - d_009f) >> 3);
+        if (is_world_position_outside_view(p->world_x, p->world_y - 384) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x6e0,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) - 32);
+        if (is_world_position_outside_view(p->world_x, p->world_y - 254) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x780,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) - 16);
+        if (is_world_position_outside_view(p->world_x, p->world_y - 128) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x780,
+                                    p->world_x - level_scroll_x,
+                                    (p->world_y - level_map_y_offset) >> 3);
 
-        if (g1_326e(p->x, p->y) == 0)
-            asm_0424(d_a0fb_ + 0x820,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
-        if (g1_326e(p->x - 2, p->y) == 0)
-            asm_0424(d_a0fb_ + 0x8c0,
-                     p->x - d_009d - 2,
-                     ((p->y - d_009f) >> 3) + 16);
-        if (g1_326e(p->x + 2, p->y) == 0)
-            asm_0424(d_a0fb_ + 0x960,
-                     p->x - d_009d + 2,
-                     ((p->y - d_009f) >> 3) + 16);
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x820,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+        if (is_world_position_outside_view(p->world_x - 2, p->world_y) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x8c0,
+                                    p->world_x - level_scroll_x - 2,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+        if (is_world_position_outside_view(p->world_x + 2, p->world_y) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x960,
+                                    p->world_x - level_scroll_x + 2,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
 
-        if (g1_3714(p->x, p->y - 512) == 0)
+        if (is_level_position_blocked(p->world_x, p->world_y - 512) == 0)
             continue;
         if (p->state != 10)
             continue;
 
-        g1_314c(p->x - 3, p->y - 512);
-        g1_314c(p->x + 2, p->y - 384);
-        g1_314c(p->x + 1, p->y - 384);
-        g1_314c(p->x - 1, p->y - 256);
-        g1_314c(p->x, p->y - 128);
+        spawn_contact_flash_effect(p->world_x - 3, p->world_y - 512);
+        spawn_contact_flash_effect(p->world_x + 2, p->world_y - 384);
+        spawn_contact_flash_effect(p->world_x + 1, p->world_y - 384);
+        spawn_contact_flash_effect(p->world_x - 1, p->world_y - 256);
+        spawn_contact_flash_effect(p->world_x, p->world_y - 128);
         p->state = 0;
-        *((&d_7729_[p->y] + (p->x >> 1)) - 0x201) =
-            *((&d_7729_[p->y] + (p->x >> 1)) - 0x181);
+        *((&level_tile_map[p->world_y] + (p->world_x >> 1)) - 0x201) =
+            *((&level_tile_map[p->world_y] + (p->world_x >> 1)) - 0x181);
     }
 }
 
-void g1_42b8(void)
+/* Updates and draws records from level-map marker 0x3008; the concrete entity identity is not
+   established by source. */
+void update_actor_3008(void)
 {
-    if (d_a0f8_ != 0)
+    if (player_contact_state != 0)
         return;
-    if (g1_326e(d_a67b_, d_a67e_) != 0)
+    if (is_world_position_outside_view(actor_3008_world_x, actor_3008_world_y) != 0)
         return;
-    if (g1_3714(d_a67b_, d_a67e_ + 128) == 0)
-        d_a67e_ += 128;
-    if (g1_3513(d_a67b_, d_a67e_) != 0 && d_052e != 0) {
-        d_a0f8_ = 1;
-        g2_1ffa(d_a0fb_ + 0xb40);
-        g1_2a40(0x3c0, d_a67b_, d_a67e_);
-        g1_0b85(1000L);
+    if (is_level_position_blocked(actor_3008_world_x, actor_3008_world_y + 128) == 0)
+        actor_3008_world_y += 128;
+    if (test_player_overlap_with_object(actor_3008_world_x, actor_3008_world_y) != 0 && actor_3008_state != 0) {
+        player_contact_state = 1;
+        draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
+        queue_ambient_sprite_animation(0x3c0, actor_3008_world_x, actor_3008_world_y);
+        add_and_draw_player_score(1000L);
         return;
     }
 
-    if (d_052e == 0 && g1_3558(d_a67b_, d_a67e_) != 0) {
-        g1_314c(d_a67b_, d_a67e_);
-        d_052e = 1;
-        if (g1_3714(d_a67b_, d_a67e_ + 128) == 0) {
-            g1_0b85(500L);
-            g1_2a40(0x280, d_a67b_, d_a67e_);
+    if (actor_3008_state == 0 && remove_world_actor_at_position(actor_3008_world_x, actor_3008_world_y) != 0) {
+        spawn_contact_flash_effect(actor_3008_world_x, actor_3008_world_y);
+        actor_3008_state = 1;
+        if (is_level_position_blocked(actor_3008_world_x, actor_3008_world_y + 128) == 0) {
+            add_and_draw_player_score(500L);
+            queue_ambient_sprite_animation(0x280, actor_3008_world_x, actor_3008_world_y);
         }
     }
 
-    if (d_052e == 0) {
-        asm_0424(d_a0fb_,
-                 d_a67b_ - d_009d,
-                 ((d_a67e_ - d_009f) >> 3) + 16);
+    if (actor_3008_state == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                                actor_3008_world_x - level_scroll_x,
+                                ((actor_3008_world_y - level_map_y_offset) >> 3) + 16);
         return;
     }
-    asm_0424(d_a0fb_ + 0xb40,
-             d_a67b_ - d_009d,
-             ((d_a67e_ - d_009f) >> 3) + 16);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0xb40,
+                            actor_3008_world_x - level_scroll_x,
+                            ((actor_3008_world_y - level_map_y_offset) >> 3) + 16);
 }
 
-void g1_43fa(void)
+/* Updates and draws records from level-map marker 0x3009; the concrete entity identity is not
+   established by source. */
+void update_actor_3009(void)
 {
     register int i;
-    struct g1_43fa_record far *p;
+    struct actor_3009_record far *p;
 
-    for (i = 0; i < d_0540; ++i) {
-        p = &d_772e_[i];
+    for (i = 0; i < actor_3009_count; ++i) {
+        p = &actor_3009_records[i];
         if (p->state == 0)
             continue;
         ++p->state;
         if (p->state >= 15) {
-            if (p->state == 15 && g1_326e(p->x, p->y) == 0)
-                g1_0042(0x2b);
+            if (p->state == 15 && is_world_position_outside_view(p->world_x, p->world_y) == 0)
+                request_priority_sound_effect(0x2b);
             if (p->state < 25) {
                 if ((p->state % 2) == 0)
                     continue;
-                if (g1_326e(p->x, p->y) != 0)
+                if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
                     continue;
-                asm_0424(d_a0fb_ + 0x0f00,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x0f00,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
                 continue;
             }
             if (p->state < 45) {
-                if (g1_326e(p->x, p->y) != 0)
+                if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
                     continue;
-                if (g1_326e(p->x + 6, p->y) != 0)
+                if (is_world_position_outside_view(p->world_x + 6, p->world_y) != 0)
                     continue;
-                asm_0424(d_a0fb_ + ((p->state % 2) * 0xa0) + 0xfa0,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
-                asm_0424(d_a0fb_ + ((p->state % 2) * 0xa0) + 0xfa0,
-                         p->x - d_009d + 2,
-                         ((p->y - d_009f) >> 3) + 16);
-                asm_0424(d_a0fb_ + ((p->state % 2) * 0xa0) + 0x10e0,
-                         p->x - d_009d + 4,
-                         ((p->y - d_009f) >> 3) + 16);
-                if (g1_3513(p->x, p->y) != 0) {
-                    d_6379_ = 1;
-                    continue;
-                }
-                if (g1_3513(p->x + 2, p->y - 32) != 0) {
-                    d_6379_ = 1;
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + ((p->state % 2) * 0xa0) + 0xfa0,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + ((p->state % 2) * 0xa0) + 0xfa0,
+                                        p->world_x - level_scroll_x + 2,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + ((p->state % 2) * 0xa0) + 0x10e0,
+                                        p->world_x - level_scroll_x + 4,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+                if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
+                    active_sprite_draw_flag = 1;
                     continue;
                 }
-                if (g1_3513(p->x + 4, p->y) == 0)
+                if (test_player_overlap_with_object(p->world_x + 2, p->world_y - 32) != 0) {
+                    active_sprite_draw_flag = 1;
                     continue;
-                d_6379_ = 1;
+                }
+                if (test_player_overlap_with_object(p->world_x + 4, p->world_y) == 0)
+                    continue;
+                active_sprite_draw_flag = 1;
             } else if (p->state > 65) {
                 p->state = 1;
             }
@@ -3148,45 +3229,47 @@ void g1_43fa(void)
     }
 }
 
-void g1_4638(void)
+/* Updates and draws records from level-map marker 0x300A; the concrete entity identity is not
+   established by source. */
+void update_actor_300a(void)
 {
     register int i;
-    struct g1_4638_entry far *p;
+    struct actor_300a_record far *p;
 
-    for (i = 0; i < d_0542; ++i) {
-        p = &d_9b3a_[i];
+    for (i = 0; i < actor_300a_count; ++i) {
+        p = &actor_300a_records[i];
         if (p->state != 0) {
             ++p->state;
 
             if (p->state >= 15) {
                 if (p->state == 15 &&
-                    g1_326e(p->position2, p->position4) == 0)
-                    g1_0042(0x2b);
+                    is_world_position_outside_view(p->world_x, p->world_y) == 0)
+                    request_priority_sound_effect(0x2b);
 
                 if (p->state < 25) {
                     if (p->state % 2 != 0 &&
-                        g1_326e(p->position2, p->position4) == 0) {
-                        asm_0424(d_a0fb_ + 0x1220,
-                                 p->position2 - d_009d,
-                                 ((p->position4 - d_009f) >> 3) + 16);
+                        is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1220,
+                                                p->world_x - level_scroll_x,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 16);
                     }
                 } else if (p->state < 45) {
-                    if (g1_326e(p->position2, p->position4) == 0 &&
-                        g1_326e(p->position2 - 6, p->position4) == 0) {
-                        asm_0424(d_a0fb_ + 0x12c0 + (p->state % 2) * 0xa0,
-                                 p->position2 - d_009d,
-                                 ((p->position4 - d_009f) >> 3) + 16);
-                        asm_0424(d_a0fb_ + 0x12c0 + (p->state % 2) * 0xa0,
-                                 p->position2 - d_009d - 2,
-                                 ((p->position4 - d_009f) >> 3) + 16);
-                        asm_0424(d_a0fb_ + 0x1400 + (p->state % 2) * 0xa0,
-                                 p->position2 - d_009d - 4,
-                                 ((p->position4 - d_009f) >> 3) + 16);
+                    if (is_world_position_outside_view(p->world_x, p->world_y) == 0 &&
+                        is_world_position_outside_view(p->world_x - 6, p->world_y) == 0) {
+                        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x12c0 + (p->state % 2) * 0xa0,
+                                                p->world_x - level_scroll_x,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 16);
+                        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x12c0 + (p->state % 2) * 0xa0,
+                                                p->world_x - level_scroll_x - 2,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 16);
+                        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1400 + (p->state % 2) * 0xa0,
+                                                p->world_x - level_scroll_x - 4,
+                                                ((p->world_y - level_map_y_offset) >> 3) + 16);
 
-                        if (g1_3513(p->position2, p->position4) != 0 ||
-                            g1_3513(p->position2 - 2, p->position4) != 0 ||
-                            g1_3513(p->position2 - 4, p->position4) != 0)
-                            d_6379_ = 1;
+                        if (test_player_overlap_with_object(p->world_x, p->world_y) != 0 ||
+                            test_player_overlap_with_object(p->world_x - 2, p->world_y) != 0 ||
+                            test_player_overlap_with_object(p->world_x - 4, p->world_y) != 0)
+                            active_sprite_draw_flag = 1;
                     }
                 } else if (p->state > 65) {
                     p->state = 1;
@@ -3197,243 +3280,248 @@ void g1_4638(void)
 }
 
 /* Keep the shared-tail jump because restructuring moves its call after rendering. */
-void g1_4874(void)
+/* Updates and draws records from level-map marker 0x300B; the concrete entity identity is not
+   established by source. */
+void update_actor_300b(void)
 {
     register int i;
-    struct G1_4874_item far *obj;
+    struct actor_300b_record far *obj;
 
-    ++d_05a8;
-    if (d_05a8 == 10)
-        d_05a8 = 0;
-    d_05a6 += 160;
-    if (d_05a6 == 640)
-        d_05a6 = 0;
+    ++actor_300b_animation_frame;
+    if (actor_300b_animation_frame == 10)
+        actor_300b_animation_frame = 0;
+    actor_300b_screen_anim_offset += 160;
+    if (actor_300b_screen_anim_offset == 640)
+        actor_300b_screen_anim_offset = 0;
 
-    for (i = 0; i < d_0544; ++i) {
-        obj = &d_637f_[i];
-        if (obj->type == 0xfe) {
-            if (g1_3714(obj->x, obj->y + 128)) {
-                g1_314c(obj->x, obj->y);
-                g1_2b86(1, obj->x, obj->y);
-                obj->type = 0;
+    for (i = 0; i < actor_300b_count; ++i) {
+        obj = &actor_300b_records[i];
+        if (obj->motion_state == 0xfe) {
+            if (is_level_position_blocked(obj->world_x, obj->world_y + 128)) {
+                spawn_contact_flash_effect(obj->world_x, obj->world_y);
+                spawn_moving_actor(1, obj->world_x, obj->world_y);
+                obj->motion_state = 0;
                 continue;
             }
-            if (obj->step <= 20) {
-                obj->x += d_0546[obj->step];
-                obj->y += (d_0546 + 1)[obj->step];
-                obj->step += 2;
+            if (obj->trajectory_step <= 20) {
+                obj->world_x += moving_item_path_delta_table_a[obj->trajectory_step];
+                obj->world_y += (moving_item_path_delta_table_a + 1)[obj->trajectory_step];
+                obj->trajectory_step += 2;
             } else {
-                obj->y += 128;
+                obj->world_y += 128;
             }
-            if (g1_326e(obj->x, obj->y)) {
-                obj->type = 0;
+            if (is_world_position_outside_view(obj->world_x, obj->world_y)) {
+                obj->motion_state = 0;
                 continue;
             }
-            asm_0424(d_637a_ + 0x3c0,
-                     obj->x - d_009d,
-                     ((obj->y - d_009f) >> 3) + 16);
-            asm_0424(d_637a_,
-                     obj->x - d_009d,
-                     (obj->y - d_009f) >> 3);
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x3c0,
+                                    obj->world_x - level_scroll_x,
+                                    ((obj->world_y - level_map_y_offset) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_graphics_buffer,
+                                    obj->world_x - level_scroll_x,
+                                    (obj->world_y - level_map_y_offset) >> 3);
         shared_animation_finish:
-            g1_2e64(obj->x, obj->y - 128);
+            spawn_pickup_object(obj->world_x, obj->world_y - 128);
             continue;
         }
 
-        if (obj->type == 0xff) {
-            if (g1_3714(obj->x, obj->y + 128)) {
-                g1_314c(obj->x, obj->y);
-                g1_2b86(1, obj->x, obj->y);
-                obj->type = 0;
+        if (obj->motion_state == 0xff) {
+            if (is_level_position_blocked(obj->world_x, obj->world_y + 128)) {
+                spawn_contact_flash_effect(obj->world_x, obj->world_y);
+                spawn_moving_actor(1, obj->world_x, obj->world_y);
+                obj->motion_state = 0;
                 continue;
             }
-            if (obj->step < 20) {
-                obj->x += d_0576[obj->step];
-                obj->y += (d_0576 + 1)[obj->step];
-                obj->step += 2;
+            if (obj->trajectory_step < 20) {
+                obj->world_x += moving_item_path_delta_table_b[obj->trajectory_step];
+                obj->world_y += (moving_item_path_delta_table_b + 1)[obj->trajectory_step];
+                obj->trajectory_step += 2;
             } else {
-                obj->y += 128;
+                obj->world_y += 128;
             }
-            if (g1_326e(obj->x, obj->y)) {
-                obj->type = 0;
+            if (is_world_position_outside_view(obj->world_x, obj->world_y)) {
+                obj->motion_state = 0;
                 continue;
             }
-            asm_0424(d_637a_ + 0x3c0,
-                     obj->x - d_009d,
-                     ((obj->y - d_009f) >> 3) + 16);
-            asm_0424(d_637a_ + 0x320,
-                     obj->x - d_009d,
-                     (obj->y - d_009f) >> 3);
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x3c0,
+                                    obj->world_x - level_scroll_x,
+                                    ((obj->world_y - level_map_y_offset) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x320,
+                                    obj->world_x - level_scroll_x,
+                                    (obj->world_y - level_map_y_offset) >> 3);
             goto shared_animation_finish;
         }
 
-        if (obj->type == 0)
+        if (obj->motion_state == 0)
             continue;
-        if (g1_326e(obj->x, obj->y))
+        if (is_world_position_outside_view(obj->world_x, obj->world_y))
             continue;
-        if (g1_326e(obj->x, obj->y - 128))
+        if (is_world_position_outside_view(obj->world_x, obj->world_y - 128))
             continue;
 
-        if (g1_3558(obj->x, obj->y - 128) ||
-            g1_3513(obj->x, obj->y - 128)) {
-            if (g1_3513(obj->x, obj->y))
-                d_6379_ = 1;
-            if (d_0437 == 0)
-                obj->type = 0xfe;
-            else if (d_0437 == 0x20)
-                obj->type = 0xfe;
+        if (remove_world_actor_at_position(obj->world_x, obj->world_y - 128) ||
+            test_player_overlap_with_object(obj->world_x, obj->world_y - 128)) {
+            if (test_player_overlap_with_object(obj->world_x, obj->world_y))
+                active_sprite_draw_flag = 1;
+            if (world_animation_phase == 0)
+                obj->motion_state = 0xfe;
+            else if (world_animation_phase == 0x20)
+                obj->motion_state = 0xfe;
             else
-                obj->type = 0xff;
-            g1_2b86(1, obj->x, obj->y);
-            obj->step = 0;
-            g1_0b85(200L);
-            g1_0042(18);
+                obj->motion_state = 0xff;
+            spawn_moving_actor(1, obj->world_x, obj->world_y);
+            obj->trajectory_step = 0;
+            add_and_draw_player_score(200L);
+            request_priority_sound_effect(18);
             continue;
         }
 
-        if (!g1_3714(obj->x, obj->y + 128))
-            obj->y += 8;
-        if (g1_3714(obj->x, obj->y + 128)) {
-            obj->y -= 8;
-            if (!g1_3714(obj->x, obj->y + 128) && d_05a6 == 0)
-                g1_29d0(obj->x, obj->y);
+        if (!is_level_position_blocked(obj->world_x, obj->world_y + 128))
+            obj->world_y += 8;
+        if (is_level_position_blocked(obj->world_x, obj->world_y + 128)) {
+            obj->world_y -= 8;
+            if (!is_level_position_blocked(obj->world_x, obj->world_y + 128) && actor_300b_screen_anim_offset == 0)
+                allocate_collision_record(obj->world_x, obj->world_y);
         }
 
-        if (d_05a6 == 0) {
-            if (obj->x > d_0099 + d_009d) {
-                if (obj->type > 1) {
-                    --obj->type;
-                } else if (!g1_367e(obj->x - 1, obj->y - 5)) {
-                    --obj->x;
-                    if (d_05a8 == 0)
-                        g1_1b8a(1, obj->x - 1, obj->y - 160);
+        if (actor_300b_screen_anim_offset == 0) {
+            if (obj->world_x > player_screen_x + level_scroll_x) {
+                if (obj->motion_state > 1) {
+                    --obj->motion_state;
+                } else if (!test_level_tile_special_state(obj->world_x - 1, obj->world_y - 5)) {
+                    --obj->world_x;
+                    if (actor_300b_animation_frame == 0)
+                        update_projectile_pool_051c(1, obj->world_x - 1, obj->world_y - 160);
                 }
             }
-            if (obj->x < d_0099 + d_009d) {
-                if (obj->type < 6) {
-                    ++obj->type;
-                } else if (!g1_367e(obj->x + 2, obj->y - 5)) {
-                    ++obj->x;
-                    if (d_05a8 == 0)
-                        g1_1b8a(2, obj->x + 1, obj->y - 160);
+            if (obj->world_x < player_screen_x + level_scroll_x) {
+                if (obj->motion_state < 6) {
+                    ++obj->motion_state;
+                } else if (!test_level_tile_special_state(obj->world_x + 2, obj->world_y - 5)) {
+                    ++obj->world_x;
+                    if (actor_300b_animation_frame == 0)
+                        update_projectile_pool_051c(2, obj->world_x + 1, obj->world_y - 160);
                 }
             }
         }
 
-        asm_0424(d_637a_ + d_05a6 + 0x3c0,
-                 obj->x - d_009d,
-                 ((obj->y - d_009f) >> 3) + 16);
-        asm_0424(d_637a_ + (obj->type - 1) * 0xa0,
-                 obj->x - d_009d,
-                 (obj->y - d_009f) >> 3);
+        blit_planar_sprite_rows(sprite_graphics_buffer + actor_300b_screen_anim_offset + 0x3c0,
+                                obj->world_x - level_scroll_x,
+                                ((obj->world_y - level_map_y_offset) >> 3) + 16);
+        blit_planar_sprite_rows(sprite_graphics_buffer + (obj->motion_state - 1) * 0xa0,
+                                obj->world_x - level_scroll_x,
+                                (obj->world_y - level_map_y_offset) >> 3);
     }
 }
 
-void pascal g1_4d42(int a2, int p1, register int a0)
+/* Draws the six sprite cells that form a two-column, three-row actor graphic. */
+void pascal draw_six_tile_actor_sprite(int a2, int p1, register int a0)
 {
     register int a1 = p1;
-    if (d_0650[a2 * 6] > 0 && g1_326e(a1, a0 - 256) == 0)
-        asm_0424(d_637a_ + d_0650[a2 * 6] + 0x5a0,
-                 a1 - d_009d,
-                 ((a0 - d_009f) >> 3) - 16);
+    if (multi_tile_actor_sprite_offsets[a2 * 6] > 0 && is_world_position_outside_view(a1, a0 - 256) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + multi_tile_actor_sprite_offsets[a2 * 6] + 0x5a0,
+                                a1 - level_scroll_x,
+                                ((a0 - level_map_y_offset) >> 3) - 16);
 
-    if (d_0650[a2 * 6] > 0 && g1_326e(a1 + 2, a0 - 256) == 0)
-        asm_0424(d_637a_ + G1_4D42_ROW(a2).f1 + 0x5a0,
-                 a1 - d_009d + 2,
-                 ((a0 - d_009f) >> 3) - 16);
+    if (multi_tile_actor_sprite_offsets[a2 * 6] > 0 && is_world_position_outside_view(a1 + 2, a0 - 256) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + ACTOR_TILE_OFFSETS(a2).top_right_sprite_offset + 0x5a0,
+                                a1 - level_scroll_x + 2,
+                                ((a0 - level_map_y_offset) >> 3) - 16);
 
-    if (g1_326e(a1, a0 - 128) == 0)
-        asm_0424(d_637a_ + G1_4D42_ROW(a2).f2 + 0x5a0,
-                 a1 - d_009d,
-                 (a0 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1, a0 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + ACTOR_TILE_OFFSETS(a2).middle_left_sprite_offset + 0x5a0,
+                                a1 - level_scroll_x,
+                                (a0 - level_map_y_offset) >> 3);
 
-    if (g1_326e(a1 + 2, a0 - 128) == 0)
-        asm_0424(d_637a_ + G1_4D42_ROW(a2).f3 + 0x5a0,
-                 a1 - d_009d + 2,
-                 (a0 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1 + 2, a0 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + ACTOR_TILE_OFFSETS(a2).middle_right_sprite_offset + 0x5a0,
+                                a1 - level_scroll_x + 2,
+                                (a0 - level_map_y_offset) >> 3);
 
-    if (g1_326e(a1, a0) == 0)
-        asm_0424(d_637a_ + G1_4D42_ROW(a2).f4 + 0x5a0,
-                 a1 - d_009d,
-                 ((a0 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a0) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + ACTOR_TILE_OFFSETS(a2).bottom_left_sprite_offset + 0x5a0,
+                                a1 - level_scroll_x,
+                                ((a0 - level_map_y_offset) >> 3) + 16);
 
-    if (g1_326e(a1 + 2, a0) == 0)
-        asm_0424(d_637a_ + G1_4D42_ROW(a2).f5 + 0x5a0,
-                 a1 - d_009d + 2,
-                 ((a0 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a0) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + ACTOR_TILE_OFFSETS(a2).bottom_right_sprite_offset + 0x5a0,
+                                a1 - level_scroll_x + 2,
+                                ((a0 - level_map_y_offset) >> 3) + 16);
 
-    if (g1_3513(a1 + 1, a0) != 0 || g1_3513(a1 + 1, a0 - 128) != 0)
-        d_6379_ = 1;
+    if (test_player_overlap_with_object(a1 + 1, a0) != 0 || test_player_overlap_with_object(a1 + 1, a0 - 128) != 0)
+        active_sprite_draw_flag = 1;
 }
 
-void g1_4f91(void)
+/* Updates and draws records from level-map marker 0x300C; the concrete entity identity is not
+   established by source. */
+void update_actor_300c(void)
 {
     register int i;
-    struct g1_4f91_record far *p;
+    struct actor_300c_record far *p;
 
-    for (i = 0; i < d_05aa; ++i) {
-        p = &d_b6bc_[i];
-        if (g1_326e(p->x, p->y) == 0 && p->marker == 0)
-            p->marker = 1;
-        if (p->state == 0 || p->marker == 0)
+    for (i = 0; i < actor_300c_count; ++i) {
+        p = &actor_300c_records[i];
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0 && p->marker_state == 0)
+            p->marker_state = 1;
+        if (p->state == 0 || p->marker_state == 0)
             continue;
 
         while (1) {
-            if (g1_3558(p->x + 1, p->y - 128) != 0 ||
-                g1_3558(p->x + 1, p->y) != 0)
-                ++d_5081_[i];
-            if (d_5081_[i] == 3) {
-                g1_314c(p->x + 1, p->y - 256);
-                g1_314c(p->x, p->y - 128);
-                g1_314c(p->x + 2, p->y);
-                g1_2b86(1, p->x + 1, p->y - 128);
-                g1_2b86(1, p->x + 2, p->y - 64);
-                g1_2b86(1, p->x + 2, p->y - 128);
-                g1_2b86(1, p->x + 1, p->y);
-                if (d_0437 == 0)
-                    g1_2fe7(p->x, p->y);
-                g1_0b85(2000L);
+            if (remove_world_actor_at_position(p->world_x + 1, p->world_y - 128) != 0 ||
+                remove_world_actor_at_position(p->world_x + 1, p->world_y) != 0)
+                ++actor_300c_object_marker_table[i];
+            if (actor_300c_object_marker_table[i] == 3) {
+                spawn_contact_flash_effect(p->world_x + 1, p->world_y - 256);
+                spawn_contact_flash_effect(p->world_x, p->world_y - 128);
+                spawn_contact_flash_effect(p->world_x + 2, p->world_y);
+                spawn_moving_actor(1, p->world_x + 1, p->world_y - 128);
+                spawn_moving_actor(1, p->world_x + 2, p->world_y - 64);
+                spawn_moving_actor(1, p->world_x + 2, p->world_y - 128);
+                spawn_moving_actor(1, p->world_x + 1, p->world_y);
+                if (world_animation_phase == 0)
+                    spawn_animated_actor_sprite(p->world_x, p->world_y);
+                add_and_draw_player_score(2000L);
                 p->state = 0;
                 break;
             }
 
-            if (d_5081_[i] == 1 && d_0437 == 0)
-                g1_2e64(p->x, p->y - 192);
-            if (d_5081_[i] == 2 && d_0437 == 0) {
-                g1_2e64(p->x + 2, p->y - 192);
-                g1_2e64(p->x, p->y - 192);
+            if (actor_300c_object_marker_table[i] == 1 && world_animation_phase == 0)
+                spawn_pickup_object(p->world_x, p->world_y - 192);
+            if (actor_300c_object_marker_table[i] == 2 && world_animation_phase == 0) {
+                spawn_pickup_object(p->world_x + 2, p->world_y - 192);
+                spawn_pickup_object(p->world_x, p->world_y - 192);
             }
 
             if (p->state < 25) {
-                if (g1_3714(p->x + 1, p->y + 128) == 0) {
-                    if (p->x > d_0099 + d_009d - 3)
-                        g1_4d42(2, p->x, p->y);
+                if (is_level_position_blocked(p->world_x + 1, p->world_y + 128) == 0) {
+                    if (p->world_x > player_screen_x + level_scroll_x - 3)
+                        draw_six_tile_actor_sprite(2, p->world_x, p->world_y);
                     else
-                        g1_4d42(5, p->x, p->y);
-                    p->y += 128;
+                        draw_six_tile_actor_sprite(5, p->world_x, p->world_y);
+                    p->world_y += 128;
                     break;
                 }
 
-                if (p->x > d_0099 + d_009d - 3) {
-                    p->marker = 1;
+                if (p->world_x > player_screen_x + level_scroll_x - 3) {
+                    p->marker_state = 1;
                     if (p->state != 12)
-                        g1_4d42(0, p->x, p->y);
+                        draw_six_tile_actor_sprite(0, p->world_x, p->world_y);
                 } else {
                     if (p->state != 12)
-                        g1_4d42(3, p->x, p->y);
-                    p->marker = 2;
+                        draw_six_tile_actor_sprite(3, p->world_x, p->world_y);
+                    p->marker_state = 2;
                 }
                 ++p->state;
                 /* Align the vertical position to a 128-unit row boundary. */
-                p->y = (p->y >> 7) << 7;
+                p->world_y = (p->world_y >> 7) << 7;
                 if (p->state == 13) {
-                    if (p->marker == 1) {
-                        g1_1b8a(1, p->x - 1, p->y - 80);
-                        g1_4d42(1, p->x, p->y);
+                    if (p->marker_state == 1) {
+                        update_projectile_pool_051c(1, p->world_x - 1, p->world_y - 80);
+                        draw_six_tile_actor_sprite(1, p->world_x, p->world_y);
                     }
-                    if (p->marker == 2) {
-                        g1_1b8a(2, p->x + 3, p->y - 80);
-                        g1_4d42(4, p->x, p->y);
+                    if (p->marker_state == 2) {
+                        update_projectile_pool_051c(2, p->world_x + 3, p->world_y - 80);
+                        draw_six_tile_actor_sprite(4, p->world_x, p->world_y);
                     }
                     ++p->state;
                 }
@@ -3441,37 +3529,37 @@ void g1_4f91(void)
             }
 
             if (p->state < 50) {
-                if (p->marker == 1) {
-                    if (g1_3714(p->x + 1, p->y - 256) != 0) {
-                        p->y = (p->y >> 7) << 7;
-                        g1_4d42(2, p->x, p->y);
+                if (p->marker_state == 1) {
+                    if (is_level_position_blocked(p->world_x + 1, p->world_y - 256) != 0) {
+                        p->world_y = (p->world_y >> 7) << 7;
+                        draw_six_tile_actor_sprite(2, p->world_x, p->world_y);
                         p->state = 1;
                         break;
                     }
-                    if (g1_367e(p->x - 1, p->y) == 0) {
-                        p->x -= d_0698[p->state - 25];
-                        p->y -= d_0698[p->state - 24];
+                    if (test_level_tile_special_state(p->world_x - 1, p->world_y) == 0) {
+                        p->world_x -= actor_300c_motion_delta_table[p->state - 25];
+                        p->world_y -= actor_300c_motion_delta_table[p->state - 24];
                     } else {
-                        p->y -= d_0698[p->state - 24];
+                        p->world_y -= actor_300c_motion_delta_table[p->state - 24];
                     }
-                    g1_4d42(2, p->x, p->y);
+                    draw_six_tile_actor_sprite(2, p->world_x, p->world_y);
                     p->state += 2;
                     break;
                 }
-                if (p->marker == 2) {
-                    if (g1_3714(p->x + 1, p->y - 256) != 0) {
-                        p->y = (p->y >> 7) << 7;
-                        g1_4d42(5, p->x, p->y);
+                if (p->marker_state == 2) {
+                    if (is_level_position_blocked(p->world_x + 1, p->world_y - 256) != 0) {
+                        p->world_y = (p->world_y >> 7) << 7;
+                        draw_six_tile_actor_sprite(5, p->world_x, p->world_y);
                         p->state = 1;
                         break;
                     }
-                    if (g1_367e(p->x + 4, p->y) == 0) {
-                        p->x += d_0698[p->state - 25];
-                        p->y -= d_0698[p->state - 24];
+                    if (test_level_tile_special_state(p->world_x + 4, p->world_y) == 0) {
+                        p->world_x += actor_300c_motion_delta_table[p->state - 25];
+                        p->world_y -= actor_300c_motion_delta_table[p->state - 24];
                     } else {
-                        p->y -= d_0698[p->state - 24];
+                        p->world_y -= actor_300c_motion_delta_table[p->state - 24];
                     }
-                    g1_4d42(5, p->x, p->y);
+                    draw_six_tile_actor_sprite(5, p->world_x, p->world_y);
                     p->state += 2;
                     break;
                 }
@@ -3482,529 +3570,547 @@ void g1_4f91(void)
     }
 }
 
-void pascal g1_5427(int a0, int a1, int a2)
+/* Draws a two-cell-wide actor row and marks player contact when the row overlaps Duke. */
+void pascal draw_two_tile_wide_actor_sprite(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 0x140 + 0x1540;
 
-    if (g1_326e(a1, a2) == 0)
-        asm_0424(d_637a_ + offset,
-                 a1 - d_009d,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset,
+                                a1 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
 
-    if (g1_326e(a1 + 2, a2) == 0)
-        asm_0424(d_637a_ + offset + 0xa0,
-                 a1 - d_009d + 2,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0,
+                                a1 - level_scroll_x + 2,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
 
-    if (g1_3513(a1, a2) || g1_3513(a1 + 2, a2))
-        d_6379_ = 1;
+    if (test_player_overlap_with_object(a1, a2) || test_player_overlap_with_object(a1 + 2, a2))
+        active_sprite_draw_flag = 1;
 }
 
-void g1_54e1(void)
+/* Updates and draws records from level-map marker 0x300D; the concrete entity identity is not
+   established by source. */
+void update_actor_300d(void)
 {
     register int i;
-    struct g1_54e1_record far *p;
+    struct actor_300d_record far *p;
 
-    ++d_06de;
-    if (d_06de == 2) {
-        d_06de = 0;
-        ++d_06dc;
+    ++actor_300d_animation_counter;
+    if (actor_300d_animation_counter == 2) {
+        actor_300d_animation_counter = 0;
+        ++actor_300d_animation_phase;
     }
-    if (d_06dc == 2)
-        d_06dc = 0;
+    if (actor_300d_animation_phase == 2)
+        actor_300d_animation_phase = 0;
 
-    for (i = 0; i < d_05ac; ++i) {
-        p = &d_a0ff_[i];
+    for (i = 0; i < actor_300d_count; ++i) {
+        p = &actor_300d_records[i];
         if (p->state == 0)
             continue;
 
-        if (g1_3558(p->x, p->y) != 0 ||
-            g1_3558(p->x + 2, p->y) != 0)
-            ++d_d57e_[i];
+        if (remove_world_actor_at_position(p->world_x, p->world_y) != 0 ||
+            remove_world_actor_at_position(p->world_x + 2, p->world_y) != 0)
+            ++actor_300d_auxiliary_states[i];
 
-        if (d_d57e_[i] == 2) {
-            g1_314c(p->x + 2, p->y);
-            g1_314c(p->x, p->y);
-            g1_2b86(1, p->x + 1, p->y);
-            g1_0b85(2500L);
-            g1_0042(0x12);
+        if (actor_300d_auxiliary_states[i] == 2) {
+            spawn_contact_flash_effect(p->world_x + 2, p->world_y);
+            spawn_contact_flash_effect(p->world_x, p->world_y);
+            spawn_moving_actor(1, p->world_x + 1, p->world_y);
+            add_and_draw_player_score(2500L);
+            request_priority_sound_effect(0x12);
             p->state = 0;
             continue;
         }
 
-        if (d_d57e_[i] == 1 && d_0437 == 0) {
-            g1_2e64(p->x + 2, p->y - 64);
+        if (actor_300d_auxiliary_states[i] == 1 && world_animation_phase == 0) {
+            spawn_pickup_object(p->world_x + 2, p->world_y - 64);
         }
-        if (g1_3714(p->x, p->y + 128) == 0) {
-            p->y += 32;
-            g1_5427(0, p->x, p->y);
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+            p->world_y += 32;
+            draw_two_tile_wide_actor_sprite(0, p->world_x, p->world_y);
             continue;
         }
 
         if (p->state == 1) {
-            if (g1_367e(p->x, p->y) != 0) {
+            if (test_level_tile_special_state(p->world_x, p->world_y) != 0) {
                 p->state = 2;
-                g1_1b8a(2, p->x + 4, p->y - 64);
-            } else if (g1_367e(p->x, p->y + 128) == 0) {
+                update_projectile_pool_051c(2, p->world_x + 4, p->world_y - 64);
+            } else if (test_level_tile_special_state(p->world_x, p->world_y + 128) == 0) {
                 p->state = 2;
-                g1_1b8a(2, p->x + 4, p->y - 64);
+                update_projectile_pool_051c(2, p->world_x + 4, p->world_y - 64);
             } else {
-                if (d_06de == 0)
-                    --p->x;
-                g1_5427(d_06dc, p->x, p->y);
+                if (actor_300d_animation_counter == 0)
+                    --p->world_x;
+                draw_two_tile_wide_actor_sprite(actor_300d_animation_phase, p->world_x, p->world_y);
             }
         }
 
         if (p->state == 2) {
-            if (g1_367e(p->x + 4, p->y) != 0 ||
-                g1_367e(p->x + 4, p->y + 128) == 0) {
+            if (test_level_tile_special_state(p->world_x + 4, p->world_y) != 0 ||
+                test_level_tile_special_state(p->world_x + 4, p->world_y + 128) == 0) {
                 p->state = 1;
-                g1_1b8a(1, p->x - 2, p->y - 64);
-                g1_5427(d_06dc + 2, p->x - 1, p->y);
+                update_projectile_pool_051c(1, p->world_x - 2, p->world_y - 64);
+                draw_two_tile_wide_actor_sprite(actor_300d_animation_phase + 2, p->world_x - 1, p->world_y);
                 continue;
             }
-            if (d_06de == 0)
-                ++p->x;
-            g1_5427(d_06dc + 2, p->x, p->y);
+            if (actor_300d_animation_counter == 0)
+                ++p->world_x;
+            draw_two_tile_wide_actor_sprite(actor_300d_animation_phase + 2, p->world_x, p->world_y);
         }
     }
 }
 
-void g1_573d(void)
+/* Updates and draws records from level-map marker 0x3020; the concrete entity identity is not
+   established by source. */
+void update_actor_3020(void)
 {
-    if (d_cc82_ != 0)
+    if (actor_3020_active_state != 0)
         return;
 
-    if (g1_326e(d_0530, d_0532) != 0)
+    if (is_world_position_outside_view(actor_3020_world_x, actor_3020_world_y) != 0)
         return;
 
-    if (g1_3714(d_0530, d_0532 + 128) == 0)
-        d_0532 += 128;
+    if (is_level_position_blocked(actor_3020_world_x, actor_3020_world_y + 128) == 0)
+        actor_3020_world_y += 128;
 
-    if (g1_3513(d_0530, d_0532) != 0 && d_0534 != 0) {
-        d_cc82_ = 1;
-        g1_2a40(0x3c0, d_0530, d_0532);
-        g1_0b85(1000L);
-        g1_0042(12);
-        g2_1ffa(d_a0fb_ + 0x2760);
+    if (test_player_overlap_with_object(actor_3020_world_x, actor_3020_world_y) != 0 && actor_3020_state != 0) {
+        actor_3020_active_state = 1;
+        queue_ambient_sprite_animation(0x3c0, actor_3020_world_x, actor_3020_world_y);
+        add_and_draw_player_score(1000L);
+        request_priority_sound_effect(12);
+        draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
         return;
     }
 
-    if (d_0534 == 0) {
-        if (g1_3558(d_0530, d_0532) != 0) {
-            g1_314c(d_0530, d_0532);
-            d_0534 = 1;
-            if (g1_3714(d_0530, d_0532 + 128) == 0) {
-                g1_0b85(500L);
-                g1_2a40(0x280, d_0530, d_0532);
+    if (actor_3020_state == 0) {
+        if (remove_world_actor_at_position(actor_3020_world_x, actor_3020_world_y) != 0) {
+            spawn_contact_flash_effect(actor_3020_world_x, actor_3020_world_y);
+            actor_3020_state = 1;
+            if (is_level_position_blocked(actor_3020_world_x, actor_3020_world_y + 128) == 0) {
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, actor_3020_world_x, actor_3020_world_y);
             }
         }
     }
 
-    if (d_0534 == 0) {
-        asm_0424(d_a0fb_,
-                 d_0530 - d_009d,
-                 ((d_0532 - d_009f) >> 3) + 16);
+    if (actor_3020_state == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                                actor_3020_world_x - level_scroll_x,
+                                ((actor_3020_world_y - level_map_y_offset) >> 3) + 16);
         return;
     }
 
-    asm_0424(d_a0fb_ + 0x2760,
-             d_0530 - d_009d,
-             ((d_0532 - d_009f) >> 3) + 16);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2760,
+                            actor_3020_world_x - level_scroll_x,
+                            ((actor_3020_world_y - level_map_y_offset) >> 3) + 16);
 }
 
-void g1_5887(void)
+/* Updates and draws records from level-map marker 0x3033; the concrete entity identity is not
+   established by source. */
+void update_actor_3033(void)
 {
-    if (d_b3d4_ != 0)
+    if (actor_3033_active_state != 0)
         return;
-    if (d_053c == 0)
+    if (actor_3033_enabled == 0)
         return;
-    if (g1_326e(d_0536, d_0538) != 0)
+    if (is_world_position_outside_view(actor_3033_world_x, actor_3033_world_y) != 0)
         return;
 
-    if (g1_3714(d_0536, d_0538 + 128) == 0)
-        d_0538 += 128;
+    if (is_level_position_blocked(actor_3033_world_x, actor_3033_world_y + 128) == 0)
+        actor_3033_world_y += 128;
 
-    if (g1_3513(d_0536, d_0538) != 0 && d_053a != 0) {
-        d_b3d4_ = 1;
-        g1_2a40(0x3c0, d_0536, d_0538);
-        g1_0b85(1000L);
-        g2_1f9c();
-        g1_0042(12);
+    if (test_player_overlap_with_object(actor_3033_world_x, actor_3033_world_y) != 0 && actor_3033_state != 0) {
+        actor_3033_active_state = 1;
+        queue_ambient_sprite_animation(0x3c0, actor_3033_world_x, actor_3033_world_y);
+        add_and_draw_player_score(1000L);
+        draw_current_planar_sprite();
+        request_priority_sound_effect(12);
         return;
     }
 
-    if (d_053a == 0) {
-        if (g1_3558(d_0536, d_0538) != 0) {
-            g1_314c(d_0536, d_0538);
-            d_053a = 1;
-            if (g1_3714(d_0536, d_0538 + 128) == 0) {
-                g1_0b85(500L);
-                g1_2a40(0x280, d_0536, d_0538);
+    if (actor_3033_state == 0) {
+        if (remove_world_actor_at_position(actor_3033_world_x, actor_3033_world_y) != 0) {
+            spawn_contact_flash_effect(actor_3033_world_x, actor_3033_world_y);
+            actor_3033_state = 1;
+            if (is_level_position_blocked(actor_3033_world_x, actor_3033_world_y + 128) == 0) {
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, actor_3033_world_x, actor_3033_world_y);
             }
         }
     }
 
-    if (d_053a == 0) {
-        asm_0424(d_a0fb_,
-                 d_0536 - d_009d,
-                 ((d_0538 - d_009f) >> 3) + 16);
+    if (actor_3033_state == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                                actor_3033_world_x - level_scroll_x,
+                                ((actor_3033_world_y - level_map_y_offset) >> 3) + 16);
     } else {
-        asm_0424(d_a0fb_ + 0x2800,
-                 d_0536 - d_009d,
-                 ((d_0538 - d_009f) >> 3) + 16);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2800,
+                                actor_3033_world_x - level_scroll_x,
+                                ((actor_3033_world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void pascal g1_59cf(int a0, int a1, int a2)
+/* Draws a two-column, two-row actor graphic and marks player contact when it overlaps Duke. */
+void pascal draw_two_by_two_actor_sprite(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 0x280 + 0x1e00;
 
-    if (g1_326e(a1, a2 - 128) == 0)
-        asm_0424(d_637a_ + offset,
-                 a1 - d_009d,
-                 (a2 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1, a2 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset,
+                                a1 - level_scroll_x,
+                                (a2 - level_map_y_offset) >> 3);
 
-    if (g1_326e(a1 + 2, a2 - 128) == 0)
-        asm_0424(d_637a_ + offset + 0xa0,
-                 a1 - d_009d + 2,
-                 (a2 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1 + 2, a2 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0,
+                                a1 - level_scroll_x + 2,
+                                (a2 - level_map_y_offset) >> 3);
 
-    if (g1_326e(a1, a2) == 0)
-        asm_0424(d_637a_ + offset + 0x140,
-                 a1 - d_009d,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x140,
+                                a1 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
 
-    if (g1_326e(a1 + 2, a2) == 0)
-        asm_0424(d_637a_ + offset + 0x1e0,
-                 a1 - d_009d + 2,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x1e0,
+                                a1 - level_scroll_x + 2,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
 
-    if (g1_3513(a1 + 1, a2) != 0 ||
-        g1_3513(a1 + 1, a2 - 64) != 0)
-        d_6379_ = 1;
+    if (test_player_overlap_with_object(a1 + 1, a2) != 0 ||
+        test_player_overlap_with_object(a1 + 1, a2 - 64) != 0)
+        active_sprite_draw_flag = 1;
 }
 
-void g1_5b0b(void)
+/* Updates and draws records from level-map marker 0x300E; the concrete entity identity is not
+   established by source. */
+void update_actor_300e(void)
 {
     register int i;
-    struct g1_5b0b_record far *p;
+    struct actor_300e_record far *p;
 
-    ++d_05ae;
-    ++d_05b0;
-    if (d_05b0 == 60)
-        d_05b0 = 0;
+    ++actor_300e_animation_state;
+    ++actor_300e_animation_counter;
+    if (actor_300e_animation_counter == 60)
+        actor_300e_animation_counter = 0;
 
-    if (d_05b0 < 25 && d_05ae >= 4)
-        d_05ae = 0;
-    if (d_05b0 >= 25 && d_05ae >= 8)
-        d_05ae = 4;
+    if (actor_300e_animation_counter < 25 && actor_300e_animation_state >= 4)
+        actor_300e_animation_state = 0;
+    if (actor_300e_animation_counter >= 25 && actor_300e_animation_state >= 8)
+        actor_300e_animation_state = 4;
 
-    for (i = 0; i < d_05b2; ++i) {
-        p = &d_abec_[i];
+    for (i = 0; i < actor_300e_count; ++i) {
+        p = &actor_300e_records[i];
         if (p->state != 0) {
-            if ((g1_3558(p->x, p->y) != 0 ||
-                 g1_3558(p->x + 2, p->y) != 0) && d_05b0 < 25)
-                ++d_4eda_[i];
+            if ((remove_world_actor_at_position(p->world_x, p->world_y) != 0 ||
+                 remove_world_actor_at_position(p->world_x + 2, p->world_y) != 0) && actor_300e_animation_counter < 25)
+                ++actor_300e_object_state_table[i];
 
-            if (d_4eda_[i] == 2) {
-                g1_314c(p->x + 2, p->y);
-                g1_314c(p->x, p->y);
-                g1_2e64(p->x + 2, p->y - 128);
-                g1_2b86(1, p->x + 1, p->y);
-                g1_2b86(1, p->x + 1, p->y - 128);
-                g1_2b86(1, p->x, p->y - 128);
-                g1_0b85(5000L);
+            if (actor_300e_object_state_table[i] == 2) {
+                spawn_contact_flash_effect(p->world_x + 2, p->world_y);
+                spawn_contact_flash_effect(p->world_x, p->world_y);
+                spawn_pickup_object(p->world_x + 2, p->world_y - 128);
+                spawn_moving_actor(1, p->world_x + 1, p->world_y);
+                spawn_moving_actor(1, p->world_x + 1, p->world_y - 128);
+                spawn_moving_actor(1, p->world_x, p->world_y - 128);
+                add_and_draw_player_score(5000L);
                 p->state = 0;
                 continue;
             }
 
-            if (d_4eda_[i] == 1 && d_0437 == 0)
-                g1_2e64(p->x + 2, p->y - 64);
+            if (actor_300e_object_state_table[i] == 1 && world_animation_phase == 0)
+                spawn_pickup_object(p->world_x + 2, p->world_y - 64);
 
-            if (g1_3714(p->x + 1, p->y + 128) == 0) {
-                p->y += 128;
-                g1_59cf(d_05ae, p->x, p->y);
+            if (is_level_position_blocked(p->world_x + 1, p->world_y + 128) == 0) {
+                p->world_y += 128;
+                draw_two_by_two_actor_sprite(actor_300e_animation_state, p->world_x, p->world_y);
                 continue;
             }
 
             if (p->state == 1) {
-                if (g1_367e(p->x, p->y + 128) == 0 || g1_367e(p->x, p->y) != 0) {
+                if (test_level_tile_special_state(p->world_x, p->world_y + 128) == 0 || test_level_tile_special_state(p->world_x, p->world_y) != 0) {
                     p->state = 2;
                 } else {
-                    if (d_0437 == 0x40 || d_0437 == 0)
-                        --p->x;
-                    g1_59cf(d_05ae, p->x, p->y);
+                    if (world_animation_phase == 0x40 || world_animation_phase == 0)
+                        --p->world_x;
+                    draw_two_by_two_actor_sprite(actor_300e_animation_state, p->world_x, p->world_y);
                     continue;
                 }
             }
 
             if (p->state == 2) {
-                if (g1_367e(p->x + 3, p->y + 128) == 0 || g1_367e(p->x + 3, p->y) != 0)
+                if (test_level_tile_special_state(p->world_x + 3, p->world_y + 128) == 0 || test_level_tile_special_state(p->world_x + 3, p->world_y) != 0)
                     p->state = 1;
-                else if (d_0437 == 0x40 || d_0437 == 0)
-                    ++p->x;
-                g1_59cf(d_05ae, p->x, p->y);
+                else if (world_animation_phase == 0x40 || world_animation_phase == 0)
+                    ++p->world_x;
+                draw_two_by_two_actor_sprite(actor_300e_animation_state, p->world_x, p->world_y);
             }
         }
     }
 }
 
-void g1_5d6f(void)
+/* Updates and draws records from level-map marker 0x300F; the concrete entity identity is not
+   established by source. */
+void update_actor_300f(void)
 {
     register int i;
-    struct g1_5d6f_record far *p;
+    struct actor_300f_record far *p;
 
-    for (i = 0; i < d_05b4; ++i) {
-        p = &d_ab32_[i];
+    for (i = 0; i < actor_300f_count; ++i) {
+        p = &actor_300f_records[i];
         if (p->active != 0) {
-            if (g1_326e(p->x, p->y) == 0) {
-                if (g1_3714(p->x, p->y + 128) == 0)
-                    p->y += 128;
-                if (g1_3513(p->x, p->y) != 0 && p->state != 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+                    p->world_y += 128;
+                if (test_player_overlap_with_object(p->world_x, p->world_y) != 0 && p->animation_state != 0) {
                     p->active = 0;
-                    if (d_c295_ < 4) {
-                        ++d_c295_;
-                        g1_0adc();
+                    if (world_actor_count < 4) {
+                        ++world_actor_count;
+                        draw_buffered_screen_effect();
                     }
-                    g1_0042(0xc);
-                    g1_0b85(1000L);
-                    g1_2a40(0x3c0, p->x, p->y);
+                    request_priority_sound_effect(0xc);
+                    add_and_draw_player_score(1000L);
+                    queue_ambient_sprite_animation(0x3c0, p->world_x, p->world_y);
                     continue;
                 }
-                if (p->state == 0 && g1_3558(p->x, p->y) != 0) {
-                    g1_314c(p->x, p->y);
-                    p->state = 1;
-                    if (g1_3714(p->x, p->y + 128) == 0) {
-                        g1_0b85(500L);
-                        g1_2a40(0x280, p->x, p->y);
+                if (p->animation_state == 0 && remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+                    spawn_contact_flash_effect(p->world_x, p->world_y);
+                    p->animation_state = 1;
+                    if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                        add_and_draw_player_score(500L);
+                        queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                     }
                 }
-                if (p->state == 0) {
-                    asm_0424(d_a0fb_,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 16);
+                if (p->animation_state == 0) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                 } else {
-                    asm_0424(d_a0fb_ + 0x1ae0,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 16);
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1ae0,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                 }
             }
         }
     }
 }
 
-void g1_5f0c(void)
+/* Updates and draws records from level-map marker 0x3010; the concrete entity identity is not
+   established by source. */
+void update_actor_3010(void)
 {
     register int i;
-    struct g1_5f0c_record far *p;
+    struct actor_3010_record far *p;
     char status;
 
-    d_06e0 += 0xa0;
-    if (d_06e0 == 0x1e0)
-        d_06e0 = 0;
+    actor_3010_sprite_offset += 0xa0;
+    if (actor_3010_sprite_offset == 0x1e0)
+        actor_3010_sprite_offset = 0;
 
-    for (i = 0; i < d_05b6; i++) {
-        p = &d_b0b4_[i];
+    for (i = 0; i < actor_3010_count; i++) {
+        p = &actor_3010_records[i];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
         if (p->state < 3) {
-            if ((status = g1_3558(p->x, p->y)) != 0) {
+            if ((status = remove_world_actor_at_position(p->world_x, p->world_y)) != 0) {
                 if (status == 1)
-                    --p->x;
+                    --p->world_x;
                 if (status == 2)
-                    ++p->x;
-                g1_0042(0x12);
+                    ++p->world_x;
+                request_priority_sound_effect(0x12);
                 p->state = 3;
             }
         }
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
         if (p->state == 1) {
-            if (g1_367e(p->x - 1, p->y) != 0 ||
-                g1_367e(p->x - 1, p->y + 128) == 0) {
+            if (test_level_tile_special_state(p->world_x - 1, p->world_y) != 0 ||
+                test_level_tile_special_state(p->world_x - 1, p->world_y + 128) == 0) {
                 p->state = 2;
-            } else if (d_06e0 == 0) {
-                --p->x;
+            } else if (actor_3010_sprite_offset == 0) {
+                --p->world_x;
             }
-            if (g1_326e(p->x, p->y) == 0)
-                asm_0424(d_637a_ + d_06e0 + 0x3200,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+                blit_planar_sprite_rows(sprite_graphics_buffer + actor_3010_sprite_offset + 0x3200,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else if (p->state == 2) {
-            if (g1_367e(p->x + 2, p->y) != 0 ||
-                g1_367e(p->x + 2, p->y + 128) == 0) {
+            if (test_level_tile_special_state(p->world_x + 2, p->world_y) != 0 ||
+                test_level_tile_special_state(p->world_x + 2, p->world_y + 128) == 0) {
                 p->state = 1;
-            } else if (d_06e0 == 0) {
-                ++p->x;
+            } else if (actor_3010_sprite_offset == 0) {
+                ++p->world_x;
             }
-            if (g1_326e(p->x, p->y) == 0)
-                asm_0424(d_637a_ + d_06e0 + 0x3200,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+                blit_planar_sprite_rows(sprite_graphics_buffer + actor_3010_sprite_offset + 0x3200,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else if (p->state >= 3) {
-            if (g1_326e(p->x, p->y) == 0)
-                asm_0424(d_637a_ + (p->state - 3) * 0xa0 + 0x33e0,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+                blit_planar_sprite_rows(sprite_graphics_buffer + (p->state - 3) * 0xa0 + 0x33e0,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             ++p->state;
             if (p->state == 10) {
                 p->state = 0;
-                g1_2b86(1, p->x, p->y);
-                g1_0b85(100L);
+                spawn_moving_actor(1, p->world_x, p->world_y);
+                add_and_draw_player_score(100L);
             }
         }
-        if (g1_3513(p->x, p->y) != 0) {
+        if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
             if (p->state > 0) {
                 if (p->state < 3)
-                    d_6379_ = 1;
+                    active_sprite_draw_flag = 1;
             }
         }
     }
 }
 
-void pascal g1_6183(int a0, int a1, int a2)
+/* Draws a two-column, two-row actor graphic from the second sprite sheet region. */
+void pascal draw_two_by_two_actor_variant(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 0x280 + 0x3c00;
-    if (g1_326e(a1, a2 - 128) == 0) {
-        asm_0424(d_637a_ + offset,
-                 a1 - d_009d,
-                 (a2 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1, a2 - 128) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset,
+                                a1 - level_scroll_x,
+                                (a2 - level_map_y_offset) >> 3);
     }
-    if (g1_326e(a1 + 2, a2 - 128) == 0) {
-        asm_0424(d_637a_ + offset + 0xa0,
-                 a1 - d_009d + 2,
-                 (a2 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1 + 2, a2 - 128) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0,
+                                a1 - level_scroll_x + 2,
+                                (a2 - level_map_y_offset) >> 3);
     }
-    if (g1_326e(a1, a2) == 0) {
-        asm_0424(d_637a_ + offset + 0x140,
-                 a1 - d_009d,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a2) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x140,
+                                a1 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
     }
-    if (g1_326e(a1 + 2, a2) == 0) {
-        asm_0424(d_637a_ + offset + 0x1e0,
-                 a1 - d_009d + 2,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a2) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x1e0,
+                                a1 - level_scroll_x + 2,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_6292(void)
+/* Handles the door and key interaction using current game state and input. */
+void handle_door_and_key_interaction(void)
 {
-    ++d_06e2;
-    if (d_06e2 == 1)
-        d_06e2 = 0;
+    ++door_interaction_phase;
+    if (door_interaction_phase == 1)
+        door_interaction_phase = 0;
 
-    if (d_d570_ == 0)
+    if (door_or_key_interaction_state == 0)
         return;
 
-    if (g1_3513(d_d4bd_ + 1, d_d4c1_) ||
-        g1_3513(d_d4bd_ + 1, d_d4c1_ - 128)) {
-        if (d_555a_) {
-            g2_16f3();
-            d_555a_ = 0;
+    if (test_player_overlap_with_object(door_lock_world_x + 1, door_lock_world_y) ||
+        test_player_overlap_with_object(door_lock_world_x + 1, door_lock_world_y - 128)) {
+        if (hint_revealed_object_4) {
+            show_secret_tip_open_door();
+            hint_revealed_object_4 = 0;
         }
     }
 
-    if (d_4ed2_ == 0 && d_c68c_ != 0 && d_d13f_ == 0 && d_d4c0_ == 0 && d_d138_ == 0 &&
-        (g1_3513(d_d4bd_ + 1, d_d4c1_) || g1_3513(d_d4bd_ + 1, d_d4c1_ - 128))) {
-        d_4ed2_ = 1;
-        if (d_02fa % 2 != 0)
-            g1_0042(0x27);
+    if (current_weapon_state == 0 && control_up_pressed != 0 && control_left_pressed == 0 && control_right_pressed == 0 && control_jump_pressed == 0 &&
+        (test_player_overlap_with_object(door_lock_world_x + 1, door_lock_world_y) || test_player_overlap_with_object(door_lock_world_x + 1, door_lock_world_y - 128))) {
+        current_weapon_state = 1;
+        if (current_level_index % 2 != 0)
+            request_priority_sound_effect(0x27);
         disable();
-        d_c68c_ = 0;
+        control_up_pressed = 0;
         enable();
     }
 
-    if (d_4ed2_ == 0)
-        g1_6183(0, d_d4bd_, d_d4c1_);
-    if (d_4ed2_ == 0)
+    if (current_weapon_state == 0)
+        draw_two_by_two_actor_variant(0, door_lock_world_x, door_lock_world_y);
+    if (current_weapon_state == 0)
         return;
 
-    if (d_06e2 == 0)
-        ++d_4ed2_;
-    if (d_4ed2_ < 5) {
-        if (d_4ed2_ == 3 && d_02fa % 2 == 0)
-            g1_0042(0x13);
-        g1_6183(d_4ed2_ - 1, d_d4bd_, d_d4c1_);
+    if (door_interaction_phase == 0)
+        ++current_weapon_state;
+    if (current_weapon_state < 5) {
+        if (current_weapon_state == 3 && current_level_index % 2 == 0)
+            request_priority_sound_effect(0x13);
+        draw_two_by_two_actor_variant(current_weapon_state - 1, door_lock_world_x, door_lock_world_y);
         return;
     }
-    if (d_4ed2_ < 5)
+    if (current_weapon_state < 5)
         return;
 
-    switch (d_4ed2_) {
+    switch (current_weapon_state) {
     case 4:
-        g1_6183(3, d_d4bd_, d_d4c1_);
+        draw_two_by_two_actor_variant(3, door_lock_world_x, door_lock_world_y);
         break;
     case 5:
-        g1_6183(2, d_d4bd_, d_d4c1_);
+        draw_two_by_two_actor_variant(2, door_lock_world_x, door_lock_world_y);
         break;
     case 6:
-        g1_6183(1, d_d4bd_, d_d4c1_);
+        draw_two_by_two_actor_variant(1, door_lock_world_x, door_lock_world_y);
         break;
     case 7:
-        g1_6183(0, d_d4bd_, d_d4c1_);
+        draw_two_by_two_actor_variant(0, door_lock_world_x, door_lock_world_y);
         break;
     case 8:
-        g1_6183(0, d_d4bd_, d_d4c1_);
-        d_0436 = 1;
+        draw_two_by_two_actor_variant(0, door_lock_world_x, door_lock_world_y);
+        interaction_cooldown_state = 1;
         break;
     }
 }
 
-void g1_6445(void)
+/* Updates and draws records from level-map marker 0x3012; the concrete entity identity is not
+   established by source. */
+void update_actor_3012(void)
 {
     register int i;
-    struct g1_6445_record far *p;
+    struct actor_3012_record far *p;
 
-    for (i = 0; i < d_05b8; ++i) {
-        p = &d_555d_[i];
+    for (i = 0; i < actor_3012_count; ++i) {
+        p = &actor_3012_records[i];
         if (p->state != 0) {
-            if (g1_3714(p->x, p->y + 128) == 0)
-                p->y += 128;
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+                p->world_y += 128;
 
-            if (p->kind == 0) {
-                if (g1_3558(p->x, p->y) != 0) {
-                    g1_314c(p->x, p->y);
-                    p->kind = 1;
-                    if (g1_3714(p->x, p->y + 128) == 0) {
-                        g1_0b85(500L);
-                        g1_2a40(0x280, p->x, p->y);
+            if (p->object_kind == 0) {
+                if (remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+                    spawn_contact_flash_effect(p->world_x, p->world_y);
+                    p->object_kind = 1;
+                    if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                        add_and_draw_player_score(500L);
+                        queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                     }
                 }
             }
 
-            if (p->kind == 0) {
-                if (g1_326e(p->x, p->y) == 0 && p->state < 12) {
-                    asm_0424(d_a0fb_,
-                            p->x - d_009d,
-                            ((p->y - d_009f) >> 3) + 16);
+            if (p->object_kind == 0) {
+                if (is_world_position_outside_view(p->world_x, p->world_y) == 0 && p->state < 12) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                            p->world_x - level_scroll_x,
+                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                     continue;
                 }
             }
 
-            if (p->kind == 0) {
+            if (p->object_kind == 0) {
                 continue;
             }
 
             ++p->state;
-            if (g1_326e(p->x, p->y) == 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
                 if (p->state < 12) {
-                    asm_0424(d_637a_ + 0x4600,
-                            p->x - d_009d,
-                            ((p->y - d_009f) >> 3) + 16);
+                    blit_planar_sprite_rows(sprite_graphics_buffer + 0x4600,
+                            p->world_x - level_scroll_x,
+                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                 }
                 if (p->state % 2 != 0 && p->state < 12) {
-                    asm_0424(d_637a_ + 0x46a0,
-                            p->x - d_009d,
-                            ((p->y - d_009f) >> 3) + 16);
+                    blit_planar_sprite_rows(sprite_graphics_buffer + 0x46a0,
+                            p->world_x - level_scroll_x,
+                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                 }
             }
 
@@ -4012,64 +4118,64 @@ void g1_6445(void)
                 continue;
 
             if (p->state == 14) {
-                g1_2b86(2, p->x, p->y);
-                g1_0042(0x21);
+                spawn_moving_actor(2, p->world_x, p->world_y);
+                request_priority_sound_effect(0x21);
             } else if (p->state == 17) {
-                if (g1_367e(p->x - 2, p->y) == 0 &&
-                    g1_367e(p->x - 2, p->y + 128) != 0) {
-                    g1_2b86(2, p->x - 2, p->y);
+                if (test_level_tile_special_state(p->world_x - 2, p->world_y) == 0 &&
+                    test_level_tile_special_state(p->world_x - 2, p->world_y + 128) != 0) {
+                    spawn_moving_actor(2, p->world_x - 2, p->world_y);
                 } else {
-                    p->flag8 = 0;
+                    p->unknown_flag_8 = 0;
                 }
-                if (g1_367e(p->x + 2, p->y) == 0 &&
-                    g1_367e(p->x + 2, p->y + 128) != 0) {
-                    g1_2b86(2, p->x + 2, p->y);
+                if (test_level_tile_special_state(p->world_x + 2, p->world_y) == 0 &&
+                    test_level_tile_special_state(p->world_x + 2, p->world_y + 128) != 0) {
+                    spawn_moving_actor(2, p->world_x + 2, p->world_y);
                 } else {
-                    p->flag10 = 0;
+                    p->unknown_flag_10 = 0;
                 }
             } else if (p->state == 19) {
-                if (p->flag8 != 0) {
-                    if (g1_367e(p->x - 4, p->y) == 0 &&
-                        g1_367e(p->x - 4, p->y + 128) != 0) {
-                        g1_2b86(2, p->x - 4, p->y);
+                if (p->unknown_flag_8 != 0) {
+                    if (test_level_tile_special_state(p->world_x - 4, p->world_y) == 0 &&
+                        test_level_tile_special_state(p->world_x - 4, p->world_y + 128) != 0) {
+                        spawn_moving_actor(2, p->world_x - 4, p->world_y);
                     } else {
-                        p->flag8 = 0;
+                        p->unknown_flag_8 = 0;
                     }
                 }
-                if (p->flag10 != 0) {
-                    if (g1_367e(p->x + 4, p->y) == 0 &&
-                        g1_367e(p->x + 4, p->y + 128) != 0) {
-                        g1_2b86(2, p->x + 4, p->y);
+                if (p->unknown_flag_10 != 0) {
+                    if (test_level_tile_special_state(p->world_x + 4, p->world_y) == 0 &&
+                        test_level_tile_special_state(p->world_x + 4, p->world_y + 128) != 0) {
+                        spawn_moving_actor(2, p->world_x + 4, p->world_y);
                     } else {
-                        p->flag10 = 0;
+                        p->unknown_flag_10 = 0;
                     }
                 }
             } else if (p->state == 21) {
-                if (p->flag8 != 0) {
-                    if (g1_367e(p->x - 6, p->y) == 0 &&
-                        g1_367e(p->x - 6, p->y + 128) != 0) {
-                        g1_2b86(2, p->x - 6, p->y);
+                if (p->unknown_flag_8 != 0) {
+                    if (test_level_tile_special_state(p->world_x - 6, p->world_y) == 0 &&
+                        test_level_tile_special_state(p->world_x - 6, p->world_y + 128) != 0) {
+                        spawn_moving_actor(2, p->world_x - 6, p->world_y);
                     } else {
-                        p->flag8 = 0;
+                        p->unknown_flag_8 = 0;
                     }
                 }
-                if (p->flag10 != 0) {
-                    if (g1_367e(p->x + 6, p->y) == 0 &&
-                        g1_367e(p->x + 6, p->y + 128) != 0) {
-                        g1_2b86(2, p->x + 6, p->y);
+                if (p->unknown_flag_10 != 0) {
+                    if (test_level_tile_special_state(p->world_x + 6, p->world_y) == 0 &&
+                        test_level_tile_special_state(p->world_x + 6, p->world_y + 128) != 0) {
+                        spawn_moving_actor(2, p->world_x + 6, p->world_y);
                     } else {
-                        p->flag10 = 0;
+                        p->unknown_flag_10 = 0;
                     }
                 }
             } else if (p->state == 23) {
-                if (p->flag8 != 0 &&
-                    g1_367e(p->x - 8, p->y) == 0 &&
-                    g1_367e(p->x - 8, p->y + 128) != 0)
-                    g1_2b86(2, p->x - 8, p->y);
-                if (p->flag10 != 0 &&
-                    g1_367e(p->x + 8, p->y) == 0 &&
-                    g1_367e(p->x + 8, p->y + 128) != 0)
-                    g1_2b86(2, p->x + 8, p->y);
+                if (p->unknown_flag_8 != 0 &&
+                    test_level_tile_special_state(p->world_x - 8, p->world_y) == 0 &&
+                    test_level_tile_special_state(p->world_x - 8, p->world_y + 128) != 0)
+                    spawn_moving_actor(2, p->world_x - 8, p->world_y);
+                if (p->unknown_flag_10 != 0 &&
+                    test_level_tile_special_state(p->world_x + 8, p->world_y) == 0 &&
+                    test_level_tile_special_state(p->world_x + 8, p->world_y + 128) != 0)
+                    spawn_moving_actor(2, p->world_x + 8, p->world_y);
             }
 
             if (p->state == 24)
@@ -4078,747 +4184,778 @@ void g1_6445(void)
     }
 }
 
-void g1_6947(void)
+/* Updates and draws records from level-map marker 0x3013; the concrete entity identity is not
+   established by source. */
+void update_actor_3013(void)
 {
     register int i;
     register int active;
 
     active = 1;
-    if (d_b636_ != 0) {
+    if (formation_update_enabled != 0) {
         for (i = active; i < 10; ++i) {
-            d_abd4_[i - 1] = d_abd4_[i];
-            d_b09c_[i - 1] = d_b09c_[i];
-            if (d_d249_[i] != 0)
+            formation_object_x_positions[i - 1] = formation_object_x_positions[i];
+            formation_object_y_positions[i - 1] = formation_object_y_positions[i];
+            if (formation_object_active_flags[i] != 0)
                 active = 0;
         }
         if (active != 0) {
-            d_b636_ = 0;
-            g1_0b85(10000L);
-            d_5310_ = 1;
+            formation_update_enabled = 0;
+            add_and_draw_player_score(10000L);
+            actor_3013_formation_state = 1;
             return;
         }
     } else {
         return;
     }
 
-    d_abe6_ += d_02fd[d_abd2_];
-    d_b0ae_ += d_034d[d_abd2_] << 6;
+    formation_world_x_accumulator += formation_x_delta_table[formation_active_object_count];
+    formation_world_y_accumulator += formation_y_delta_table[formation_active_object_count] << 6;
 
     for (i = 1; i < 10; ++i) {
-        if (g1_326e(d_abd4_[i], d_b09c_[i]) == 0 && d_d249_[i] != 0) {
-            asm_0424(d_637a_ + d_06e3 + 0x4b00,
-                     d_abd4_[i] - d_009d,
-                     ((d_b09c_[i] - d_009f) >> 3) + 16);
-            if (g1_3513(d_abd4_[i], d_b09c_[i]) != 0)
-                d_6379_ = 1;
+        if (is_world_position_outside_view(formation_object_x_positions[i], formation_object_y_positions[i]) == 0 && formation_object_active_flags[i] != 0) {
+            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3013_sprite_offset + 0x4b00,
+                                    formation_object_x_positions[i] - level_scroll_x,
+                                    ((formation_object_y_positions[i] - level_map_y_offset) >> 3) + 16);
+            if (test_player_overlap_with_object(formation_object_x_positions[i], formation_object_y_positions[i]) != 0)
+                active_sprite_draw_flag = 1;
         }
 
-        if (d_0437 != 0)
-            d_06e3 += 0xa0;
-        if (d_06e3 == 0x460)
-            d_06e3 = 0;
-        if (d_d249_[i] != 0 &&
-            g1_3558(d_abd4_[i], d_b09c_[i] - 128) != 0) {
-            g1_2b86(3, d_abd4_[i], d_b09c_[i]);
-            g1_0b85(1000L);
-            g1_0042(10);
-            g1_314c(d_abd4_[i], d_b09c_[i] - 128);
-            d_d249_[i] = 0;
+        if (world_animation_phase != 0)
+            actor_3013_sprite_offset += 0xa0;
+        if (actor_3013_sprite_offset == 0x460)
+            actor_3013_sprite_offset = 0;
+        if (formation_object_active_flags[i] != 0 &&
+            remove_world_actor_at_position(formation_object_x_positions[i], formation_object_y_positions[i] - 128) != 0) {
+            spawn_moving_actor(3, formation_object_x_positions[i], formation_object_y_positions[i]);
+            add_and_draw_player_score(1000L);
+            request_priority_sound_effect(10);
+            spawn_contact_flash_effect(formation_object_x_positions[i], formation_object_y_positions[i] - 128);
+            formation_object_active_flags[i] = 0;
         }
     }
 
-    ++d_abd2_;
-    if (d_abd2_ == 39)
-        d_abd2_ = 0;
+    ++formation_active_object_count;
+    if (formation_active_object_count == 39)
+        formation_active_object_count = 0;
 }
 
-void g1_6afd(void)
+/* Updates and draws records from level-map marker 0x3014; the concrete entity identity is not
+   established by source. */
+void update_actor_3014(void)
 {
     register int i;
-    struct g1_6afd_record far *p;
+    struct actor_3014_record far *p;
 
     /* Select VGA graphics-controller register 5 with value 1. */
     outport(0x3ce, 0x105);
-    d_06e5 += 40;
-    if (d_06e5 > 40)
-        d_06e5 = 0;
-    for (i = 0; i < d_05ba; ++i) {
-        p = &d_70db_[i];
-        if (g1_326e(p->x, p->y) == 0)
-            asm_0315(p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16,
-                     d_06e5);
+    actor_3014_sprite_offset += 40;
+    if (actor_3014_sprite_offset > 40)
+        actor_3014_sprite_offset = 0;
+    for (i = 0; i < actor_3014_count; ++i) {
+        p = &actor_3014_records[i];
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+            copy_planar_video_region(p->world_x - level_scroll_x,
+                                     ((p->world_y - level_map_y_offset) >> 3) + 16,
+                                     actor_3014_sprite_offset);
     }
 }
 
-void g1_6b82(void)
+/* Updates and draws records from level-map marker 0x3015; the concrete entity identity is not
+   established by source. */
+void update_actor_3015(void)
 {
     register int i;
-    struct g1_6b82_record far *p;
+    struct actor_3015_record far *p;
 
-    if (d_0437 == 0)
-        d_06e7 += 0xa0;
+    if (world_animation_phase == 0)
+        actor_3015_sprite_offset += 0xa0;
 
-    if (d_06e7 == 0x280)
-        d_06e7 = 0;
+    if (actor_3015_sprite_offset == 0x280)
+        actor_3015_sprite_offset = 0;
     i = 0;
 
-    for (; i < d_05bc; ++i) {
-        p = &d_5a12_[i];
+    for (; i < actor_3015_count; ++i) {
+        p = &actor_3015_records[i];
 
-        if (p->state >= 3 && g1_326e(p->x, p->y))
+        if (p->state >= 3 && is_world_position_outside_view(p->world_x, p->world_y))
             p->state = 0;
 
         if (p->state == 0)
             continue;
 
-        if (g1_326e(p->x, p->y))
+        if (is_world_position_outside_view(p->world_x, p->world_y))
             continue;
 
-        if (p->state >= 3 && g1_326e(p->x, p->y)) {
+        if (p->state >= 3 && is_world_position_outside_view(p->world_x, p->world_y)) {
             p->state = 0;
             continue;
         }
 
-        if (!g1_3714(p->x, p->y + 128) && p->state < 3)
-            p->y += 128;
+        if (!is_level_position_blocked(p->world_x, p->world_y + 128) && p->state < 3)
+            p->world_y += 128;
 
         if (p->state >= 3) {
-            if (d_0437 != 0)
-                p->y -= 64;
-            if (g1_3714(p->x, p->y - 64)) {
-                g1_2b86(1, p->x, p->y);
+            if (world_animation_phase != 0)
+                p->world_y -= 64;
+            if (is_level_position_blocked(p->world_x, p->world_y - 64)) {
+                spawn_moving_actor(1, p->world_x, p->world_y);
                 p->state = 0;
                 continue;
             }
-            if (g1_3513(p->x, p->y)) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y)) {
                 p->state = 0;
-                g1_0b85(1000L);
-                g1_2a40(0x3c0, p->x, p->y);
-                g1_0042(0x10);
+                add_and_draw_player_score(1000L);
+                queue_ambient_sprite_animation(0x3c0, p->world_x, p->world_y);
+                request_priority_sound_effect(0x10);
                 continue;
             }
         }
 
-        if (g1_3558(p->x, p->y)) {
+        if (remove_world_actor_at_position(p->world_x, p->world_y)) {
             if (p->state == 1) {
-                g1_314c(p->x, p->y);
+                spawn_contact_flash_effect(p->world_x, p->world_y);
                 p->state = 2;
-                if (!g1_3714(p->x, p->y + 128)) {
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x, p->y);
+                if (!is_level_position_blocked(p->world_x, p->world_y + 128)) {
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                 }
             } else if (p->state == 2) {
                 p->state = 3;
-                g1_0042(2);
+                request_priority_sound_effect(2);
             }
         }
 
-        if (g1_3513(p->x, p->y) && p->state == 2) {
+        if (test_player_overlap_with_object(p->world_x, p->world_y) && p->state == 2) {
             p->state = 0;
-            g1_0b85(200L);
-            g1_2a40(0x140, p->x, p->y);
-            g1_0acc();
-            g1_0042(1);
-            if (d_5554_ != 0) {
-                g2_1534();
-                d_5554_ = 0;
+            add_and_draw_player_score(200L);
+            queue_ambient_sprite_animation(0x140, p->world_x, p->world_y);
+            advance_title_screen_animation();
+            request_priority_sound_effect(1);
+            if (hint_revealed_object_2 != 0) {
+                show_secret_tip_soda();
+                hint_revealed_object_2 = 0;
             }
         }
 
         if (p->state == 1)
-            asm_0424(d_a0fb_ + 0x3f20,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3f20,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         if (p->state == 2)
-            asm_0424(d_637a_ + d_06e7 + 0x5000,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3015_sprite_offset + 0x5000,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         if (p->state >= 3)
-            asm_0424(d_637a_ + d_06e7 + 0x5280,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3015_sprite_offset + 0x5280,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_6e71(void)
+/* Updates and draws records from level-map marker 0x3016; the concrete entity identity is not
+   established by source. */
+void update_actor_3016(void)
 {
     register int i;
-    struct g1_6e71_record far *p;
+    struct actor_3016_record far *p;
 
-    d_06e9 += 0xa0;
-    d_06eb -= 0xa0;
-    if (d_06eb == -0xa0)
-        d_06eb = 0x1e0;
-    if (d_06e9 == 0x280)
-        d_06e9 = 0;
+    actor_3016_upper_sprite_offset += 0xa0;
+    actor_3016_lower_sprite_offset -= 0xa0;
+    if (actor_3016_lower_sprite_offset == -0xa0)
+        actor_3016_lower_sprite_offset = 0x1e0;
+    if (actor_3016_upper_sprite_offset == 0x280)
+        actor_3016_upper_sprite_offset = 0;
 
-    for (i = 0; i < d_05be; ++i) {
-        p = &d_d261_[i];
+    for (i = 0; i < actor_3016_count; ++i) {
+        p = &actor_3016_records[i];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
 
         if (p->state == 1) {
-            p->y -= 8;
-            asm_0424(d_637a_ + d_06e9 + 0x5500,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
-            if (g1_3714(p->x - 2, p->y) == 0 ||
-                g1_3714(p->x, p->y) != 0)
+            p->world_y -= 8;
+            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_upper_sprite_offset + 0x5500,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+            if (is_level_position_blocked(p->world_x - 2, p->world_y) == 0 ||
+                is_level_position_blocked(p->world_x, p->world_y) != 0)
                 p->state = 2;
         } else if (p->state == 2) {
-            p->y += 8;
-            asm_0424(d_637a_ + d_06eb + 0x5500,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
-            if (g1_3714(p->x - 2, p->y + 128) == 0 ||
-                g1_3714(p->x, p->y + 128) != 0)
+            p->world_y += 8;
+            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_lower_sprite_offset + 0x5500,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+            if (is_level_position_blocked(p->world_x - 2, p->world_y + 128) == 0 ||
+                is_level_position_blocked(p->world_x, p->world_y + 128) != 0)
                 p->state = 1;
         } else if (p->state == 3) {
-            p->y -= 8;
-            asm_0424(d_637a_ + d_06e9 + 0x5780,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
-            if (g1_3714(p->x + 2, p->y) == 0 ||
-                g1_3714(p->x, p->y) != 0)
+            p->world_y -= 8;
+            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_upper_sprite_offset + 0x5780,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+            if (is_level_position_blocked(p->world_x + 2, p->world_y) == 0 ||
+                is_level_position_blocked(p->world_x, p->world_y) != 0)
                 p->state = 4;
         } else if (p->state == 4) {
-            p->y += 8;
-            asm_0424(d_637a_ + d_06eb + 0x5780,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
-            if (g1_3714(p->x + 2, p->y + 128) == 0 ||
-                g1_3714(p->x, p->y + 128) != 0)
+            p->world_y += 8;
+            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_lower_sprite_offset + 0x5780,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+            if (is_level_position_blocked(p->world_x + 2, p->world_y + 128) == 0 ||
+                is_level_position_blocked(p->world_x, p->world_y + 128) != 0)
                 p->state = 3;
         }
 
-        if (g1_3558(p->x, p->y) != 0) {
-            g1_2b86(1, p->x, p->y);
-            g1_2e64(p->x, p->y - 64);
-            g1_0b85(100L);
-            g1_0042(18);
+        if (remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+            spawn_moving_actor(1, p->world_x, p->world_y);
+            spawn_pickup_object(p->world_x, p->world_y - 64);
+            add_and_draw_player_score(100L);
+            request_priority_sound_effect(18);
             p->state = 0;
         }
-        if (p->state != 0 && g1_3513(p->x, p->y) != 0)
-            d_6379_ = 1;
+        if (p->state != 0 && test_player_overlap_with_object(p->world_x, p->world_y) != 0)
+            active_sprite_draw_flag = 1;
     }
 }
 
-void g1_7163(void)
+/* Updates and draws records from level-map marker 0x3018; the concrete entity identity is not
+   established by source. */
+void update_actor_3018(void)
 {
     register int i;
-    struct g1_7163_record far *p;
+    struct actor_3018_record far *p;
 
-    for (i = 0; i < d_05c0; i++) {
-        p = &d_c01e_[i];
+    for (i = 0; i < actor_3018_count; i++) {
+        p = &actor_3018_records[i];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
-        if (g1_3513(p->x, p->y)) {
-            if (p->state > 1 && d_637e_ != 0) {
-                d_637e_ = 0;
-                g2_15c9();
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
+        if (test_player_overlap_with_object(p->world_x, p->world_y)) {
+            if (p->state > 1 && hint_revealed_object_11 != 0) {
+                hint_revealed_object_11 = 0;
+                show_secret_tip_turkey();
             }
             if (p->state == 2) {
                 p->state = 0;
-                g1_0b85(100L);
-                g1_2a40(0, p->x, p->y);
-                g1_0042(1);
-                g1_0acc();
+                add_and_draw_player_score(100L);
+                queue_ambient_sprite_animation(0, p->world_x, p->world_y);
+                request_priority_sound_effect(1);
+                advance_title_screen_animation();
                 continue;
             }
             if (p->state == 3) {
                 p->state = 0;
-                g1_0b85(200L);
-                g1_2a40(0x140, p->x, p->y);
-                g1_0042(1);
-                g1_0acc();
-                g1_0acc();
+                add_and_draw_player_score(200L);
+                queue_ambient_sprite_animation(0x140, p->world_x, p->world_y);
+                request_priority_sound_effect(1);
+                advance_title_screen_animation();
+                advance_title_screen_animation();
                 continue;
             }
         }
-        if (p->state != 3 && g1_3558(p->x, p->y)) {
+        if (p->state != 3 && remove_world_actor_at_position(p->world_x, p->world_y)) {
             if (p->state == 1) {
-                g1_314c(p->x, p->y);
-                if (g1_3714(p->x, p->y + 128) == 0) {
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x, p->y);
+                spawn_contact_flash_effect(p->world_x, p->world_y);
+                if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                 }
                 p->state = 2;
             } else if (p->state == 2)
                 p->state = 3;
         }
         if (p->state == 1) {
-            asm_0424(d_a0fb_ + 0x3f20,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3f20,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
             if (p->state == 2) {
-                asm_0424(d_a0fb_ + 0x1b80,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1b80,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             }
             if (p->state == 3) {
-                asm_0424(d_a0fb_ + 0x1c20,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x1c20,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             }
         }
-        if (p->state > 1 && d_637e_ != 0 && g1_3513(p->x, p->y)) {
-            d_637e_ = 0;
-            g2_15c9();
+        if (p->state > 1 && hint_revealed_object_11 != 0 && test_player_overlap_with_object(p->world_x, p->world_y)) {
+            hint_revealed_object_11 = 0;
+            show_secret_tip_turkey();
         }
     }
 }
 
-void g1_73d3(void)
+/* Updates and draws records from level-map marker 0x3019; the concrete entity identity is not
+   established by source. */
+void update_actor_3019(void)
 {
     register int si;
 
-    if (d_c281_ == 0)
+    if (actor_3019_enabled == 0)
         return;
-    if (g1_35ee(d_b62e_ - 2, d_b62e_ + d_d136_, d_b632_ - 32) != 0) {
-        if (d_d155_ == 2) {
-            for (si = 0; si < (d_d136_ >> 1); si++) {
+    if (test_player_vertical_range(actor_3019_world_x - 2, actor_3019_world_x + actor_3019_width, actor_3019_world_y - 32) != 0) {
+        if (actor_3019_animation_state == 2) {
+            for (si = 0; si < (actor_3019_width >> 1); si++) {
                 /* The row stride is 128 words; keep this pointer form for the match. */
-                *((d_7729_ + d_d4b9_ + si) + (d_d4bb_ << 7) - 2) =
-                    *((d_7729_ + d_d4b9_ + si) + (d_d4bb_ << 7) - 130);
+                *((level_tile_map + actor_3019_screen_x + si) + (actor_3019_map_row << 7) - 2) =
+                    *((level_tile_map + actor_3019_screen_x + si) + (actor_3019_map_row << 7) - 130);
                 if (si % 2 != 0)
-                    g1_314c(d_b62e_ * 2 + si * 2, d_b632_);
+                    spawn_contact_flash_effect(actor_3019_world_x * 2 + si * 2, actor_3019_world_y);
                 else
-                    g1_2b86(1, d_b62e_ * 2 + si * 2, d_b632_);
+                    spawn_moving_actor(1, actor_3019_world_x * 2 + si * 2, actor_3019_world_y);
             }
-            d_c281_ = 0;
-            d_d155_ = 0;
-            d_d155_ = 1;
+            actor_3019_enabled = 0;
+            actor_3019_animation_state = 0;
+            actor_3019_animation_state = 1;
             return;
         }
-        d_d155_ = 1;
+        actor_3019_animation_state = 1;
         return;
     }
-    if (d_d155_ == 1)
-        d_d155_ = 2;
+    if (actor_3019_animation_state == 1)
+        actor_3019_animation_state = 2;
 }
 
-void g1_74c2(void)
+/* Updates and draws records from level-map marker 0x301A; the concrete entity identity is not
+   established by source. */
+void update_actor_301a(void)
 {
     register int i;
-    struct t_b3d6 far *p;
+    struct actor_301a_record far *p;
 
-    d_06ed += 0xa0;
-    if (d_06ed == 0x280)
-        d_06ed = 0;
+    actor_301a_sprite_offset += 0xa0;
+    if (actor_301a_sprite_offset == 0x280)
+        actor_301a_sprite_offset = 0;
 
-    for (i = 0; i < d_05c2; ++i) {
-        p = &d_b3d6_[i];
-        if (p->used != 0 && g1_326e(p->x, p->y) == 0) {
-            if (g1_3513(p->x, p->y) != 0) {
-                asm_0424(d_a0fb_ + d_06ed + 0x21c0,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
-                d_6379_ = 1;
+    for (i = 0; i < actor_301a_count; ++i) {
+        p = &actor_301a_records[i];
+        if (p->active != 0 && is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_301a_sprite_offset + 0x21c0,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+                active_sprite_draw_flag = 1;
             } else {
-                asm_0424(d_a0fb_ + d_06ed + 0x1f40,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_301a_sprite_offset + 0x1f40,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             }
-            if (d_0437 == 0)
-                g1_0042(21);
+            if (world_animation_phase == 0)
+                request_priority_sound_effect(21);
         }
     }
 }
 
-void pascal g1_75b9(int row, int horizontal, int vertical)
+/* Draws two vertically stacked sprite cells for an actor. */
+void pascal draw_two_tile_tall_actor_sprite(int row, int horizontal, int vertical)
 {
     register int index = row * 0x140 + 0x6180;
 
-    if (g1_326e(horizontal, vertical - 128) == 0)
-        asm_0424(d_637a_ + index, horizontal - d_009d,
-                 (vertical - d_009f) >> 3);
-    if (g1_326e(horizontal, vertical) == 0)
-        asm_0424(d_637a_ + index + 0xa0, horizontal - d_009d,
-                 ((vertical - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(horizontal, vertical - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + index, horizontal - level_scroll_x,
+                                (vertical - level_map_y_offset) >> 3);
+    if (is_world_position_outside_view(horizontal, vertical) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + index + 0xa0, horizontal - level_scroll_x,
+                                ((vertical - level_map_y_offset) >> 3) + 16);
 }
 
-void g1_7647(void)
+/* Updates and draws records from level-map marker 0x301B; the concrete entity identity is not
+   established by source. */
+void update_actor_301b(void)
 {
     register int i;
-    struct g1_7647_record far *p;
+    struct actor_301b_record far *p;
 
-    for (i = 0; i < d_05c4; i++) {
-        p = &d_798c_[i];
+    for (i = 0; i < actor_301b_count; i++) {
+        p = &actor_301b_records[i];
         if (p->state != 0 &&
             (p->state <= 3 || p->state == 5 || p->state == 9 ||
              p->state == 15 || p->state == 25))
-            p->count++;
+            p->animation_count++;
 
-        if (p->count == 4)
-            p->count = 0;
+        if (p->animation_count == 4)
+            p->animation_count = 0;
 
-        if (g1_326e(p->value1, p->value2) != 0 &&
-            g1_326e(p->value1, p->value2 - 128) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0 &&
+            is_world_position_outside_view(p->world_x, p->world_y - 128) != 0)
             continue;
 
-        if (g1_3558(p->value1, p->value2) != 0 ||
-            g1_3558(p->value1, p->value2 - 128) != 0) {
+        if (remove_world_actor_at_position(p->world_x, p->world_y) != 0 ||
+            remove_world_actor_at_position(p->world_x, p->world_y - 128) != 0) {
             if (p->state == 1 || p->state == 2)
-                g1_0b85(1000L);
+                add_and_draw_player_score(1000L);
             p->state = 3;
-            g1_0042(18);
-            g1_2e64(p->value1, p->value2 - 192);
+            request_priority_sound_effect(18);
+            spawn_pickup_object(p->world_x, p->world_y - 192);
         }
 
         if (p->state >= 3)
             p->state++;
         if (p->state == 26)
             p->state = 0;
-        g1_75b9(p->count, p->value1, p->value2);
+        draw_two_tile_tall_actor_sprite(p->animation_count, p->world_x, p->world_y);
 
         if (p->state == 1) {
-            if (g1_3513(p->value1 - 2, p->value2 - 64) ||
-                g1_3513(p->value1 - 4, p->value2 - 64) ||
-                g1_3513(p->value1 - 6, p->value2 - 64)) {
-                if (g1_1247())
-                    d_0099--;
+            if (test_player_overlap_with_object(p->world_x - 2, p->world_y - 64) ||
+                test_player_overlap_with_object(p->world_x - 4, p->world_y - 64) ||
+                test_player_overlap_with_object(p->world_x - 6, p->world_y - 64)) {
+                if (test_player_floor_clearance())
+                    player_screen_x--;
             }
         }
 
         if (p->state == 2) {
-            if (g1_3513(p->value1 + 2, p->value2 - 64) ||
-                g1_3513(p->value1 + 4, p->value2 - 64) ||
-                g1_3513(p->value1 + 6, p->value2 - 64)) {
-                if (g1_12ce())
-                    d_0099++;
+            if (test_player_overlap_with_object(p->world_x + 2, p->world_y - 64) ||
+                test_player_overlap_with_object(p->world_x + 4, p->world_y - 64) ||
+                test_player_overlap_with_object(p->world_x + 6, p->world_y - 64)) {
+                if (test_player_body_clearance())
+                    player_screen_x++;
             }
         }
     }
 }
 
-void g1_784b(void)
+/* Updates and draws records from level-map marker 0x301D; the concrete entity identity is not
+   established by source. */
+void update_actor_301d(void)
 {
     register int i;
-    struct g1_784b_record far *p;
+    struct actor_301d_record far *p;
 
-    for (i = 0; i < d_05c6; i++) {
-        p = &d_9d99_[i];
+    for (i = 0; i < actor_301d_count; i++) {
+        p = &actor_301d_records[i];
         if (p->active != 0) {
-            if (g1_326e(p->x, p->y) == 0) {
-                if (g1_3714(p->x, p->y + 128) == 0)
-                    p->y += 128;
-                if (g1_3513(p->x, p->y) != 0 && p->state != 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+                    p->world_y += 128;
+                if (test_player_overlap_with_object(p->world_x, p->world_y) != 0 && p->animation_state != 0) {
                     p->active = 0;
-                    g1_2a40(0, p->x, p->y);
-                    g1_0b85(100L);
-                    g1_0042(16);
+                    queue_ambient_sprite_animation(0, p->world_x, p->world_y);
+                    add_and_draw_player_score(100L);
+                    request_priority_sound_effect(16);
                     continue;
                 }
-                if (p->state == 0 && g1_3558(p->x, p->y) != 0) {
-                    g1_314c(p->x, p->y);
-                    p->state = 1;
-                    if (g1_3714(p->x, p->y + 128) == 0) {
-                        g1_0b85(500L);
-                        g1_2a40(0x280, p->x, p->y);
+                if (p->animation_state == 0 && remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+                    spawn_contact_flash_effect(p->world_x, p->world_y);
+                    p->animation_state = 1;
+                    if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                        add_and_draw_player_score(500L);
+                        queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                     }
                 }
-                if (p->state == 0) {
-                    asm_0424(d_a0fb_ + 0x3e80,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 16);
+                if (p->animation_state == 0) {
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3e80,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                 } else {
-                    asm_0424(d_a0fb_ + 0x2440,
-                             p->x - d_009d,
-                             ((p->y - d_009f) >> 3) + 16);
+                    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2440,
+                                            p->world_x - level_scroll_x,
+                                            ((p->world_y - level_map_y_offset) >> 3) + 16);
                 }
             }
         }
     }
 }
 
-void g1_79d9(void)
+/* Updates and draws records from level-map marker 0x301E; the concrete entity identity is not
+   established by source. */
+void update_actor_301e(void)
 {
     register int i;
-    struct g1_79d9_record far *p;
+    struct actor_301e_record far *p;
 
-    for (i = 0; i < d_05c8; ++i) {
-        p = &d_a357_[i];
+    for (i = 0; i < actor_301e_count; ++i) {
+        p = &actor_301e_records[i];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
-        if (g1_3513(p->x, p->y) != 0 && p->flag != 0) {
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
+        if (test_player_overlap_with_object(p->world_x, p->world_y) != 0 && p->animation_flag != 0) {
             p->state = 0;
-            g1_2a40(0x500, p->x, p->y);
-            g1_0b85(2000L);
-            g1_0042(16);
+            queue_ambient_sprite_animation(0x500, p->world_x, p->world_y);
+            add_and_draw_player_score(2000L);
+            request_priority_sound_effect(16);
             continue;
         }
-        if (p->flag == 0 && g1_3558(p->x, p->y) != 0) {
-            g1_314c(p->x, p->y);
-            p->flag = 1;
-            if (g1_3714(p->x, p->y + 128) == 0) {
-                g1_0b85(500L);
-                g1_2a40(0x280, p->x, p->y);
+        if (p->animation_flag == 0 && remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+            spawn_contact_flash_effect(p->world_x, p->world_y);
+            p->animation_flag = 1;
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
             }
         }
-        if (p->flag == 0)
-            asm_0424(d_a0fb_ + 0x3e80,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+        if (p->animation_flag == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3e80,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         else
-            asm_0424(d_a0fb_ + 0x24e0,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x24e0,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_7b68(void)
+/* Updates and draws records from level-map marker 0x301F; the concrete entity identity is not
+   established by source. */
+void update_actor_301f(void)
 {
     register int i;
-    struct g1_7b68_record far *p;
+    struct actor_301f_record far *p;
 
-    for (i = 0; i < d_05ca; ++i) {
-        p = &d_9818_[i];
+    for (i = 0; i < actor_301f_count; ++i) {
+        p = &actor_301f_records[i];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
-        if (g1_3513(p->x, p->y) != 0 && p->flag != 0) {
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
+        if (test_player_overlap_with_object(p->world_x, p->world_y) != 0 && p->animation_flag != 0) {
             p->state = 0;
-            g1_2a40(0x640, p->x, p->y);
-            g1_0b85(5000L);
-            g1_0042(16);
+            queue_ambient_sprite_animation(0x640, p->world_x, p->world_y);
+            add_and_draw_player_score(5000L);
+            request_priority_sound_effect(16);
             continue;
         }
-        if (p->flag == 0 && g1_3558(p->x, p->y) != 0) {
-            g1_314c(p->x, p->y);
-            if (g1_3714(p->x, p->y + 128) == 0) {
-                g1_0b85(500L);
-                g1_2a40(0x280, p->x, p->y);
+        if (p->animation_flag == 0 && remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+            spawn_contact_flash_effect(p->world_x, p->world_y);
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
             }
-            p->flag = 1;
+            p->animation_flag = 1;
         }
-        if (p->flag == 0)
-            asm_0424(d_a0fb_ + 0x3e80,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+        if (p->animation_flag == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3e80,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         else
-            asm_0424(d_a0fb_ + 0x2580,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2580,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_7cfa(void)
+/* Updates and draws records from level-map marker 0x3021; the concrete entity identity is not
+   established by source. */
+void update_actor_3021(void)
 {
     register int i;
-    struct t_726b far *p;
+    struct actor_3021_record far *p;
 
-    d_06ef += 0xa0;
-    if (d_06ef == 0x280)
-        d_06ef = 0;
-    for (i = 0; i < d_05cc; ++i) {
-        p = &d_726b_[i];
-        if (p[1].x == 0) /* Keep this next-record access form for the match. */
+    actor_3021_sprite_offset += 0xa0;
+    if (actor_3021_sprite_offset == 0x280)
+        actor_3021_sprite_offset = 0;
+    for (i = 0; i < actor_3021_count; ++i) {
+        p = &actor_3021_records[i];
+        if (p[1].world_x == 0) /* Keep this next-actor_302a_record access form for the match. */
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        g1_3558(p->x, p->y);
-        if (g1_3513(p->x + 1, p->y) != 0 &&
-            d_d13f_ != 0 && g1_12ce() != 0)
-            ++d_0099;
-        if (g1_3513(p->x - 1, p->y) != 0 &&
-            d_d4c0_ != 0 && g1_1247() != 0)
-            --d_0099;
-        asm_0424(d_a0fb_ + d_06ef + 0x28a0,
-                 p->x - d_009d,
-                 ((p->y - d_009f) >> 3) + 16);
-        if (d_0437 == 0)
-            g1_0042(21);
+        remove_world_actor_at_position(p->world_x, p->world_y);
+        if (test_player_overlap_with_object(p->world_x + 1, p->world_y) != 0 &&
+            control_left_pressed != 0 && test_player_body_clearance() != 0)
+            ++player_screen_x;
+        if (test_player_overlap_with_object(p->world_x - 1, p->world_y) != 0 &&
+            control_right_pressed != 0 && test_player_floor_clearance() != 0)
+            --player_screen_x;
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3021_sprite_offset + 0x28a0,
+                                p->world_x - level_scroll_x,
+                                ((p->world_y - level_map_y_offset) >> 3) + 16);
+        if (world_animation_phase == 0)
+            request_priority_sound_effect(21);
     }
 }
 
-void pascal g1_7dff(int a0, int a1, int a2)
+/* Draws a four-cell-wide actor row and marks player contact in its center cells. */
+void pascal draw_four_wide_actor_sprite(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 0x280;
     offset += 0x6680;
 
-    if (g1_326e(a1, a2) == 0)
-        asm_0424(d_637a_ + offset,
-                 a1 - d_009d,
-                 ((a2 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 2, a2) == 0)
-        asm_0424(d_637a_ + offset + 0xa0,
-                 a1 - d_009d + 2,
-                 ((a2 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 4, a2) == 0)
-        asm_0424(d_637a_ + offset + 0x140,
-                 a1 - d_009d + 4,
-                 ((a2 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 6, a2) == 0)
-        asm_0424(d_637a_ + offset + 0x1e0,
-                 a1 - d_009d + 6,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset,
+                                a1 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0,
+                                a1 - level_scroll_x + 2,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 4, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x140,
+                                a1 - level_scroll_x + 4,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 6, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x1e0,
+                                a1 - level_scroll_x + 6,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
 
-    if (g1_3513(a1 + 2, a2 - 64) != 0 ||
-        g1_3513(a1 + 4, a2 - 64) != 0)
-        d_6379_ = 1;
+    if (test_player_overlap_with_object(a1 + 2, a2 - 64) != 0 ||
+        test_player_overlap_with_object(a1 + 4, a2 - 64) != 0)
+        active_sprite_draw_flag = 1;
 }
 
-void pascal g1_7f4a(int a0, int a1, int a2)
+/* Draws the wide actor sprite using the active page and graphics resources. */
+void pascal draw_wide_actor_sprite(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 0x280 + 0x6e00;
-    if (g1_326e(a1, a2) == 0)
-        asm_0424(d_637a_ + offset, a1 - d_009d, ((a2 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 2, a2) == 0)
-        asm_0424(d_637a_ + offset + 0xa0, a1 - d_009d + 2, ((a2 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 4, a2) == 0)
-        asm_0424(d_637a_ + offset + 0x140, a1 - d_009d + 4, ((a2 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 6, a2) == 0) {
-        asm_0424(d_637a_ + offset + 0x1e0, a1 - d_009d + 6, ((a2 - d_009f) >> 3) + 16);
-        g1_0042(22);
+    if (is_world_position_outside_view(a1, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset, a1 - level_scroll_x, ((a2 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0, a1 - level_scroll_x + 2, ((a2 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 4, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x140, a1 - level_scroll_x + 4, ((a2 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 6, a2) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0x1e0, a1 - level_scroll_x + 6, ((a2 - level_map_y_offset) >> 3) + 16);
+        request_priority_sound_effect(22);
     }
 }
 
-void g1_8069(void)
+/* Updates and draws records from level-map marker 0x3022; the concrete entity identity is not
+   established by source. */
+void update_actor_3022(void)
 {
     register int i;
-    struct g1_8069_record far *p;
+    struct actor_3022_record far *p;
 
-    d_06f1 = !d_06f1;
-    for (i = 0; i < d_05ce; i++) {
-        p = &d_5ec9_[i];
-        if (p->f0 == 0)
+    actor_3022_animation_phase = !actor_3022_animation_phase;
+    for (i = 0; i < actor_3022_count; i++) {
+        p = &actor_3022_records[i];
+        if (p->movement_state == 0)
             continue;
 
-        if (g1_326e(p->f2, p->f4) == 0 && p->f6 == 0) {
-            if (g1_3714(p->f2 + 3, p->f4 + 128))
-                p->f6 = 24;
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0 && p->jump_timer == 0) {
+            if (is_level_position_blocked(p->world_x + 3, p->world_y + 128))
+                p->jump_timer = 24;
             else
-                p->f6 = 1;
+                p->jump_timer = 1;
         }
 
-        if (p->f6 == 0)
+        if (p->jump_timer == 0)
             continue;
 
-        if (p->f6 > 2) {
-            --p->f6;
-            p->f4 -= 16;
+        if (p->jump_timer > 2) {
+            --p->jump_timer;
+            p->world_y -= 16;
         }
-        if (p->fa > 1 && p->f6 <= 2) {
-            p->f4 += 16;
-            ++p->fa;
-            if (p->fa >= 24 || g1_3714(p->f2 + 3, p->f4 + 128)) {
-                p->f6 = 24;
-                p->fa = 0;
+        if (p->fall_counter > 1 && p->jump_timer <= 2) {
+            p->world_y += 16;
+            ++p->fall_counter;
+            if (p->fall_counter >= 24 || is_level_position_blocked(p->world_x + 3, p->world_y + 128)) {
+                p->jump_timer = 24;
+                p->fall_counter = 0;
             }
         }
 
-        if (p->f2 + 3 > d_0099 + d_009d) {
-            p->f0 = 2;
-            if (d_0437 == 0 || d_0437 == 0x40) {
-                if (g1_367e(p->f2 - 2, p->f4) == 0)
-                    --p->f2;
+        if (p->world_x + 3 > player_screen_x + level_scroll_x) {
+            p->movement_state = 2;
+            if (world_animation_phase == 0 || world_animation_phase == 0x40) {
+                if (test_level_tile_special_state(p->world_x - 2, p->world_y) == 0)
+                    --p->world_x;
             }
-        } else if (p->f2 + 3 < d_0099 + d_009d) {
-            p->f0 = 3;
-            if (d_0437 == 0 || d_0437 == 0x40) {
-                if (g1_367e(p->f2 + 8, p->f4) == 0)
-                    ++p->f2;
+        } else if (p->world_x + 3 < player_screen_x + level_scroll_x) {
+            p->movement_state = 3;
+            if (world_animation_phase == 0 || world_animation_phase == 0x40) {
+                if (test_level_tile_special_state(p->world_x + 8, p->world_y) == 0)
+                    ++p->world_x;
             }
         } else {
-            if (p->f6 < 3 && p->fa == 0)
-                p->fa = 2;
-            p->f0 = 1;
+            if (p->jump_timer < 3 && p->fall_counter == 0)
+                p->fall_counter = 2;
+            p->movement_state = 1;
         }
 
-        if (g1_3558(p->f2, p->f4) ||
-            g1_3558(p->f2 + 8, p->f4) ||
-            g1_3558(p->f2 + 4, p->f4 - 128)) {
-            if (p->f8 != 0)
-                --p->f8;
+        if (remove_world_actor_at_position(p->world_x, p->world_y) ||
+            remove_world_actor_at_position(p->world_x + 8, p->world_y) ||
+            remove_world_actor_at_position(p->world_x + 4, p->world_y - 128)) {
+            if (p->hit_points != 0)
+                --p->hit_points;
         }
-        if (p->f8 < 4 && d_0437 == 0)
-            g1_2e64(p->f2 + 3, p->f4 - 96);
-        if (p->f8 < 3 && d_0437 == 0x20)
-            g1_2e64(p->f2, p->f4 - 96);
-        if (p->f8 < 2 && d_0437 == 0x40)
-            g1_2e64(p->f2 + 2, p->f4 - 128);
+        if (p->hit_points < 4 && world_animation_phase == 0)
+            spawn_pickup_object(p->world_x + 3, p->world_y - 96);
+        if (p->hit_points < 3 && world_animation_phase == 0x20)
+            spawn_pickup_object(p->world_x, p->world_y - 96);
+        if (p->hit_points < 2 && world_animation_phase == 0x40)
+            spawn_pickup_object(p->world_x + 2, p->world_y - 128);
 
-        if (p->f8 == 0) {
-            if (g1_3714(p->f2, p->f4 + 128) ||
-                g1_3714(p->f2 + 8, p->f4 + 128)) {
-                g1_314c(p->f2, p->f4);
-                g1_314c(p->f2 + 2, p->f4 - 64);
-                g1_314c(p->f2 + 4, p->f4);
-                g1_314c(p->f2 + 6, p->f4 - 64);
-                g1_314c(p->f2 + 8, p->f4);
-                g1_2fe7(p->f2 + 1, p->f4 - 32);
-                g1_2fe7(p->f2 + 5, p->f4 - 128);
-                g1_2b86(1, p->f2 + 1, p->f4 - 32);
-                g1_2b86(1, p->f2 + 7, p->f4 - 64);
-                g1_2b86(1, p->f2 + 1, p->f4 - 32);
-                g1_2b86(1, p->f2 + 2, p->f4 - 128);
-                g1_2b86(1, p->f2 + 3, p->f4 - 128);
-                g1_2b86(1, p->f2 + 5, p->f4 - 32);
-                p->f0 = 0;
-                g1_0b85(5000L);
+        if (p->hit_points == 0) {
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) ||
+                is_level_position_blocked(p->world_x + 8, p->world_y + 128)) {
+                spawn_contact_flash_effect(p->world_x, p->world_y);
+                spawn_contact_flash_effect(p->world_x + 2, p->world_y - 64);
+                spawn_contact_flash_effect(p->world_x + 4, p->world_y);
+                spawn_contact_flash_effect(p->world_x + 6, p->world_y - 64);
+                spawn_contact_flash_effect(p->world_x + 8, p->world_y);
+                spawn_animated_actor_sprite(p->world_x + 1, p->world_y - 32);
+                spawn_animated_actor_sprite(p->world_x + 5, p->world_y - 128);
+                spawn_moving_actor(1, p->world_x + 1, p->world_y - 32);
+                spawn_moving_actor(1, p->world_x + 7, p->world_y - 64);
+                spawn_moving_actor(1, p->world_x + 1, p->world_y - 32);
+                spawn_moving_actor(1, p->world_x + 2, p->world_y - 128);
+                spawn_moving_actor(1, p->world_x + 3, p->world_y - 128);
+                spawn_moving_actor(1, p->world_x + 5, p->world_y - 32);
+                p->movement_state = 0;
+                add_and_draw_player_score(5000L);
                 continue;
             }
-            p->f4 += 32;
+            p->world_y += 32;
         }
 
-        switch (p->f0) {
+        switch (p->movement_state) {
         case 2:
-            g1_7f4a(d_06f1, p->f2, p->f4 - 128);
-            g1_7dff(0, p->f2, p->f4);
+            draw_wide_actor_sprite(actor_3022_animation_phase, p->world_x, p->world_y - 128);
+            draw_four_wide_actor_sprite(0, p->world_x, p->world_y);
             break;
         case 1:
-            g1_7f4a(d_06f1 + 2, p->f2, p->f4 - 128);
-            g1_7dff(1, p->f2, p->f4);
+            draw_wide_actor_sprite(actor_3022_animation_phase + 2, p->world_x, p->world_y - 128);
+            draw_four_wide_actor_sprite(1, p->world_x, p->world_y);
             break;
         case 3:
-            g1_7f4a(d_06f1 + 4, p->f2, p->f4 - 128);
-            g1_7dff(2, p->f2, p->f4);
+            draw_wide_actor_sprite(actor_3022_animation_phase + 4, p->world_x, p->world_y - 128);
+            draw_four_wide_actor_sprite(2, p->world_x, p->world_y);
             break;
         }
     }
 }
 
-void g1_8506(void)
+/* Updates and draws records from level-map marker 0x3023; the concrete entity identity is not
+   established by source. */
+void update_actor_3023(void)
 {
     register int i;
-    struct g1_8506_record far *p;
+    struct actor_3023_record far *p;
 
-    for (i = 0; i < d_05d0; i++) {
-        p = &d_7cac_[i];
+    for (i = 0; i < actor_3023_count; i++) {
+        p = &actor_3023_records[i];
         if (p->state == 0)
             continue;
 
         if (p->state == 1) {
-            if (g1_3714(p->x, p->y + 128) == 0)
-                p->y += 64;
-            if (g1_326e(p->x, p->y) == 0) {
-                asm_0424(d_a0fb_ + 0x3e80,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
-                if (g1_3558(p->x, p->y) != 0) {
-                    g1_314c(p->x, p->y);
-                    if (g1_3714(p->x, p->y + 128) == 0) {
-                        g1_0b85(500L);
-                        g1_2a40(0x280, p->x, p->y);
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+                p->world_y += 64;
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3e80,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+                if (remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+                    spawn_contact_flash_effect(p->world_x, p->world_y);
+                    if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                        add_and_draw_player_score(500L);
+                        queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                     }
                     p->state = 2;
                 }
@@ -4826,159 +4963,166 @@ void g1_8506(void)
             continue;
         }
 
-        if (d_0437 == 0)
-            d_06f3 += 0xa0;
-        if (d_06f3 == 0x1e0)
-            d_06f3 = 0;
+        if (world_animation_phase == 0)
+            actor_3023_sprite_offset += 0xa0;
+        if (actor_3023_sprite_offset == 0x1e0)
+            actor_3023_sprite_offset = 0;
 
-        if (g1_3714(p->x, p->y - 128) == 0)
-            p->y -= 8;
-        if (g1_3558(p->x, p->y - 128) != 0 || g1_3714(p->x, p->y - 128) != 0) {
-            if (g1_326e(p->x, p->y - 128) == 0)
-                asm_0424(d_a0fb_ + 0x2da0,
-                         p->x - d_009d,
-                         (p->y - d_009f) >> 3);
+        if (is_level_position_blocked(p->world_x, p->world_y - 128) == 0)
+            p->world_y -= 8;
+        if (remove_world_actor_at_position(p->world_x, p->world_y - 128) != 0 || is_level_position_blocked(p->world_x, p->world_y - 128) != 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y - 128) == 0)
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2da0,
+                                        p->world_x - level_scroll_x,
+                                        (p->world_y - level_map_y_offset) >> 3);
             p->state = 0;
-            g1_2e64(p->x, p->y - 128);
+            spawn_pickup_object(p->world_x, p->world_y - 128);
             continue;
         }
-        if (g1_326e(p->x, p->y - 128) == 0)
-            asm_0424(d_a0fb_ + 0x2b20,
-                     p->x - d_009d,
-                     (p->y - d_009f) >> 3);
-        if (g1_326e(p->x, p->y) == 0)
-            asm_0424(d_a0fb_ + d_06f3 + 0x2bc0,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
-        if (g1_3513(p->x, p->y) != 0) {
-            g1_0b85(10000L);
-            g1_2a40(0x780, p->x, p->y - 128);
-            g1_0042(3);
+        if (is_world_position_outside_view(p->world_x, p->world_y - 128) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2b20,
+                                    p->world_x - level_scroll_x,
+                                    (p->world_y - level_map_y_offset) >> 3);
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3023_sprite_offset + 0x2bc0,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+        if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
+            add_and_draw_player_score(10000L);
+            queue_ambient_sprite_animation(0x780, p->world_x, p->world_y - 128);
+            request_priority_sound_effect(3);
             p->state = 0;
         }
     }
 }
 
-void g1_87bf(void)
+/* Updates and draws records from level-map marker 0x3024; the concrete entity identity is not
+   established by source. */
+void update_actor_3024(void)
 {
     register int i;
-    struct g1_87bf_record far *p;
+    struct actor_3024_record far *p;
 
-    d_4ed6_ = 1;
-    for (i = 0; i < d_05d2; ++i) {
-        p = &d_68fc_[i];
+    level_play_state = 1;
+    for (i = 0; i < actor_3024_count; ++i) {
+        p = &actor_3024_records[i];
         if (p->state == 0)
             continue;
 
-        d_4ed6_ = 0;
-        if (g1_326e(p->x, p->y) != 0)
+        level_play_state = 0;
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
 
-        if (p->x - 2 > d_0099 + d_009d) {
-            asm_0424(d_637a_ + 0x7d00,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
-        } else if (p->x + 2 < d_0099 + d_009d) {
-            asm_0424(d_637a_ + 0x7e40,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+        if (p->world_x - 2 > player_screen_x + level_scroll_x) {
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x7d00,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
+        } else if (p->world_x + 2 < player_screen_x + level_scroll_x) {
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x7e40,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
-            asm_0424(d_637a_ + 0x7da0,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x7da0,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
 
-        if (g1_3558(p->x, p->y) != 0) {
-            g1_2a40(0, p->x, p->y);
-            g1_0b85(100L);
-            g1_2b86(1, p->x, p->y);
+        if (remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+            queue_ambient_sprite_animation(0, p->world_x, p->world_y);
+            add_and_draw_player_score(100L);
+            spawn_moving_actor(1, p->world_x, p->world_y);
             p->state = 0;
-            g1_0042(18);
+            request_priority_sound_effect(18);
         }
     }
 }
 
-void g1_892b(void)
+/* Draws the animated level tile using the active page and graphics resources. */
+void draw_animated_level_tile(void)
 {
     register unsigned int i;
-    struct g1_892b_record far *p;
+    struct animated_level_tile_record far *p;
 
-    for (i = 0; i < d_05d4; ++i) {
-        p = &d_7f06_[i];
-        if (g1_326e(p->x, p->y) == 0)
-            asm_0424(d_637a_ + p->offset,
-                    p->x - d_009d,
-                    ((p->y - d_009f) >> 3) + 16);
+    for (i = 0; i < actor_3025_count; ++i) {
+        p = &animated_level_tile_records[i];
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + p->sprite_resource_offset,
+                    p->world_x - level_scroll_x,
+                    ((p->world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_899e(void)
+/* Updates and draws records from level-map marker 0x3029; the concrete entity identity is not
+   established by source. */
+void update_actor_3029(void)
 {
     register unsigned int si;
-    struct g1_899e_record far *p;
+    struct actor_3029_record far *p;
 
-    d_06f5 += 0xa0;
-    if (d_06f5 == 0x5a0)
-        d_06f5 = 0;
+    actor_3024_sprite_offset += 0xa0;
+    if (actor_3024_sprite_offset == 0x5a0)
+        actor_3024_sprite_offset = 0;
 
-    for (si = 0; si < d_05d6; ++si) {
-        p = &d_7063_[si];
+    for (si = 0; si < actor_3029_count; ++si) {
+        p = &actor_3029_records[si];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
 
         if (p->state == 1) {
-            if (g1_3558(p->x, p->y) != 0) {
-                g1_314c(p->x, p->y);
+            if (remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+                spawn_contact_flash_effect(p->world_x, p->world_y);
                 p->state = 2;
-                if (g1_3714(p->x, p->y + 128) == 0) {
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x, p->y);
+                if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                 }
             }
         }
 
-        if (p->state == 2 && g1_3513(p->x, p->y) != 0) {
+        if (p->state == 2 && test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
             p->state = 0;
-            d_4ed4_ = 9;
-            g1_0b85(1000L);
-            g1_2a40(0x3c0, p->x, p->y);
-            g1_0a0e();
-            g1_0042(4);
-            if (d_5ec8_ != 0) {
-                d_5ec8_ = 0;
-                g2_165e();
+            title_graphic_frame_index = 9;
+            add_and_draw_player_score(1000L);
+            queue_ambient_sprite_animation(0x3c0, p->world_x, p->world_y);
+            draw_title_screen_graphic();
+            request_priority_sound_effect(4);
+            if (hint_revealed_object_10 != 0) {
+                hint_revealed_object_10 = 0;
+                show_secret_tip_nuclear();
             }
             continue;
         }
 
         if (p->state == 1) {
-            asm_0424(d_a0fb_,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
-            asm_0424(d_a0fb_ + d_06f5 + 0x2e40,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3024_sprite_offset + 0x2e40,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-void g1_8b5b(void)
+/* Updates and draws records from level-map marker 0x302A; the concrete entity identity is not
+   established by source. */
+void update_actor_302a(void)
 {
-    struct record far *p;
+    struct actor_302a_record far *p;
     register int i;
 
-    d_531c_ = 1;
-    for (i = 0; i < d_05d8; ++i) {
-        p = &d_c691_[i];
+    actor_302a_update_state = 1;
+    for (i = 0; i < actor_302a_count; ++i) {
+        p = &actor_302a_records[i];
         if (p->state == 0)
             continue;
-        d_531c_ = 0;
-        if (g1_326e(p->x, p->y) && g1_326e(p->x, p->y)) {
+        actor_302a_update_state = 0;
+        if (is_world_position_outside_view(p->world_x, p->world_y) && is_world_position_outside_view(p->world_x, p->world_y)) {
             if (p->state > 15) {
                 p->state = 0;
                 continue;
@@ -4987,9 +5131,9 @@ void g1_8b5b(void)
             }
         } else {
             if (p->state > 1) {
-                if (g1_3714(p->x + 1, p->y + 128)) {
-                    g1_314c(p->x + 1, p->y);
-                    g1_2e64(p->x + 1, p->y);
+                if (is_level_position_blocked(p->world_x + 1, p->world_y + 128)) {
+                    spawn_contact_flash_effect(p->world_x + 1, p->world_y);
+                    spawn_pickup_object(p->world_x + 1, p->world_y);
                     p->state = 0;
                     continue;
                 }
@@ -4997,308 +5141,314 @@ void g1_8b5b(void)
             }
             if (p->state < 2) {
                 /* Scale the tile value by 128 before comparing world positions. */
-                if (p->x - 1 <= d_0099 + d_009d &&
-                    p->x + 3 >= d_0099 + d_009d &&
-                    ((d_009b >> 4) << 7) + d_009f - p->y < 1024 &&
-                    ((d_009b >> 4) << 7) + d_009f - p->y > 0)
+                if (p->world_x - 1 <= player_screen_x + level_scroll_x &&
+                    p->world_x + 3 >= player_screen_x + level_scroll_x &&
+                    ((player_screen_y >> 4) << 7) + level_map_y_offset - p->world_y < 1024 &&
+                    ((player_screen_y >> 4) << 7) + level_map_y_offset - p->world_y > 0)
                     p->state = 2;
             }
             if (p->state == 16)
-                g1_0042(32);
+                request_priority_sound_effect(32);
             if (p->state > 15) {
-                p->y += 96;
-                if (g1_3513(p->x, p->y) || g1_3513(p->x + 2, p->y))
-                    d_6379_ = 1;
-                if (g1_3558(p->x, p->y - 64) ||
-                    g1_3558(p->x + 2, p->y - 64)) {
-                    g1_314c(p->x + 1, p->y);
-                    g1_2e64(p->x + 1, p->y);
-                    g1_2b86(1, p->x + 1, p->y);
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x + 1, p->y);
+                p->world_y += 96;
+                if (test_player_overlap_with_object(p->world_x, p->world_y) || test_player_overlap_with_object(p->world_x + 2, p->world_y))
+                    active_sprite_draw_flag = 1;
+                if (remove_world_actor_at_position(p->world_x, p->world_y - 64) ||
+                    remove_world_actor_at_position(p->world_x + 2, p->world_y - 64)) {
+                    spawn_contact_flash_effect(p->world_x + 1, p->world_y);
+                    spawn_pickup_object(p->world_x + 1, p->world_y);
+                    spawn_moving_actor(1, p->world_x + 1, p->world_y);
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x + 1, p->world_y);
                     p->state = 0;
                     continue;
                 }
             }
         }
         if (p->state == 1 || p->state >= 15) {
-            if (!g1_326e(p->x, p->y))
-                asm_0424(d_a0fb_ + 0x33e0,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
-            if (!g1_326e(p->x + 2, p->y))
-                asm_0424(d_a0fb_ + 0x3480,
-                         p->x - d_009d + 2,
-                         ((p->y - d_009f) >> 3) + 16);
+            if (!is_world_position_outside_view(p->world_x, p->world_y))
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x33e0,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
+            if (!is_world_position_outside_view(p->world_x + 2, p->world_y))
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3480,
+                                        p->world_x - level_scroll_x + 2,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
         if (p->state >= 15)
             continue;
-        if (!g1_326e(p->x, p->y))
-            asm_0424(d_a0fb_ + 0x33e0,
-                     p->x - d_009d,
-                     (p->state % 2) + ((p->y - d_009f) >> 3) + 16);
-        if (g1_326e(p->x + 2, p->y))
+        if (!is_world_position_outside_view(p->world_x, p->world_y))
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x33e0,
+                                    p->world_x - level_scroll_x,
+                                    (p->state % 2) + ((p->world_y - level_map_y_offset) >> 3) + 16);
+        if (is_world_position_outside_view(p->world_x + 2, p->world_y))
             continue;
-        asm_0424(d_a0fb_ + 0x3480,
-                 p->x - d_009d + 2,
-                 (p->state % 2) + ((p->y - d_009f) >> 3) + 16);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3480,
+                                p->world_x - level_scroll_x + 2,
+                                (p->state % 2) + ((p->world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-void g1_8ec1(void)
+/* Updates and draws records from level-map marker 0x302B; the concrete entity identity is not
+   established by source. */
+void update_actor_302b(void)
 {
     register int i;
     register int event;
 
     event = 0;
-    d_06f7 += 0xa0;
-    if (d_06f7 == 0x320)
-        d_06f7 = 0;
-    if (g1_326e(d_c68d_, d_c68f_) != 0) {
-        if (d_d572_ < 2)
+    actor_3029_sprite_offset += 0xa0;
+    if (actor_3029_sprite_offset == 0x320)
+        actor_3029_sprite_offset = 0;
+    if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y) != 0) {
+        if (actor_302b_open_state < 2)
             return;
-        d_d572_ = 0;
-        for (i = 0; i < d_05c2; ++i)
-            d_b3d6_[i].used = 0;
+        actor_302b_open_state = 0;
+        for (i = 0; i < actor_301a_count; ++i)
+            actor_301a_records[i].active = 0;
         return;
     }
 
-    if (d_c8e9_ != 0 && d_d572_ == 0)
+    if (actor_302b_active_state != 0 && actor_302b_open_state == 0)
         return;
 
-    if (g1_3558(d_c68d_, d_c68f_) != 0) {
-        --d_d56e_;
-        g1_314c(d_c68d_, d_c68f_);
-        if (d_d56e_ == 0)
-            d_c8e9_ = 1;
+    if (remove_world_actor_at_position(actor_302b_world_x, actor_302b_world_y) != 0) {
+        --actor_302b_animation_counter;
+        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y);
+        if (actor_302b_animation_counter == 0)
+            actor_302b_active_state = 1;
         event = 1;
-        g1_0042(10);
+        request_priority_sound_effect(10);
     }
-    if (g1_3558(d_c68d_, d_c68f_ - 128) != 0) {
-        --d_d56e_;
-        g1_314c(d_c68d_, d_c68f_ - 128);
-        if (d_d56e_ == 0)
-            d_c8e9_ = 1;
+    if (remove_world_actor_at_position(actor_302b_world_x, actor_302b_world_y - 128) != 0) {
+        --actor_302b_animation_counter;
+        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y - 128);
+        if (actor_302b_animation_counter == 0)
+            actor_302b_active_state = 1;
         event = 1;
-        g1_0042(10);
+        request_priority_sound_effect(10);
     }
-    if (g1_3558(d_c68d_, d_c68f_ - 256) != 0) {
-        --d_d56e_;
-        g1_314c(d_c68d_, d_c68f_ - 256);
-        if (d_d56e_ == 0)
-            d_c8e9_ = 1;
+    if (remove_world_actor_at_position(actor_302b_world_x, actor_302b_world_y - 256) != 0) {
+        --actor_302b_animation_counter;
+        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y - 256);
+        if (actor_302b_animation_counter == 0)
+            actor_302b_active_state = 1;
         event = 1;
-        g1_0042(10);
+        request_priority_sound_effect(10);
     }
 
-    if (d_c8e9_ == 0) {
-        g1_0042(36);
+    if (actor_302b_active_state == 0) {
+        request_priority_sound_effect(36);
         if (event == 0) {
-            asm_0424(d_a0fb_ + d_06f7 + 0x3840,
-                     d_c68d_ - d_009d,
-                     ((d_c68f_ - d_009f) >> 3) + 16);
-            if (g1_326e(d_c68d_, d_c68f_ - 128) == 0)
-                asm_0424(d_a0fb_ + d_06f7 + 0x3840,
-                         d_c68d_ - d_009d,
-                         (d_c68f_ - d_009f) >> 3);
-            if (g1_326e(d_c68d_, d_c68f_ - 256) == 0)
-                asm_0424(d_a0fb_ + d_06f7 + 0x3840,
-                         d_c68d_ - d_009d,
-                         ((d_c68f_ - d_009f) >> 3) - 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3029_sprite_offset + 0x3840,
+                                    actor_302b_world_x - level_scroll_x,
+                                    ((actor_302b_world_y - level_map_y_offset) >> 3) + 16);
+            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 128) == 0)
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3029_sprite_offset + 0x3840,
+                                        actor_302b_world_x - level_scroll_x,
+                                        (actor_302b_world_y - level_map_y_offset) >> 3);
+            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 256) == 0)
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3029_sprite_offset + 0x3840,
+                                        actor_302b_world_x - level_scroll_x,
+                                        ((actor_302b_world_y - level_map_y_offset) >> 3) - 16);
         } else {
-            asm_0424(d_637a_ + 0x9f60,
-                     d_c68d_ - d_009d,
-                     ((d_c68f_ - d_009f) >> 3) + 16);
-            if (g1_326e(d_c68d_, d_c68f_ - 128) == 0)
-                asm_0424(d_637a_ + 0x9f60,
-                         d_c68d_ - d_009d,
-                         (d_c68f_ - d_009f) >> 3);
-            if (g1_326e(d_c68d_, d_c68f_ - 256) == 0)
-                asm_0424(d_637a_ + 0x9f60,
-                         d_c68d_ - d_009d,
-                         ((d_c68f_ - d_009f) >> 3) - 16);
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x9f60,
+                                    actor_302b_world_x - level_scroll_x,
+                                    ((actor_302b_world_y - level_map_y_offset) >> 3) + 16);
+            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 128) == 0)
+                blit_planar_sprite_rows(sprite_graphics_buffer + 0x9f60,
+                                        actor_302b_world_x - level_scroll_x,
+                                        (actor_302b_world_y - level_map_y_offset) >> 3);
+            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 256) == 0)
+                blit_planar_sprite_rows(sprite_graphics_buffer + 0x9f60,
+                                        actor_302b_world_x - level_scroll_x,
+                                        ((actor_302b_world_y - level_map_y_offset) >> 3) - 16);
         }
-        if (g1_3513(d_c68d_, d_c68f_ - 64) != 0) {
-            if (d_4ed4_ > 0) {
-                d_4ed4_ = 0;
-                g1_0a0e();
+        if (test_player_overlap_with_object(actor_302b_world_x, actor_302b_world_y - 64) != 0) {
+            if (title_graphic_frame_index > 0) {
+                title_graphic_frame_index = 0;
+                draw_title_screen_graphic();
             }
         }
         return;
     }
 
-    asm_0424(d_a0fb_ + 0x3840,
-             d_c68d_ - d_009d,
-             ((d_c68f_ - d_009f) >> 3) + 16);
-    if (g1_326e(d_c68d_, d_c68f_ - 128) == 0)
-        asm_0424(d_a0fb_ + 0x3840,
-                 d_c68d_ - d_009d,
-                 (d_c68f_ - d_009f) >> 3);
-    if (g1_326e(d_c68d_, d_c68f_ - 256) == 0)
-        asm_0424(d_a0fb_ + 0x3840,
-                 d_c68d_ - d_009d,
-                 ((d_c68f_ - d_009f) >> 3) - 16);
-    ++d_d572_;
-    if (d_0437 == 0)
-        g1_2e64(d_c68d_ - 1, d_c68f_);
-    if (d_0437 == 0x40)
-        g1_2e64(d_c68d_ + 1, d_c68f_);
-    if (d_d572_ == 32) {
-        d_d572_ = 0;
-        for (i = 0; i < d_05c2; ++i)
-            d_b3d6_[i].used = 0;
-        g1_0b85(20000L);
-        g1_0042(17);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3840,
+                            actor_302b_world_x - level_scroll_x,
+                            ((actor_302b_world_y - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 128) == 0)
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3840,
+                                actor_302b_world_x - level_scroll_x,
+                                (actor_302b_world_y - level_map_y_offset) >> 3);
+    if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 256) == 0)
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3840,
+                                actor_302b_world_x - level_scroll_x,
+                                ((actor_302b_world_y - level_map_y_offset) >> 3) - 16);
+    ++actor_302b_open_state;
+    if (world_animation_phase == 0)
+        spawn_pickup_object(actor_302b_world_x - 1, actor_302b_world_y);
+    if (world_animation_phase == 0x40)
+        spawn_pickup_object(actor_302b_world_x + 1, actor_302b_world_y);
+    if (actor_302b_open_state == 32) {
+        actor_302b_open_state = 0;
+        for (i = 0; i < actor_301a_count; ++i)
+            actor_301a_records[i].active = 0;
+        add_and_draw_player_score(20000L);
+        request_priority_sound_effect(17);
         return;
     }
-    if (d_0437 == 0)
+    if (world_animation_phase == 0)
         return;
 
-    switch (d_d572_) {
+    switch (actor_302b_open_state) {
     case 2:
-        g1_2b86(1, d_c68d_ - 1, d_c68f_);
+        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y);
         break;
     case 8:
-        g1_2b86(1, d_c68d_ - 2, d_c68f_ - 128);
+        spawn_moving_actor(1, actor_302b_world_x - 2, actor_302b_world_y - 128);
         break;
     case 10:
-        g1_2b86(1, d_c68d_ + 1, d_c68f_ + 256);
+        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
         break;
     case 13:
-        g1_2b86(1, d_c68d_, d_c68f_ + 128);
-        g1_2b86(1, d_c68d_ - 1, d_c68f_ + 384);
-        g1_2b86(1, d_c68d_, d_c68f_ - 384);
-        g1_2b86(3, d_c68d_ + 2, d_c68f_);
-        g1_2b86(3, d_c68d_, d_c68f_ + 128);
+        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y + 128);
+        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y + 384);
+        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y - 384);
+        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y);
+        spawn_moving_actor(3, actor_302b_world_x, actor_302b_world_y + 128);
         break;
     case 15:
-        g1_2b86(1, d_c68d_ + 2, d_c68f_ - 128);
+        spawn_moving_actor(1, actor_302b_world_x + 2, actor_302b_world_y - 128);
         break;
     case 17:
-        g1_2b86(1, d_c68d_ + 1, d_c68f_ + 256);
-        g1_2b86(1, d_c68d_ + 2, d_c68f_);
-        g1_2b86(1, d_c68d_ - 3, d_c68f_ - 256);
-        g1_314c(d_c68d_ - 1, d_c68f_);
+        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
+        spawn_moving_actor(1, actor_302b_world_x + 2, actor_302b_world_y);
+        spawn_moving_actor(1, actor_302b_world_x - 3, actor_302b_world_y - 256);
+        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y);
         break;
     case 18:
-        g1_314c(d_c68d_ + 3, d_c68f_ - 256);
-        g1_2b86(1, d_c68d_ + 1, d_c68f_ + 256);
+        spawn_contact_flash_effect(actor_302b_world_x + 3, actor_302b_world_y - 256);
+        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
         break;
     case 23:
-        g1_2fe7(d_c68d_, d_c68f_ + 64);
-        g1_2fe7(d_c68d_ - 1, d_c68f_ - 64);
-        g1_2b86(3, d_c68d_, d_c68f_ + 128);
-        g1_314c(d_c68d_ + 2, d_c68f_);
-        g1_314c(d_c68d_ - 1, d_c68f_ + 384);
-        g1_2b86(1, d_c68d_ - 1, d_c68f_ + 384);
-        g1_2b86(3, d_c68d_, d_c68f_ - 384);
-        g1_2b86(3, d_c68d_ + 2, d_c68f_ - 128);
-        g1_2b86(1, d_c68d_ + 1, d_c68f_ + 256);
+        spawn_animated_actor_sprite(actor_302b_world_x, actor_302b_world_y + 64);
+        spawn_animated_actor_sprite(actor_302b_world_x - 1, actor_302b_world_y - 64);
+        spawn_moving_actor(3, actor_302b_world_x, actor_302b_world_y + 128);
+        spawn_contact_flash_effect(actor_302b_world_x + 2, actor_302b_world_y);
+        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y + 384);
+        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y + 384);
+        spawn_moving_actor(3, actor_302b_world_x, actor_302b_world_y - 384);
+        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y - 128);
+        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
         break;
     case 24:
-        g1_314c(d_c68d_ + 1, d_c68f_ + 128);
-        g1_314c(d_c68d_ - 2, d_c68f_ - 256);
-        g1_2b86(1, d_c68d_ + 2, d_c68f_);
-        g1_2b86(3, d_c68d_ - 3, d_c68f_ - 256);
-        g1_314c(d_c68d_ - 1, d_c68f_);
-        g1_314c(d_c68d_ + 3, d_c68f_ - 256);
-        g1_2b86(1, d_c68d_ - 1, d_c68f_);
-        g1_2b86(3, d_c68d_ - 2, d_c68f_ - 128);
-        g1_2b86(1, d_c68d_ + 1, d_c68f_ + 256);
+        spawn_contact_flash_effect(actor_302b_world_x + 1, actor_302b_world_y + 128);
+        spawn_contact_flash_effect(actor_302b_world_x - 2, actor_302b_world_y - 256);
+        spawn_moving_actor(1, actor_302b_world_x + 2, actor_302b_world_y);
+        spawn_moving_actor(3, actor_302b_world_x - 3, actor_302b_world_y - 256);
+        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y);
+        spawn_contact_flash_effect(actor_302b_world_x + 3, actor_302b_world_y - 256);
+        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y);
+        spawn_moving_actor(3, actor_302b_world_x - 2, actor_302b_world_y - 128);
+        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
         break;
     case 29:
-        g1_2fe7(d_c68d_ + 3, d_c68f_ - 128);
-        g1_2fe7(d_c68d_ + 2, d_c68f_ + 256);
-        g1_2b86(1, d_c68d_, d_c68f_ + 128);
-        g1_314c(d_c68d_ + 2, d_c68f_);
-        g1_314c(d_c68d_ - 1, d_c68f_ + 384);
-        g1_2b86(3, d_c68d_ - 1, d_c68f_ + 384);
-        g1_2b86(1, d_c68d_, d_c68f_ - 384);
-        g1_2b86(3, d_c68d_ + 2, d_c68f_ - 128);
-        g1_2b86(1, d_c68d_ + 1, d_c68f_ + 256);
+        spawn_animated_actor_sprite(actor_302b_world_x + 3, actor_302b_world_y - 128);
+        spawn_animated_actor_sprite(actor_302b_world_x + 2, actor_302b_world_y + 256);
+        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y + 128);
+        spawn_contact_flash_effect(actor_302b_world_x + 2, actor_302b_world_y);
+        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y + 384);
+        spawn_moving_actor(3, actor_302b_world_x - 1, actor_302b_world_y + 384);
+        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y - 384);
+        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y - 128);
+        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
         break;
     case 31:
-        g1_2fe7(d_c68d_ - 2, d_c68f_ - 384);
-        g1_314c(d_c68d_ + 1, d_c68f_ + 128);
-        g1_314c(d_c68d_, d_c68f_);
-        g1_2b86(3, d_c68d_ + 2, d_c68f_);
-        g1_2b86(3, d_c68d_ - 3, d_c68f_ - 256);
-        g1_314c(d_c68d_ - 1, d_c68f_);
-        g1_314c(d_c68d_ + 3, d_c68f_ - 256);
-        g1_2b86(1, d_c68d_ - 1, d_c68f_);
-        g1_2b86(1, d_c68d_ - 2, d_c68f_ - 128);
-        g1_2b86(3, d_c68d_ + 1, d_c68f_ + 256);
-        g1_2a40(0x780, d_c68d_ - 1, d_c68f_);
-        g1_2a40(0x780, d_c68d_ + 1, d_c68f_);
+        spawn_animated_actor_sprite(actor_302b_world_x - 2, actor_302b_world_y - 384);
+        spawn_contact_flash_effect(actor_302b_world_x + 1, actor_302b_world_y + 128);
+        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y);
+        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y);
+        spawn_moving_actor(3, actor_302b_world_x - 3, actor_302b_world_y - 256);
+        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y);
+        spawn_contact_flash_effect(actor_302b_world_x + 3, actor_302b_world_y - 256);
+        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y);
+        spawn_moving_actor(1, actor_302b_world_x - 2, actor_302b_world_y - 128);
+        spawn_moving_actor(3, actor_302b_world_x + 1, actor_302b_world_y + 256);
+        queue_ambient_sprite_animation(0x780, actor_302b_world_x - 1, actor_302b_world_y);
+        queue_ambient_sprite_animation(0x780, actor_302b_world_x + 1, actor_302b_world_y);
         break;
     }
 }
 
-void g1_9698(void)
+/* Updates and draws records from level-map marker 0x302C; the concrete entity identity is not
+   established by source. */
+void update_actor_302c(void)
 {
     register int i;
-    struct g1_9698_record far *p;
+    struct actor_302c_record far *p;
 
-    for (i = 0; i < d_05da; ++i) {
-        p = &d_9688_[i];
-        if (g1_326e(p->x, p->y) == 0) {
-            if (g1_3513(p->x, p->y)) {
-                d_6379_ = 1;
-                asm_0424(d_a0fb_ + 0x3c00,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+    for (i = 0; i < actor_302c_count; ++i) {
+        p = &actor_302c_records[i];
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y)) {
+                active_sprite_draw_flag = 1;
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3c00,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             } else {
-                asm_0424(d_a0fb_ + 0x3b60,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3b60,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             }
         }
     }
 }
 
-void g1_9757(void)
+/* Updates and draws records from level-map marker 0x302D; the concrete entity identity is not
+   established by source. */
+void update_actor_302d(void)
 {
     register int i;
-    struct g1_9757_row far *p;
+    struct actor_302d_record far *p;
 
-    d_06f9 += 0xa0;
-    if (d_06f9 == 0x1e0)
-        d_06f9 = 0;
-    for (i = 0; i < d_05dc; i++) {
-        p = &d_c915_[i];
+    actor_302a_sprite_offset += 0xa0;
+    if (actor_302a_sprite_offset == 0x1e0)
+        actor_302a_sprite_offset = 0;
+    for (i = 0; i < actor_302d_count; i++) {
+        p = &actor_302d_records[i];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
-        if (p->state == 1 && g1_3558(p->x, p->y)) {
-            g1_314c(p->x, p->y);
-            if (g1_3714(p->x, p->y + 128) == 0) {
-                g1_0b85(500L);
-                g1_2a40(0x280, p->x, p->y);
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
+        if (p->state == 1 && remove_world_actor_at_position(p->world_x, p->world_y)) {
+            spawn_contact_flash_effect(p->world_x, p->world_y);
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
             }
             p->state = 2;
         }
-        if (p->state == 2 && g1_3513(p->x, p->y) != 0) {
+        if (p->state == 2 && test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
             p->state = 0;
-            g1_0042(16);
-            switch (d_0437) {
+            request_priority_sound_effect(16);
+            switch (world_animation_phase) {
             case 0:
-                g1_0b85(100L);
-                g1_2a40(0, p->x, p->y);
+                add_and_draw_player_score(100L);
+                queue_ambient_sprite_animation(0, p->world_x, p->world_y);
                 break;
             case 0x20:
-                g1_0b85(500L);
-                g1_2a40(0x280, p->x, p->y);
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                 break;
             case 0x40:
-                g1_0b85(2000L);
-                g1_2a40(0x500, p->x, p->y);
+                add_and_draw_player_score(2000L);
+                queue_ambient_sprite_animation(0x500, p->world_x, p->world_y);
                 break;
             case 0x60:
-                g1_0b85(5000L);
-                g1_2a40(0x640, p->x, p->y);
+                add_and_draw_player_score(5000L);
+                queue_ambient_sprite_animation(0x640, p->world_x, p->world_y);
                 break;
             default:
                 continue;
@@ -5306,66 +5456,68 @@ void g1_9757(void)
             continue;
         }
         if (p->state == 1) {
-            asm_0424(d_a0fb_ + 0x3e80,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3e80,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
-            asm_0424(d_a0fb_ + d_06f9 + 0x3ca0,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_302a_sprite_offset + 0x3ca0,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-void g1_9986(void)
+/* Updates and draws records from level-map marker 0x302E; the concrete entity identity is not
+   established by source. */
+void update_actor_302e(void)
 {
     register int si;
-    struct g1_9986_record far *p;
+    struct actor_302e_record far *p;
 
-    d_06fb += 0xa0;
-    if (d_06fb == 0x1e0)
-        d_06fb = 0;
+    actor_302b_sprite_offset += 0xa0;
+    if (actor_302b_sprite_offset == 0x1e0)
+        actor_302b_sprite_offset = 0;
 
-    for (si = 0; si < d_05de; ++si) {
-        p = &d_6e0b_[si];
+    for (si = 0; si < actor_302e_count; ++si) {
+        p = &actor_302e_records[si];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
 
         if (p->state == 1) {
-            if (g1_3558(p->x, p->y) != 0) {
-                g1_314c(p->x, p->y);
-                if (g1_3714(p->x, p->y + 128) == 0) {
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x, p->y);
+            if (remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+                spawn_contact_flash_effect(p->world_x, p->world_y);
+                if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                 }
                 p->state = 2;
             }
         }
 
         if (p->state == 2) {
-            if (g1_3513(p->x, p->y) != 0) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
                 p->state = 0;
-                g1_0042(16);
-                switch (d_0437) {
+                request_priority_sound_effect(16);
+                switch (world_animation_phase) {
                 case 0:
-                    g1_0b85(100L);
-                    g1_2a40(0, p->x, p->y);
+                    add_and_draw_player_score(100L);
+                    queue_ambient_sprite_animation(0, p->world_x, p->world_y);
                     break;
                 case 0x20:
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x, p->y);
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
                     break;
                 case 0x40:
-                    g1_0b85(2000L);
-                    g1_2a40(0x500, p->x, p->y);
+                    add_and_draw_player_score(2000L);
+                    queue_ambient_sprite_animation(0x500, p->world_x, p->world_y);
                     break;
                 case 0x60:
-                    g1_0b85(5000L);
-                    g1_2a40(0x640, p->x, p->y);
+                    add_and_draw_player_score(5000L);
+                    queue_ambient_sprite_animation(0x640, p->world_x, p->world_y);
                     break;
                 }
                 continue;
@@ -5373,408 +5525,422 @@ void g1_9986(void)
         }
 
         if (p->state == 1) {
-            asm_0424(d_a0fb_ + 0x3e80,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3e80,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
-            asm_0424(d_a0fb_ + d_06fb + 0x3fc0,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_302b_sprite_offset + 0x3fc0,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-void pascal g1_9bb5(int a2, register int a1, register int a0)
+/* Draws the level object animation using the active page and graphics resources. */
+void pascal draw_level_object_animation(int a2, register int a1, register int a0)
 {
-    ++d_06fd;
-    if (d_06fd == 3)
-        d_06fd = 0;
+    ++actor_302c_animation_phase;
+    if (actor_302c_animation_phase == 3)
+        actor_302c_animation_phase = 0;
 
-    if (g1_326e(a1, a0 - 256) == 0)
-        asm_0424(d_637a_ + 0x8480, a1 - d_009d,
-                 ((a0 - d_009f) >> 3) - 16);
-    if (g1_326e(a1 + 4, a0 - 256) == 0)
-        asm_0424(d_637a_ + 0x85c0, a1 - d_009d + 4,
-                 ((a0 - d_009f) >> 3) - 16);
-    if (g1_326e(a1, a0 - 128) == 0)
-        asm_0424(d_637a_ + 0x8660, a1 - d_009d,
-                 (a0 - d_009f) >> 3);
-    if (g1_326e(a1 + 2, a0 - 128) == 0)
-        asm_0424(d_637a_ + 0x8700, a1 - d_009d + 2,
-                 (a0 - d_009f) >> 3);
-    if (g1_326e(a1 + 4, a0 - 128) == 0)
-        asm_0424(d_637a_ + 0x87a0, a1 - d_009d + 4,
-                 (a0 - d_009f) >> 3);
-    if (g1_326e(a1, a0) == 0)
-        asm_0424(d_637a_ + 0x8840, a1 - d_009d,
-                 ((a0 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 2, a0) == 0)
-        asm_0424(d_637a_ + 0x88e0, a1 - d_009d + 2,
-                 ((a0 - d_009f) >> 3) + 16);
-    if (g1_326e(a1 + 4, a0) == 0)
-        asm_0424(d_637a_ + 0x8980, a1 - d_009d + 4,
-                 ((a0 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a0 - 256) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x8480, a1 - level_scroll_x,
+                                ((a0 - level_map_y_offset) >> 3) - 16);
+    if (is_world_position_outside_view(a1 + 4, a0 - 256) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x85c0, a1 - level_scroll_x + 4,
+                                ((a0 - level_map_y_offset) >> 3) - 16);
+    if (is_world_position_outside_view(a1, a0 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x8660, a1 - level_scroll_x,
+                                (a0 - level_map_y_offset) >> 3);
+    if (is_world_position_outside_view(a1 + 2, a0 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x8700, a1 - level_scroll_x + 2,
+                                (a0 - level_map_y_offset) >> 3);
+    if (is_world_position_outside_view(a1 + 4, a0 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x87a0, a1 - level_scroll_x + 4,
+                                (a0 - level_map_y_offset) >> 3);
+    if (is_world_position_outside_view(a1, a0) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x8840, a1 - level_scroll_x,
+                                ((a0 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 2, a0) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x88e0, a1 - level_scroll_x + 2,
+                                ((a0 - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(a1 + 4, a0) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0x8980, a1 - level_scroll_x + 4,
+                                ((a0 - level_map_y_offset) >> 3) + 16);
 
-    switch (d_06fd) {
+    switch (actor_302c_animation_phase) {
     case 0:
-        if (g1_326e(a1 + 2, a0 - 128) == 0)
-            asm_0424(d_637a_ + 0x8700, a1 - d_009d + 2,
-                     (a0 - d_009f) >> 3);
-        if (g1_326e(a1 + 4, a0 - 128) == 0)
-            asm_0424(d_637a_ + 0x87a0, a1 - d_009d + 4,
-                     (a0 - d_009f) >> 3);
+        if (is_world_position_outside_view(a1 + 2, a0 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8700, a1 - level_scroll_x + 2,
+                                    (a0 - level_map_y_offset) >> 3);
+        if (is_world_position_outside_view(a1 + 4, a0 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x87a0, a1 - level_scroll_x + 4,
+                                    (a0 - level_map_y_offset) >> 3);
         break;
     case 1:
-        if (g1_326e(a1 + 2, a0 - 128) == 0)
-            asm_0424(d_637a_ + 0x8c00, a1 - d_009d + 2,
-                     (a0 - d_009f) >> 3);
-        if (g1_326e(a1 + 4, a0 - 128) == 0)
-            asm_0424(d_637a_ + 0x8d40, a1 - d_009d + 4,
-                     (a0 - d_009f) >> 3);
+        if (is_world_position_outside_view(a1 + 2, a0 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8c00, a1 - level_scroll_x + 2,
+                                    (a0 - level_map_y_offset) >> 3);
+        if (is_world_position_outside_view(a1 + 4, a0 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8d40, a1 - level_scroll_x + 4,
+                                    (a0 - level_map_y_offset) >> 3);
         break;
     case 2:
-        if (g1_326e(a1 + 2, a0 - 128) == 0)
-            asm_0424(d_637a_ + 0x8ca0, a1 - d_009d + 2,
-                     (a0 - d_009f) >> 3);
-        if (g1_326e(a1 + 4, a0 - 128) == 0)
-            asm_0424(d_637a_ + 0x8de0, a1 - d_009d + 4,
-                     (a0 - d_009f) >> 3);
+        if (is_world_position_outside_view(a1 + 2, a0 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8ca0, a1 - level_scroll_x + 2,
+                                    (a0 - level_map_y_offset) >> 3);
+        if (is_world_position_outside_view(a1 + 4, a0 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8de0, a1 - level_scroll_x + 4,
+                                    (a0 - level_map_y_offset) >> 3);
         break;
     }
     switch (a2) {
     case 0:
     case 2:
-        if (g1_326e(a1 + 2, a0 - 256) == 0)
-            asm_0424(d_637a_ + 0x8520, a1 - d_009d + 2,
-                     ((a0 - d_009f) >> 3) - 16);
+        if (is_world_position_outside_view(a1 + 2, a0 - 256) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8520, a1 - level_scroll_x + 2,
+                                    ((a0 - level_map_y_offset) >> 3) - 16);
         break;
     case 1:
-        if (g1_326e(a1 + 2, a0 - 256) == 0)
-            asm_0424(d_637a_ + 0x8a20, a1 - d_009d + 2,
-                     ((a0 - d_009f) >> 3) - 16);
+        if (is_world_position_outside_view(a1 + 2, a0 - 256) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8a20, a1 - level_scroll_x + 2,
+                                    ((a0 - level_map_y_offset) >> 3) - 16);
         break;
     case 3:
-        if (g1_326e(a1 + 2, a0 - 256) == 0)
-            asm_0424(d_637a_ + 0x8ac0, a1 - d_009d + 2,
-                     ((a0 - d_009f) >> 3) - 16);
+        if (is_world_position_outside_view(a1 + 2, a0 - 256) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0x8ac0, a1 - level_scroll_x + 2,
+                                    ((a0 - level_map_y_offset) >> 3) - 16);
         break;
     }
 }
 
-void g1_a032(void)
+/* Activates the level object created from map marker 0x302F when its trigger condition is met. */
+void activate_actor_302f(void)
 {
-    if (d_c684_ != 0) {
-        if (d_d139_ == 1) {
-            d_d139_ = 0;
-            d_009d = d_c27b_ - d_0099 + 2;
-            d_009f = d_c28d_ - 768;
-            d_0644 = 1;
-            d_c68c_ = 0;
-            d_c68a_ = 8;
-            d_c686_ = 0;
+    if (actor_302f_active_state != 0) {
+        if (actor_302f_interaction_state == 1) {
+            actor_302f_interaction_state = 0;
+            level_scroll_x = actor_3030_world_x - player_screen_x + 2;
+            level_map_y_offset = actor_3030_world_y - 768;
+            player_sprite_draw_state = 1;
+            control_up_pressed = 0;
+            actor_302f_animation_phase = 8;
+            actor_302f_interaction_phase = 0;
         }
 
-        if (d_d139_ > 1)
-            --d_d139_;
-        if (d_c686_ > 0) {
-            g1_9bb5(d_c686_ % 4, d_c279_, d_c28b_);
-            --d_c686_;
+        if (actor_302f_interaction_state > 1)
+            --actor_302f_interaction_state;
+        if (actor_302f_interaction_phase > 0) {
+            draw_level_object_animation(actor_302f_interaction_phase % 4, actor_302f_world_x, actor_302f_world_y);
+            --actor_302f_interaction_phase;
         } else {
-            g1_9bb5(d_d139_ % 4, d_c279_, d_c28b_);
+            draw_level_object_animation(actor_302f_interaction_state % 4, actor_302f_world_x, actor_302f_world_y);
         }
 
-        if (d_68f7_ != 0) {
-            if (g1_3513(d_c279_ + 2, d_c28b_)) {
-                d_68f7_ = 0;
-                g2_18b8();
+        if (transporter_hint_pending != 0) {
+            if (test_player_overlap_with_object(actor_302f_world_x + 2, actor_302f_world_y)) {
+                transporter_hint_pending = 0;
+                show_secret_tip_transporter();
             }
         }
-        if (g1_3513(d_c279_ + 2, d_c28b_)) {
-            if (d_c68c_ != 0 && d_d139_ == 0 && d_d13f_ == 0 &&
-                d_d4c0_ == 0 && d_d138_ == 0) {
-                d_d139_ = 8;
-                g1_0042(7);
+        if (test_player_overlap_with_object(actor_302f_world_x + 2, actor_302f_world_y)) {
+            if (control_up_pressed != 0 && actor_302f_interaction_state == 0 && control_left_pressed == 0 &&
+                control_right_pressed == 0 && control_jump_pressed == 0) {
+                actor_302f_interaction_state = 8;
+                request_priority_sound_effect(7);
             }
         }
     }
 }
 
-void g1_a125(void)
+/* Activates the level object created from map marker 0x3030 when its trigger condition is met. */
+void activate_actor_3030(void)
 {
-    if (d_c688_ == 0)
+    if (actor_3030_active_state == 0)
         return;
 
-    if (d_d13b_ == 1) {
-        d_d13b_ = 0;
-        d_009d = d_c279_ - d_0099 + 2;
+    if (actor_3030_interaction_state == 1) {
+        actor_3030_interaction_state = 0;
+        level_scroll_x = actor_302f_world_x - player_screen_x + 2;
         /* The 16-bit wrap applies the -768-pixel camera offset. */
-        d_009f = d_c28b_ + 0xfd00;
-        d_0644 = 1;
-        d_c68c_ = 0;
-        d_c686_ = 8;
-        d_c68a_ = 0;
+        level_map_y_offset = actor_302f_world_y + 0xfd00;
+        player_sprite_draw_state = 1;
+        control_up_pressed = 0;
+        actor_302f_interaction_phase = 8;
+        actor_302f_animation_phase = 0;
     }
 
-    if (d_d13b_ > 1)
-        --d_d13b_;
+    if (actor_3030_interaction_state > 1)
+        --actor_3030_interaction_state;
 
-    if (d_c68a_ > 0) {
-        g1_9bb5(d_c68a_ % 4, d_c27b_, d_c28d_);
-        --d_c68a_;
+    if (actor_302f_animation_phase > 0) {
+        draw_level_object_animation(actor_302f_animation_phase % 4, actor_3030_world_x, actor_3030_world_y);
+        --actor_302f_animation_phase;
     } else {
-        g1_9bb5(d_d13b_ % 4, d_c27b_, d_c28d_);
+        draw_level_object_animation(actor_3030_interaction_state % 4, actor_3030_world_x, actor_3030_world_y);
     }
 
-    if (d_68f7_ != 0 && g1_3513(d_c27b_ + 2, d_c28d_)) {
-        d_68f7_ = 0;
-        g2_18b8();
+    if (transporter_hint_pending != 0 && test_player_overlap_with_object(actor_3030_world_x + 2, actor_3030_world_y)) {
+        transporter_hint_pending = 0;
+        show_secret_tip_transporter();
     }
 
-    if (!g1_3513(d_c27b_ + 2, d_c28d_))
+    if (!test_player_overlap_with_object(actor_3030_world_x + 2, actor_3030_world_y))
         return;
 
-    if (d_c68c_ != 0 && d_d13b_ == 0 && d_d13f_ == 0 &&
-        d_d4c0_ == 0 && d_d138_ == 0) {
-        d_d13b_ = 8;
-        g1_0042(7);
+    if (control_up_pressed != 0 && actor_3030_interaction_state == 0 && control_left_pressed == 0 &&
+        control_right_pressed == 0 && control_jump_pressed == 0) {
+        actor_3030_interaction_state = 8;
+        request_priority_sound_effect(7);
     }
 }
 
-void g1_a218(void)
+/* Updates and draws records from level-map marker 0x3031; the concrete entity identity is not
+   established by source. */
+void update_actor_3031(void)
 {
     register int i;
-    struct g1_a218_record far *p;
+    struct actor_3031_record far *p;
 
-    for (i = 0; i < d_05e0; ++i) {
-        p = &d_ae44_[i];
-        if (g1_326e(p->x, p->y) == 0) {
-            p->y -= d_05e2[p->state + 6];
+    for (i = 0; i < actor_3031_count; ++i) {
+        p = &actor_3031_records[i];
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+            p->world_y -= level_vertical_motion_table[p->state + 6];
             ++p->state;
             if (p->state == 8)
                 p->state = -6;
             if (p->state == -6)
-                g1_0042(34);
-            if (g1_3513(p->x, p->y))
-                d_6379_ = 1;
-            g1_3558(p->x, p->y);
-            if (g1_326e(p->x, p->y) == 0)
-                asm_0424(d_637a_ + 0x8b60,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                request_priority_sound_effect(34);
+            if (test_player_overlap_with_object(p->world_x, p->world_y))
+                active_sprite_draw_flag = 1;
+            remove_world_actor_at_position(p->world_x, p->world_y);
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
+                blit_planar_sprite_rows(sprite_graphics_buffer + 0x8b60,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-void g1_a30a(void)
+/* Advances and draws falling hazards, applying player contact and spawning their impact effect. */
+void update_falling_hazards(void)
 {
     register int i;
-    struct g1_a30a_record far *p;
+    struct falling_hazard_record far *p;
 
-    for (i = 0; i < d_5004_; ++i) {
-        p = &d_5c6c_[i];
-        if (p->used != 0) {
-            if (g1_326e(p->x, p->y) == 0) {
-                if (g1_3714(p->x, p->y + 128) == 0)
-                    p->y += 0x40;
-                if (g1_3513(p->x, p->y) != 0) {
-                    p->used = 0;
-                    d_6379_ = 1;
-                    g1_2b86(2, p->x, p->y);
-                    g1_0042(33);
+    for (i = 0; i < level_hazard_count; ++i) {
+        p = &falling_hazard_records[i];
+        if (p->active != 0) {
+            if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+                if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+                    p->world_y += 0x40;
+                if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
+                    p->active = 0;
+                    active_sprite_draw_flag = 1;
+                    spawn_moving_actor(2, p->world_x, p->world_y);
+                    request_priority_sound_effect(33);
                 }
-                asm_0424(d_637a_ + 0x8b60,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_graphics_buffer + 0x8b60,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             }
         }
     }
 }
 
-void g1_a3e7(void)
+/* Updates and draws records from level-map marker 0x3034; the concrete entity identity is not
+   established by source. */
+void update_actor_3034(void)
 {
     register int i;
 
-    if (d_7f04_ == -1)
+    if (actor_3034_active_state == -1)
         return;
-    if (g1_326e(d_9d96_, d_a0b9_) != 0)
+    if (is_world_position_outside_view(actor_3034_world_x, actor_3034_world_y) != 0)
         return;
 
-    if (d_7f04_ == 0) {
-        asm_0424(d_a0fb_ + 0x46a0,
-                 d_9d96_ - d_009d,
-                 ((d_a0b9_ - d_009f) >> 3) + 16);
+    if (actor_3034_active_state == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x46a0,
+                                actor_3034_world_x - level_scroll_x,
+                                ((actor_3034_world_y - level_map_y_offset) >> 3) + 16);
         return;
     }
 
-    d_06fe += 0xa0;
-    if (d_06fe == 0x500)
-        d_06fe = 0;
+    actor_302d_sprite_offset += 0xa0;
+    if (actor_302d_sprite_offset == 0x500)
+        actor_302d_sprite_offset = 0;
 
-    asm_0424(d_a0fb_ + d_06fe + 0x41a0,
-             d_9d96_ - d_009d,
-             ((d_a0b9_ - d_009f) >> 3) + 16);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_302d_sprite_offset + 0x41a0,
+                            actor_3034_world_x - level_scroll_x,
+                            ((actor_3034_world_y - level_map_y_offset) >> 3) + 16);
 
-    if (g1_3513(d_9d96_, d_a0b9_) != 0 && d_5553_ != 0) {
-        d_5553_ = 0;
-        g2_1821();
+    if (test_player_overlap_with_object(actor_3034_world_x, actor_3034_world_y) != 0 && hint_revealed_object_1 != 0) {
+        hint_revealed_object_1 = 0;
+        show_secret_tip_access_card();
     }
 
-    if (g1_3513(d_9d96_, d_a0b9_) != 0 && d_b3d4_ != 0 && d_c68c_ != 0) {
-        for (i = 0; i < d_05cc; ++i)
-            (&d_726b_[i].x)[2] = 0;      /* The original clears the next record's x. */
+    if (test_player_overlap_with_object(actor_3034_world_x, actor_3034_world_y) != 0 && actor_3033_active_state != 0 && control_up_pressed != 0) {
+        for (i = 0; i < actor_3021_count; ++i)
+            (&actor_3021_records[i].world_x)[2] = 0;      /* The original clears the next actor_302a_record's x. */
 
-        d_7f04_ = 0;
-        g2_3b79();
-        g1_0042(31);
-        d_053c = 0;
-        d_b3d4_ = 0;
+        actor_3034_active_state = 0;
+        draw_planar_sprite_frame();
+        request_priority_sound_effect(31);
+        actor_3033_enabled = 0;
+        actor_3033_active_state = 0;
     }
 
-    if (g1_3513(d_9d96_, d_a0b9_) != 0 &&
-        d_b3d4_ == 0 && d_c68c_ != 0 &&
-        d_7f04_ != 0 && d_5555_ != 0)
-        g2_1a82();
+    if (test_player_overlap_with_object(actor_3034_world_x, actor_3034_world_y) != 0 &&
+        actor_3033_active_state == 0 && control_up_pressed != 0 &&
+        actor_3034_active_state != 0 && hint_revealed_object_3 != 0)
+        show_secret_tip_insert_card();
 }
 
-void g1_a53a(void)
+/* Updates and draws records from level-map marker 0x3035; the concrete entity identity is not
+   established by source. */
+void update_actor_3035(void)
 {
-    if (d_5307_ == 0)
+    if (actor_3035_active_state == 0)
         return;
 
-    if (g1_326e(d_d13d_ - 2, d_d140_) == 0) {
-        asm_0424(d_a0fb_ + 0x4880,
-                 d_d13d_ - d_009d - 2,
-                 ((d_d140_ - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(actor_3035_world_x - 2, actor_3035_world_y) == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4880,
+                                actor_3035_world_x - level_scroll_x - 2,
+                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
     }
 
-    if (g1_326e(d_d13d_ + 2, d_d140_) == 0) {
-        asm_0424(d_a0fb_ + 0x4920,
-                 d_d13d_ - d_009d + 2,
-                 ((d_d140_ - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(actor_3035_world_x + 2, actor_3035_world_y) == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4920,
+                                actor_3035_world_x - level_scroll_x + 2,
+                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
     }
 
-    if (g1_326e(d_d13d_, d_d140_) != 0) {
-        d_52db_ = 0;
+    if (is_world_position_outside_view(actor_3035_world_x, actor_3035_world_y) != 0) {
+        actor_3035_animation_state = 0;
         return;
     }
 
-    if (g1_3513(d_d13d_, d_d140_) != 0 && d_555c_ != 0) {
-        d_555c_ = 0;
-        g2_178a();
+    if (test_player_overlap_with_object(actor_3035_world_x, actor_3035_world_y) != 0 && hint_revealed_object_6 != 0) {
+        hint_revealed_object_6 = 0;
+        show_secret_tip_robohand();
     }
 
-    if (g1_3513(d_d13d_, d_d140_) != 0) {
-        if (d_c68c_ != 0 && d_5149_ == 0) {
-            if (d_cc82_ != 0) {
-                d_5149_ = 1;
-                d_5000_ = 1;
-                g1_0042(5);
+    if (test_player_overlap_with_object(actor_3035_world_x, actor_3035_world_y) != 0) {
+        if (control_up_pressed != 0 && actor_3035_state == 0) {
+            if (actor_3020_active_state != 0) {
+                actor_3035_state = 1;
+                secret_block_state = 1;
+                request_priority_sound_effect(5);
             } else {
-                d_52db_ = 1;
+                actor_3035_animation_state = 1;
             }
         }
     }
 
-    if (d_5149_ == 0 && d_0437 == 0) {
-        asm_0424(d_a0fb_ + 0x4740,
-                 d_d13d_ - d_009d,
-                 ((d_d140_ - d_009f) >> 3) + 16);
+    if (actor_3035_state == 0 && world_animation_phase == 0) {
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4740,
+                                actor_3035_world_x - level_scroll_x,
+                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
     } else {
-        asm_0424(d_a0fb_ + 0x47e0,
-                 d_d13d_ - d_009d,
-                 ((d_d140_ - d_009f) >> 3) + 16);
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x47e0,
+                                actor_3035_world_x - level_scroll_x,
+                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
     }
 
-    if (d_52db_ != 0) {
-        if (d_0437 == 0)
-            g1_1b8a(1, d_d13d_ + 2, d_d140_ - 36);
-        if (d_0437 == 0x40)
-            g1_1b8a(2, d_d13d_ - 2, d_d140_ - 36);
+    if (actor_3035_animation_state != 0) {
+        if (world_animation_phase == 0)
+            update_projectile_pool_051c(1, actor_3035_world_x + 2, actor_3035_world_y - 36);
+        if (world_animation_phase == 0x40)
+            update_projectile_pool_051c(2, actor_3035_world_x - 2, actor_3035_world_y - 36);
     }
 }
 
-void g1_a6f4(void)
+/* Updates the secret block state from its current state and inputs. */
+void update_secret_block_state(void)
 {
-    if (d_5316_ == 0)
+    if (secret_block_animation_state == 0)
         return;
-    if (d_5000_ == 0)
+    if (secret_block_state == 0)
         return;
-    g1_2b86(3, d_d574_ + 2, d_d577_);
+    spawn_moving_actor(3, secret_block_world_x + 2, secret_block_world_y);
     /* Keep word-pointer arithmetic here for the matching access sequence. */
-    if (*(d_7729_ + d_d577_ + (d_d574_ >> 1)) == 0x2fe0U) {
-        d_5316_ = 0;
-        d_5000_ = 0;
+    if (*(level_tile_map + secret_block_world_y + (secret_block_world_x >> 1)) == 0x2fe0U) {
+        secret_block_animation_state = 0;
+        secret_block_state = 0;
     } else {
-        *(d_7729_ + d_d577_ + (d_d574_ >> 1)) = 0x2fe0U;
+        *(level_tile_map + secret_block_world_y + (secret_block_world_x >> 1)) = 0x2fe0U;
     }
-    d_d574_ += 2;
+    secret_block_world_x += 2;
 }
 
-void g1_a75c(void)
+/* Updates and draws records from level-map marker 0x3037; the concrete entity identity is not
+   established by source. */
+void update_actor_3037(void)
 {
     register int i;
-    struct g1_a75c_record far *p;
+    struct actor_3037_record far *p;
 
-    for (i = 0; i < d_5309_; i++) {
-        p = &d_a0bf_[i];
+    for (i = 0; i < actor_3037_object_count; i++) {
+        p = &actor_3037_records[i];
         if (p->state == 0)
             continue;
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (g1_3714(p->x, p->y + 128) == 0)
-            p->y += 128;
-        if (p->flag == 0 && g1_3558(p->x, p->y) != 0) {
-            g1_314c(p->x, p->y);
-            if (g1_3714(p->x, p->y + 128) == 0) {
-                g1_0b85(500L);
-                g1_2a40(0x280, p->x, p->y);
+        if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+            p->world_y += 128;
+        if (p->animation_flag == 0 && remove_world_actor_at_position(p->world_x, p->world_y) != 0) {
+            spawn_contact_flash_effect(p->world_x, p->world_y);
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0) {
+                add_and_draw_player_score(500L);
+                queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
             }
-            p->flag = 1;
+            p->animation_flag = 1;
         }
-        if (p->flag != 0) {
-            if (g1_3513(p->x, p->y) != 0) {
+        if (p->animation_flag != 0) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
                 if (p->state != 'E') {
-                    d_d149_[d_d57a_++] = p->state;
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x, p->y);
-                    g1_0042(16);
-                } else if (d_d57a_ == 3 && d_d149_[0] == 'D' &&
-                           d_d14b_ == 'U' && d_d14d_ == 'K') {
-                    g1_0b85(10000L);
-                    g1_2a40(0x780, p->x, p->y);
-                    g1_0042(37);
-                    d_530c_ = 1;
+                    secret_code_character_0[actor_3037_bonus_state++] = p->state;
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
+                    request_priority_sound_effect(16);
+                } else if (actor_3037_bonus_state == 3 && secret_code_character_0[0] == 'D' &&
+                           secret_code_character_1 == 'U' && secret_code_character_2 == 'K') {
+                    add_and_draw_player_score(10000L);
+                    queue_ambient_sprite_animation(0x780, p->world_x, p->world_y);
+                    request_priority_sound_effect(37);
+                    actor_3037_animation_state = 1;
                 } else {
-                    g1_0b85(500L);
-                    g1_2a40(0x280, p->x, p->y);
-                    g1_0042(16);
+                    add_and_draw_player_score(500L);
+                    queue_ambient_sprite_animation(0x280, p->world_x, p->world_y);
+                    request_priority_sound_effect(16);
                 }
                 p->state = 0;
             }
         }
-        if (g1_326e(p->x, p->y) != 0)
+        if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
             continue;
-        if (p->flag == 0) {
-            asm_0424(d_a0fb_, p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+        if (p->animation_flag == 0) {
+            blit_planar_sprite_rows(sprite_pixel_data_pointer, p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
             if (p->state == 'D')
-                asm_0424(d_a0fb_ + 0x49c0, p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x49c0, p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             if (p->state == 'U')
-                asm_0424(d_a0fb_ + 0x4a60, p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4a60, p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             if (p->state == 'K')
-                asm_0424(d_a0fb_ + 0x4b00, p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4b00, p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
             if (p->state == 'E')
-                asm_0424(d_a0fb_ + 0x4ba0, p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 16);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4ba0, p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-void pascal g1_aa1b(int a0, register int a1, int a2)
+/* Draws the two sprite cells used by the climbing actor. */
+void pascal draw_climbing_actor_sprite(int a0, register int a1, int a2)
 {
     register int offset;
 
@@ -5783,137 +5949,140 @@ void pascal g1_aa1b(int a0, register int a1, int a2)
     else
         offset = (a0 - 3) * 0x140 + 0x8e80;
 
-    if (g1_326e(a1, a2 - 128) == 0)
-        asm_0424(d_637a_ + offset,
-                 a1 - d_009d,
-                 (a2 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1, a2 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset,
+                                a1 - level_scroll_x,
+                                (a2 - level_map_y_offset) >> 3);
 
-    if (g1_326e(a1, a2) == 0)
-        asm_0424(d_637a_ + offset + 0xa0,
-                 a1 - d_009d,
-                 ((a2 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a2) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0,
+                                a1 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 16);
 }
 
-void g1_aac2(void)
+/* Updates and draws records from level-map marker 0x303B; the concrete entity identity is not
+   established by source. */
+void update_actor_303b(void)
 {
     register int i;
-    struct g1_aac2_record far *p;
+    struct actor_303b_record far *p;
 
-    d_5312_ = 1;
-    for (i = 0; i < d_0600; ++i) {
-        p = &d_73fb_[i];
+    actor_303b_update_state = 1;
+    for (i = 0; i < actor_303b_count; ++i) {
+        p = &actor_303b_records[i];
         if (p->state == 0)
             continue;
 
-        d_5312_ = 0;
+        actor_303b_update_state = 0;
         if (p->state > 2) {
-            switch (p->kind) {
+            switch (p->object_kind) {
             case 0:
-                g1_aa1b(0, p->x, p->y);
+                draw_climbing_actor_sprite(0, p->world_x, p->world_y);
                 break;
             case 1:
-                g1_aa1b(6, p->x, p->y);
+                draw_climbing_actor_sprite(6, p->world_x, p->world_y);
                 break;
             case 2:
-                g1_aa1b(3, p->x, p->y);
+                draw_climbing_actor_sprite(3, p->world_x, p->world_y);
                 break;
             case 3:
-                g1_aa1b(7, p->x, p->y);
+                draw_climbing_actor_sprite(7, p->world_x, p->world_y);
                 break;
             }
             ++p->state;
-            ++p->kind;
-            if (p->kind == 4)
-                p->kind = 0;
+            ++p->object_kind;
+            if (p->object_kind == 4)
+                p->object_kind = 0;
             if (p->state == 20) {
                 p->state = 0;
-                g1_2e64(p->x, p->y);
-                g1_2e64(p->x, p->y - 128);
-                g1_2e64(p->x - 1, p->y - 64);
-                g1_2e64(p->x + 1, p->y - 64);
-                g1_2e64(p->x + 1, p->y - 192);
-                g1_2e64(p->x - 1, p->y);
-                g1_0b85(5000L);
-                g1_2a40(0x640, p->x, p->y);
+                spawn_pickup_object(p->world_x, p->world_y);
+                spawn_pickup_object(p->world_x, p->world_y - 128);
+                spawn_pickup_object(p->world_x - 1, p->world_y - 64);
+                spawn_pickup_object(p->world_x + 1, p->world_y - 64);
+                spawn_pickup_object(p->world_x + 1, p->world_y - 192);
+                spawn_pickup_object(p->world_x - 1, p->world_y);
+                add_and_draw_player_score(5000L);
+                queue_ambient_sprite_animation(0x640, p->world_x, p->world_y);
                 continue;
             }
         } else {
-            if (!g1_3714(p->x, p->y + 128)) {
-                p->y += 0x40;
+            if (!is_level_position_blocked(p->world_x, p->world_y + 128)) {
+                p->world_y += 0x40;
             } else {
-                if (g1_367e(p->x - 1, p->y) && p->state == 1) {
+                if (test_level_tile_special_state(p->world_x - 1, p->world_y) && p->state == 1) {
                     p->state = 2;
-                    p->kind = 0;
-                } else if (g1_367e(p->x + 2, p->y) && p->state == 2) {
+                    p->object_kind = 0;
+                } else if (test_level_tile_special_state(p->world_x + 2, p->world_y) && p->state == 2) {
                     p->state = 1;
-                    p->kind = 0;
+                    p->object_kind = 0;
                 }
             }
 
-            if (p->kind == 0) {
+            if (p->object_kind == 0) {
                 if (p->state == 1)
-                    g1_aa1b(6, p->x, p->y);
+                    draw_climbing_actor_sprite(6, p->world_x, p->world_y);
                 if (p->state == 2)
-                    g1_aa1b(7, p->x, p->y);
-                if (d_0437 != 0x40 && d_0437 != 0)
+                    draw_climbing_actor_sprite(7, p->world_x, p->world_y);
+                if (world_animation_phase != 0x40 && world_animation_phase != 0)
                     continue;
-                p->kind = 1;
+                p->object_kind = 1;
                 continue;
             }
 
             if (p->state == 1) {
-                if (d_0437 == 0 || d_0437 == 0x40)
-                    --p->x;
-                if (p->kind < 3)
-                    g1_aa1b(p->kind, p->x, p->y);
+                if (world_animation_phase == 0 || world_animation_phase == 0x40)
+                    --p->world_x;
+                if (p->object_kind < 3)
+                    draw_climbing_actor_sprite(p->object_kind, p->world_x, p->world_y);
                 else
-                    g1_aa1b(5 - p->kind, p->x, p->y);
-                if (d_0437 == 0 || d_0437 == 0x40) {
-                    if (g1_3714(p->x, p->y + 128))
-                        ++p->kind;
-                    if (p->kind == 6)
-                        p->kind = 1;
+                    draw_climbing_actor_sprite(5 - p->object_kind, p->world_x, p->world_y);
+                if (world_animation_phase == 0 || world_animation_phase == 0x40) {
+                    if (is_level_position_blocked(p->world_x, p->world_y + 128))
+                        ++p->object_kind;
+                    if (p->object_kind == 6)
+                        p->object_kind = 1;
                 }
             }
 
             if (p->state == 2) {
-                if (d_0437 == 0 || d_0437 == 0x40)
-                    ++p->x;
-                if (p->kind < 3)
-                    g1_aa1b(p->kind + 2, p->x, p->y);
+                if (world_animation_phase == 0 || world_animation_phase == 0x40)
+                    ++p->world_x;
+                if (p->object_kind < 3)
+                    draw_climbing_actor_sprite(p->object_kind + 2, p->world_x, p->world_y);
                 else
-                    g1_aa1b(8 - p->kind, p->x, p->y);
-                if (d_0437 == 0 || d_0437 == 0x40) {
-                    if (g1_3714(p->x, p->y + 128))
-                        ++p->kind;
-                    if (p->kind == 6)
-                        p->kind = 1;
+                    draw_climbing_actor_sprite(8 - p->object_kind, p->world_x, p->world_y);
+                if (world_animation_phase == 0 || world_animation_phase == 0x40) {
+                    if (is_level_position_blocked(p->world_x, p->world_y + 128))
+                        ++p->object_kind;
+                    if (p->object_kind == 6)
+                        p->object_kind = 1;
                 }
             }
 
-            if (g1_3558(p->x, p->y)) {
+            if (remove_world_actor_at_position(p->world_x, p->world_y)) {
                 p->state = 0;
-                g1_2e64(p->x, p->y);
-                g1_2e64(p->x, p->y - 128);
-                g1_2e64(p->x - 1, p->y - 64);
-                g1_2e64(p->x + 1, p->y - 64);
-                g1_2e64(p->x + 1, p->y - 192);
-                g1_2e64(p->x - 1, p->y);
-                g1_0042(18);
-                g1_0b85(200L);
+                spawn_pickup_object(p->world_x, p->world_y);
+                spawn_pickup_object(p->world_x, p->world_y - 128);
+                spawn_pickup_object(p->world_x - 1, p->world_y - 64);
+                spawn_pickup_object(p->world_x + 1, p->world_y - 64);
+                spawn_pickup_object(p->world_x + 1, p->world_y - 192);
+                spawn_pickup_object(p->world_x - 1, p->world_y);
+                request_priority_sound_effect(18);
+                add_and_draw_player_score(200L);
                 continue;
             }
-            if (g1_3513(p->x, p->y)) {
-                d_6379_ = 1;
-                g1_0042(35);
+            if (test_player_overlap_with_object(p->world_x, p->world_y)) {
+                active_sprite_draw_flag = 1;
+                request_priority_sound_effect(35);
                 p->state = 3;
-                p->kind = 0;
+                p->object_kind = 0;
             }
         }
     }
 }
 
-void pascal g1_af06(int a2, int a1, int a0)
+/* Draws two vertically stacked effect cells from the actor sprite resource. */
+void pascal draw_tall_effect_sprite(int a2, int a1, int a0)
 {
     register int row;
     register int col;
@@ -5921,565 +6090,586 @@ void pascal g1_af06(int a2, int a1, int a0)
     col = a1;
     row = a2 * 0x140;
     row += 0x9600;
-    if (g1_326e(a1, a0 - 128) == 0)
-        asm_0424(d_637a_ + row, col - d_009d, (a0 - d_009f) >> 3);
-    if (g1_326e(col, a0) == 0)
-        asm_0424(d_637a_ + row + 0xa0, col - d_009d, ((a0 - d_009f) >> 3) + 16);
+    if (is_world_position_outside_view(a1, a0 - 128) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + row, col - level_scroll_x, (a0 - level_map_y_offset) >> 3);
+    if (is_world_position_outside_view(col, a0) == 0)
+        blit_planar_sprite_rows(sprite_graphics_buffer + row + 0xa0, col - level_scroll_x, ((a0 - level_map_y_offset) >> 3) + 16);
 }
 
-void g1_af94(void)
+/* Updates and draws records from level-map marker 0x303C; the concrete entity identity is not
+   established by source. */
+void update_actor_303c(void)
 {
     register int i;
-    struct g1_af94_record far *p;
+    struct actor_303c_record far *p;
 
-    if (d_0437 == 0 || d_0437 == 0x40)
-        ++d_0700;
-    if (d_0700 == 3)
-        d_0700 = 0;
+    if (world_animation_phase == 0 || world_animation_phase == 0x40)
+        ++actor_303c_animation_phase;
+    if (actor_303c_animation_phase == 3)
+        actor_303c_animation_phase = 0;
 
-    for (i = 0; i < d_05fe; ++i) {
-        p = &d_a680_[i];
+    for (i = 0; i < actor_303c_count; ++i) {
+        p = &actor_303c_records[i];
         if (p->state != 0) {
-            if (g1_3714(p->x, p->y + 128) == 0)
-                p->y += 0x40;
-            if (g1_367e(p->x - 1, p->y) != 0 ||
-                g1_3714(p->x - 2, p->y + 128) == 0)
+            if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
+                p->world_y += 0x40;
+            if (test_level_tile_special_state(p->world_x - 1, p->world_y) != 0 ||
+                is_level_position_blocked(p->world_x - 2, p->world_y + 128) == 0)
                 p->state = 2;
-            if (g1_367e(p->x + 2, p->y) != 0 ||
-                g1_3714(p->x + 2, p->y + 128) == 0)
+            if (test_level_tile_special_state(p->world_x + 2, p->world_y) != 0 ||
+                is_level_position_blocked(p->world_x + 2, p->world_y + 128) == 0)
                 p->state = 1;
 
             if (p->state == 1) {
-                if (d_0437 == 0 || d_0437 == 0x40)
-                    --p->x;
-                g1_af06(d_0700, p->x, p->y);
+                if (world_animation_phase == 0 || world_animation_phase == 0x40)
+                    --p->world_x;
+                draw_tall_effect_sprite(actor_303c_animation_phase, p->world_x, p->world_y);
             }
             if (p->state == 2) {
-                if (d_0437 == 0 || d_0437 == 0x40)
-                    ++p->x;
-                g1_af06(d_0700 + 3, p->x, p->y);
+                if (world_animation_phase == 0 || world_animation_phase == 0x40)
+                    ++p->world_x;
+                draw_tall_effect_sprite(actor_303c_animation_phase + 3, p->world_x, p->world_y);
             }
-            g1_3558(p->x, p->y);
-            if (g1_3513(p->x, p->y) != 0)
-                d_6379_ = 1;
+            remove_world_actor_at_position(p->world_x, p->world_y);
+            if (test_player_overlap_with_object(p->world_x, p->world_y) != 0)
+                active_sprite_draw_flag = 1;
         }
     }
 }
 
-void g1_b118(void)
+/* Waits for the for level start condition or input event. */
+void wait_for_level_start(void)
 {
     register int si;
 
-    si = d_02fa;
+    si = current_level_index;
     si <<= 2;
-    g2_3d8c(2, 1, 3);
-    g2_37b6(d_0ba1[si], 3, 3);
-    g2_37b6(d_0ba1[si + 1], 3, 4);
-    g2_37b6(d_0ba1[si + 2], 3, 5);
-    g2_37b6(d_0ba1[si + 3], 3, 6);
-    g2_37b6("      Press ENTER:      ", 3, 8);
+    draw_framed_dialog_box(2, 1, 3);
+    draw_text_string(episode_level_start_text_table[si], 3, 3);
+    draw_text_string(episode_level_start_text_table[si + 1], 3, 4);
+    draw_text_string(episode_level_start_text_table[si + 2], 3, 5);
+    draw_text_string(episode_level_start_text_table[si + 3], 3, 6);
+    draw_text_string("      Press ENTER:      ", 3, 8);
     enable();
     do {
-        g2_2870(0x1a, 8);
-    } while (d_a0fa_ != 0x1c);
-    d_d4c0_ = 0;
-    d_d134_ = 0;
+        wait_input_animated_sprite(0x1a, 8);
+    } while (last_keyboard_scan_code != 0x1c);
+    control_right_pressed = 0;
+    control_down_pressed = 0;
     disable();
     /* Update the sound hardware with interrupts disabled. */
-    asm_05eb(!d_6e0a_);
-    asm_05f7(d_6e0a_);
-    d_02fb = 0;
+    select_draw_page(!draw_page_index);
+    show_video_page(draw_page_index);
+    timer_tick_counter = 0;
 }
 
-void g1_b1fd(void)
+/* Updates and draws records from level-map marker 0x3040; the concrete entity identity is not
+   established by source. */
+void update_actor_3040(void)
 {
-    if (d_a677_ != 0) {
-        if (g1_326e(d_9d92_, d_9d94_) == 0) {
-            if (d_5c6b_ == 1 && g1_3513(d_9d92_, d_9d94_) != 0) {
-                d_5c6b_ = 0;
-                g2_0f2a();
+    if (actor_3040_active_state != 0) {
+        if (is_world_position_outside_view(actor_3040_world_x, actor_3040_world_y) == 0) {
+            if (hint_revealed_object_9 == 1 && test_player_overlap_with_object(actor_3040_world_x, actor_3040_world_y) != 0) {
+                hint_revealed_object_9 = 0;
+                show_secret_tip_read_notes();
             }
-            if (g1_3513(d_9d92_, d_9d94_) != 0 && d_c68c_ != 0) {
-                g1_0042(28);
-                g1_b118();
+            if (test_player_overlap_with_object(actor_3040_world_x, actor_3040_world_y) != 0 && control_up_pressed != 0) {
+                request_priority_sound_effect(28);
+                wait_for_level_start();
             }
-            asm_0424(d_a0fb_ + 0x4ce0,
-                     d_9d92_ - d_009d,
-                     ((d_9d94_ - d_009f) >> 3) + 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4ce0,
+                                    actor_3040_world_x - level_scroll_x,
+                                    ((actor_3040_world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-void pascal g1_b292(int a0, register int a1, register int a2)
+/* Draws a two-by-two actor graphic selected by its animation variant and marks player contact. */
+void pascal draw_actor_sprite_by_variant(int a0, register int a1, register int a2)
 {
     if (a0 < 2) {
-        if (g1_326e(a1, a2 - 128) == 0)
-            asm_0424(d_637a_ + 0xa8c0,
-                     a1 - d_009d,
-                     (a2 - d_009f) >> 3);
-        if (g1_326e(a1 + 2, a2 - 128) == 0)
-            asm_0424(d_637a_ + 0xa960,
-                     a1 + 2 - d_009d,
-                     (a2 - d_009f) >> 3);
+        if (is_world_position_outside_view(a1, a2 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xa8c0,
+                                    a1 - level_scroll_x,
+                                    (a2 - level_map_y_offset) >> 3);
+        if (is_world_position_outside_view(a1 + 2, a2 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xa960,
+                                    a1 + 2 - level_scroll_x,
+                                    (a2 - level_map_y_offset) >> 3);
     } else {
-        if (g1_326e(a1, a2 - 128) == 0)
-            asm_0424(d_637a_ + 0xac80,
-                     a1 - d_009d,
-                     (a2 - d_009f) >> 3);
-        if (g1_326e(a1 + 2, a2 - 128) == 0)
-            asm_0424(d_637a_ + 0xad20,
-                     a1 + 2 - d_009d,
-                     (a2 - d_009f) >> 3);
+        if (is_world_position_outside_view(a1, a2 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xac80,
+                                    a1 - level_scroll_x,
+                                    (a2 - level_map_y_offset) >> 3);
+        if (is_world_position_outside_view(a1 + 2, a2 - 128) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xad20,
+                                    a1 + 2 - level_scroll_x,
+                                    (a2 - level_map_y_offset) >> 3);
     }
 
     switch (a0) {
     case 0:
-        if (g1_326e(a1, a2) == 0)
-            asm_0424(d_637a_ + 0xaa00,
-                     a1 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
-        if (g1_326e(a1 + 2, a2) == 0)
-            asm_0424(d_637a_ + 0xaaa0,
-                     a1 + 2 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
+        if (is_world_position_outside_view(a1, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xaa00,
+                                    a1 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
+        if (is_world_position_outside_view(a1 + 2, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xaaa0,
+                                    a1 + 2 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
         break;
     case 1:
-        if (g1_326e(a1, a2) == 0)
-            asm_0424(d_637a_ + 0xab40,
-                     a1 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
-        if (g1_326e(a1 + 2, a2) == 0)
-            asm_0424(d_637a_ + 0xabe0,
-                     a1 + 2 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
+        if (is_world_position_outside_view(a1, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xab40,
+                                    a1 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
+        if (is_world_position_outside_view(a1 + 2, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xabe0,
+                                    a1 + 2 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
         break;
     case 2:
-        if (g1_326e(a1, a2) == 0)
-            asm_0424(d_637a_ + 0xadc0,
-                     a1 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
-        if (g1_326e(a1 + 2, a2) == 0)
-            asm_0424(d_637a_ + 0xae60,
-                     a1 + 2 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
+        if (is_world_position_outside_view(a1, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xadc0,
+                                    a1 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
+        if (is_world_position_outside_view(a1 + 2, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xae60,
+                                    a1 + 2 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
         break;
     case 3:
-        if (g1_326e(a1, a2) == 0)
-            asm_0424(d_637a_ + 0xaf00,
-                     a1 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
-        if (g1_326e(a1 + 2, a2) == 0)
-            asm_0424(d_637a_ + 0xafa0,
-                     a1 + 2 - d_009d,
-                     ((a2 - d_009f) >> 3) + 16);
+        if (is_world_position_outside_view(a1, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xaf00,
+                                    a1 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
+        if (is_world_position_outside_view(a1 + 2, a2) == 0)
+            blit_planar_sprite_rows(sprite_graphics_buffer + 0xafa0,
+                                    a1 + 2 - level_scroll_x,
+                                    ((a2 - level_map_y_offset) >> 3) + 16);
         break;
     }
 
-    if (g1_3513(a1, a2) != 0)
-        d_6379_ = 1;
+    if (test_player_overlap_with_object(a1, a2) != 0)
+        active_sprite_draw_flag = 1;
 }
 
-void g1_b595(void)
+/* Updates and draws records from level-map marker 0x3042; the concrete entity identity is not
+   established by source. */
+void update_actor_3042(void)
 {
-    if (d_554a_ != 0) {
-        ++d_554a_;
-        if (d_554a_ == 10)
-            d_c293_ = 1;
+    if (actor_3042_interaction_state != 0) {
+        ++actor_3042_interaction_state;
+        if (actor_3042_interaction_state == 10)
+            actor_3042_hint_state = 1;
         return;
     }
 
-    d_0602 = !d_0602;
-    if (d_c283_ == 0)
+    actor_3042_animation_frame_0 = !actor_3042_animation_frame_0;
+    if (actor_3042_active_state == 0)
         return;
 
-    if (d_d56c_ != 2) {
-        if (d_d56c_ != 0) {
-            if (d_0608 == 0) {
-                ++d_0604;
-                if (d_0604 == (d_060c >> 1)) {
-                    if (d_0099 + d_009d - 2 < d_b630_)
-                        g1_1b8a(1, d_b630_, d_b634_ - 32);
+    if (actor_3042_open_state != 2) {
+        if (actor_3042_open_state != 0) {
+            if (actor_3042_animation_frame_3 == 0) {
+                ++actor_3042_animation_frame_1;
+                if (actor_3042_animation_frame_1 == (actor_3042_animation_frame_5 >> 1)) {
+                    if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
+                        update_projectile_pool_051c(1, actor_3042_world_x, actor_3042_world_y - 32);
                     else
-                        g1_1b8a(2, d_b630_ + 3, d_b634_ - 32);
+                        update_projectile_pool_051c(2, actor_3042_world_x + 3, actor_3042_world_y - 32);
                 }
-                if (d_0604 > d_060c) {
-                    d_0604 = 0;
-                    d_0606 = 0;
-                    d_0608 = 1;
-                    if (d_0099 + d_009d - 2 < d_b630_)
-                        d_060a = 1;
+                if (actor_3042_animation_frame_1 > actor_3042_animation_frame_5) {
+                    actor_3042_animation_frame_1 = 0;
+                    actor_3042_animation_frame_2 = 0;
+                    actor_3042_animation_frame_3 = 1;
+                    if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
+                        actor_3042_animation_frame_4 = 1;
                     else
-                        d_060a = 0;
+                        actor_3042_animation_frame_4 = 0;
                 }
             } else {
-                d_b634_ += d_0702[d_0606];
-                if (d_060a != 0) {
-                    if (!g1_367e(d_b630_ - 1, d_b634_ - 64))
-                        --d_b630_;
+                actor_3042_world_y += actor_3042_motion_delta_table[actor_3042_animation_frame_2];
+                if (actor_3042_animation_frame_4 != 0) {
+                    if (!test_level_tile_special_state(actor_3042_world_x - 1, actor_3042_world_y - 64))
+                        --actor_3042_world_x;
                 } else {
-                    if (!g1_367e(d_b630_ + 3, d_b634_ - 64))
-                        ++d_b630_;
+                    if (!test_level_tile_special_state(actor_3042_world_x + 3, actor_3042_world_y - 64))
+                        ++actor_3042_world_x;
                 }
-                ++d_0606;
-                if (d_0606 == 12) {
-                    d_0608 = 0;
-                    d_060c = (d_0437 >> 1) + 1;
-                    d_0604 = 0;
+                ++actor_3042_animation_frame_2;
+                if (actor_3042_animation_frame_2 == 12) {
+                    actor_3042_animation_frame_3 = 0;
+                    actor_3042_animation_frame_5 = (world_animation_phase >> 1) + 1;
+                    actor_3042_animation_frame_1 = 0;
                 }
             }
-            if (d_0099 + d_009d - 2 < d_b630_)
-                g1_b292(d_0602, d_b630_, d_b634_);
+            if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
+                draw_actor_sprite_by_variant(actor_3042_animation_frame_0, actor_3042_world_x, actor_3042_world_y);
             else
-                g1_b292(d_0602 + 2, d_b630_, d_b634_);
-            if (g1_3558(d_b630_ + 1, d_b634_ - 64)) {
-                g1_2b86(3, d_b630_ + 2, d_b634_ - 92);
-                --d_d142_;
+                draw_actor_sprite_by_variant(actor_3042_animation_frame_0 + 2, actor_3042_world_x, actor_3042_world_y);
+            if (remove_world_actor_at_position(actor_3042_world_x + 1, actor_3042_world_y - 64)) {
+                spawn_moving_actor(3, actor_3042_world_x + 2, actor_3042_world_y - 92);
+                --actor_3042_animation_counter;
             }
-            if (d_0437 != 0 && d_d142_ < 10) {
-                if (d_d142_ < 10)
-                    g1_2e64(d_b630_ + 2, d_b634_ - 32);
-                if (d_d142_ < 6)
-                    g1_2e64(d_b630_ + 1, d_b634_ - 64);
-                if (d_d142_ < 2)
-                    g1_2e64(d_b630_ + 3, d_b634_ - 64);
+            if (world_animation_phase != 0 && actor_3042_animation_counter < 10) {
+                if (actor_3042_animation_counter < 10)
+                    spawn_pickup_object(actor_3042_world_x + 2, actor_3042_world_y - 32);
+                if (actor_3042_animation_counter < 6)
+                    spawn_pickup_object(actor_3042_world_x + 1, actor_3042_world_y - 64);
+                if (actor_3042_animation_counter < 2)
+                    spawn_pickup_object(actor_3042_world_x + 3, actor_3042_world_y - 64);
             }
-            if (d_d142_ == 1 && d_b9dc_ != 0)
-                d_d56c_ = 0;
-            else if (d_d142_ == 0)
-                d_d56c_ = 2;
+            if (actor_3042_animation_counter == 1 && ending_sequence_enabled != 0)
+                actor_3042_open_state = 0;
+            else if (actor_3042_animation_counter == 0)
+                actor_3042_open_state = 2;
         } else {
-            if (!g1_326e(d_b630_, d_b634_) && d_5002_ == 0) {
-                d_5002_ = 1;
-                g1_0042(40);
+            if (!is_world_position_outside_view(actor_3042_world_x, actor_3042_world_y) && player_animation_lock_state == 0) {
+                player_animation_lock_state = 1;
+                request_priority_sound_effect(40);
                 disable();
-                d_d135_ = d_d138_ = d_d13f_ = d_d4c0_ = d_c68c_ = d_d134_ = 0;
+                control_fire_pressed = control_jump_pressed = control_left_pressed = control_right_pressed = control_up_pressed = control_down_pressed = 0;
                 enable();
             }
-            if (d_5002_ > 30)
-                d_c293_ = 1;
-            if (d_5002_ != 0)
-                ++d_5002_;
-            if (d_5002_ != 0 && d_b634_ > 0x100 && d_009f > 0x100) {
-                d_b634_ -= 0x80;
-                d_009f -= 0x80;
-                d_060e = 1;
+            if (player_animation_lock_state > 30)
+                actor_3042_hint_state = 1;
+            if (player_animation_lock_state != 0)
+                ++player_animation_lock_state;
+            if (player_animation_lock_state != 0 && actor_3042_world_y > 0x100 && level_map_y_offset > 0x100) {
+                actor_3042_world_y -= 0x80;
+                level_map_y_offset -= 0x80;
+                gameplay_animation_flag = 1;
             }
-            if (d_0099 + d_009d - 2 < d_b630_)
-                g1_b292(d_0602, d_b630_, d_b634_);
+            if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
+                draw_actor_sprite_by_variant(actor_3042_animation_frame_0, actor_3042_world_x, actor_3042_world_y);
             else
-                g1_b292(d_0602 + 2, d_b630_, d_b634_);
+                draw_actor_sprite_by_variant(actor_3042_animation_frame_0 + 2, actor_3042_world_x, actor_3042_world_y);
             return;
         }
     } else {
-        d_b634_ += 32;
-        if (d_0437 == 0)
-            g1_314c(d_b630_ + 2, d_b634_);
-        if (d_0437 == 32)
-            g1_2b86(1, d_b630_ + 2, d_b634_);
-        if (d_0437 == 64)
-            g1_314c(d_b630_, d_b634_);
-        if (d_0437 == 96)
-            g1_2b86(3, d_b630_ + 2, d_b634_);
-        if (d_0099 + d_009d - 2 < d_b630_)
-            g1_b292(0, d_b630_, d_b634_);
+        actor_3042_world_y += 32;
+        if (world_animation_phase == 0)
+            spawn_contact_flash_effect(actor_3042_world_x + 2, actor_3042_world_y);
+        if (world_animation_phase == 32)
+            spawn_moving_actor(1, actor_3042_world_x + 2, actor_3042_world_y);
+        if (world_animation_phase == 64)
+            spawn_contact_flash_effect(actor_3042_world_x, actor_3042_world_y);
+        if (world_animation_phase == 96)
+            spawn_moving_actor(3, actor_3042_world_x + 2, actor_3042_world_y);
+        if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
+            draw_actor_sprite_by_variant(0, actor_3042_world_x, actor_3042_world_y);
         else
-            g1_b292(2, d_b630_, d_b634_);
-        if (g1_3714(d_b630_ + 1, d_b634_)) {
-            g1_0042(41);
-            d_554a_ = 1;
+            draw_actor_sprite_by_variant(2, actor_3042_world_x, actor_3042_world_y);
+        if (is_level_position_blocked(actor_3042_world_x + 1, actor_3042_world_y)) {
+            request_priority_sound_effect(41);
+            actor_3042_interaction_state = 1;
         }
         return;
     }
 }
 
-void pascal g1_b926(int a0, int a1, int a2)
+/* Draws a large two-by-two actor graphic and clears its active flag when the right edge is
+   outside the view. */
+void pascal draw_large_actor_sprite(int a0, int a1, int a2)
 {
     register int offset;
 
     offset = a0 * 0x140 + 0xa140;
-    if (g1_326e(a1, a2 - 0x80) == 0) {
-        asm_0424(d_637a_ + offset,
-                 a1 - d_009d,
-                 (a2 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1, a2 - 0x80) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset,
+                                a1 - level_scroll_x,
+                                (a2 - level_map_y_offset) >> 3);
     }
-    if (g1_326e(a1 + 2, a2 - 0x80) == 0) {
-        asm_0424(d_637a_ + offset + 0xa0,
-                 a1 + 2 - d_009d,
-                 (a2 - d_009f) >> 3);
+    if (is_world_position_outside_view(a1 + 2, a2 - 0x80) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + offset + 0xa0,
+                                a1 + 2 - level_scroll_x,
+                                (a2 - level_map_y_offset) >> 3);
     }
-    if (g1_326e(a1, a2) == 0) {
-        asm_0424(d_637a_ + 0xa000,
-                 a1 - d_009d,
-                 ((a2 - d_009f) >> 3) + 0x10);
+    if (is_world_position_outside_view(a1, a2) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0xa000,
+                                a1 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 0x10);
     }
-    if (g1_326e(a1 + 2, a2) == 0) {
-        asm_0424(d_637a_ + 0xa0a0,
-                 a1 + 2 - d_009d,
-                 ((a2 - d_009f) >> 3) + 0x10);
+    if (is_world_position_outside_view(a1 + 2, a2) == 0) {
+        blit_planar_sprite_rows(sprite_graphics_buffer + 0xa0a0,
+                                a1 + 2 - level_scroll_x,
+                                ((a2 - level_map_y_offset) >> 3) + 0x10);
     } else {
-        d_d146_ = 0;
+        actor_3041_interaction_state = 0;
     }
 }
 
-void g1_ba39(void)
+/* Updates the level lock or exit from its current state and inputs. */
+void update_level_lock_or_exit(void)
 {
     register int si;
 
-    if (d_c681_ == 0 || d_02fa == 0)
+    if (actor_3041_active_state == 0 || current_level_index == 0)
         return;
 
-    ++d_071a;
-    if (d_071a == 3)
-        d_071a = 0;
-    ++d_071c;
+    ++actor_3041_sprite_frame;
+    if (actor_3041_sprite_frame == 3)
+        actor_3041_sprite_frame = 0;
+    ++actor_3041_animation_counter;
 
-    if (d_071e != 0) {
-        g1_b118();
-        d_071e = 0;
-        if (d_cc81_ == 0) {
+    if (actor_3041_event_pending != 0) {
+        wait_for_level_start();
+        actor_3041_event_pending = 0;
+        if (control_confirmation_state == 0) {
             enable();
-            while ((d_a0fa_ & 0x80) == 0) {
+            while ((last_keyboard_scan_code & 0x80) == 0) {
             }
             disable();
         }
     }
 
-    if (d_071c == 125)
-        d_071c = 0;
+    if (actor_3041_animation_counter == 125)
+        actor_3041_animation_counter = 0;
 
-    if (d_d146_ == 0 && d_5314_ == 0) {
-        if (g1_3513(d_c276_ - 6, d_c289_) != 0) {
-            g1_0042(0x1d);
-            d_d146_ = 1;
-            d_5314_ = 1;
-            d_071e = 1;
-        } else if (g1_3513(d_c276_ + 8, d_c289_) != 0) {
-            g1_0042(0x1d);
-            d_d146_ = 1;
-            d_5314_ = 1;
-            d_071e = 1;
+    if (actor_3041_interaction_state == 0 && exit_lock_animation_state == 0) {
+        if (test_player_overlap_with_object(actor_3041_world_x - 6, actor_3041_world_y) != 0) {
+            request_priority_sound_effect(0x1d);
+            actor_3041_interaction_state = 1;
+            exit_lock_animation_state = 1;
+            actor_3041_event_pending = 1;
+        } else if (test_player_overlap_with_object(actor_3041_world_x + 8, actor_3041_world_y) != 0) {
+            request_priority_sound_effect(0x1d);
+            actor_3041_interaction_state = 1;
+            exit_lock_animation_state = 1;
+            actor_3041_event_pending = 1;
         }
     }
 
-    if (d_c68c_ != 0 &&
-        (g1_3513(d_c276_, d_c289_) != 0 ||
-         g1_3513(d_c276_ + 2, d_c289_) != 0)) {
-        d_d146_ = 1;
-        g1_0042(0x1d);
-        d_071e = 1;
-        d_5314_ = 1;
+    if (control_up_pressed != 0 &&
+        (test_player_overlap_with_object(actor_3041_world_x, actor_3041_world_y) != 0 ||
+         test_player_overlap_with_object(actor_3041_world_x + 2, actor_3041_world_y) != 0)) {
+        actor_3041_interaction_state = 1;
+        request_priority_sound_effect(0x1d);
+        actor_3041_event_pending = 1;
+        exit_lock_animation_state = 1;
     }
 
-    if (d_d146_ == 0) {
-        g1_b926(d_071a, d_c276_, d_c289_);
-    } else if (d_0099 + d_009d < d_c276_ - 1) {
-        g1_b926(3, d_c276_, d_c289_);
-    } else if (d_0099 + d_009d > d_c276_ + 3) {
-        g1_b926(5, d_c276_, d_c289_);
+    if (actor_3041_interaction_state == 0) {
+        draw_large_actor_sprite(actor_3041_sprite_frame, actor_3041_world_x, actor_3041_world_y);
+    } else if (player_screen_x + level_scroll_x < actor_3041_world_x - 1) {
+        draw_large_actor_sprite(3, actor_3041_world_x, actor_3041_world_y);
+    } else if (player_screen_x + level_scroll_x > actor_3041_world_x + 3) {
+        draw_large_actor_sprite(5, actor_3041_world_x, actor_3041_world_y);
     } else {
-        g1_b926(4, d_c276_, d_c289_);
+        draw_large_actor_sprite(4, actor_3041_world_x, actor_3041_world_y);
     }
 }
 
-void pascal g1_bb9f(void)
+/* Draws the four directional hint icons on the level screen using the current hint flags. */
+void pascal draw_level_marker_tiles(void)
 {
     register int si;
     register int di;
 
-    si = d_6e0a_;
+    si = draw_page_index;
     di = 0;
     do {
         ++di;
-        asm_05eb(si);
-        if (d_554f_ != 0)
-            asm_0424(d_a0fb_ + 0x4d80, 0x1e, 0x90);
+        select_draw_page(si);
+        if (control_hint_up_flag != 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4d80, 0x1e, 0x90);
         else
-            asm_0424(d_a0fb_ + 0x4c40, 0x1e, 0x90);
-        if (d_5550_ != 0)
-            asm_0424(d_a0fb_ + 0x4e20, 0x20, 0x90);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4c40, 0x1e, 0x90);
+        if (control_hint_down_flag != 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4e20, 0x20, 0x90);
         else
-            asm_0424(d_a0fb_ + 0x4c40, 0x20, 0x90);
-        if (d_5551_ != 0)
-            asm_0424(d_a0fb_ + 0x4ec0, 0x22, 0x90);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4c40, 0x20, 0x90);
+        if (control_hint_left_flag != 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4ec0, 0x22, 0x90);
         else
-            asm_0424(d_a0fb_ + 0x4c40, 0x22, 0x90);
-        if (d_5552_ != 0)
-            asm_0424(d_a0fb_ + 0x4f60, 0x24, 0x90);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4c40, 0x22, 0x90);
+        if (control_hint_right_flag != 0)
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4f60, 0x24, 0x90);
         else
-            asm_0424(d_a0fb_ + 0x4c40, 0x24, 0x90);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4c40, 0x24, 0x90);
         si = !si;
     } while (di == 1);
 }
 
-void g1_bccb(void)
+/* Updates and draws records from level-map marker 0x3044; the concrete entity identity is not
+   established by source. */
+void update_actor_3044(void)
 {
     register int si;
-    struct s_bccb far *p;
+    struct actor_3044_record far *p;
 
-    for (si = 0; si < d_d70e_; si++) {
-        p = &d_6b58_[si];
-        if (p->a == 0)
+    for (si = 0; si < actor_3044_entity_count; si++) {
+        p = &actor_3044_records[si];
+        if (p->state == 0)
             continue;
-        if (g1_326e(p->b, p->c))
+        if (is_world_position_outside_view(p->world_x, p->world_y))
             continue;
-        if (g1_3513(p->b, p->c)) {
-            switch (p->a) {
+        if (test_player_overlap_with_object(p->world_x, p->world_y)) {
+            switch (p->state) {
             case 0x00a0:
-                d_554f_ = 1;
+                control_hint_up_flag = 1;
                 break;
             case 0x0140:
-                d_5550_ = 1;
+                control_hint_down_flag = 1;
                 break;
             case 0x01e0:
-                d_5551_ = 1;
+                control_hint_left_flag = 1;
                 break;
             case 0x0280:
-                d_5552_ = 1;
+                control_hint_right_flag = 1;
                 break;
             }
-            g1_0042(9);
-            g1_0b85(1000L);
-            g1_2a40(0x03c0, p->b, p->c);
-            g1_bb9f();
-            p->a = 0;
+            request_priority_sound_effect(9);
+            add_and_draw_player_score(1000L);
+            queue_ambient_sprite_animation(0x03c0, p->world_x, p->world_y);
+            draw_level_marker_tiles();
+            p->state = 0;
         } else {
-            asm_0424(d_a0fb_ + p->a + 0x4ce0,
-                     p->b - d_009d,
-                     0x10 + ((p->c - d_009f) >> 3));
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + p->state + 0x4ce0,
+                                    p->world_x - level_scroll_x,
+                                    0x10 + ((p->world_y - level_map_y_offset) >> 3));
         }
     }
 }
 
-void g1_bdd9(void)
+/* Updates and draws records from level-map marker 0x3048; the concrete entity identity is not
+   established by source. */
+void update_actor_3048(void)
 {
     register int i;
     register int j;
-    struct t_b9de far *p;
+    struct level_tile_animation_record far *p;
 
-    if (d_0437 == 0)
-        ++d_0720;
-    if (d_0720 == 320)
-        d_0720 = 0;
+    if (world_animation_phase == 0)
+        ++actor_3041_sprite_offset;
+    if (actor_3041_sprite_offset == 320)
+        actor_3041_sprite_offset = 0;
 
-    for (j = 0; j < d_5548_; ++j) {
-        p = &d_d157_[j];
-        if (g1_326e(p->x, p->y))
+    for (j = 0; j < actor_3048_entity_count; ++j) {
+        p = &actor_3048_records[j];
+        if (is_world_position_outside_view(p->world_x, p->world_y))
             continue;
 
-        if (d_5a11_ != 0 && g1_3513(p->x, p->y)) {
-            d_5a11_ = 0;
-            g2_0e98();
+        if (hint_revealed_object_7 != 0 && test_player_overlap_with_object(p->world_x, p->world_y)) {
+            hint_revealed_object_7 = 0;
+            show_secret_tip_card_key();
         }
-        if (g1_3513(p->x, p->y) != 0 &&
-            d_c68c_ != 0 && p->offset != 0) {
-            if ((d_554f_ != 0 && p->offset == 0x140) ||
-                (d_5550_ != 0 && p->offset == 0x1e0) ||
-                (d_5551_ != 0 && p->offset == 0x280) ||
-                (d_5552_ != 0 && p->offset == 0x320)) {
-                for (i = 0; i < d_5319_; ++i) {
-                    if (d_b9de_[i].offset != p->offset - 0xa0)
+        if (test_player_overlap_with_object(p->world_x, p->world_y) != 0 &&
+            control_up_pressed != 0 && p->sprite_resource_offset != 0) {
+            if ((control_hint_up_flag != 0 && p->sprite_resource_offset == 0x140) ||
+                (control_hint_down_flag != 0 && p->sprite_resource_offset == 0x1e0) ||
+                (control_hint_left_flag != 0 && p->sprite_resource_offset == 0x280) ||
+                (control_hint_right_flag != 0 && p->sprite_resource_offset == 0x320)) {
+                for (i = 0; i < actor_3048_object_count; ++i) {
+                    if (level_tile_animation_records[i].sprite_resource_offset != p->sprite_resource_offset - 0xa0)
                         continue;
-                    d_b9de_[i].alternate = 1;
-                    *(d_7729_ + d_b9de_[i].y + (d_b9de_[i].x >> 1) - 1) =
-                        *(d_7729_ + d_b9de_[i].y + (d_b9de_[i].x >> 1) - 2);
+                    level_tile_animation_records[i].alternate_frame = 1;
+                    *(level_tile_map + level_tile_animation_records[i].world_y + (level_tile_animation_records[i].world_x >> 1) - 1) =
+                        *(level_tile_map + level_tile_animation_records[i].world_y + (level_tile_animation_records[i].world_x >> 1) - 2);
                 }
 
-                switch (p->offset - 0xa0) {
+                switch (p->sprite_resource_offset - 0xa0) {
                 case 0xa0:
-                    d_554f_ = 0;
+                    control_hint_up_flag = 0;
                     break;
                 case 0x140:
-                    d_5550_ = 0;
+                    control_hint_down_flag = 0;
                     break;
                 case 0x1e0:
-                    d_5551_ = 0;
+                    control_hint_left_flag = 0;
                     break;
                 case 0x280:
-                    d_5552_ = 0;
+                    control_hint_right_flag = 0;
                     break;
                 }
-                g1_bb9f();
-                p->offset = 0;
-                g1_0042(0x1f);
-                g1_0b85(1000L);
+                draw_level_marker_tiles();
+                p->sprite_resource_offset = 0;
+                request_priority_sound_effect(0x1f);
+                add_and_draw_player_score(1000L);
                 continue;
             }
-            if (d_5c6a_ != 0)
-                g2_1b19();
+            if (hint_revealed_object_8 != 0)
+                show_secret_tip_lock_key();
         }
-        if (p->offset == 0) {
-            asm_0424(d_a0fb_ + 0x5460 + p->alternate,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 0x10);
-        } else if (d_0720 % 2 != 0) {
-            asm_0424(d_a0fb_ + 0x5500,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 0x10);
+        if (p->sprite_resource_offset == 0) {
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x5460 + p->alternate_frame,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 0x10);
+        } else if (actor_3041_sprite_offset % 2 != 0) {
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x5500,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 0x10);
         } else {
-            asm_0424(d_a0fb_ + 0x5460 + p->offset,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 0x10);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x5460 + p->sprite_resource_offset,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 0x10);
         }
     }
 }
 
-void g1_c0c7(void)
+/* Advances alternate tile-animation offsets and draws the visible level-tile animation records. */
+void animate_level_tile_records(void)
 {
     register int i;
-    struct t_b9de far *p;
+    struct level_tile_animation_record far *p;
 
-    for (i = 0; i < d_5319_; ++i) {
-        p = &d_b9de_[i];
-        if (p->offset != 0 && g1_326e(p->x, p->y) == 0) {
-            if (p->alternate != 0) {
-                if (d_0437 == 0 || d_0437 == 0x40)
-                    p->offset += 0xa0;
-                if (p->offset == 0x5a0) {
-                    p->offset = 0;
+    for (i = 0; i < actor_3048_object_count; ++i) {
+        p = &level_tile_animation_records[i];
+        if (p->sprite_resource_offset != 0 && is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+            if (p->alternate_frame != 0) {
+                if (world_animation_phase == 0 || world_animation_phase == 0x40)
+                    p->sprite_resource_offset += 0xa0;
+                if (p->sprite_resource_offset == 0x5a0) {
+                    p->sprite_resource_offset = 0;
                     continue;
                 }
-                asm_0424(d_a0fb_ + p->offset + 0x4f60,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 0x10);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + p->sprite_resource_offset + 0x4f60,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 0x10);
             } else {
-                asm_0424(d_a0fb_ + 0x5000,
-                         p->x - d_009d,
-                         ((p->y - d_009f) >> 3) + 0x10);
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x5000,
+                                        p->world_x - level_scroll_x,
+                                        ((p->world_y - level_map_y_offset) >> 3) + 0x10);
             }
         }
     }
 }
 
-void g1_c1b2(void)
+/* Draws visible marker 0x3058 objects and marks player contact when one overlaps Duke. */
+void draw_marker_3058_objects(void)
 {
     register int i;
-    struct g1_c1b2_record far *p;
+    struct actor_3058_record far *p;
 
-    for (i = 0; i < d_531e_; ++i) {
-        p = &d_cc84_[i];
-        if (g1_326e(p->x, p->y) == 0) {
-            if (g1_3513(p->x, p->y) != 0)
-                d_6379_ = 1;
-            asm_0424(d_a0fb_ + p->kind,
-                     p->x - d_009d,
-                     ((p->y - d_009f) >> 3) + 16);
+    for (i = 0; i < level_object_pool_531e_count; ++i) {
+        p = &actor_3058_records[i];
+        if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
+            if (test_player_overlap_with_object(p->world_x, p->world_y) != 0)
+                active_sprite_draw_flag = 1;
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + p->sprite_resource_offset,
+                                    p->world_x - level_scroll_x,
+                                    ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-void pascal g1_c243(void (far *key)(void))
+/* Registers a level-object update callback for execution by the gameplay loop. */
+void pascal register_level_update_callback(void (far *key)(void))
 {
     register int i;
 
-    for (i = 0; i < d_554d_; ++i) {
-        if (d_514b_[i] == key)
+    for (i = 0; i < keyboard_hotkey_count; ++i) {
+        if (level_update_callback_table[i] == key)
             return;
     }
-    d_514b_[i] = key;
-    ++d_554d_;
+    level_update_callback_table[i] = key;
+    ++keyboard_hotkey_count;
 }
 
-void pascal g1_c287(unsigned int a0)
+/* Scans level-map marker values, initializes the corresponding object records, and registers
+   their update callbacks. */
+void pascal create_objects_from_level_map(unsigned int a0)
 {
     register unsigned int col;
     register unsigned int row;
@@ -6488,624 +6678,624 @@ void pascal g1_c287(unsigned int a0)
 
     for (row = 0; row < a0; ++row) {
         for (col = 0; col < 128; ++col) {
-            cell = d_7729_ + row * 128 + col;
+            cell = level_tile_map + row * 128 + col;
             if (*cell >= 0x3000) {
                 switch (*cell) {
                 case 0x3000:
-                    d_669f_[d_043c].state = 1;
-                    d_669f_[d_043c].x = col * 2 + 2;
-                    d_669f_[d_043c].y = row * 128;
-                    g1_c243(g1_376f);
+                    actor_3000_records[actor_3000_count].state = 1;
+                    actor_3000_records[actor_3000_count].world_x = col * 2 + 2;
+                    actor_3000_records[actor_3000_count].world_y = row * 128;
+                    register_level_update_callback(update_actor_3000);
                     *cell = cell[-1];
-                    ++d_043c;
+                    ++actor_3000_count;
                     break;
                 case 0x3001:
-                    d_a8da_[d_0524].used = 1;
-                    d_a8da_[d_0524].x = col * 2 + 2;
-                    d_d646_[d_0524] = cell[-128];
-                    d_a8da_[d_0524].y = row * 128;
+                    actor_3001_records[actor_3001_count].active = 1;
+                    actor_3001_records[actor_3001_count].world_x = col * 2 + 2;
+                    actor_3001_tile_below_records[actor_3001_count] = cell[-128];
+                    actor_3001_records[actor_3001_count].world_y = row * 128;
                     *cell = 0x1ae0;
-                    ++d_0524;
+                    ++actor_3001_count;
                     break;
                 case 0x3002:
-                    d_c299_[d_0526].reserved = 0;
-                    d_c299_[d_0526].y = col + 2;
-                    d_c299_[d_0526].x = row * 128;
+                    actor_3002_records[actor_3002_count].reserved = 0;
+                    actor_3002_records[actor_3002_count].map_column = col + 2;
+                    actor_3002_records[actor_3002_count].map_row = row * 128;
                     k = 0;
                     while (cell[k] != 0x3003)
                         ++k;
-                    d_c299_[d_0526].height = k * 2;
-                    d_c299_[d_0526].state = 0;
-                    g1_c243(g1_3a98);
+                    actor_3002_records[actor_3002_count].object_height = k * 2;
+                    actor_3002_records[actor_3002_count].object_state = 0;
+                    register_level_update_callback(update_actor_3002);
                     *cell = 0x1820;
-                    ++d_0526;
+                    ++actor_3002_count;
                     break;
                 case 0x3003:
                     break;
                 case 0x3004:
-                    d_c299_[d_0526].reserved = 0;
-                    d_c299_[d_0526].y = col + 2;
-                    d_c299_[d_0526].x = row * 128;
+                    actor_3002_records[actor_3002_count].reserved = 0;
+                    actor_3002_records[actor_3002_count].map_column = col + 2;
+                    actor_3002_records[actor_3002_count].map_row = row * 128;
                     k = 0;
                     while (cell[k] != 0x3005)
                         ++k;
-                    d_c299_[d_0526].height = k * 2;
-                    d_c299_[d_0526].state = 1;
-                    g1_c243(g1_3a98);
-                    ++d_0526;
+                    actor_3002_records[actor_3002_count].object_height = k * 2;
+                    actor_3002_records[actor_3002_count].object_state = 1;
+                    register_level_update_callback(update_actor_3002);
+                    ++actor_3002_count;
                     break;
                 case 0x3005:
                     break;
                 case 0x3006:
-                    d_0528 = col * 2 + 2;
-                    d_052a = row * 128;
-                    d_052c = 0;
-                    g1_c243(g1_3cbc);
+                    actor_3006_world_x = col * 2 + 2;
+                    actor_3006_world_y = row * 128;
+                    actor_3006_state = 0;
+                    register_level_update_callback(update_actor_3006);
                     *cell = cell[-1];
                     break;
                 case 0x3007:
-                    d_6bb2_[d_053e].state = 1;
-                    d_6bb2_[d_053e].x = col * 2 + 2;
-                    d_6bb2_[d_053e].y = row * 128;
-                    g1_c243(g1_3e06);
-                    d_5006_ = 1;
+                    actor_3007_records[actor_3007_count].state = 1;
+                    actor_3007_records[actor_3007_count].world_x = col * 2 + 2;
+                    actor_3007_records[actor_3007_count].world_y = row * 128;
+                    register_level_update_callback(update_actor_3007);
+                    level_loading_state = 1;
                     *cell = cell[-128];
-                    ++d_053e;
+                    ++actor_3007_count;
                     break;
                 case 0x3008:
-                    d_a67b_ = col * 2 + 2;
-                    d_a67e_ = row * 128;
-                    d_052e = 0;
-                    g1_c243(g1_42b8);
+                    actor_3008_world_x = col * 2 + 2;
+                    actor_3008_world_y = row * 128;
+                    actor_3008_state = 0;
+                    register_level_update_callback(update_actor_3008);
                     *cell = cell[-1];
                     break;
                 case 0x3009:
-                    d_772e_[d_0540].state = 1;
-                    d_772e_[d_0540].x = col * 2 + 2;
-                    d_772e_[d_0540].y = row * 128;
-                    g1_c243(g1_43fa);
+                    actor_3009_records[actor_3009_count].state = 1;
+                    actor_3009_records[actor_3009_count].world_x = col * 2 + 2;
+                    actor_3009_records[actor_3009_count].world_y = row * 128;
+                    register_level_update_callback(update_actor_3009);
                     *cell = cell[1];
-                    ++d_0540;
+                    ++actor_3009_count;
                     break;
                 case 0x300a:
-                    d_9b3a_[d_0542].state = 1;
-                    d_9b3a_[d_0542].position2 = col * 2 + 2;
-                    d_9b3a_[d_0542].position4 = row * 128;
-                    g1_c243(g1_4638);
+                    actor_300a_records[actor_300a_count].state = 1;
+                    actor_300a_records[actor_300a_count].world_x = col * 2 + 2;
+                    actor_300a_records[actor_300a_count].world_y = row * 128;
+                    register_level_update_callback(update_actor_300a);
                     *cell = cell[-1];
-                    ++d_0542;
+                    ++actor_300a_count;
                     break;
                 case 0x300b:
-                    d_637f_[d_0544].type = 1;
-                    d_637f_[d_0544].x = col * 2 + 2;
-                    d_637f_[d_0544].y = row * 128;
-                    d_637f_[d_0544].step = 0;
-                    g1_c243(g1_4874);
+                    actor_300b_records[actor_300b_count].motion_state = 1;
+                    actor_300b_records[actor_300b_count].world_x = col * 2 + 2;
+                    actor_300b_records[actor_300b_count].world_y = row * 128;
+                    actor_300b_records[actor_300b_count].trajectory_step = 0;
+                    register_level_update_callback(update_actor_300b);
                     *cell = cell[-1];
-                    ++d_0544;
+                    ++actor_300b_count;
                     break;
                 case 0x300c:
-                    d_b6bc_[d_05aa].state = 1;
-                    d_b6bc_[d_05aa].x = col * 2 + 2;
-                    d_b6bc_[d_05aa].y = row * 128;
-                    d_b6bc_[d_05aa].marker = 0;
-                    d_5081_[d_05aa] = 0;
-                    g1_c243(g1_4f91);
+                    actor_300c_records[actor_300c_count].state = 1;
+                    actor_300c_records[actor_300c_count].world_x = col * 2 + 2;
+                    actor_300c_records[actor_300c_count].world_y = row * 128;
+                    actor_300c_records[actor_300c_count].marker_state = 0;
+                    actor_300c_object_marker_table[actor_300c_count] = 0;
+                    register_level_update_callback(update_actor_300c);
                     *cell = cell[-1];
-                    ++d_05aa;
+                    ++actor_300c_count;
                     break;
                 case 0x300d:
-                    d_a0ff_[d_05ac].state = 1;
-                    d_a0ff_[d_05ac].x = col * 2 + 2;
-                    d_a0ff_[d_05ac].y = row * 128;
-                    d_d57e_[d_05ac] = 0;
-                    g1_c243(g1_54e1);
+                    actor_300d_records[actor_300d_count].state = 1;
+                    actor_300d_records[actor_300d_count].world_x = col * 2 + 2;
+                    actor_300d_records[actor_300d_count].world_y = row * 128;
+                    actor_300d_auxiliary_states[actor_300d_count] = 0;
+                    register_level_update_callback(update_actor_300d);
                     *cell = cell[-1];
-                    ++d_05ac;
+                    ++actor_300d_count;
                     break;
                 case 0x300e:
-                    d_abec_[d_05b2].state = 1;
-                    d_abec_[d_05b2].x = col * 2 + 2;
-                    d_abec_[d_05b2].y = row * 128;
-                    d_4eda_[d_05b2] = 0;
-                    g1_c243(g1_5b0b);
+                    actor_300e_records[actor_300e_count].state = 1;
+                    actor_300e_records[actor_300e_count].world_x = col * 2 + 2;
+                    actor_300e_records[actor_300e_count].world_y = row * 128;
+                    actor_300e_object_state_table[actor_300e_count] = 0;
+                    register_level_update_callback(update_actor_300e);
                     *cell = cell[-1];
-                    ++d_05b2;
+                    ++actor_300e_count;
                     break;
                 case 0x300f:
-                    d_ab32_[d_05b4].active = 1;
-                    d_ab32_[d_05b4].x = col * 2 + 2;
-                    d_ab32_[d_05b4].y = row * 128;
-                    d_ab32_[d_05b4].state = 0;
-                    g1_c243(g1_5d6f);
+                    actor_300f_records[actor_300f_count].active = 1;
+                    actor_300f_records[actor_300f_count].world_x = col * 2 + 2;
+                    actor_300f_records[actor_300f_count].world_y = row * 128;
+                    actor_300f_records[actor_300f_count].animation_state = 0;
+                    register_level_update_callback(update_actor_300f);
                     *cell = cell[-1];
-                    ++d_05b4;
+                    ++actor_300f_count;
                     break;
                 case 0x3010:
-                    d_b0b4_[d_05b6].state = 1;
-                    d_b0b4_[d_05b6].x = col * 2 + 2;
-                    d_b0b4_[d_05b6].y = row * 128;
-                    d_b0b4_[d_05b6].field3 = 0;
-                    g1_c243(g1_5f0c);
+                    actor_3010_records[actor_3010_count].state = 1;
+                    actor_3010_records[actor_3010_count].world_x = col * 2 + 2;
+                    actor_3010_records[actor_3010_count].world_y = row * 128;
+                    actor_3010_records[actor_3010_count].animation_phase = 0;
+                    register_level_update_callback(update_actor_3010);
                     *cell = cell[-1];
-                    ++d_05b6;
+                    ++actor_3010_count;
                     break;
                 case 0x3011:
-                    d_4ed2_ = 0;
-                    d_d570_ = 1;
-                    d_d4bd_ = col * 2 + 2;
-                    d_d4c1_ = row * 128 + 2;
+                    current_weapon_state = 0;
+                    door_or_key_interaction_state = 1;
+                    door_lock_world_x = col * 2 + 2;
+                    door_lock_world_y = row * 128 + 2;
                     *cell = cell[-1];
                     break;
                 case 0x3012:
-                    d_555d_[d_05b8].state = 1;
-                    d_555d_[d_05b8].x = col * 2 + 2;
-                    d_555d_[d_05b8].y = row * 128;
-                    d_555d_[d_05b8].kind = 0;
-                    d_555d_[d_05b8].flag8 = 1;
-                    d_555d_[d_05b8].flag10 = 1;
-                    g1_c243(g1_6445);
+                    actor_3012_records[actor_3012_count].state = 1;
+                    actor_3012_records[actor_3012_count].world_x = col * 2 + 2;
+                    actor_3012_records[actor_3012_count].world_y = row * 128;
+                    actor_3012_records[actor_3012_count].object_kind = 0;
+                    actor_3012_records[actor_3012_count].unknown_flag_8 = 1;
+                    actor_3012_records[actor_3012_count].unknown_flag_10 = 1;
+                    register_level_update_callback(update_actor_3012);
                     *cell = cell[-1];
-                    ++d_05b8;
+                    ++actor_3012_count;
                     break;
                 case 0x3013:
-                    d_5310_ = 0;
-                    d_b636_ = 1;
-                    d_abd2_ = 0;
+                    actor_3013_formation_state = 0;
+                    formation_update_enabled = 1;
+                    formation_active_object_count = 0;
                     for (k = 9; k > 0; --k) {
-                        d_abd4_[k] = col * 2 + k * 2;
-                        d_b09c_[k] = row * 128 + 2;
-                        d_d249_[k] = 1;
+                        formation_object_x_positions[k] = col * 2 + k * 2;
+                        formation_object_y_positions[k] = row * 128 + 2;
+                        formation_object_active_flags[k] = 1;
                     }
-                    g1_c243(g1_6947);
+                    register_level_update_callback(update_actor_3013);
                     *cell = cell[-1];
                     break;
                 case 0x3014:
-                    d_70db_[d_05ba].x = col * 2 + 2;
-                    d_70db_[d_05ba].y = row * 128;
-                    ++d_05ba;
+                    actor_3014_records[actor_3014_count].world_x = col * 2 + 2;
+                    actor_3014_records[actor_3014_count].world_y = row * 128;
+                    ++actor_3014_count;
                     *cell = cell[-1];
                     break;
                 case 0x3015:
                 case 0x3052:
                     if (*cell == 0x3052)
-                        d_5a12_[d_05bc].state = 2;
+                        actor_3015_records[actor_3015_count].state = 2;
                     else
-                        d_5a12_[d_05bc].state = 1;
-                    d_5a12_[d_05bc].x = col * 2 + 2;
-                    d_5a12_[d_05bc].y = row * 128;
-                    ++d_05bc;
+                        actor_3015_records[actor_3015_count].state = 1;
+                    actor_3015_records[actor_3015_count].world_x = col * 2 + 2;
+                    actor_3015_records[actor_3015_count].world_y = row * 128;
+                    ++actor_3015_count;
                     *cell = cell[-1];
-                    g1_c243(g1_6b82);
+                    register_level_update_callback(update_actor_3015);
                     break;
                 case 0x3016:
                 case 0x3017:
                     if (*cell == 0x3016) {
-                        d_d261_[d_05be].state = 1;
+                        actor_3016_records[actor_3016_count].state = 1;
                         *cell = cell[1];
                     } else {
-                        d_d261_[d_05be].state = 3;
+                        actor_3016_records[actor_3016_count].state = 3;
                         *cell = cell[-1];
                     }
-                    d_d261_[d_05be].x = col * 2 + 2;
-                    d_d261_[d_05be].y = row * 128;
-                    ++d_05be;
-                    g1_c243(g1_6e71);
+                    actor_3016_records[actor_3016_count].world_x = col * 2 + 2;
+                    actor_3016_records[actor_3016_count].world_y = row * 128;
+                    ++actor_3016_count;
+                    register_level_update_callback(update_actor_3016);
                     break;
                 case 0x3018:
                 case 0x3051:
                     if (*cell == 0x3051)
-                        d_c01e_[d_05c0].state = 2;
+                        actor_3018_records[actor_3018_count].state = 2;
                     else
-                        d_c01e_[d_05c0].state = 1;
-                    d_c01e_[d_05c0].x = col * 2 + 2;
-                    d_c01e_[d_05c0].y = row * 128;
-                    ++d_05c0;
+                        actor_3018_records[actor_3018_count].state = 1;
+                    actor_3018_records[actor_3018_count].world_x = col * 2 + 2;
+                    actor_3018_records[actor_3018_count].world_y = row * 128;
+                    ++actor_3018_count;
                     *cell = cell[-1];
-                    g1_c243(g1_7163);
+                    register_level_update_callback(update_actor_3018);
                     break;
                 case 0x3019:
-                    d_d4b9_ = col + 2;
-                    d_d4bb_ = row;
-                    d_c281_ = 1;
-                    d_d155_ = 0;
-                    d_b62e_ = col + 2;
-                    d_b632_ = row * 128;
+                    actor_3019_screen_x = col + 2;
+                    actor_3019_map_row = row;
+                    actor_3019_enabled = 1;
+                    actor_3019_animation_state = 0;
+                    actor_3019_world_x = col + 2;
+                    actor_3019_world_y = row * 128;
                     k = 0;
                     /* Direct cell indexing changes this far-pointer access sequence. */
-                    while (((struct cell_pair far *)(cell + k))->second < 0x1800) {
+                    while (((struct level_map_cell_pair far *)(cell + k))->second_tile_value < 0x1800) {
                         cell[k] = 0x21a0;
-                        ((struct cell_pair far *)(cell + k))->second = 0x21c0;
+                        ((struct level_map_cell_pair far *)(cell + k))->second_tile_value = 0x21c0;
                         k += 2;
                     }
-                    d_d136_ = k * 2;
-                    g1_c243(g1_73d3);
+                    actor_3019_width = k * 2;
+                    register_level_update_callback(update_actor_3019);
                     *cell = 0x21a0;
                     break;
                 case 0x301a:
-                    d_b3d6_[d_05c2].x = col * 2 + 2;
-                    d_b3d6_[d_05c2].y = row * 128;
-                    d_b3d6_[d_05c2].used = 1;
-                    g1_c243(g1_74c2);
-                    ++d_05c2;
+                    actor_301a_records[actor_301a_count].world_x = col * 2 + 2;
+                    actor_301a_records[actor_301a_count].world_y = row * 128;
+                    actor_301a_records[actor_301a_count].active = 1;
+                    register_level_update_callback(update_actor_301a);
+                    ++actor_301a_count;
                     *cell = cell[-128];
                     break;
                 case 0x301b:
                 case 0x301c:
                     if (*cell == 0x301b) {
-                        d_798c_[d_05c4].state = 1;
+                        actor_301b_records[actor_301b_count].state = 1;
                         *cell = cell[-1];
                     } else {
-                        d_798c_[d_05c4].state = 2;
+                        actor_301b_records[actor_301b_count].state = 2;
                         *cell = cell[1];
                     }
-                    d_798c_[d_05c4].value1 = col * 2 + 2;
-                    d_798c_[d_05c4].value2 = row * 128;
-                    d_798c_[d_05c4].count = 0;
-                    g1_c243(g1_7647);
-                    ++d_05c4;
+                    actor_301b_records[actor_301b_count].world_x = col * 2 + 2;
+                    actor_301b_records[actor_301b_count].world_y = row * 128;
+                    actor_301b_records[actor_301b_count].animation_count = 0;
+                    register_level_update_callback(update_actor_301b);
+                    ++actor_301b_count;
                     break;
                 case 0x301d:
                 case 0x3050:
-                    d_9d99_[d_05c6].active = 1;
-                    d_9d99_[d_05c6].x = col * 2 + 2;
-                    d_9d99_[d_05c6].y = row * 128;
+                    actor_301d_records[actor_301d_count].active = 1;
+                    actor_301d_records[actor_301d_count].world_x = col * 2 + 2;
+                    actor_301d_records[actor_301d_count].world_y = row * 128;
                     if (*cell == 0x3050)
-                        d_9d99_[d_05c6].state = 1;
+                        actor_301d_records[actor_301d_count].animation_state = 1;
                     else
-                        d_9d99_[d_05c6].state = 0;
-                    ++d_05c6;
+                        actor_301d_records[actor_301d_count].animation_state = 0;
+                    ++actor_301d_count;
                     *cell = cell[-1];
-                    g1_c243(g1_784b);
+                    register_level_update_callback(update_actor_301d);
                     break;
                 case 0x301e:
                 case 0x3054:
-                    d_a357_[d_05c8].state = 1;
-                    d_a357_[d_05c8].x = col * 2 + 2;
-                    d_a357_[d_05c8].y = row * 128;
+                    actor_301e_records[actor_301e_count].state = 1;
+                    actor_301e_records[actor_301e_count].world_x = col * 2 + 2;
+                    actor_301e_records[actor_301e_count].world_y = row * 128;
                     if (*cell == 0x3054)
-                        d_a357_[d_05c8].flag = 1;
+                        actor_301e_records[actor_301e_count].animation_flag = 1;
                     else
-                        d_a357_[d_05c8].flag = 0;
-                    ++d_05c8;
+                        actor_301e_records[actor_301e_count].animation_flag = 0;
+                    ++actor_301e_count;
                     *cell = cell[-1];
-                    g1_c243(g1_79d9);
+                    register_level_update_callback(update_actor_301e);
                     break;
                 case 0x301f:
                 case 0x3053:
-                    d_9818_[d_05ca].state = 1;
-                    d_9818_[d_05ca].x = col * 2 + 2;
-                    d_9818_[d_05ca].y = row * 128;
+                    actor_301f_records[actor_301f_count].state = 1;
+                    actor_301f_records[actor_301f_count].world_x = col * 2 + 2;
+                    actor_301f_records[actor_301f_count].world_y = row * 128;
                     if (*cell == 0x3053)
-                        d_9818_[d_05ca].flag = 1;
+                        actor_301f_records[actor_301f_count].animation_flag = 1;
                     else
-                        d_9818_[d_05ca].flag = 0;
-                    ++d_05ca;
+                        actor_301f_records[actor_301f_count].animation_flag = 0;
+                    ++actor_301f_count;
                     *cell = cell[-1];
-                    g1_c243(g1_7b68);
+                    register_level_update_callback(update_actor_301f);
                     break;
                 case 0x3020:
-                    d_0530 = col * 2 + 2;
-                    d_0532 = row * 128;
-                    d_0534 = 0;
-                    g1_c243(g1_573d);
+                    actor_3020_world_x = col * 2 + 2;
+                    actor_3020_world_y = row * 128;
+                    actor_3020_state = 0;
+                    register_level_update_callback(update_actor_3020);
                     *cell = cell[-1];
                     break;
                 case 0x3021:
-                    d_726b_[d_05cc].x = col * 2 + 2;
-                    d_726b_[d_05cc].y = row * 128;
-                    /* This writes x in the next record; keep the matching-era form. */
-                    (&d_726b_[d_05cc].x)[2] = 1;
-                    g1_c243(g1_7cfa);
-                    ++d_05cc;
+                    actor_3021_records[actor_3021_count].world_x = col * 2 + 2;
+                    actor_3021_records[actor_3021_count].world_y = row * 128;
+                    /* This writes x in the next actor_302a_record; keep the matching-era form. */
+                    (&actor_3021_records[actor_3021_count].world_x)[2] = 1;
+                    register_level_update_callback(update_actor_3021);
+                    ++actor_3021_count;
                     *cell = cell[-1];
                     break;
                 case 0x3022:
-                    d_5ec9_[d_05ce].f0 = 1;
-                    d_5ec9_[d_05ce].f2 = col * 2 + 2;
-                    d_5ec9_[d_05ce].f4 = row * 128;
-                    d_5ec9_[d_05ce].f6 = 0;
-                    d_5ec9_[d_05ce].f8 = 4;
-                    d_5ec9_[d_05ce].fa = 0;
-                    g1_c243(g1_8069);
-                    ++d_05ce;
+                    actor_3022_records[actor_3022_count].movement_state = 1;
+                    actor_3022_records[actor_3022_count].world_x = col * 2 + 2;
+                    actor_3022_records[actor_3022_count].world_y = row * 128;
+                    actor_3022_records[actor_3022_count].jump_timer = 0;
+                    actor_3022_records[actor_3022_count].hit_points = 4;
+                    actor_3022_records[actor_3022_count].fall_counter = 0;
+                    register_level_update_callback(update_actor_3022);
+                    ++actor_3022_count;
                     *cell = cell[-1];
                     break;
                 case 0x3023:
-                    d_7cac_[d_05d0].state = 1;
-                    d_7cac_[d_05d0].x = col * 2 + 2;
-                    d_7cac_[d_05d0].y = row * 128;
-                    g1_c243(g1_8506);
-                    ++d_05d0;
+                    actor_3023_records[actor_3023_count].state = 1;
+                    actor_3023_records[actor_3023_count].world_x = col * 2 + 2;
+                    actor_3023_records[actor_3023_count].world_y = row * 128;
+                    register_level_update_callback(update_actor_3023);
+                    ++actor_3023_count;
                     *cell = cell[-1];
                     break;
                 case 0x3024:
-                    d_d57c_ = 1;
-                    d_68fc_[d_05d2].state = 1;
-                    d_68fc_[d_05d2].x = col * 2 + 2;
-                    d_68fc_[d_05d2].y = row * 128;
-                    ++d_05d2;
+                    level_progress_word = 1;
+                    actor_3024_records[actor_3024_count].state = 1;
+                    actor_3024_records[actor_3024_count].world_x = col * 2 + 2;
+                    actor_3024_records[actor_3024_count].world_y = row * 128;
+                    ++actor_3024_count;
                     *cell = cell[128];
                     break;
                 case 0x3025:
-                    d_7f06_[d_05d4].offset = 0x7ee0;
-                    d_7f06_[d_05d4].x = col * 2 + 2;
-                    d_7f06_[d_05d4].y = row * 128;
-                    ++d_05d4;
+                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = 0x7ee0;
+                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
+                    ++actor_3025_count;
                     *cell = cell[-128];
                     break;
                 case 0x3026:
                 case 0x3027:
-                    d_7f06_[d_05d4].offset = (*cell + 0xcfda) * 0xa0 + 0x7f80;
-                    d_7f06_[d_05d4].x = col * 2 + 2;
-                    d_7f06_[d_05d4].y = row * 128;
-                    ++d_05d4;
+                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = (*cell + 0xcfda) * 0xa0 + 0x7f80;
+                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
+                    ++actor_3025_count;
                     if (*cell == 0x3026)
                         *cell = cell[-1];
                     else
                         *cell = cell[1];
                     break;
                 case 0x3028:
-                    d_7f06_[d_05d4].offset = 0x80c0;
-                    d_7f06_[d_05d4].x = col * 2 + 2;
-                    d_7f06_[d_05d4].y = row * 128;
-                    ++d_05d4;
+                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = 0x80c0;
+                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
+                    ++actor_3025_count;
                     *cell = 0;
                     break;
                 case 0x3029:
-                    d_7063_[d_05d6].state = 1;
-                    d_7063_[d_05d6].x = col * 2 + 2;
-                    d_7063_[d_05d6].y = row * 128;
-                    ++d_05d6;
-                    g1_c243(g1_899e);
+                    actor_3029_records[actor_3029_count].state = 1;
+                    actor_3029_records[actor_3029_count].world_x = col * 2 + 2;
+                    actor_3029_records[actor_3029_count].world_y = row * 128;
+                    ++actor_3029_count;
+                    register_level_update_callback(update_actor_3029);
                     *cell = cell[-1];
                     break;
                 case 0x302a:
-                    d_c691_[d_05d8].state = 1;
-                    d_c691_[d_05d8].x = col * 2 + 2;
-                    d_c691_[d_05d8].y = row * 128;
-                    ++d_05d8;
-                    g1_c243(g1_8b5b);
+                    actor_302a_records[actor_302a_count].state = 1;
+                    actor_302a_records[actor_302a_count].world_x = col * 2 + 2;
+                    actor_302a_records[actor_302a_count].world_y = row * 128;
+                    ++actor_302a_count;
+                    register_level_update_callback(update_actor_302a);
                     *cell = cell[-1];
                     break;
                 case 0x302b:
-                    d_c8e9_ = 0;
-                    d_c68d_ = col * 2 + 2;
-                    d_c68f_ = row * 128;
-                    d_d572_ = 1;
-                    d_d56e_ = 10;
-                    g1_c243(g1_8ec1);
+                    actor_302b_active_state = 0;
+                    actor_302b_world_x = col * 2 + 2;
+                    actor_302b_world_y = row * 128;
+                    actor_302b_open_state = 1;
+                    actor_302b_animation_counter = 10;
+                    register_level_update_callback(update_actor_302b);
                     *cell = cell[-1];
                     break;
                 case 0x302c:
-                    d_9688_[d_05da].x = col * 2 + 2;
-                    d_9688_[d_05da].y = row * 128;
-                    g1_c243(g1_9698);
-                    ++d_05da;
+                    actor_302c_records[actor_302c_count].world_x = col * 2 + 2;
+                    actor_302c_records[actor_302c_count].world_y = row * 128;
+                    register_level_update_callback(update_actor_302c);
+                    ++actor_302c_count;
                     *cell = cell[-128];
                     break;
                 case 0x302d:
                 case 0x3055:
                     if (*cell == 0x3055)
-                        d_c915_[d_05dc].state = 2;
+                        actor_302d_records[actor_302d_count].state = 2;
                     else
-                        d_c915_[d_05dc].state = 1;
-                    d_c915_[d_05dc].x = col * 2 + 2;
-                    d_c915_[d_05dc].y = row * 128;
-                    ++d_05dc;
-                    g1_c243(g1_9757);
+                        actor_302d_records[actor_302d_count].state = 1;
+                    actor_302d_records[actor_302d_count].world_x = col * 2 + 2;
+                    actor_302d_records[actor_302d_count].world_y = row * 128;
+                    ++actor_302d_count;
+                    register_level_update_callback(update_actor_302d);
                     *cell = cell[-1];
                     break;
                 case 0x302e:
                 case 0x3056:
                     if (*cell == 0x3056)
-                        d_6e0b_[d_05de].state = 2;
+                        actor_302e_records[actor_302e_count].state = 2;
                     else
-                        d_6e0b_[d_05de].state = 1;
-                    d_6e0b_[d_05de].x = col * 2 + 2;
-                    d_6e0b_[d_05de].y = row * 128;
-                    ++d_05de;
-                    g1_c243(g1_9986);
+                        actor_302e_records[actor_302e_count].state = 1;
+                    actor_302e_records[actor_302e_count].world_x = col * 2 + 2;
+                    actor_302e_records[actor_302e_count].world_y = row * 128;
+                    ++actor_302e_count;
+                    register_level_update_callback(update_actor_302e);
                     *cell = cell[-1];
                     break;
                 case 0x302f:
-                    d_c684_ = 1;
-                    d_c279_ = col * 2 + 2;
-                    d_c28b_ = row * 128;
-                    d_d139_ = 0;
-                    d_c686_ = 0;
-                    g1_c243(g1_a032);
+                    actor_302f_active_state = 1;
+                    actor_302f_world_x = col * 2 + 2;
+                    actor_302f_world_y = row * 128;
+                    actor_302f_interaction_state = 0;
+                    actor_302f_interaction_phase = 0;
+                    register_level_update_callback(activate_actor_302f);
                     *cell = cell[-1];
                     break;
                 case 0x3030:
-                    d_c688_ = 1;
-                    d_c27b_ = col * 2 + 2;
-                    d_c28d_ = row * 128;
-                    d_d13b_ = 0;
-                    d_c68a_ = 0;
-                    g1_c243(g1_a125);
+                    actor_3030_active_state = 1;
+                    actor_3030_world_x = col * 2 + 2;
+                    actor_3030_world_y = row * 128;
+                    actor_3030_interaction_state = 0;
+                    actor_302f_animation_phase = 0;
+                    register_level_update_callback(activate_actor_3030);
                     *cell = cell[-1];
                     break;
                 case 0x3031:
-                    d_ae44_[d_05e0].state = 0xfffa;
-                    d_ae44_[d_05e0].x = col * 2 + 2;
-                    d_ae44_[d_05e0].y = row * 128;
-                    g1_c243(g1_a218);
+                    actor_3031_records[actor_3031_count].state = 0xfffa;
+                    actor_3031_records[actor_3031_count].world_x = col * 2 + 2;
+                    actor_3031_records[actor_3031_count].world_y = row * 128;
+                    register_level_update_callback(update_actor_3031);
                     *cell = cell[-1];
-                    ++d_05e0;
+                    ++actor_3031_count;
                     break;
                 case 0x3032:
-                    d_009d = col * 2 - 14;
-                    d_009f = row * 128 - 384;
-                    d_009b = 64;
+                    level_scroll_x = col * 2 - 14;
+                    level_map_y_offset = row * 128 - 384;
+                    player_screen_y = 64;
                     *cell = cell[-1];
                     break;
                 case 0x3033:
-                    d_b3d4_ = 0;
-                    d_053c = 1;
-                    d_0536 = col * 2 + 2;
-                    d_0538 = row * 128;
-                    d_053a = 0;
-                    g1_c243(g1_5887);
+                    actor_3033_active_state = 0;
+                    actor_3033_enabled = 1;
+                    actor_3033_world_x = col * 2 + 2;
+                    actor_3033_world_y = row * 128;
+                    actor_3033_state = 0;
+                    register_level_update_callback(update_actor_3033);
                     *cell = cell[-1];
                     break;
                 case 0x3034:
-                    d_7f04_ = 1;
-                    d_9d96_ = col * 2 + 2;
-                    d_a0b9_ = row * 128;
+                    actor_3034_active_state = 1;
+                    actor_3034_world_x = col * 2 + 2;
+                    actor_3034_world_y = row * 128;
                     *cell = cell[-1];
                     break;
                 case 0x3035:
-                    d_5307_ = 1;
-                    d_52db_ = 0;
-                    d_5149_ = 0;
-                    d_d13d_ = col * 2 + 2;
-                    d_d140_ = row * 128;
+                    actor_3035_active_state = 1;
+                    actor_3035_animation_state = 0;
+                    actor_3035_state = 0;
+                    actor_3035_world_x = col * 2 + 2;
+                    actor_3035_world_y = row * 128;
                     *cell = cell[-1];
                     break;
                 case 0x3036:
-                    d_5316_ = 1;
-                    d_5000_ = 0;
-                    d_d574_ = col * 2 + 2;
-                    d_d577_ = row * 128;
+                    secret_block_animation_state = 1;
+                    secret_block_state = 0;
+                    secret_block_world_x = col * 2 + 2;
+                    secret_block_world_y = row * 128;
                     *cell = 0x2fe0;
-                    g1_c243(g1_a6f4);
+                    register_level_update_callback(update_secret_block_state);
                     break;
                 case 0x3037:
                 case 0x3038:
                 case 0x3039:
                 case 0x303a:
-                    d_530c_ = 0;
+                    actor_3037_animation_state = 0;
                     switch (*cell) {
                     case 0x3037:
-                        d_a0bf_[d_5309_].state = 0x44;
+                        actor_3037_records[actor_3037_object_count].state = 0x44;
                         break;
                     case 0x3038:
-                        d_a0bf_[d_5309_].state = 0x55;
+                        actor_3037_records[actor_3037_object_count].state = 0x55;
                         break;
                     case 0x3039:
-                        d_a0bf_[d_5309_].state = 0x4b;
+                        actor_3037_records[actor_3037_object_count].state = 0x4b;
                         break;
                     case 0x303a:
-                        d_a0bf_[d_5309_].state = 0x45;
+                        actor_3037_records[actor_3037_object_count].state = 0x45;
                         break;
                     }
-                    d_a0bf_[d_5309_].x = col * 2 + 2;
-                    d_a0bf_[d_5309_].y = row * 128;
-                    d_a0bf_[d_5309_].flag = 0;
+                    actor_3037_records[actor_3037_object_count].world_x = col * 2 + 2;
+                    actor_3037_records[actor_3037_object_count].world_y = row * 128;
+                    actor_3037_records[actor_3037_object_count].animation_flag = 0;
                     *cell = cell[-1];
-                    g1_c243(g1_a75c);
-                    ++d_5309_;
+                    register_level_update_callback(update_actor_3037);
+                    ++actor_3037_object_count;
                     break;
                 case 0x303b:
-                    d_73fb_[d_0600].state = 1;
-                    d_73fb_[d_0600].x = col * 2 + 2;
-                    d_73fb_[d_0600].y = row * 128;
-                    d_73fb_[d_0600].kind = 0;
-                    ++d_0600;
-                    g1_c243(g1_aac2);
+                    actor_303b_records[actor_303b_count].state = 1;
+                    actor_303b_records[actor_303b_count].world_x = col * 2 + 2;
+                    actor_303b_records[actor_303b_count].world_y = row * 128;
+                    actor_303b_records[actor_303b_count].object_kind = 0;
+                    ++actor_303b_count;
+                    register_level_update_callback(update_actor_303b);
                     *cell = cell[-1];
                     break;
                 case 0x303c:
-                    d_a680_[d_05fe].state = 1;
-                    d_a680_[d_05fe].x = col * 2 + 2;
-                    d_a680_[d_05fe].y = row * 128;
-                    ++d_05fe;
-                    g1_c243(g1_af94);
+                    actor_303c_records[actor_303c_count].state = 1;
+                    actor_303c_records[actor_303c_count].world_x = col * 2 + 2;
+                    actor_303c_records[actor_303c_count].world_y = row * 128;
+                    ++actor_303c_count;
+                    register_level_update_callback(update_actor_303c);
                     *cell = cell[-1];
                     break;
                 case 0x303d:
                 case 0x303e:
                 case 0x303f:
-                    d_7f06_[d_05d4].offset = (*cell + 0xcfc3) * 0xa0 + 0x9d80;
-                    d_7f06_[d_05d4].x = col * 2 + 2;
-                    d_7f06_[d_05d4].y = row * 128;
-                    ++d_05d4;
+                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = (*cell + 0xcfc3) * 0xa0 + 0x9d80;
+                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
+                    ++actor_3025_count;
                     *cell = 0;
                     break;
                 case 0x3040:
-                    d_a677_ = 1;
-                    d_9d92_ = col * 2 + 2;
-                    d_9d94_ = row * 128;
+                    actor_3040_active_state = 1;
+                    actor_3040_world_x = col * 2 + 2;
+                    actor_3040_world_y = row * 128;
                     *cell = cell[-1];
                     break;
                 case 0x3041:
-                    d_c681_ = 1;
-                    d_d146_ = 0;
-                    d_c276_ = col * 2 + 2;
-                    d_c289_ = row * 128;
+                    actor_3041_active_state = 1;
+                    actor_3041_interaction_state = 0;
+                    actor_3041_world_x = col * 2 + 2;
+                    actor_3041_world_y = row * 128;
                     *cell = cell[-1];
                     break;
                 case 0x3042:
                 case 0x3043:
-                    d_c283_ = 1;
-                    d_b630_ = col * 2 + 2;
-                    d_b634_ = row * 128;
-                    d_d56c_ = 1;
+                    actor_3042_active_state = 1;
+                    actor_3042_world_x = col * 2 + 2;
+                    actor_3042_world_y = row * 128;
+                    actor_3042_open_state = 1;
                     if (*cell == 0x3043)
-                        d_b9dc_ = 1;
+                        ending_sequence_enabled = 1;
                     else
-                        d_b9dc_ = 0;
-                    d_d142_ = 10;
-                    d_5002_ = 0;
+                        ending_sequence_enabled = 0;
+                    actor_3042_animation_counter = 10;
+                    player_animation_lock_state = 0;
                     *cell = cell[-1];
-                    g1_c243(g1_b595);
+                    register_level_update_callback(update_actor_3042);
                     break;
                 case 0x3044:
                 case 0x3045:
                 case 0x3046:
                 case 0x3047:
-                    d_6b58_[d_d70e_].a = (*cell + 0xcfbd) * 0xa0;
-                    d_6b58_[d_d70e_].b = col * 2 + 2;
-                    d_6b58_[d_d70e_].c = row * 128;
-                    ++d_d70e_;
+                    actor_3044_records[actor_3044_entity_count].state = (*cell + 0xcfbd) * 0xa0;
+                    actor_3044_records[actor_3044_entity_count].world_x = col * 2 + 2;
+                    actor_3044_records[actor_3044_entity_count].world_y = row * 128;
+                    ++actor_3044_entity_count;
                     *cell = cell[-1];
-                    g1_c243(g1_bccb);
+                    register_level_update_callback(update_actor_3044);
                     break;
                 case 0x3048:
                 case 0x3049:
                 case 0x304a:
                 case 0x304b:
-                    d_d157_[d_5548_].offset = (*cell + 0xcfba) * 0xa0;
-                    d_d157_[d_5548_].x = col * 2 + 2;
-                    d_d157_[d_5548_].y = row * 128;
-                    d_d157_[d_5548_].alternate = (*cell + 0xcfba) * 0xa0;
-                    ++d_5548_;
+                    actor_3048_records[actor_3048_entity_count].sprite_resource_offset = (*cell + 0xcfba) * 0xa0;
+                    actor_3048_records[actor_3048_entity_count].world_x = col * 2 + 2;
+                    actor_3048_records[actor_3048_entity_count].world_y = row * 128;
+                    actor_3048_records[actor_3048_entity_count].alternate_frame = (*cell + 0xcfba) * 0xa0;
+                    ++actor_3048_entity_count;
                     *cell = cell[-1];
                     break;
                 case 0x304c:
                 case 0x304d:
                 case 0x304e:
                 case 0x304f:
-                    d_b9de_[d_5319_].offset = (*cell + 0xcfb5) * 0xa0;
-                    d_b9de_[d_5319_].x = col * 2 + 2;
-                    d_b9de_[d_5319_].y = row * 128;
-                    d_b9de_[d_5319_].alternate = 0;
-                    ++d_5319_;
+                    level_tile_animation_records[actor_3048_object_count].sprite_resource_offset = (*cell + 0xcfb5) * 0xa0;
+                    level_tile_animation_records[actor_3048_object_count].world_x = col * 2 + 2;
+                    level_tile_animation_records[actor_3048_object_count].world_y = row * 128;
+                    level_tile_animation_records[actor_3048_object_count].alternate_frame = 0;
+                    ++actor_3048_object_count;
                     *cell = 0x1820;
-                    g1_c243(g1_c0c7);
+                    register_level_update_callback(animate_level_tile_records);
                     break;
                 case 0x3057:
-                    d_5c6c_[d_5004_].used = 1;
-                    d_5c6c_[d_5004_].x = col * 2 + 2;
-                    d_5c6c_[d_5004_].y = row * 128;
-                    ++d_5004_;
+                    falling_hazard_records[level_hazard_count].active = 1;
+                    falling_hazard_records[level_hazard_count].world_x = col * 2 + 2;
+                    falling_hazard_records[level_hazard_count].world_y = row * 128;
+                    ++level_hazard_count;
                     *cell = cell[-1];
-                    g1_c243(g1_a30a);
+                    register_level_update_callback(update_falling_hazards);
                     break;
                 case 0x3058:
                 case 0x3059:
-                    d_cc84_[d_531e_].x = col * 2 + 2;
-                    d_cc84_[d_531e_].y = row * 128;
-                    g1_c243(g1_c1b2);
+                    actor_3058_records[level_object_pool_531e_count].world_x = col * 2 + 2;
+                    actor_3058_records[level_object_pool_531e_count].world_y = row * 128;
+                    register_level_update_callback(draw_marker_3058_objects);
                     if (*cell == 0x3058) {
-                        d_cc84_[d_531e_].kind = 0x5c80;
+                        actor_3058_records[level_object_pool_531e_count].sprite_resource_offset = 0x5c80;
                         *cell = cell[-128];
                     } else {
-                        d_cc84_[d_531e_].kind = 0x5d20;
+                        actor_3058_records[level_object_pool_531e_count].sprite_resource_offset = 0x5d20;
                         *cell = cell[128];
                     }
-                    ++d_531e_;
+                    ++level_object_pool_531e_count;
                     break;
                 case 0x305a:
                     break;
@@ -7127,307 +7317,319 @@ void pascal g1_c287(unsigned int a0)
     }
 }
 
-void g1_de26(char far *filename)
+/* Reads the level's 16-bit tile map from the named file into the level-map buffer. */
+void load_level_tile_map(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
-    fread(d_7729_, 11520, 2, stream);
+    fread(level_tile_map, 11520, 2, stream);
     fclose(stream);
 }
 
-/* g1_de71 candidate 3 */
-void g1_de71(char far *filename, char far *buffer)
+/* load_user_demo_recording candidate 3 */
+/* Reads the user-demo header and recorded input bytes into the supplied buffer. */
+void load_user_demo_recording(char far *filename, char far *buffer)
 {
     FILE *fp;
 
     fp = fopen(filename, "rb");
     if (fp == 0) {
-        d_c278_ = 0;
-        d_530e_ = 1;
+        demo_file_load_success = 0;
+        user_demo_recording_state = 1;
     } else {
-        d_530e_ = 0;
-        d_040e = getw(fp);
+        user_demo_recording_state = 0;
+        user_demo_input_length = getw(fp);
         fread(buffer, 17000, 1, fp);
-        d_c278_ = 1;
+        demo_file_load_success = 1;
     }
     fclose(fp);
 }
 
-void g1_dee9(char far *filename, char far *buffer)
+/* Reads the saved-demo header and recorded input bytes into the supplied buffer. */
+void load_saved_demo_recording(char far *filename, char far *buffer)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
     if (stream == NULL) {
-        d_c278_ = 0;
+        demo_file_load_success = 0;
     } else {
-        d_0410 = getw(stream);
+        saved_demo_input_length = getw(stream);
         fread(buffer, 17000, 1, stream);
-        d_c278_ = 1;
+        demo_file_load_success = 1;
     }
     fclose(stream);
 }
 
-void g1_df57(char far *filename, void far *buffer)
+/* Writes a user-demo header and recorded input bytes to the named file. */
+void save_user_demo_recording(char far *filename, void far *buffer)
 {
     FILE *stream;
 
     stream = fopen(filename, "wb");
-    putw(d_040e, stream);
+    putw(user_demo_input_length, stream);
     fwrite(buffer, 17000, 1, stream);
     fclose(stream);
 }
 
-void g1_dfb2(char far *filename, void far *buffer)
+/* Writes the saved-demo header and recorded input bytes to the named file. */
+void save_demo_recording(char far *filename, void far *buffer)
 {
     FILE *stream;
 
     stream = fopen(filename, "wb");
-    putw(d_0410, stream);
+    putw(saved_demo_input_length, stream);
     fwrite(buffer, 17000, 1, stream);
     fclose(stream);
 }
 
-void g1_e00d(void)
+/* Allocates the game buffers and initializes episode resource data needed by the first screens. */
+void allocate_game_buffers_and_state(void)
 {
-    g1_10fb(F_BORDER0, 0x3000, 7680);
-    d_7729_ = malloc(24000);
-    d_6b54_ = malloc(4500);
-    d_a0fb_ = malloc(24010);
-    d_a0ef_ = malloc(8001);
-    d_5ec4_ = malloc(34001);
-    d_637a_ = malloc(48001);
-    d_9684_ = malloc(18000);
-    d_5a0d_ = malloc(18000);
+    load_planar_image_file(F_BORDER0, 0x3000, 7680);
+    level_tile_map = malloc(24000);
+    font_glyph_data_buffer = malloc(4500);
+    sprite_pixel_data_pointer = malloc(24010);
+    object_sprite_buffer = malloc(8001);
+    player_sprite_resource_buffer = malloc(34001);
+    sprite_graphics_buffer = malloc(48001);
+    saved_demo_buffer = malloc(18000);
+    user_demo_buffer = malloc(18000);
 
-    if (!d_6b54_ || !d_5ec4_ || !d_637a_ || !d_a0fb_)
+    if (!font_glyph_data_buffer || !player_sprite_resource_buffer || !sprite_graphics_buffer || !sprite_pixel_data_pointer)
         exit(0);
-    if (!d_9684_ || !d_5a0d_)
+    if (!saved_demo_buffer || !user_demo_buffer)
         exit(0);
-    if (!d_9684_ || !d_5a0d_)
+    if (!saved_demo_buffer || !user_demo_buffer)
         exit(0);
-    if (!d_a0ef_)
+    if (!object_sprite_buffer)
         exit(0);
-    if (!d_7729_)
+    if (!level_tile_map)
         exit(0);
 
-    g1_295e(F_FONT1, d_6b54_, 2000);
-    g1_295e(F_FONT2, d_6b54_ + 2000, 2000);
-    g2_01a9(5);
-    g2_1f24();
-    g2_0036(5);
-    g1_295e(F_NUMBERS, d_a0ef_, 8000);
-    g1_295e(F_OBJECT0, d_a0fb_, 8000);
-    g1_295e(F_OBJECT1, d_a0fb_ + 8000, 8000);
-    g1_295e(F_OBJECT2, d_a0fb_ + 16000, 8000);
-    g1_de71(F_USERDEMO, d_9684_);
-    g1_dee9(F_MYDEMO, d_5a0d_);
-    g1_295e(F_MAN0, d_5ec4_, 7680);
-    g1_295e(F_MAN1, d_5ec4_ + 7680, 7680);
-    g1_295e(F_MAN2, d_5ec4_ + 15360, 7680);
-    g1_295e(F_MAN3, d_5ec4_ + 23040, 7680);
-    g1_10fb(F_BACK0, 0, 7680);
-    g1_10fb(F_BACK1, 0x600, 7680);
-    g1_10fb(F_BACK2, 0xc00, 7680);
-    g1_10fb(F_BACK3, 0x1200, 7680);
-    g2_01a9(5);
-    g2_3114();
-    g1_10fb(F_SOLID0, 0x1800, 7680);
-    g1_10fb(F_SOLID1, 7680, 7680);
-    g2_3af3();
-    g2_0036(5);
-    g1_10fb(F_SOLID2, 0x2400, 7680);
-    g1_10fb(F_SOLID3, 0x2a00, 7680);
-    g1_10fb(F_BORDER0, 0x3000, 7680);
-    g1_295e(F_ANIM0, d_637a_, 7680);
-    g1_295e(F_ANIM1, d_637a_ + 7680, 7680);
-    g1_295e(F_ANIM2, d_637a_ + 15360, 7680);
-    g1_295e(F_ANIM3, d_637a_ + 23040, 7680);
-    g1_295e(F_ANIM4, d_637a_ + 0x7800, 7680);
-    g1_295e(F_ANIM5, d_637a_ + 38400, 7680);
-    g2_01a9(5);
+    read_file_block(F_FONT1, font_glyph_data_buffer, 2000);
+    read_file_block(F_FONT2, font_glyph_data_buffer + 2000, 2000);
+    clear_palette_entries(5);
+    show_loading_status();
+    restore_ega_palette(5);
+    read_file_block(F_NUMBERS, object_sprite_buffer, 8000);
+    read_file_block(F_OBJECT0, sprite_pixel_data_pointer, 8000);
+    read_file_block(F_OBJECT1, sprite_pixel_data_pointer + 8000, 8000);
+    read_file_block(F_OBJECT2, sprite_pixel_data_pointer + 16000, 8000);
+    load_user_demo_recording(F_USERDEMO, saved_demo_buffer);
+    load_saved_demo_recording(F_MYDEMO, user_demo_buffer);
+    read_file_block(F_MAN0, player_sprite_resource_buffer, 7680);
+    read_file_block(F_MAN1, player_sprite_resource_buffer + 7680, 7680);
+    read_file_block(F_MAN2, player_sprite_resource_buffer + 15360, 7680);
+    read_file_block(F_MAN3, player_sprite_resource_buffer + 23040, 7680);
+    load_planar_image_file(F_BACK0, 0, 7680);
+    load_planar_image_file(F_BACK1, 0x600, 7680);
+    load_planar_image_file(F_BACK2, 0xc00, 7680);
+    load_planar_image_file(F_BACK3, 0x1200, 7680);
+    clear_palette_entries(5);
+    clear_video_page();
+    load_planar_image_file(F_SOLID0, 0x1800, 7680);
+    load_planar_image_file(F_SOLID1, 7680, 7680);
+    show_credit_screen();
+    restore_ega_palette(5);
+    load_planar_image_file(F_SOLID2, 0x2400, 7680);
+    load_planar_image_file(F_SOLID3, 0x2a00, 7680);
+    load_planar_image_file(F_BORDER0, 0x3000, 7680);
+    read_file_block(F_ANIM0, sprite_graphics_buffer, 7680);
+    read_file_block(F_ANIM1, sprite_graphics_buffer + 7680, 7680);
+    read_file_block(F_ANIM2, sprite_graphics_buffer + 15360, 7680);
+    read_file_block(F_ANIM3, sprite_graphics_buffer + 23040, 7680);
+    read_file_block(F_ANIM4, sprite_graphics_buffer + 0x7800, 7680);
+    read_file_block(F_ANIM5, sprite_graphics_buffer + 38400, 7680);
+    clear_palette_entries(5);
 }
 
-void pascal g1_e3e0(char far *a0)
+/* Resets level runtime state, loads the tile map and drop graphics, creates map objects, and
+   draws their marker tiles. */
+void pascal load_level_and_init_objects(char far *a0)
 {
-    g1_1b51();
-    d_0436 = 0;
-    d_0437 = 0;
-    d_060e = 0;
-    d_0439 = 0;
-    d_043a = 4;
-    d_043b = 0;
-    d_d576_ = 0;
-    d_043c = 0;
-    d_043e = 12;
-    d_051c = 3;
-    d_051e = 7;
-    d_0520 = 0x12;
-    d_0522 = 8;
-    d_0524 = 0;
-    d_0526 = 0;
-    d_053e = 0;
-    d_0540 = 0;
-    d_0542 = 0;
-    d_0544 = 0;
-    d_05a6 = 0;
-    d_05a8 = 0;
-    d_05aa = 0;
-    d_05ac = 0;
-    d_05b2 = 0;
-    d_554d_ = 0;
-    d_05b4 = 0;
-    d_05b6 = 0;
-    d_4ed2_ = 0;
-    d_d570_ = 0;
-    d_05b8 = 0;
-    d_b636_ = 0;
-    d_05ba = 0;
-    d_05bc = 0;
-    d_05be = 0;
-    d_05c0 = 0;
-    d_c281_ = 0;
-    d_05c2 = 0;
-    d_05c4 = 0;
-    d_05c6 = 0;
-    d_05c8 = 0;
-    d_05ca = 0;
-    d_05cc = 0;
-    d_05ce = 0;
-    d_05d0 = 0;
-    d_05d2 = 0;
-    d_05d4 = 0;
-    d_05d6 = 0;
-    d_05d8 = 0;
-    d_05da = 0;
-    d_c8e9_ = 1;
-    d_d572_ = 0;
-    d_05dc = 0;
-    d_05de = 0;
-    d_05e0 = d_c688_ = d_d13b_ = d_c684_ = d_d139_ = 0;
-    d_7f04_ = -1;
-    d_c283_ = d_c681_ = d_a677_ = d_05fe = d_0600 = d_d57a_ = d_5309_ = d_5316_ = d_5307_ = 0;
-    d_6379_ = 0;
-    d_d4bf_ = 0x15;
-    d_5314_ = d_5319_ = d_d70e_ = d_5548_ = d_053c = d_b3d4_ = 0;
-    d_d56e_ = 10;
-    d_060a = d_0608 = d_0606 = d_0604 = d_0602 = d_5004_ = 0;
-    d_060c = 10;
-    d_554a_ = d_531e_ = d_b9dc_ = d_5002_ = 0;
+    clear_projectile_pool_051c();
+    interaction_cooldown_state = 0;
+    world_animation_phase = 0;
+    gameplay_animation_flag = 0;
+    player_death_state = 0;
+    player_action_state = 4;
+    player_animation_phase = 0;
+    player_invulnerability_state = 0;
+    actor_3000_count = 0;
+    collision_sound_record_count = 12;
+    projectile_count = 3;
+    moving_object_count = 7;
+    pickup_object_count = 0x12;
+    moving_actor_count = 8;
+    actor_3001_count = 0;
+    actor_3002_count = 0;
+    actor_3007_count = 0;
+    actor_3009_count = 0;
+    actor_300a_count = 0;
+    actor_300b_count = 0;
+    actor_300b_screen_anim_offset = 0;
+    actor_300b_animation_frame = 0;
+    actor_300c_count = 0;
+    actor_300d_count = 0;
+    actor_300e_count = 0;
+    keyboard_hotkey_count = 0;
+    actor_300f_count = 0;
+    actor_3010_count = 0;
+    current_weapon_state = 0;
+    door_or_key_interaction_state = 0;
+    actor_3012_count = 0;
+    formation_update_enabled = 0;
+    actor_3014_count = 0;
+    actor_3015_count = 0;
+    actor_3016_count = 0;
+    actor_3018_count = 0;
+    actor_3019_enabled = 0;
+    actor_301a_count = 0;
+    actor_301b_count = 0;
+    actor_301d_count = 0;
+    actor_301e_count = 0;
+    actor_301f_count = 0;
+    actor_3021_count = 0;
+    actor_3022_count = 0;
+    actor_3023_count = 0;
+    actor_3024_count = 0;
+    actor_3025_count = 0;
+    actor_3029_count = 0;
+    actor_302a_count = 0;
+    actor_302c_count = 0;
+    actor_302b_active_state = 1;
+    actor_302b_open_state = 0;
+    actor_302d_count = 0;
+    actor_302e_count = 0;
+    actor_3031_count = actor_3030_active_state = actor_3030_interaction_state = actor_302f_active_state = actor_302f_interaction_state = 0;
+    actor_3034_active_state = -1;
+    actor_3042_active_state = actor_3041_active_state = actor_3040_active_state = actor_303c_count = actor_303b_count = actor_3037_bonus_state = actor_3037_object_count = secret_block_animation_state = actor_3035_active_state = 0;
+    active_sprite_draw_flag = 0;
+    player_projectile_state = 0x15;
+    exit_lock_animation_state = actor_3048_object_count = actor_3044_entity_count = actor_3048_entity_count = actor_3033_enabled = actor_3033_active_state = 0;
+    actor_302b_animation_counter = 10;
+    actor_3042_animation_frame_4 = actor_3042_animation_frame_3 = actor_3042_animation_frame_2 = actor_3042_animation_frame_1 = actor_3042_animation_frame_0 = level_hazard_count = 0;
+    actor_3042_animation_frame_5 = 10;
+    actor_3042_interaction_state = level_object_pool_531e_count = ending_sequence_enabled = player_animation_lock_state = 0;
 
-    g1_de26(a0);
+    load_level_tile_map(a0);
     outport(0x3ce, 5);
 
-    if (d_02fa % 2 == 0) {
-        g1_10fb(d_0b47[(int)d_02fa],
-                0x4000, 0x5140);
-        g1_10fb(d_0b47[(int)d_02fa + 1],
-                0x8100, 0x5140);
+    if (current_level_index % 2 == 0) {
+        load_planar_image_file(episode_drop_filename_table[(int)current_level_index],
+                               0x4000, 0x5140);
+        load_planar_image_file(episode_drop_filename_table[(int)current_level_index + 1],
+                               0x8100, 0x5140);
     }
 
-    if (d_02fa % 2 == 0) {
-        d_d247_ = 1;
-        d_5312_ = 0;
-        g1_2a1d();
+    if (current_level_index % 2 == 0) {
+        player_gameplay_state = 1;
+        actor_303b_update_state = 0;
+        clear_ambient_object_pool();
     }
 
-    g1_c287(90);
-    d_0644 = 1;
-    d_a679_ = 0;
-    d_d144_ = 0;
-    d_554f_ = 0;
-    d_5550_ = 0;
-    d_5551_ = 0;
-    d_5552_ = 0;
-    g1_bb9f();
+    create_objects_from_level_map(90);
+    player_sprite_draw_state = 1;
+    player_sprite_refresh_state = 0;
+    player_sprite_animation_index = 0;
+    control_hint_up_flag = 0;
+    control_hint_down_flag = 0;
+    control_hint_left_flag = 0;
+    control_hint_right_flag = 0;
+    draw_level_marker_tiles();
 }
 
-/* d_68fa_ is byte 2 of accepted d_68f8_ (long): use d_68f8_ */
-/* d_a0fd_ is byte 2 of accepted d_a0fb_ (char far*): use d_a0fb_ */
-void g1_e655(void)
+/* player_score_upper_word_alias is byte 2 of accepted player_score (long): use player_score */
+/* sprite_pixel_segment_alias is byte 2 of accepted sprite_pixel_data_pointer (char far*): use sprite_pixel_data_pointer */
+/* Initializes player and level-entry state, restores a save when requested, then loads the
+   selected level. */
+void init_player_and_level_state(void)
 {
     long saved;
 
-    d_05ae = 0;
-    d_05b0 = 0;
-    d_043a = 4;
-    d_043b = 0;
-    d_d576_ = 0;
-    d_0528 = 0;
-    d_052a = 0;
-    d_798a_ = 0;
-    d_052c = 0;
-    d_052e = 0;
-    d_a0f8_ = 0;
-    d_0530 = 0;
-    d_0532 = 0;
-    d_cc82_ = 0;
-    d_0534 = 0;
-    d_0536 = 0;
-    d_0538 = 0;
-    d_b3d4_ = 0;
-    d_053a = 0;
-    d_9682_ = 0;
-    d_9b38_ = 0;
-    d_5310_ = 0;
-    d_530c_ = 0;
-    d_c295_ = 1;
-    d_5006_ = 0;
-    d_0610 = 1;
-    d_0611 = 0;
-    d_0612 = 0;
-    d_0099 = 0x10;
-    d_009b = 0x30;
-    d_009d = 0;
-    d_009f = 0;
-    d_68f8_ = 0L;
-    d_d57c_ = 0;
-    d_4ed6_ = 0;
-    d_531c_ = 0;
-    d_02fa = 0;
-    d_4ed4_ = 9;
+    actor_300e_animation_state = 0;
+    actor_300e_animation_counter = 0;
+    player_action_state = 4;
+    player_animation_phase = 0;
+    player_invulnerability_state = 0;
+    actor_3006_world_x = 0;
+    actor_3006_world_y = 0;
+    access_card_or_door_state = 0;
+    actor_3006_state = 0;
+    actor_3008_state = 0;
+    player_contact_state = 0;
+    actor_3020_world_x = 0;
+    actor_3020_world_y = 0;
+    actor_3020_active_state = 0;
+    actor_3020_state = 0;
+    actor_3033_world_x = 0;
+    actor_3033_world_y = 0;
+    actor_3033_active_state = 0;
+    actor_3033_state = 0;
+    alternate_sprite_draw_offset = 0;
+    episode_sprite_resource_table = 0;
+    actor_3013_formation_state = 0;
+    actor_3037_animation_state = 0;
+    world_actor_count = 1;
+    level_loading_state = 0;
+    player_airborne_state = 1;
+    player_damage_immunity_state = 0;
+    player_jump_frame = 0;
+    player_screen_x = 0x10;
+    player_screen_y = 0x30;
+    level_scroll_x = 0;
+    level_map_y_offset = 0;
+    player_score = 0L;
+    level_progress_word = 0;
+    level_play_state = 0;
+    actor_302a_update_state = 0;
+    current_level_index = 0;
+    title_graphic_frame_index = 9;
 
-    if (d_03a3) {
-        g2_219d(d_554c_);
-        if (d_5318_) {
+    if (restore_saved_game_requested) {
+        restore_game_state_from_slot(selected_save_slot);
+        if (game_session_abort_flag) {
             return;
         }
-        g2_0009(0x14);
-        g2_3114();
-        d_03a3 = 0;
-        if (d_798a_) {
-            g2_1ffa(d_a0fb_ + 0x640);
+        set_palette_entries_to_23(0x14);
+        clear_video_page();
+        restore_saved_game_requested = 0;
+        if (access_card_or_door_state) {
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x640);
         }
-        if (d_a0f8_) {
-            g2_1ffa(d_a0fb_ + 0xb40);
+        if (player_contact_state) {
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
         }
-        if (d_cc82_) {
-            g2_1ffa(d_a0fb_ + 0x2760);
+        if (actor_3020_active_state) {
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
         }
     } else {
-        g2_3114();
+        clear_video_page();
     }
 
-    g2_2ab9();
-    g2_1454();
-    g2_29a2();
-    g2_0036(0x14);
+    draw_page_frame_template();
+    draw_get_ready_message();
+    draw_video_page_template();
+    restore_ega_palette(0x14);
 
-    if (d_0098 == 2 || d_c683_ == 2) {
-        d_02fa = 0x14;
+    if (demo_mode_state == 2 || player_level_transition_state == 2) {
+        current_level_index = 0x14;
     }
-    g1_e3e0(d_03a4[d_02fa]);
-    saved = d_68f8_;
-    d_68f8_ = 0L;
-    g1_0b85(0L);
-    d_68f8_ = saved;
-    g1_0b85(0L);
-    g1_0adc();
-    g1_0a0e();
+    load_level_and_init_objects(episode_level_filename_table[current_level_index]);
+    saved = player_score;
+    player_score = 0L;
+    add_and_draw_player_score(0L);
+    player_score = saved;
+    add_and_draw_player_score(0L);
+    draw_buffered_screen_effect();
+    draw_title_screen_graphic();
 }
 
-void g1_e83e(void)
+/* Checks that DOS reports the minimum required free memory and exits with a message when it does
+   not. */
+void check_minimum_available_memory(void)
 {
     unsigned long available;
 
@@ -7441,38 +7643,42 @@ void g1_e83e(void)
     }
 }
 
-void pascal g1_e89d(char far *filename)
+/* Reads the saved game-speed word from the named file, using zero when the file is absent. */
+void pascal load_game_speed_setting(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "rb");
     if (stream == NULL) {
-        d_4ed0_ = 0;
+        game_speed_setting = 0;
     } else {
-        d_4ed0_ = getw(stream);
+        game_speed_setting = getw(stream);
     }
     fclose(stream);
 }
 
-void pascal g1_e8ed(char far *filename)
+/* Writes the current game-speed word to the named file. */
+void pascal save_game_speed_setting(char far *filename)
 {
     FILE *stream;
 
     stream = fopen(filename, "wb");
-    putw(d_4ed0_, stream);
+    putw(game_speed_setting, stream);
     fclose(stream);
 }
 
 /* Busy-wait until the timer-interrupt tick counter reaches n (pascal). */
-void pascal g1_e92e(register int n)
+/* Waits until the timer interrupt counter reaches the requested number of ticks. */
+void pascal wait_for_timer_ticks(register int n)
 {
-    d_02fb = 0;
-    while (d_02fb < n)
+    timer_tick_counter = 0;
+    while (timer_tick_counter < n)
         ;
 }
 
 /* goto kept: timeout skips the first fade-in wait; structured attempts change emission. */
-void g1_e947(void)
+/* Runs the level-transition presentation sequence using the active episode graphics and text. */
+void play_level_transition_sequence(void)
 {
     register int i;
     register int phase;
@@ -7482,584 +7688,588 @@ void g1_e947(void)
 
     counter = 0L;
     phase = 0;
-    g1_0b85(100000L);
-    if (d_b9dc_ != 0) {
-        g2_01a9(10);
-        g2_36c1();
-        g2_0036(10);
+    add_and_draw_player_score(100000L);
+    if (ending_sequence_enabled != 0) {
+        clear_palette_entries(10);
+        display_ending_bitmap();
+        restore_ega_palette(10);
         for (i = 0; i < 52; ++i) {
             phase = !phase;
-            asm_0424(d_a0fb_ + (phase % 2) * 0xa0 + 0x5820,
-                     26, 125 - i);
-            g1_e92e(10);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + (phase % 2) * 0xa0 + 0x5820,
+                                    26, 125 - i);
+            wait_for_timer_ticks(10);
         }
         for (i = 0; i < 50; ++i) {
             phase = !phase;
-            asm_0424(d_a0fb_ + (phase % 2) * 0xa0 + 0x5820,
-                     26, 74);
-            g1_e92e(10);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + (phase % 2) * 0xa0 + 0x5820,
+                                    26, 74);
+            wait_for_timer_ticks(10);
         }
         for (i = 0; i < 5; ++i) {
-            asm_0424(d_a0fb_ + i * 0xa0 + 0x5960,
-                     26, 75 - i);
-            g1_e92e(14);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + i * 0xa0 + 0x5960,
+                                    26, 75 - i);
+            wait_for_timer_ticks(14);
         }
 
         counter = 0L;
-        d_a0fa_ = 0;
+        last_keyboard_scan_code = 0;
         /* Read the two joystick button lines from the game port. */
-        if (d_d56b_ != 0) {
+        if (joystick_enabled != 0) {
             button1 = inportb(0x201) & 0x10;
             button2 = inportb(0x201) & 0x20;
         } else {
             button1 = button2 = 1;
         }
-        while (d_a0fa_ == 0 && button1 != 0 && button2 != 0) {
-            if (d_d56b_ != 0) {
+        while (last_keyboard_scan_code == 0 && button1 != 0 && button2 != 0) {
+            if (joystick_enabled != 0) {
                 button1 = inportb(0x201) & 0x10;
                 button2 = inportb(0x201) & 0x20;
             } else {
                 button1 = button2 = 1;
             }
-            if (d_02fb % 2 != 0) {
+            if (timer_tick_counter % 2 != 0) {
                 ++counter;
                 if (counter == 1500000L) {
-                    g2_01a9(10);
-                    g2_340f();
-                    g2_0036(10);
+                    clear_palette_entries(10);
+                    display_badguy_bitmap();
+                    restore_ega_palette(10);
                     goto stage_after_first;
                 }
                 if (counter == 300000L)
-                    g2_2473();
+                    wait_controller_button();
             }
         }
 
-        g2_01a9(10);
-        g2_340f();
-        g2_0036(10);
-        if (d_cc81_ == 0) {
+        clear_palette_entries(10);
+        display_badguy_bitmap();
+        restore_ega_palette(10);
+        if (control_confirmation_state == 0) {
             do {
-            } while ((d_a0fa_ & 0x80) == 0);
+            } while ((last_keyboard_scan_code & 0x80) == 0);
         }
 
     stage_after_first:
-        g2_4334();
-        d_02fb = 0;
+        show_proton_level_end_dialogue();
+        timer_tick_counter = 0;
 
-        g2_01a9(10);
-        g2_3568();
-        g2_0036(10);
-        if (d_cc81_ == 0) {
+        clear_palette_entries(10);
+        display_duke_bitmap();
+        restore_ega_palette(10);
+        if (control_confirmation_state == 0) {
             do {
-            } while ((d_a0fa_ & 0x80) == 0);
+            } while ((last_keyboard_scan_code & 0x80) == 0);
         }
-        g2_4394();
-        d_02fb = 0;
+        show_proton_transition_dialogue();
+        timer_tick_counter = 0;
 
-        g2_01a9(10);
-        g2_340f();
-        g2_0036(10);
-        if (d_cc81_ == 0) {
+        clear_palette_entries(10);
+        display_badguy_bitmap();
+        restore_ega_palette(10);
+        if (control_confirmation_state == 0) {
             do {
-            } while ((d_a0fa_ & 0x80) == 0);
+            } while ((last_keyboard_scan_code & 0x80) == 0);
         }
-        g2_43f5();
-        d_02fb = 0;
+        show_proton_future_dialogue();
+        timer_tick_counter = 0;
 
-        g2_01a9(10);
-        g2_3568();
-        g2_0036(10);
-        if (d_cc81_ == 0) {
+        clear_palette_entries(10);
+        display_duke_bitmap();
+        restore_ega_palette(10);
+        if (control_confirmation_state == 0) {
             do {
-            } while ((d_a0fa_ & 0x80) == 0);
+            } while ((last_keyboard_scan_code & 0x80) == 0);
         }
-        g2_4444();
-        g2_01a9(10);
+        show_duke_level_end_dialogue();
+        clear_palette_entries(10);
     } else {
-        d_02fb = 0;
-        while (d_02fb < 500) {
+        timer_tick_counter = 0;
+        while (timer_tick_counter < 500) {
         }
-        g2_01a9(20);
-        g2_3114();
-        g2_3568();
-        g2_0036(20);
-        if (d_cc81_ == 0) {
+        clear_palette_entries(20);
+        clear_video_page();
+        display_duke_bitmap();
+        restore_ega_palette(20);
+        if (control_confirmation_state == 0) {
             do {
-            } while ((d_a0fa_ & 0x80) == 0);
+            } while ((last_keyboard_scan_code & 0x80) == 0);
         }
-        g2_44a5();
-        g2_01a9(20);
+        show_game_completion_message();
+        clear_palette_entries(20);
     }
-    d_02fb = 0;
-    g2_452b(7);
+    timer_tick_counter = 0;
+    show_next_episode_promotion(7);
 }
-void pascal g1_ec3d(void)
+/* Checks memory, selects video mode, loads settings and assets, installs the keyboard IRQ, and
+   starts the timer IRQ. */
+void pascal init_video_keyboard_and_assets(void)
 {
-    g1_e83e();
-    g2_25cd();
-    asm_0258(0);
-    asm_05eb(0);
-    asm_05f7(0);
+    check_minimum_available_memory();
+    detect_joystick_connection();
+    set_video_mode(0);
+    select_draw_page(0);
+    show_video_page(0);
 #if EPISODE == 1
-    g2_2104("KEYS.DN1");
+    load_keyboard_bindings("KEYS.DN1");
 #elif EPISODE == 2
-    g2_2104("KEYS.dn2");
+    load_keyboard_bindings("KEYS.dn2");
 #else
-    g2_2104("KEYS.DN3");
+    load_keyboard_bindings("KEYS.DN3");
 #endif
-    g2_24b1();
-    g1_e00d();
+    load_high_score_table();
+    allocate_game_buffers_and_state();
 #if EPISODE == 1
-    g2_3980("duke1.dn1");
-    g2_3a38("duke1-b.dn1");
-    g2_3252("dn.dn1");
-    g2_365d("end.dn1");
-    g2_33ab("badguy.dn1");
-    g2_3504("duke.dn1");
-    g2_30b0("credits.dn1");
+    load_primary_sound_bank("duke1.dn1");
+    load_secondary_sound_bank("duke1-b.dn1");
+    load_episode_graphics_b638("dn.dn1");
+    load_ending_graphics("end.dn1");
+    load_badguy_graphics("badguy.dn1");
+    load_duke_graphics("duke.dn1");
+    load_credits_graphics("credits.dn1");
 #elif EPISODE == 2
-    g2_3980("duke1.dn2");
-    g2_3a38("duke1-b.dn2");
-    g2_3252("dn.dn2");
-    g2_365d("end.dn2");
-    g2_33ab("badguy.dn2");
-    g2_3504("duke.dn2");
-    g2_30b0("credits.dn2");
+    load_primary_sound_bank("duke1.dn2");
+    load_secondary_sound_bank("duke1-b.dn2");
+    load_episode_graphics_b638("dn.dn2");
+    load_ending_graphics("end.dn2");
+    load_badguy_graphics("badguy.dn2");
+    load_duke_graphics("duke.dn2");
+    load_credits_graphics("credits.dn2");
 #else
-    g2_3980("duke1.dn3");
-    g2_3a38("duke1-b.dn3");
-    g2_3252("dn.dn3");
-    g2_365d("end.dn3");
-    g2_33ab("badguy.dn3");
-    g2_3504("duke.dn3");
-    g2_30b0("credits.dn3");
+    load_primary_sound_bank("duke1.dn3");
+    load_secondary_sound_bank("duke1-b.dn3");
+    load_episode_graphics_b638("dn.dn3");
+    load_ending_graphics("end.dn3");
+    load_badguy_graphics("badguy.dn3");
+    load_duke_graphics("duke.dn3");
+    load_credits_graphics("credits.dn3");
 #endif
     disable();
-    d_5556_ = getvect(9);
-    setvect(9, g1_15f4);
+    saved_keyboard_interrupt_vector = getvect(9);
+    setvect(9, keyboard_interrupt_handler);
     enable();
-    g2_1e97();
+    install_timer_interrupt();
 #if EPISODE == 1
-    g1_e89d("SPEED.DN1");
+    load_game_speed_setting("SPEED.DN1");
 #elif EPISODE == 2
-    g1_e89d("SPEED.dn2");
+    load_game_speed_setting("SPEED.dn2");
 #else
-    g1_e89d("SPEED.DN3");
+    load_game_speed_setting("SPEED.DN3");
 #endif
 }
 
 /* goto kept (STRUCTURING BACKLOG): the main game loop's shared exits and state tails; the
    structured forms measured 3900 and 4128 bytes, switch variants 3952 and 3983 (original 3985). */
-/* d_a0fd_ is byte 2 of accepted d_a0fb_ (char far*): use d_a0fb_ */
-void g1_ecf4(void)
+/* sprite_pixel_segment_alias is byte 2 of accepted sprite_pixel_data_pointer (char far*): use sprite_pixel_data_pointer */
+/* Runs the timer-paced gameplay loop for player input, demo playback, level callbacks,
+   rendering, and menus. */
+void run_game_loop(void)
 {
     int wait;
     register int i;
     register int j;
 
     wait = 0;
-    d_0b9f = 0;
-    d_5305_ = 0;
-    d_039f = 0;
-    d_02fb = 0;
-    d_c293_ = 0;
+    credits_scroll_position = 0;
+    credits_text_position = 0;
+    credit_scroll_delay = 0;
+    timer_tick_counter = 0;
+    actor_3042_hint_state = 0;
     disable();
-    d_d135_ = d_d138_ = d_d13f_ = d_d4c0_ = d_c68c_ = d_d134_ = 0;
+    control_fire_pressed = control_jump_pressed = control_left_pressed = control_right_pressed = control_up_pressed = control_down_pressed = 0;
     enable();
 
-    if (d_c683_ != 0)
-        d_a0fa_ = 0;
+    if (player_level_transition_state != 0)
+        last_keyboard_scan_code = 0;
     for (;;) {
-        while (d_4ed0_ + 9 > d_02fb) {
+        while (game_speed_setting + 9 > timer_tick_counter) {
             /* Wait for the next game tick. */
         }
-        d_02fb = 0;
-        g1_290f();
-        if (d_cc81_ != 0) {
-            if (d_d139_ == 0 && d_d13b_ == 0)
-                g1_0c52(1);
-            g1_10a5();
+        timer_tick_counter = 0;
+        advance_player_transition();
+        if (control_confirmation_state != 0) {
+            if (actor_302f_interaction_state == 0 && actor_3030_interaction_state == 0)
+                configure_joystick_axes(1);
+            update_joystick_axis_state();
         }
         disable();
 
         /* Demo snapshots contain six bytes of player state. */
-        if (d_c683_ == 1) {
-            d_c68c_ = ((char far *)d_9684_)[d_040c];
-            d_d134_ = ((char far *)d_9684_)[d_040c + 1];
-            d_d13f_ = ((char far *)d_9684_)[d_040c + 2];
-            d_d4c0_ = ((char far *)d_9684_)[d_040c + 3];
-            d_d135_ = ((char far *)d_9684_)[d_040c + 4];
-            d_d138_ = ((char far *)d_9684_)[d_040c + 5];
-            d_040c += 6;
-            if (d_040c >= 0x425a || d_040c >= d_040e) {
+        if (player_level_transition_state == 1) {
+            control_up_pressed = ((char far *)saved_demo_buffer)[menu_selection_state];
+            control_down_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 1];
+            control_left_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 2];
+            control_right_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 3];
+            control_fire_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 4];
+            control_jump_pressed = ((char far *)saved_demo_buffer)[menu_selection_state + 5];
+            menu_selection_state += 6;
+            if (menu_selection_state >= 0x425a || menu_selection_state >= user_demo_input_length) {
                 enable();
                 goto reset_c683_exit;
             }
         }
-        if (d_0098 == 1 && d_040c != 0x425a) {
-            ((char far *)d_9684_)[d_040c] = d_c68c_;
-            ((char far *)d_9684_)[d_040c + 1] = d_d134_;
-            ((char far *)d_9684_)[d_040c + 2] = d_d13f_;
-            ((char far *)d_9684_)[d_040c + 3] = d_d4c0_;
-            ((char far *)d_9684_)[d_040c + 4] = d_d135_;
-            ((char far *)d_9684_)[d_040c + 5] = d_d138_;
-            d_040c += 6;
-            if (d_040c >= 0x4259) {
-                d_0098 = 0;
-                d_040e = d_040c;
+        if (demo_mode_state == 1 && menu_selection_state != 0x425a) {
+            ((char far *)saved_demo_buffer)[menu_selection_state] = control_up_pressed;
+            ((char far *)saved_demo_buffer)[menu_selection_state + 1] = control_down_pressed;
+            ((char far *)saved_demo_buffer)[menu_selection_state + 2] = control_left_pressed;
+            ((char far *)saved_demo_buffer)[menu_selection_state + 3] = control_right_pressed;
+            ((char far *)saved_demo_buffer)[menu_selection_state + 4] = control_fire_pressed;
+            ((char far *)saved_demo_buffer)[menu_selection_state + 5] = control_jump_pressed;
+            menu_selection_state += 6;
+            if (menu_selection_state >= 0x4259) {
+                demo_mode_state = 0;
+                user_demo_input_length = menu_selection_state;
             }
         }
-        if (d_c683_ == 2) {
-            d_c68c_ = ((char far *)d_5a0d_)[d_040c];
-            d_d134_ = ((char far *)d_5a0d_)[d_040c + 1];
-            d_d13f_ = ((char far *)d_5a0d_)[d_040c + 2];
-            d_d4c0_ = ((char far *)d_5a0d_)[d_040c + 3];
-            d_d135_ = ((char far *)d_5a0d_)[d_040c + 4];
-            d_d138_ = ((char far *)d_5a0d_)[d_040c + 5];
-            d_040c += 6;
-            if (d_040c >= 0x425a || d_040c >= d_0410) {
+        if (player_level_transition_state == 2) {
+            control_up_pressed = ((char far *)user_demo_buffer)[menu_selection_state];
+            control_down_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 1];
+            control_left_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 2];
+            control_right_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 3];
+            control_fire_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 4];
+            control_jump_pressed = ((char far *)user_demo_buffer)[menu_selection_state + 5];
+            menu_selection_state += 6;
+            if (menu_selection_state >= 0x425a || menu_selection_state >= saved_demo_input_length) {
                 enable();
                 goto reset_c683_exit;
             }
         }
-        if (d_0098 == 2 && d_040c != 0x425a) {
-            ((char far *)d_5a0d_)[d_040c] = d_c68c_;
-            ((char far *)d_5a0d_)[d_040c + 1] = d_d134_;
-            ((char far *)d_5a0d_)[d_040c + 2] = d_d13f_;
-            ((char far *)d_5a0d_)[d_040c + 3] = d_d4c0_;
-            ((char far *)d_5a0d_)[d_040c + 4] = d_d135_;
-            ((char far *)d_5a0d_)[d_040c + 5] = d_d138_;
-            d_040c += 6;
-            d_0410 = d_040c;
-            if (d_040c >= 0x4259)
-                d_0098 = 0;
+        if (demo_mode_state == 2 && menu_selection_state != 0x425a) {
+            ((char far *)user_demo_buffer)[menu_selection_state] = control_up_pressed;
+            ((char far *)user_demo_buffer)[menu_selection_state + 1] = control_down_pressed;
+            ((char far *)user_demo_buffer)[menu_selection_state + 2] = control_left_pressed;
+            ((char far *)user_demo_buffer)[menu_selection_state + 3] = control_right_pressed;
+            ((char far *)user_demo_buffer)[menu_selection_state + 4] = control_fire_pressed;
+            ((char far *)user_demo_buffer)[menu_selection_state + 5] = control_jump_pressed;
+            menu_selection_state += 6;
+            saved_demo_input_length = menu_selection_state;
+            if (menu_selection_state >= 0x4259)
+                demo_mode_state = 0;
         }
 
-        g1_1e77();
+        update_player_and_level_state();
         enable();
-        g1_2a93();
-        g1_32a5();
-        g1_2f4c();
-        g1_2eb1();
-        g1_1933();
-        g1_1bf6();
-        g1_30c9();
+        animate_ambient_sprite_records();
+        animate_contact_flash_effects();
+        update_collision_effect_pool();
+        update_pickup_object_pool();
+        update_moving_world_effects();
+        resolve_projectile_collisions();
+        update_animated_actor_pool();
         j = 0;
-        while (j < d_554d_) {
-            d_514b_[j]();
+        while (j < keyboard_hotkey_count) {
+            level_update_callback_table[j]();
             ++j;
         }
 
-        if (d_c683_ == 2) {
-            if (d_0437 == 0 || d_0437 == 0x20)
-                g2_37b6("Press any key.", 8, 10);
-            g2_3f68();
+        if (player_level_transition_state == 2) {
+            if (world_animation_phase == 0 || world_animation_phase == 0x20)
+                draw_text_string("Press any key.", 8, 10);
+            animate_credits_scroll();
         }
-        if (d_7728_ != 0 && d_772d_ != 0 && d_771b_ != 0 && d_0095 != 0) {
-            d_b3d4_ = d_798a_ = d_a0f8_ = d_cc82_ = 1;
-            d_053c = 0;
-            g2_1ffa(d_a0fb_ + 0x640);
-            g2_1ffa(d_a0fb_ + 0xb40);
-            g2_1ffa(d_a0fb_ + 0x2760);
-            g2_1f9c();
-            d_4ed4_ = 9;
-            g1_0a0e();
-            d_554f_ = d_5550_ = d_5551_ = d_5552_ = 1;
-            g1_bb9f();
-            d_c295_ = 4;
-            g1_0adc();
-            d_02fb = 0;
-            d_9682_ = 0;
+        if (keyboard_key_g_pressed != 0 && keyboard_key_o_pressed != 0 && keyboard_key_d_pressed != 0 && demo_mode_enabled != 0) {
+            actor_3033_active_state = access_card_or_door_state = player_contact_state = actor_3020_active_state = 1;
+            actor_3033_enabled = 0;
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x640);
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
+            draw_current_planar_sprite();
+            title_graphic_frame_index = 9;
+            draw_title_screen_graphic();
+            control_hint_up_flag = control_hint_down_flag = control_hint_left_flag = control_hint_right_flag = 1;
+            draw_level_marker_tiles();
+            world_actor_count = 4;
+            draw_buffered_screen_effect();
+            timer_tick_counter = 0;
+            alternate_sprite_draw_offset = 0;
         }
-        if (d_a67d_ == 1 && d_a8d9_ == 1) {
-            g1_0042(0x19);
-            g2_3d8c(2, 1, 2);
-            g2_3cdc();
-            while (d_a67d_ != 0 || d_a8d9_ != 0)
+        if (keyboard_backspace_pressed == 1 && keyboard_interrupt_state == 1) {
+            request_priority_sound_effect(0x19);
+            draw_framed_dialog_box(2, 1, 2);
+            show_cheat_mode_message();
+            while (keyboard_backspace_pressed != 0 || keyboard_interrupt_state != 0)
                 ;
-            g2_2870(0x1a, 6);
-            d_554f_ = d_5550_ = d_5551_ = d_5552_ = 1;
-            g1_bb9f();
-            d_c295_ = 4;
-            g1_0adc();
-            d_02fb = 0;
-            d_d4c0_ = 0;
-            d_d134_ = 0;
+            wait_input_animated_sprite(0x1a, 6);
+            control_hint_up_flag = control_hint_down_flag = control_hint_left_flag = control_hint_right_flag = 1;
+            draw_level_marker_tiles();
+            world_actor_count = 4;
+            draw_buffered_screen_effect();
+            timer_tick_counter = 0;
+            control_right_pressed = 0;
+            control_down_pressed = 0;
         }
-        g1_2bd9();
-        g1_6afd();
-        g2_29a2();
-        if (d_0098 != 0)
-            asm_02ad(0x3200, 2);
-        if (d_c683_ != 0 && d_0437 == 0)
-            asm_02ad(0x3180, 2);
-        if (d_a67d_ == 1 && d_7728_ != 0) {
-            while (d_a67d_ == 1 || d_7728_ != 0)
+        update_moving_actor_pool();
+        update_actor_3014();
+        draw_video_page_template();
+        if (demo_mode_state != 0)
+            blit_bitmap_to_video_page(0x3200, 2);
+        if (player_level_transition_state != 0 && world_animation_phase == 0)
+            blit_bitmap_to_video_page(0x3180, 2);
+        if (keyboard_backspace_pressed == 1 && keyboard_key_g_pressed != 0) {
+            while (keyboard_backspace_pressed == 1 || keyboard_key_g_pressed != 0)
                 ;
-            while (d_a67d_ == 0 && d_7728_ == 0)
+            while (keyboard_backspace_pressed == 0 && keyboard_key_g_pressed == 0)
                 ;
         }
-        if (d_a0fa_ == 0x11 && d_7728_ != 0 && d_772d_ != 0 && d_0095 != 0)
-            d_0436 = 1;
-        if (d_a0fa_ == 0x23) {
-            while (d_a0fa_ == 0x23)
+        if (last_keyboard_scan_code == 0x11 && keyboard_key_g_pressed != 0 && keyboard_key_o_pressed != 0 && demo_mode_enabled != 0)
+            interaction_cooldown_state = 1;
+        if (last_keyboard_scan_code == 0x23) {
+            while (last_keyboard_scan_code == 0x23)
                 ;
-            g2_10f0(2);
-            d_02fb = 0;
-            asm_05eb(!d_6e0a_);
-            asm_05f7(d_6e0a_);
-            d_d4c0_ = 0;
-            d_d134_ = 0;
+            toggle_hint_mode(2);
+            timer_tick_counter = 0;
+            select_draw_page(!draw_page_index);
+            show_video_page(draw_page_index);
+            control_right_pressed = 0;
+            control_down_pressed = 0;
         }
-        if (d_a0fa_ == 0x19) {
-            g2_11f2(2);
-            while (d_a0fa_ == 0x19)
+        if (last_keyboard_scan_code == 0x19) {
+            pause_until_resume_input(2);
+            while (last_keyboard_scan_code == 0x19)
                 ;
-            d_02fb = 0;
-            asm_05eb(!d_6e0a_);
-            asm_05f7(d_6e0a_);
-            d_d4c0_ = 0;
-            d_d134_ = 0;
+            timer_tick_counter = 0;
+            select_draw_page(!draw_page_index);
+            show_video_page(draw_page_index);
+            control_right_pressed = 0;
+            control_down_pressed = 0;
         }
-        if (d_a0fa_ == 0x3b && d_c683_ == 0) {
-            d_0094 = 0;
-            g1_037e(2);
-            if (d_0094 != 0) {
-                d_0094 = 0;
-                g2_14e6();
-                if (d_a0fa_ == 0x15) {
-                    if (d_02fa == 0 && d_0098 != 0) {
-                        d_0098 = 0;
-                        d_040e = d_040c;
+        if (last_keyboard_scan_code == 0x3b && player_level_transition_state == 0) {
+            menu_action_state = 0;
+            handle_in_game_help_menu(2);
+            if (menu_action_state != 0) {
+                menu_action_state = 0;
+                confirm_level_restart();
+                if (last_keyboard_scan_code == 0x15) {
+                    if (current_level_index == 0 && demo_mode_state != 0) {
+                        demo_mode_state = 0;
+                        user_demo_input_length = menu_selection_state;
                     }
-                    d_d4c0_ = 0;
-                    d_d134_ = 0;
-                    d_02fb = 0;
+                    control_right_pressed = 0;
+                    control_down_pressed = 0;
+                    timer_tick_counter = 0;
                     goto mode_tail;
                 }
-                d_02fb = 0;
-                asm_05eb(!d_6e0a_);
-                asm_05f7(d_6e0a_);
+                timer_tick_counter = 0;
+                select_draw_page(!draw_page_index);
+                show_video_page(draw_page_index);
             }
-            while (d_a0fa_ == 1)
+            while (last_keyboard_scan_code == 1)
                 ;
-            d_d4c0_ = 0;
-            d_d134_ = 0;
-            d_02fb = 0;
-            asm_05eb(!d_6e0a_);
-            asm_05f7(d_6e0a_);
+            control_right_pressed = 0;
+            control_down_pressed = 0;
+            timer_tick_counter = 0;
+            select_draw_page(!draw_page_index);
+            show_video_page(draw_page_index);
         }
-        if (d_a0fa_ == 0x1f && d_c683_ == 0) {
-            g2_1058(2);
-            while (d_a0fa_ == 0x1f)
+        if (last_keyboard_scan_code == 0x1f && player_level_transition_state == 0) {
+            toggle_sound_setting(2);
+            while (last_keyboard_scan_code == 0x1f)
                 ;
-            d_02fb = 0;
-            asm_05eb(!d_6e0a_);
-            asm_05f7(d_6e0a_);
-            d_d4c0_ = 0;
-            d_d134_ = 0;
+            timer_tick_counter = 0;
+            select_draw_page(!draw_page_index);
+            show_video_page(draw_page_index);
+            control_right_pressed = 0;
+            control_down_pressed = 0;
         }
 
-        if (d_d148_ != 0 && d_4ed0_ > 0) {
-            --d_4ed0_;
-            asm_02ad(0x3500, 4);
+        if (keyboard_control_lock_state != 0 && game_speed_setting > 0) {
+            --game_speed_setting;
+            blit_bitmap_to_video_page(0x3500, 4);
         }
-        if (d_0643 != 0 && d_4ed0_ <= 8) {
-            ++d_4ed0_;
-            asm_02ad(0x3520, 4);
+        if (keyboard_modifier_state != 0 && game_speed_setting <= 8) {
+            ++game_speed_setting;
+            blit_bitmap_to_video_page(0x3520, 4);
         }
-        asm_05eb(d_6e0a_);
-        asm_05f7(d_6e0a_ = !d_6e0a_);
-        if (d_0436 == 1) {
-            if (d_0098 == 1) {
-                d_0098 = 0;
-                d_040e = d_040c;
+        select_draw_page(draw_page_index);
+        show_video_page(draw_page_index = !draw_page_index);
+        if (interaction_cooldown_state == 1) {
+            if (demo_mode_state == 1) {
+                demo_mode_state = 0;
+                user_demo_input_length = menu_selection_state;
             }
-            if (d_0098 == 2) {
-                d_0098 = 0;
-                d_0410 = d_040c;
+            if (demo_mode_state == 2) {
+                demo_mode_state = 0;
+                saved_demo_input_length = menu_selection_state;
                 return;
             }
-            if (d_c683_ != 0)
+            if (player_level_transition_state != 0)
                 wait = 1;
-            ++d_02fa;
-            g1_e3e0(d_03a4[d_02fa]);
-            if (d_02fa % 2 != 0) {
+            ++current_level_index;
+            load_level_and_init_objects(episode_level_filename_table[current_level_index]);
+            if (current_level_index % 2 != 0) {
                 i = 0;
-                if (d_d247_ != 0) {
+                if (player_gameplay_state != 0) {
                     /* Scale each 16-pixel tile row to its 128-byte screen stride. */
-                    g1_2a40(0xb40, d_0099 + d_009d + 4,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_2a40(0xc80, d_0099 + d_009d + 6,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
+                    queue_ambient_sprite_animation(0xb40, player_screen_x + level_scroll_x + 4,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    queue_ambient_sprite_animation(0xc80, player_screen_x + level_scroll_x + 6,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
                     i += 0x100;
-                    g1_0b85(10000L);
+                    add_and_draw_player_score(10000L);
                 }
-                if (d_4ed6_ != 0 && d_d57c_ != 0) {
-                    g1_2a40(0x8c0, d_0099 + d_009d + 4,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_2a40(0xa00, d_0099 + d_009d + 6,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
+                if (level_play_state != 0 && level_progress_word != 0) {
+                    queue_ambient_sprite_animation(0x8c0, player_screen_x + level_scroll_x + 4,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    queue_ambient_sprite_animation(0xa00, player_screen_x + level_scroll_x + 6,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
                     i += 0x100;
-                    g1_0b85(10000L);
-                    d_4ed6_ = 0;
-                    d_d57c_ = 0;
+                    add_and_draw_player_score(10000L);
+                    level_play_state = 0;
+                    level_progress_word = 0;
                 }
-                if (d_531c_ != 0) {
-                    g1_2a40(0xdc0, d_0099 + d_009d + 4,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_2a40(0xf00, d_0099 + d_009d + 6,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_0b85(10000L);
-                    d_531c_ = 0;
+                if (actor_302a_update_state != 0) {
+                    queue_ambient_sprite_animation(0xdc0, player_screen_x + level_scroll_x + 4,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    queue_ambient_sprite_animation(0xf00, player_screen_x + level_scroll_x + 6,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    add_and_draw_player_score(10000L);
+                    actor_302a_update_state = 0;
                 }
-                d_d247_ = 1;
-                if (d_4ed8_ != 0 && d_5006_ != 0) {
-                    g1_2a40(0x1040, d_0099 + d_009d + 4,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_2a40(0x1180, d_0099 + d_009d + 6,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
+                player_gameplay_state = 1;
+                if (hidden_object_state != 0 && level_loading_state != 0) {
+                    queue_ambient_sprite_animation(0x1040, player_screen_x + level_scroll_x + 4,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    queue_ambient_sprite_animation(0x1180, player_screen_x + level_scroll_x + 6,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
                     i += 0x100;
-                    g1_0b85(10000L);
-                    d_4ed8_ = 0;
+                    add_and_draw_player_score(10000L);
+                    hidden_object_state = 0;
                 }
-                if (d_530c_ != 0) {
-                    g1_2a40(0x12c0, d_0099 + d_009d + 4,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_2a40(0x1400, d_0099 + d_009d + 6,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_0b85(10000L);
+                if (actor_3037_animation_state != 0) {
+                    queue_ambient_sprite_animation(0x12c0, player_screen_x + level_scroll_x + 4,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    queue_ambient_sprite_animation(0x1400, player_screen_x + level_scroll_x + 6,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    add_and_draw_player_score(10000L);
                     i += 0x100;
-                    d_530c_ = 0;
+                    actor_3037_animation_state = 0;
                 }
-                if (d_5310_ != 0) {
-                    g1_2a40(0x1540, d_0099 + d_009d + 4,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_2a40(0x1680, d_0099 + d_009d + 6,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_0b85(10000L);
+                if (actor_3013_formation_state != 0) {
+                    queue_ambient_sprite_animation(0x1540, player_screen_x + level_scroll_x + 4,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    queue_ambient_sprite_animation(0x1680, player_screen_x + level_scroll_x + 6,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    add_and_draw_player_score(10000L);
                     i += 0x100;
-                    d_5310_ = 0;
+                    actor_3013_formation_state = 0;
                 }
-                if (d_5312_ != 0) {
-                    g1_2a40(0x17c0, d_0099 + d_009d + 4,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_2a40(0x1900, d_0099 + d_009d + 6,
-                            (((d_009b - 29) >> 4) << 7) + i + d_009f + 0x300);
-                    g1_0b85(10000L);
+                if (actor_303b_update_state != 0) {
+                    queue_ambient_sprite_animation(0x17c0, player_screen_x + level_scroll_x + 4,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    queue_ambient_sprite_animation(0x1900, player_screen_x + level_scroll_x + 6,
+                                                   (((player_screen_y - 29) >> 4) << 7) + i + level_map_y_offset + 0x300);
+                    add_and_draw_player_score(10000L);
                     i += 0x100;
-                    d_5312_ = 0;
+                    actor_303b_update_state = 0;
                 }
-                g1_0151('T');
+                save_game_state_to_slot('T');
             }
         }
-        if (d_4ed4_ < 2) {
-            if (d_6e0a_ == 0) {
-                asm_02ad(0x3540, 0x660);
-                asm_02ad(0x3560, 0x662);
+        if (title_graphic_frame_index < 2) {
+            if (draw_page_index == 0) {
+                blit_bitmap_to_video_page(0x3540, 0x660);
+                blit_bitmap_to_video_page(0x3560, 0x662);
             } else {
-                asm_02ad(0x3480, 0x660);
-                asm_02ad(0x34a0, 0x662);
+                blit_bitmap_to_video_page(0x3480, 0x660);
+                blit_bitmap_to_video_page(0x34a0, 0x662);
             }
         } else {
             /* Select VGA graphics-controller write mode 1. */
             outport(0x3ce, 0x0105);
-            asm_02ad(0x3480, 0x660);
-            asm_02ad(0x34a0, 0x662);
+            blit_bitmap_to_video_page(0x3480, 0x660);
+            blit_bitmap_to_video_page(0x34a0, 0x662);
         }
-        if (d_03a1 != 0) {
-            ++d_03a1;
-            if (d_03a1 < 15)
-                g1_0042(10);
-            switch (d_03a1) {
+        if (title_graphic_animation_state != 0) {
+            ++title_graphic_animation_state;
+            if (title_graphic_animation_state < 15)
+                request_priority_sound_effect(10);
+            switch (title_graphic_animation_state) {
             case 1:
-                g1_314c(d_0099 + d_009d,
-                        (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x,
+                                           (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
                 /* The jump preserves TC 2.0's shared tail for cases 2 and 7. */
                 goto case_two_seven;
             case 3:
-                g1_314c(d_0099 + d_009d - 2,
-                        128 - (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x - 2,
+                                           128 - (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
             case 4:
-                g1_314c(d_0099 + d_009d + 2,
-                        128 - (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x + 2,
+                                           128 - (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
                 break;
             case 5:
-                g1_314c(d_0099 + d_009d - 3,
-                        (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x - 3,
+                                           (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
             case 6:
-                g1_314c(d_0099 + d_009d + 3,
-                        (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x + 3,
+                                           (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
                 break;
             case_two_seven:
             case 2:
             case 7:
-                g1_314c(d_0099 + d_009d,
-                        (((d_009b - 16) >> 4) << 7) + d_009f + 128);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x,
+                                           (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset + 128);
                 break;
             case 8:
-                g1_314c(d_0099 + d_009d,
-                        (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x,
+                                           (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
                 break;
             case 10:
             case 15:
-                g1_314c(d_0099 + d_009d - 2,
-                        128 - (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x - 2,
+                                           128 - (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
             case 11:
             case 16:
-                g1_314c(d_0099 + d_009d + 3,
-                        128 - (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x + 3,
+                                           128 - (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
                 break;
             case 12:
             case 17:
-                g1_314c(d_0099 + d_009d - 3,
-                        (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x - 3,
+                                           (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
                 break;
             case 13:
             case 18:
-                g1_314c(d_0099 + d_009d + 2,
-                        (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x + 2,
+                                           (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
             case 9:
             case 14:
             case 19:
-                g1_314c(d_0099 + d_009d,
-                        128 - (((d_009b - 16) >> 4) << 7) + d_009f);
+                spawn_contact_flash_effect(player_screen_x + level_scroll_x,
+                                           128 - (((player_screen_y - 16) >> 4) << 7) + level_map_y_offset);
                 break;
             }
         }
 
-        if (d_4ed4_ == 0 && d_03a1 == 0)
-            d_03a1 = 1;
-        if ((d_4ed4_ == 0 && d_c683_ == 0 && d_03a1 == 30) ||
-            (d_a0fa_ == 0x44 && d_02fa % 2 == 0)) {
-            if (d_a0fa_ == 0x44) {
-                g2_14e6();
-                if (d_a0fa_ == 0x15) {
-                    if (d_02fa == 0 && d_0098 != 0) {
-                        d_0098 = 0;
-                        d_040e = d_040c;
+        if (title_graphic_frame_index == 0 && title_graphic_animation_state == 0)
+            title_graphic_animation_state = 1;
+        if ((title_graphic_frame_index == 0 && player_level_transition_state == 0 && title_graphic_animation_state == 30) ||
+            (last_keyboard_scan_code == 0x44 && current_level_index % 2 == 0)) {
+            if (last_keyboard_scan_code == 0x44) {
+                confirm_level_restart();
+                if (last_keyboard_scan_code == 0x15) {
+                    if (current_level_index == 0 && demo_mode_state != 0) {
+                        demo_mode_state = 0;
+                        user_demo_input_length = menu_selection_state;
                     }
                     goto mode_tail;
                 } else {
-                    d_02fb = 0;
-                    asm_05eb(!d_6e0a_);
-                    asm_05f7(d_6e0a_);
+                    timer_tick_counter = 0;
+                    select_draw_page(!draw_page_index);
+                    show_video_page(draw_page_index);
                 }
                 goto post_mode;
             } else {
-                g1_0042(0);
-                if (d_02fa != 0) {
-                    g2_3d8c(2, 1, 2);
-                    g2_3c9a();
-                    while (d_02fb < 100)
+                request_priority_sound_effect(0);
+                if (current_level_index != 0) {
+                    draw_framed_dialog_box(2, 1, 2);
+                    show_player_death_message();
+                    while (timer_tick_counter < 100)
                         ;
-                    d_02fb = 0;
+                    timer_tick_counter = 0;
                     do {
-                        d_a0fa_ = 0;
-                        g2_2870(0x1a, 6);
-                    } while (d_a0fa_ != 0x1c);
-                    d_d134_ = 0;
-                    d_d4c0_ = 0;
+                        last_keyboard_scan_code = 0;
+                        wait_input_animated_sprite(0x1a, 6);
+                    } while (last_keyboard_scan_code != 0x1c);
+                    control_down_pressed = 0;
+                    control_right_pressed = 0;
                 }
             }
         } else {
@@ -8067,276 +8277,283 @@ void g1_ecf4(void)
         }
     /* Shared cleanup keeps the mode exits on TC 2.0's matching path. */
     mode_tail:
-        d_a0fa_ = 0;
-        asm_05eb(0);
-        g2_29a2();
-        asm_05eb(1);
-        g2_29a2();
-        d_6e0a_ = 0;
-        asm_05eb(d_6e0a_);
-        asm_05f7(d_6e0a_);
-        d_03a1 = 0;
-        d_5318_ = 0;
-        d_03a3 = 1;
-        d_554c_ = 'T';
-        if (d_0098 != 0)
-            d_040e = d_040c;
-        d_0098 = 0;
-        g2_29a2();
-        g1_e655();
-        d_9682_ = 0;
-        d_9b38_ = 0;
-        if (d_798a_ != 0)
-            g2_1ffa(d_a0fb_ + 0x640);
-        if (d_a0f8_ != 0)
-            g2_1ffa(d_a0fb_ + 0xb40);
-        if (d_cc82_ != 0)
-            g2_1ffa(d_a0fb_ + 0x2760);
-        d_b3d4_ = 0;
+        last_keyboard_scan_code = 0;
+        select_draw_page(0);
+        draw_video_page_template();
+        select_draw_page(1);
+        draw_video_page_template();
+        draw_page_index = 0;
+        select_draw_page(draw_page_index);
+        show_video_page(draw_page_index);
+        title_graphic_animation_state = 0;
+        game_session_abort_flag = 0;
+        restore_saved_game_requested = 1;
+        selected_save_slot = 'T';
+        if (demo_mode_state != 0)
+            user_demo_input_length = menu_selection_state;
+        demo_mode_state = 0;
+        draw_video_page_template();
+        init_player_and_level_state();
+        alternate_sprite_draw_offset = 0;
+        episode_sprite_resource_table = 0;
+        if (access_card_or_door_state != 0)
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x640);
+        if (player_contact_state != 0)
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
+        if (actor_3020_active_state != 0)
+            draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
+        actor_3033_active_state = 0;
 
     /* These paths skip the mode-change cleanup above. */
     post_mode:
         if (wait == 1)
             goto state_tail;
-        if (d_c683_ == 0)
+        if (player_level_transition_state == 0)
             goto state_c293;
-        if (d_a0fa_ != 0)
+        if (last_keyboard_scan_code != 0)
             goto state_tail;
-        if (d_4ed4_ == 0)
+        if (title_graphic_frame_index == 0)
             goto state_tail;
-    /* The d_c683_ == 0 path joins the timed demo path here. */
+    /* The player_level_transition_state == 0 path joins the timed demo path here. */
     state_c293:
-        if (d_c293_ == 0)
+        if (actor_3042_hint_state == 0)
             goto state_event;
-        g1_e947();
-        asm_05eb(d_6e0a_);
-        asm_05f7(!d_6e0a_);
-        d_6e0a_ = 0;
-        asm_05eb(0);
-        g2_3114();
+        play_level_transition_sequence();
+        select_draw_page(draw_page_index);
+        show_video_page(!draw_page_index);
+        draw_page_index = 0;
+        select_draw_page(0);
+        clear_video_page();
         goto post_state_g1;
     /* Keep the event check separate from the demo-frame path. */
     state_event:
-        if (d_a0fa_ != 1 && d_a0fa_ != 0x10)
+        if (last_keyboard_scan_code != 1 && last_keyboard_scan_code != 0x10)
             continue;
-        while (d_a0fa_ == 0x10)
+        while (last_keyboard_scan_code == 0x10)
             ;
     /* Shared tail keeps the timer and input exits in TC 2.0's layout. */
     state_tail:
-        if (d_c683_ != 0)
+        if (player_level_transition_state != 0)
             goto reset_c683_exit;
-        if (g2_3d1e(2) == 0) {
-            d_02fb = 0;
-            asm_05eb(d_6e0a_);
-            asm_05f7(!d_6e0a_);
-            d_d4c0_ = 0;
-            d_d134_ = 0;
+        if (confirm_quit_to_dos(2) == 0) {
+            timer_tick_counter = 0;
+            select_draw_page(draw_page_index);
+            show_video_page(!draw_page_index);
+            control_right_pressed = 0;
+            control_down_pressed = 0;
             continue;
         }
-        g1_0042(8);
+        request_priority_sound_effect(8);
         if (wait == 0) {
-            if (d_0098 == 2)
-                d_0410 = d_040c;
-            if (d_0098 == 1)
-                d_040e = d_040c;
+            if (demo_mode_state == 2)
+                saved_demo_input_length = menu_selection_state;
+            if (demo_mode_state == 1)
+                user_demo_input_length = menu_selection_state;
         }
-        d_6e0a_ = 0;
-        asm_05eb(0);
-        g2_3114();
+        draw_page_index = 0;
+        select_draw_page(0);
+        clear_video_page();
     /* The demo event path resumes after the state-tail checks. */
     post_state_g1:
-        asm_05f7(0);
-        g1_0928();
-        while ((d_a0fa_ & 0x80) == 0)
+        show_video_page(0);
+        insert_score_into_high_scores();
+        while ((last_keyboard_scan_code & 0x80) == 0)
             ;
-        d_a0fa_ = 0;
-        g2_1d40(7);
+        last_keyboard_scan_code = 0;
+        draw_high_score_table(7);
         delay(300);
-        g2_2870(0x1f, 0x14);
-        d_02fb = 0;
-        d_0098 = 0;
+        wait_input_animated_sprite(0x1f, 0x14);
+        timer_tick_counter = 0;
+        demo_mode_state = 0;
     /* Shared exit is required for TC 2.0's return layout. */
     reset_c683_exit:
-        d_c683_ = 0;
+        player_level_transition_state = 0;
         return;
     }
 }
 
-/* g1_fc85 candidate, attempt 2: char stub matches the observed low-byte argument setup. */
-void pascal g1_fc85(void)
+/* start_gameplay_session candidate, attempt 2: char stub matches the observed low-byte argument setup. */
+/* Initializes a gameplay session, writes its start marker, and enters the main gameplay loop
+   unless cancelled. */
+void pascal start_gameplay_session(void)
 {
-    g1_e655();
-    if (!d_5318_) {
-        g1_0151('T');
-        g1_ecf4();
+    init_player_and_level_state();
+    if (!game_session_abort_flag) {
+        save_game_state_to_slot('T');
+        run_game_loop();
     }
 }
 
-void g1_fc9c(void)
+/* Saves settings and demos, restores timer and keyboard services, returns to text mode, and
+   exits to DOS. */
+void shut_down_game_to_dos(void)
 {
     textmode(3);
 #if EPISODE == 1
-    g2_205f("KEYS.DN1");
-    g1_df57("USERDEMO.DN1", d_9684_);
-    g1_dfb2("MY_DEMO.DN1", d_5a0d_);
-    g1_e8ed("SPEED.DN1");
+    save_keyboard_bindings("KEYS.DN1");
+    save_user_demo_recording("USERDEMO.DN1", saved_demo_buffer);
+    save_demo_recording("MY_DEMO.DN1", user_demo_buffer);
+    save_game_speed_setting("SPEED.DN1");
 #elif EPISODE == 2
-    g2_205f("KEYS.dn2");
-    g1_df57("USERDEMO.dn2", d_9684_);
-    g1_dfb2("MY_DEMO.dn2", d_5a0d_);
-    g1_e8ed("SPEED.dn2");
+    save_keyboard_bindings("KEYS.dn2");
+    save_user_demo_recording("USERDEMO.dn2", saved_demo_buffer);
+    save_demo_recording("MY_DEMO.dn2", user_demo_buffer);
+    save_game_speed_setting("SPEED.dn2");
 #else
-    g2_205f("KEYS.DN3");
-    g1_df57("USERDEMO.dn3", d_9684_);
-    g1_dfb2("MY_DEMO.DN3", d_5a0d_);
-    g1_e8ed("SPEED.DN3");
+    save_keyboard_bindings("KEYS.DN3");
+    save_user_demo_recording("USERDEMO.dn3", saved_demo_buffer);
+    save_demo_recording("MY_DEMO.DN3", user_demo_buffer);
+    save_game_speed_setting("SPEED.DN3");
 #endif
-    g2_1e1b();
-    g2_2f04();
+    save_high_score_table();
+    print_ordering_information();
     disable();
-    setvect(9, d_5556_);
-    g2_1319();
+    setvect(9, saved_keyboard_interrupt_vector);
+    restore_timer_interrupt_vector();
     enable();
     _exit(0);
 }
 
-void pascal g1_fd15(void)
+/* Runs the title and main-menu state loop and dispatches the selected menu action. */
+void pascal run_title_and_main_menu(void)
 {
     register int state;
 
     for (;;) {
-        g2_3114();
-        state = g1_049f(7);
+        clear_video_page();
+        state = poll_player_controls_and_events(7);
 
-        d_5a11_ = 0;
-        d_5c6b_ = 0;
-        d_5554_ = 0;
-        d_637e_ = 0;
-        d_5ec8_ = 0;
-        d_555a_ = 0;
-        d_555c_ = 0;
-        d_5553_ = 0;
-        d_555b_ = 0;
-        d_68f7_ = 0;
-        d_5555_ = 0;
-        d_5c6a_ = 0;
+        hint_revealed_object_7 = 0;
+        hint_revealed_object_9 = 0;
+        hint_revealed_object_2 = 0;
+        hint_revealed_object_11 = 0;
+        hint_revealed_object_10 = 0;
+        hint_revealed_object_4 = 0;
+        hint_revealed_object_6 = 0;
+        hint_revealed_object_1 = 0;
+        hint_revealed_object_5 = 0;
+        transporter_hint_pending = 0;
+        hint_revealed_object_3 = 0;
+        hint_revealed_object_8 = 0;
 
         if (state == 1) {
-            d_c683_ = 0;
-            d_c278_ = 1;
-            d_040c = 0;
-            d_0098 = 1;
-            d_03a3 = 0;
-            g2_01a9(0x14);
-            g2_340f();
-            g2_0036(0x14);
-            if (d_cc81_ == 0) {
-                while ((d_a0fa_ & 0x80) == 0) {
+            player_level_transition_state = 0;
+            demo_file_load_success = 1;
+            menu_selection_state = 0;
+            demo_mode_state = 1;
+            restore_saved_game_requested = 0;
+            clear_palette_entries(0x14);
+            display_badguy_bitmap();
+            restore_ega_palette(0x14);
+            if (control_confirmation_state == 0) {
+                while ((last_keyboard_scan_code & 0x80) == 0) {
                 }
             }
-            g2_3bd7();
-            g2_01a9(0x14);
-            g2_3568();
-            g2_0036(0x14);
-            if (d_cc81_ == 0) {
-                while ((d_a0fa_ & 0x80) == 0) {
+            show_proton_episode_dialogue();
+            clear_palette_entries(0x14);
+            display_duke_bitmap();
+            restore_ega_palette(0x14);
+            if (control_confirmation_state == 0) {
+                while ((last_keyboard_scan_code & 0x80) == 0) {
                 }
             }
-            g2_3c38();
-            d_530e_ = 0;
-            g2_0009(0x14);
-            if (d_0b46 == 1) {
-                d_5a11_ = 1;
-                d_5c6b_ = 1;
-                d_5554_ = 1;
-                d_637e_ = 1;
-                d_5ec8_ = 1;
-                d_555a_ = 1;
-                d_555c_ = 1;
-                d_5553_ = 1;
-                d_555b_ = 1;
-                d_68f7_ = 1;
-                d_5555_ = 1;
-                d_5c6a_ = 1;
+            show_duke_episode_dialogue();
+            user_demo_recording_state = 0;
+            set_palette_entries_to_23(0x14);
+            if (hint_mode_enabled == 1) {
+                hint_revealed_object_7 = 1;
+                hint_revealed_object_9 = 1;
+                hint_revealed_object_2 = 1;
+                hint_revealed_object_11 = 1;
+                hint_revealed_object_10 = 1;
+                hint_revealed_object_4 = 1;
+                hint_revealed_object_6 = 1;
+                hint_revealed_object_1 = 1;
+                hint_revealed_object_5 = 1;
+                transporter_hint_pending = 1;
+                hint_revealed_object_3 = 1;
+                hint_revealed_object_8 = 1;
             }
-            g1_0042(0x1a);
+            request_priority_sound_effect(0x1a);
             return;
         }
 
         if (state == 2) {
-            if (d_c278_ == 0)
+            if (demo_file_load_success == 0)
                 continue;
-            d_c683_ = 1;
-            d_0098 = 0;
-            d_040c = 0;
-            d_03a3 = 0;
-            g2_0009(0x14);
+            player_level_transition_state = 1;
+            demo_mode_state = 0;
+            menu_selection_state = 0;
+            restore_saved_game_requested = 0;
+            set_palette_entries_to_23(0x14);
             return;
         }
 
-        if (state == 3 && g1_0126(7) != 0) {
-            d_03a3 = 1;
-            d_c683_ = 0;
-            d_0098 = 0;
-            if (d_0b46 == 1) {
-                d_5a11_ = 1;
-                d_5c6b_ = 1;
-                d_5554_ = 1;
-                d_637e_ = 1;
-                d_5ec8_ = 1;
-                d_555a_ = 1;
-                d_555c_ = 1;
-                d_5553_ = 1;
-                d_555b_ = 1;
-                d_68f7_ = 1;
-                d_5555_ = 1;
-                d_5c6a_ = 1;
+        if (state == 3 && read_restore_slot_digit(7) != 0) {
+            restore_saved_game_requested = 1;
+            player_level_transition_state = 0;
+            demo_mode_state = 0;
+            if (hint_mode_enabled == 1) {
+                hint_revealed_object_7 = 1;
+                hint_revealed_object_9 = 1;
+                hint_revealed_object_2 = 1;
+                hint_revealed_object_11 = 1;
+                hint_revealed_object_10 = 1;
+                hint_revealed_object_4 = 1;
+                hint_revealed_object_6 = 1;
+                hint_revealed_object_1 = 1;
+                hint_revealed_object_5 = 1;
+                transporter_hint_pending = 1;
+                hint_revealed_object_3 = 1;
+                hint_revealed_object_8 = 1;
             }
             return;
         }
 
         if (state == 4) {
-            d_c683_ = 0;
-            d_c278_ = 1;
-            d_040c = 0;
-            d_0098 = 2;
-            d_03a3 = 0;
-            g2_0009(0x14);
+            player_level_transition_state = 0;
+            demo_file_load_success = 1;
+            menu_selection_state = 0;
+            demo_mode_state = 2;
+            restore_saved_game_requested = 0;
+            set_palette_entries_to_23(0x14);
             return;
         }
 
         if (state == 5) {
-            if (d_c278_ == 0)
+            if (demo_file_load_success == 0)
                 continue;
-            d_c683_ = 2;
-            d_0098 = 0;
-            d_040c = 0;
-            d_03a3 = 0;
-            g2_0009(0x14);
+            player_level_transition_state = 2;
+            demo_mode_state = 0;
+            menu_selection_state = 0;
+            restore_saved_game_requested = 0;
+            set_palette_entries_to_23(0x14);
             return;
         }
 
         if (state == 0) {
-            g2_01a9(0x14);
-            g1_fc9c();
+            clear_palette_entries(0x14);
+            shut_down_game_to_dos();
             continue;
         }
     }
 }
 
+/* Parses the command-line options, initializes the game, and repeatedly runs the menu and
+   gameplay session. */
 void main(int argc, char **argv)
 {
     if (argv[1][0] == 'a' && argv[1][1] == 's' && argv[1][2] == 'p') {
-        d_0095 = 1;
+        demo_mode_enabled = 1;
         if (argv[2][0] == 'g')
-            d_039d = 1;
+            chain_keyboard_interrupt = 1;
     }
-    g1_ec3d();
+    init_video_keyboard_and_assets();
     for (;;) {
-        g1_fd15();
-        g1_fc85();
-        g2_01a9(15);
-        d_5318_ = 0;
+        run_title_and_main_menu();
+        start_gameplay_session();
+        clear_palette_entries(15);
+        game_session_abort_flag = 0;
     }
 }
 

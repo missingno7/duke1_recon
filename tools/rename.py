@@ -158,7 +158,10 @@ def rename_fields(text: str, fields: dict, globals_: dict, unresolved: list, fna
         if j >= 0 and toks[j] == ")":                 # ((struct T far *)x)
             i = matching(j, ")", "(")
             m = re.match(r"\(\s*\(\s*struct\s+(\w+)", "".join(toks[i:j + 1]))
-            return m.group(1) if m else None
+            if m:
+                return m.group(1)
+            h = back(i - 1)                           # VIEW(i).f with #define VIEW(i) (*(struct T *)...)
+            return MACRO_TAGS.get(toks[h]) if h >= 0 else None
         return None
 
     for k, tok in enumerate(toks):
@@ -178,6 +181,7 @@ def rename_fields(text: str, fields: dict, globals_: dict, unresolved: list, fna
 
 
 STRUCT_FIELDS: dict = {}                              # tag -> field names, from the struct definitions
+MACRO_TAGS: dict = {}                                 # function-like macro -> the struct it casts to
 
 
 def collect_struct_fields(texts) -> dict:
@@ -212,6 +216,79 @@ def rename_params(text: str, func: str, mapping: dict) -> str:
     return text[:m.start()] + replace_tokens(span, mapping, in_comments=False) + text[i + 1:]
 
 
+def paren_columns(text: str) -> list:
+    """For each line: the column of the innermost '(' still open at its start (or None)."""
+    out, stack, col = [None], [], 0
+    for tok in TOKEN.findall(text):
+        if tok == "(":
+            stack.append(col)
+        elif tok == ")" and stack:
+            stack.pop()
+        for ch in tok:
+            if ch == LF:
+                out.append(stack[-1] if stack else None)
+                col = 0
+            else:
+                col += 1
+    return out
+
+
+def realign(old: str, new: str) -> str:
+    """Continuation lines that were aligned one column after an open '(' are
+    re-aligned after a rename changed the length of the text before it."""
+    po, pn = paren_columns(old), paren_columns(new)
+    lines_o, lines_n = old.split(LF), new.split(LF)
+    if len(lines_o) != len(lines_n):
+        return new
+    for i, (lo, ln) in enumerate(zip(lines_o, lines_n)):
+        ind = len(lo) - len(lo.lstrip(" "))
+        if po[i] is not None and pn[i] is not None and lo.strip() and ind == po[i] + 1:
+            lines_n[i] = " " * (pn[i] + 1) + ln.lstrip(" ")
+    return LF.join(lines_n)
+
+
+def wrap_comment(text: str, indent: str = "", width: int = 100) -> list:
+    words, lines, cur = text.replace("*/", "* /").split(), [], ""
+    for w in words:
+        if cur and len(indent) + 3 + len(cur) + 1 + len(w) > width - 3:
+            lines.append(cur)
+            cur = w
+        else:
+            cur = f"{cur} {w}".strip()
+    lines.append(cur)
+    if len(lines) == 1:
+        return [f"{indent}/* {lines[0]} */"]
+    return [f"{indent}/* {lines[0]}"] + [f"{indent}   {ln}" for ln in lines[1:-1]] + [f"{indent}   {lines[-1]} */"]
+
+
+def add_docs(text: str, docs: dict, header: bool) -> str:
+    """Put each description above its function definition or struct definition;
+    in the header, beside (or above) the global's declaration."""
+    out = []
+    lines = text.split(LF)
+    for i, ln in enumerate(lines):
+        doc = None
+        m = re.match(r"^[A-Za-z_][^;=()]*?\b(\w+)\s*\([^;]*$", ln)
+        if m and not header and m.group(1) in docs and not ln.startswith(("#", "extern")):
+            doc = docs[m.group(1)]
+        m = re.match(r"^struct\s+(\w+)\s*\{", ln)
+        if m and f"struct {m.group(1)}" in docs:
+            doc = docs[f"struct {m.group(1)}"]
+        if doc and not (out and out[-1].startswith("/*") and doc[:30] in out[-1]):
+            out += wrap_comment(doc)
+        if header:
+            g = re.match(r"^extern\b[^(]*?\b(\w+)\s*(\[[^\]]*\])*\s*;$", ln) or \
+                re.match(r"^extern\b.*\(\s*(?:far\s*)?\*\s*(\w+)\s*\).*;$", ln)
+            if g and g.group(1) in docs:
+                d = docs[g.group(1)].replace("*/", "* /")
+                if len(ln) + len(d) + 7 <= 120:
+                    ln = f"{ln:<44} /* {d} */" if len(ln) < 44 and 44 + len(d) + 7 <= 120 else f"{ln}  /* {d} */"
+                else:
+                    out += wrap_comment(d)
+        out.append(ln)
+    return LF.join(out)
+
+
 BSS_NAME = re.compile(r"^d_[0-9a-f]{4}_$")
 ALIAS_MARK = "/* ---- global data"
 ALIAS_HEAD = """/* ---- names of the uninitialised globals ----
@@ -239,10 +316,12 @@ def main() -> int:
     files = {p.name: p.read_bytes().decode("latin-1").replace(CRLF, LF)
              for p in d.iterdir() if p.suffix.upper() in (".C", ".H", ".ASM")}
     csrc = [n for n in files if not n.upper().endswith(".ASM")]
+    original = dict(files)
     glob = {k: v for k, v in {**flat(m.get("functions")), **flat(m.get("globals"))}.items() if k != v}
     tags = {k: v for k, v in flat(m.get("structs")).items() if k != v}
     # uninitialised globals keep their storage names; the new names are macros (see ALIAS_HEAD)
-    aliases = {o: n for o, n in glob.items() if BSS_NAME.match(o)}
+    present = set(TOKEN.findall("".join(files.values())))
+    aliases = {o: n for o, n in glob.items() if BSS_NAME.match(o) and o in present}
     news = list(glob.values()) + list(tags.values())
     dup = {n for n in news if news.count(n) > 1}
     if dup:
@@ -263,6 +342,8 @@ def main() -> int:
     # 1. fields (while tags and globals still have their old names)
     if fmaps:
         STRUCT_FIELDS.update(collect_struct_fields(files[n] for n in csrc))
+        for n in csrc:
+            MACRO_TAGS.update(re.findall(r"(?m)^#define\s+(\w+)\([^)]*\).*?\bstruct\s+(\w+)", files[n]))
         gvars = {}
         for n in csrc:
             gvars.update(struct_vars(top_level_text(files[n])))
@@ -298,6 +379,13 @@ def main() -> int:
         k = h.index(ALIAS_MARK)
         files["DUKE.H"] = h[:k] + alias_block(merged) + h[k:]
         print(f"{len(aliases)} uninitialised globals named by macro")
+    for n in csrc:
+        files[n] = realign(original[n], files[n]) if n != "DUKE.H" else files[n]
+    # 5. one-line descriptions
+    if m.get("docs"):
+        new_name = {**glob, **{f"struct {k}": f"struct {v}" for k, v in tags.items()}}
+        for n in csrc:
+            files[n] = add_docs(files[n], {new_name.get(k, k): v for k, v in m["docs"].items() if v}, n == "DUKE.H")
     if a.dry_run:
         return 0
     for name, text in files.items():

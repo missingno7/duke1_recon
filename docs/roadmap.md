@@ -33,21 +33,18 @@ outputs with `layout/oracle.lock.json`.
    on, refactoring is safe and mechanical to check.
 3. **Readability pass** on `game/` (no change in emitted code, verified by the standalone
    build on every step):
-   * semantic names through `layout/symbols.json` aliases (proposals with evidence
-     from `build/workers/luna-names/`, reviewed by the supervisor).  Names of
-     uninitialised globals are constrained: Turbo C orders a unit's `_BSS` by a hash
-     of the name (rule BSS-ORDER), so along each unit's BSS layout the keys
-     `(first + 4*last + 32*length) mod 1024` must not decrease (ties keep header
-     order).  A naming tool checks this; the matching phase uses `d_XXXX_` names,
-     which all hash alike;
-   * one shared header replacing the per-function preludes and stubs (an artifact
-     of proving one function at a time);
-   * one source file per original translation unit, original order kept (Turbo C's
-     code, literal-pool, data and BSS layout depend on it), with subsystem sections
-     and comments; consistent formatting;
-   * idioms that only exist to reproduce the original made explicit and named
-     (e.g. the out-of-record store `(&d_726b[i].x)[2]`, label loops kept for
-     register allocation, `goto kept:` notes).
+   * done 2026-10-14: one shared header (`DUKE.H`) and one file per original unit;
+     formatting, natural constants and comments by function range (six workers, merged
+     three-way); semantic names for all functions, globals, structures and fields
+     (`layout/game-names.json`, applied by `tools/rename.py`, which also re-aligns
+     continuation lines and writes one-line descriptions).  Uninitialised globals keep
+     hash-neutral storage names `d_XXXX_` behind `#define` names, since Turbo C orders a
+     unit's `_BSS` by a hash of the name (rule BSS-ORDER);
+   * open: parameter and local names (`a0`, `p1`), low-confidence names
+     (`update_actor_30XX` once each actor is identified), subsystem section comments,
+     and the remaining matching-era forms (documented `goto`s, shift chains in the sound
+     bank loaders, casts over byte buffers, the out-of-record store in
+     `actor_3021_records`).
 4. **Standalone tree** (generated and proven 2026-10-14: `game/`, `python tools/standalone.py build`,
    re-run by `tools/validate.py`): `BUILD.BAT` + host check script.  `game/` is now the source
    that is edited; `src/` + `recipes/` stay frozen as the per-function matching record.

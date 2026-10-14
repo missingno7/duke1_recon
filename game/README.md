@@ -16,12 +16,23 @@ Requirements: Turbo C 2.0 (TCC, TLINK, `INCLUDE\`, `LIB\C0L.OBJ`, `LIB\CL.LIB`),
 TASM 1.0 and LZEXE 0.91, with `TC` set to the Turbo C directory.  The episode is
 selected with `-DEPISODE=n`; one source serves all three.  Each unit defines `UNIT`
 before including `DUKE.H`: the original units declared three things differently
-(`g2_3d1e`, `d_02fa`, `d_9682_`), and the header records both views.
+(`confirm_quit_to_dos`, `current_level_index`, `alternate_sprite_draw_offset`), and the
+header records both views.
+
+Names: the original identifiers are lost.  Functions, globals, structures and fields carry
+descriptive names inferred from the code (`layout/game-names.json` maps them to the
+address-based ids of the matching archive in `src/`).  Actor kinds without an obvious
+identity are named after their level tile code (`update_actor_3000`, `actor_3000_records`).
+Uninitialised globals are the one exception to plain naming: Turbo C 2.0 lays out a unit's
+uninitialised data by a hash of the names, so these objects keep storage names
+(`d_` + DN1 address + `_`, all hashing alike) and `DUKE.H` gives them their readable names
+with `#define` (block "names of the uninitialised globals").
 
 From the repository, `python tools/standalone.py build` runs the same steps with the
 pinned toolchain and compares the results with the original files' SHA-256
 (`layout/oracle.lock.json`); `python tools/validate.py` does it on every check.
 
-The code is still in its matching-phase form (logical names such as `g1_ff16` and
-`d_02fb` that encode original addresses).  The readability pass is described in
-`../docs/roadmap.md`; every step of it must keep the build byte-identical.
+The readability pass is ongoing (`../docs/roadmap.md`): names marked low confidence in
+`layout/game-names.json`, parameter names, and a few matching-era forms (documented
+`goto`s, shift chains and casts that a plainer form would compile differently) remain.
+Every step must keep the build byte-identical; `tools/rename.py` renames safely.
