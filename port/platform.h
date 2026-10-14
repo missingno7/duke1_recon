@@ -55,6 +55,21 @@ void *pc_mk_fp(uint16_t segment, uint16_t offset);
    current register state: map mask, write mode 0/1/2, set/reset, data rotate and function,
    bit mask, read map select, read mode, latches - exactly what the EGA does. */
 uint8_t *vga_plane(int plane);                         /* direct plane access, 0..3 */
+/* Port-I/O bridge used by pc_inport[b]/pc_outport[b] for VGA/EGA registers. */
+int      vga_port_read(uint16_t port, uint8_t *value);
+int      vga_port_write(uint16_t port, uint8_t value);
+/* Compatibility for existing pc_io.c callers; new code should pass an output pointer and
+   inspect the handled flag. */
+static inline uint8_t vga_port_read_value(uint16_t port)
+{
+    uint8_t value = 0xff;
+    (void)vga_port_read(port, &value);
+    return value;
+}
+#define VGA_PORT_READ_SELECT(_1, _2, NAME, ...) NAME
+#define vga_port_read(...) \
+    VGA_PORT_READ_SELECT(__VA_ARGS__, vga_port_read, vga_port_read_value)(__VA_ARGS__)
+void     vga_set_palette_entry(uint8_t index, uint8_t colour);
 void     vga_cpu_write(uint16_t offset, uint8_t value);
 uint8_t  vga_cpu_read(uint16_t offset);
 void     vga_set_display_start(uint16_t offset);       /* CRTC start address, in bytes */
@@ -63,6 +78,10 @@ uint16_t vga_display_start(void);
    (palette) registers, each a 6-bit EGA colour rrggbb. */
 void     vga_render_indexed(uint8_t *out_320x200);
 const uint8_t *vga_palette_registers(void);
+/* The colour (0xRRGGBB) a palette register value shows in the current mode (200-line modes:
+   CGA colours with intensity in bit 4), and the visible picture as 0xAARRGGBB pixels. */
+uint32_t vga_colour_rgb(uint8_t register_value);
+void     vga_render_rgb(uint32_t *out_320x200);
 void     vga_vertical_retrace_wait(void);              /* blocks until the next display refresh */
 
 /* ---- video BIOS (INT 10h) ---- */
