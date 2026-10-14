@@ -1,7 +1,7 @@
 #include "pc_internal.h"
 #include "config.h"
-#include "capture.h"
-#include "renderer.h"
+#include "scene.h"
+#include "present.h"
 #include <ctype.h>
 #include <math.h>
 #include <stdarg.h>
@@ -31,16 +31,12 @@ static SDL_AtomicInt window_settings_requested;
 static int fullscreen;
 static int window_open;
 static uint32_t rgba_frame[320u * 200u];
-static uint32_t native_readback[320u * 200u];
 static uint32_t *script_shot_pixels;
 static size_t script_shot_capacity;
 static char pending_script_shot[4096];
 static int renderer_override = -1;
 static int verify_native;
 static int verify_episode;
-static uint64_t last_verified_sequence;
-static uint64_t verify_frame_counts[4];
-static uint64_t verify_mismatch_counts[4];
 static uint8_t launcher_keys[64];
 static unsigned launcher_key_read;
 static unsigned launcher_key_write;
@@ -746,78 +742,29 @@ static int renderer_is_enhanced(void) {
     return pc_settings.renderer == PC_RENDERER_ENHANCED;
 }
 
-static void verify_native_frame(const CaptureFrame *frame) {
-    unsigned differing = 0;
-    unsigned i;
-    int episode = verify_episode;
-    const char *base_path = SDL_GetBasePath();
-    const char *output_prefix = base_path ? base_path : "";
-    char ega_path[160], native_path[160];
-    if (!frame || frame->sequence == last_verified_sequence)
-        return;
-    last_verified_sequence = frame->sequence;
-    if (episode < 0 || episode > 3)
-        episode = 0;
-    ++verify_frame_counts[episode];
-    for (i = 0; i < 320u * 200u; ++i)
-        if (native_readback[i] != frame->ega_rgba[i])
-            ++differing;
-    fprintf(stderr, "[native] episode %d frame %llu: %u differing pixels\n",
-            episode, (unsigned long long)frame->sequence, differing);
-    if (!differing)
-        return;
-    ++verify_mismatch_counts[episode];
-    snprintf(ega_path, sizeof(ega_path), "%s../native-e%d-%06llu-ega.png", output_prefix, episode,
-             (unsigned long long)frame->sequence);
-    snprintf(native_path, sizeof(native_path), "%s../native-e%d-%06llu-native.png", output_prefix, episode,
-             (unsigned long long)frame->sequence);
-    if (!save_rgb_png_pixels(ega_path, frame->ega_rgba))
-        fprintf(stderr, "[native] could not save %s\n", ega_path);
-    if (!save_rgb_png_pixels(native_path, native_readback))
-        fprintf(stderr, "[native] could not save %s\n", native_path);
-}
-
 static void render_enhanced_picture(void) {
     int out_w = 0, out_h = 0;
     int canvas_width, picture_width;
-    int current_frame_is_gameplay = 0;
-    const CaptureFrame *frame;
-    SDL_Texture *picture = NULL;
-    uint32_t *readback = NULL;
+    SDL_Texture *picture;
+    const uint32_t *pixels = NULL;
     int shot_pending = has_script_shot();
     char shot_path[4096];
     int shot_path_ready = 0;
     (void)SDL_GetRenderOutputSize(renderer, &out_w, &out_h);
-    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
-                              pc_settings.wide_activity);
-    canvas_width = pc_settings.widescreen && renderer_is_enhanced() ?
-        native_canvas_width(out_w, out_h) : CAPTURE_WIDTH;
-    capture_set_wide_canvas_width(canvas_width);
-    if (shot_pending && ensure_script_shot_pixels((size_t)canvas_width * CAPTURE_HEIGHT))
-        readback = script_shot_pixels;
-    frame = capture_acquire_latest(&current_frame_is_gameplay);
-    int have_frame = frame != NULL;
-    if (frame && current_frame_is_gameplay) {
-        uint32_t *verify_buffer = verify_native && canvas_width == CAPTURE_WIDTH ? native_readback : NULL;
-        picture = native_renderer_render(frame, canvas_width, verify_buffer ? verify_buffer : readback);
-        if (picture && shot_pending && readback && verify_buffer)
-            memcpy(readback, verify_buffer, CAPTURE_WIDTH * CAPTURE_HEIGHT * sizeof(uint32_t));
-    }
-    if (verify_native && canvas_width == CAPTURE_WIDTH && picture && frame && current_frame_is_gameplay)
-        verify_native_frame(frame);
+    canvas_width = pc_settings.widescreen ? native_canvas_width(out_w, out_h) : SCENE_WIDTH;
+    scene_set_wide(canvas_width, pc_settings.widescreen, pc_settings.wide_activity);
+    scene_set_active(1);
+    picture = present_texture(renderer, canvas_width, &pixels);
     picture_width = canvas_width;
-    if (canvas_width > 335 && (!frame || !frame->wide_snapshot_valid))
-        picture_width = CAPTURE_WIDTH;
-    if (shot_pending && readback && picture) {
+    if (shot_pending && picture && pixels) {
         shot_path_ready = take_script_shot(shot_path, sizeof(shot_path));
-        if (shot_path_ready && !save_rgb_png_pixels_sized(shot_path, readback,
-                                                          (unsigned)picture_width, 200))
+        if (shot_path_ready && !save_rgb_png_pixels_sized(shot_path, pixels, (unsigned)picture_width, 200))
             fprintf(stderr, "Could not write script shot %s\n", shot_path);
     }
-    if (have_frame)
-        capture_release_latest();
-    if (!picture) {
-        render_classic_picture();
+    if (!picture) {                              /* nothing drawn yet: black, never the EGA page */
+        (void)SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        (void)SDL_RenderClear(renderer);
+        (void)SDL_RenderPresent(renderer);
         return;
     }
 
@@ -856,10 +803,12 @@ static void render_enhanced_picture(void) {
 }
 
 static void render_frame(void) {
-    if (renderer_is_enhanced())
+    if (renderer_is_enhanced()) {
         render_enhanced_picture();
-    else
+    } else {
+        scene_set_active(0);
         render_classic_picture();
+    }
 }
 
 static void remember_windowed_size(void) {
@@ -955,13 +904,12 @@ int platform_init(const char *data_dir) {
     }
     pc_config_load();
     read_native_command_options();
-    if (!capture_init()) {
-        fprintf(stderr, "Could not create frame-capture synchronization.\n");
+    if (!scene_init()) {
+        fprintf(stderr, "Could not create the native scene.\n");
         return 0;
     }
-    capture_set_enhanced(renderer_is_enhanced());
-    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
-                              pc_settings.wide_activity);
+    scene_set_active(renderer_is_enhanced());
+    present_set_verify(verify_native);
     pc_speaker_set_stereo(pc_settings.stereo);
     window = SDL_CreateWindow("Duke Nukum v2.0", pc_settings.window_width, pc_settings.window_height, SDL_WINDOW_RESIZABLE);
     if (!window) {
@@ -982,8 +930,6 @@ int platform_init(const char *data_dir) {
         return 0;
     }
     (void)SDL_SetTextureScaleMode(screen_texture, SDL_SCALEMODE_NEAREST);
-    if (!native_renderer_init(renderer))
-        fprintf(stderr, "Native renderer unavailable: %s\n", SDL_GetError());
     if (!pc_interrupt_init()) {
         fprintf(stderr, "Could not create interrupt synchronization primitives.\n");
         return 0;
@@ -1022,9 +968,7 @@ int platform_run_episode(episode_main entry, int argc, char **argv) {
     struct game_call { episode_main entry; int argc; char **argv; } call;
     SDL_Thread *thread;
     if (!entry) return -1;
-    capture_set_enhanced(renderer_is_enhanced());
-    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
-                              pc_settings.wide_activity);
+    scene_set_active(renderer_is_enhanced());
     call.entry = entry;
     call.argc = argc;
     call.argv = argv;
@@ -1104,15 +1048,8 @@ void platform_reset_episode(void)
     memset(keyboard_game_route, 0, sizeof(keyboard_game_route));
     bios_set_mode(0x0d);
 
-    native_renderer_shutdown();
-    capture_shutdown();
-    if (!capture_init())
-        fprintf(stderr, "[port] could not reset frame capture synchronization\n");
-    capture_set_enhanced(renderer_is_enhanced());
-    capture_set_wide_settings(pc_settings.widescreen && renderer_is_enhanced(),
-                              pc_settings.wide_activity);
-    if (!native_renderer_init(renderer))
-        fprintf(stderr, "[port] could not reset native renderer: %s\n", SDL_GetError());
+    present_shutdown();
+    scene_reset();
 
     if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
     launcher_key_read = launcher_key_write = 0;
@@ -1127,14 +1064,9 @@ void platform_shutdown(void) {
     save_windowed_size();
     pc_interrupt_shutdown();
     pc_speaker_shutdown();
-    if (verify_native) {
-        for (int episode = 0; episode <= 3; ++episode)
-            fprintf(stderr, "[native] episode %d summary: %llu frames, %llu mismatching frames\n",
-                    episode, (unsigned long long)verify_frame_counts[episode],
-                    (unsigned long long)verify_mismatch_counts[episode]);
-    }
-    native_renderer_shutdown();
-    capture_shutdown();
+    if (verify_native) present_report();
+    present_shutdown();
+    scene_shutdown();
     pc_release_all_allocations();
     if (sharp_texture) SDL_DestroyTexture(sharp_texture);
     if (screen_texture) SDL_DestroyTexture(screen_texture);
@@ -1161,9 +1093,18 @@ void platform_shutdown(void) {
 }
 
 int platform_poll_key(void) {
+    static uint64_t last_present;
     SDL_Event event;
+    uint64_t now;
     process_script_events();
     while (SDL_PollEvent(&event)) handle_event(&event);
+    /* The launcher's dialogs wait here: keep the window presented (and script shots taken)
+       at display rate, not only when the dialog redraws. */
+    now = SDL_GetTicksNS();
+    if (window_open && now - last_present >= 16000000ull) {
+        render_frame();
+        last_present = now;
+    }
     if (launcher_key_mutex) SDL_LockMutex(launcher_key_mutex);
     int key = 0;
     if (launcher_key_read != launcher_key_write) {

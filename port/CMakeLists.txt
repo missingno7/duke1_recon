@@ -62,8 +62,8 @@ set(PLATFORM_SOURCES
   "${CMAKE_CURRENT_SOURCE_DIR}/pc_dos.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/vga.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/toolbox.c"
-  "${CMAKE_CURRENT_SOURCE_DIR}/capture.c"
-  "${CMAKE_CURRENT_SOURCE_DIR}/renderer.c")
+  "${CMAKE_CURRENT_SOURCE_DIR}/scene.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/present.c")
 set_source_files_properties(${PLATFORM_SOURCES}
   PROPERTIES COMPILE_OPTIONS "-O2;-fwrapv;-fno-strict-aliasing;-funsigned-char")
 
@@ -84,9 +84,19 @@ add_custom_command(TARGET duke1 POST_BUILD
 # ---- the EGA self-test (tools/validate.py runs it) ----
 add_executable(vga_selftest "${CMAKE_CURRENT_SOURCE_DIR}/tests/vga_selftest.c"
                             "${CMAKE_CURRENT_SOURCE_DIR}/vga.c" "${CMAKE_CURRENT_SOURCE_DIR}/toolbox.c"
-                            "${CMAKE_CURRENT_SOURCE_DIR}/capture.c")
+                            "${CMAKE_CURRENT_SOURCE_DIR}/scene.c" "${CMAKE_CURRENT_SOURCE_DIR}/present.c")
 target_include_directories(vga_selftest PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(vga_selftest PRIVATE SDL3::SDL3)
 set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/tests/vga_selftest.c"
   PROPERTIES COMPILE_OPTIONS "-O2;-funsigned-char")
 set_target_properties(vga_selftest PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+
+# ---- the native scene against the emulated EGA (tools/validate.py runs it) ----
+add_executable(scene_selftest "${CMAKE_CURRENT_SOURCE_DIR}/tests/scene_selftest.c"
+                              "${CMAKE_CURRENT_SOURCE_DIR}/vga.c" "${CMAKE_CURRENT_SOURCE_DIR}/toolbox.c"
+                              "${CMAKE_CURRENT_SOURCE_DIR}/scene.c" "${CMAKE_CURRENT_SOURCE_DIR}/present.c"
+                              "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_outport.c")
+target_include_directories(scene_selftest PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_compile_options(scene_selftest PRIVATE -O1 -funsigned-char)
+target_link_libraries(scene_selftest PRIVATE SDL3::SDL3)
+set_target_properties(scene_selftest PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")

@@ -1,8 +1,13 @@
-/* C versions of the nine TASM routines in game/TOOLBOX.ASM. */
+/* C versions of the nine TASM routines in src/TOOLBOX.ASM.  Each draws into the emulated EGA
+   exactly like the original; in the enhanced renderer it also hands what it drew to the native
+   scene (scene.h). */
 #include "platform.h"
-#include "capture.h"
+#include "scene.h"
+#include "present.h"
 
 #include <stddef.h>
+
+uint8_t vga_graphics_register(uint8_t index);   /* vga.c: the bit mask a caller set */
 
 static uint16_t draw_page_selector;
 
@@ -32,22 +37,15 @@ static uint8_t src_byte(const char *src, uint16_t offset)
     return (uint8_t)(unsigned char)src[offset];
 }
 
-static void draw_page_write(uint16_t offset, uint8_t value, int clip_to_playfield)
-{
-    if (clip_to_playfield && capture_enhanced() && capture_is_recording()) {
-        uint16_t page_base = (draw_page_selector & 0xffu) ? 0x2000u : 0u;
-        uint16_t page_relative = (uint16_t)(offset - page_base);
-        if (!capture_page_byte_is_playfield(page_relative))
-            return;
-    }
-    vga_cpu_write(offset, value);
-}
-
 static void xchg_vram(uint16_t offset, uint8_t value)
 {
     (void)vga_cpu_read(offset); /* XCHG reads the VGA aperture and loads all four latches. */
     vga_cpu_write(offset, value);
 }
+
+/* Page-relative pixel position of a byte offset on the current draw page. */
+static int page_x(uint16_t page_relative) { return (int)(page_relative % 40u) * 8; }
+static int page_y(uint16_t page_relative) { return (int)(page_relative / 40u); }
 
 int16_t set_video_mode(int16_t mode)
 {
@@ -57,6 +55,7 @@ int16_t set_video_mode(int16_t mode)
         bios_set_mode(0x10);
     else
         bios_set_mode(0x12);
+    scene_reset();
     return 0;
 }
 
@@ -70,24 +69,21 @@ int16_t blit_bitmap_to_video_page(int16_t source_offset, int16_t destination_off
 {
     uint16_t src = (uint16_t)source_offset;
     uint16_t dst = (uint16_t)destination_offset;
-    uint16_t page_base = (draw_page_selector & 0xffu) ? 0x2000u : 0u;
-    uint16_t page_relative;
-    int clip_to_playfield;
+    uint16_t page_relative = dst;
     unsigned row;
+    scene_before_draw();
     if ((draw_page_selector & 0xffu) != 0)
         dst = add16(dst, 0x2000);
-    page_relative = (uint16_t)(dst - page_base);
-    clip_to_playfield = capture_page_byte_is_playfield(page_relative);
-    capture_record_bitmap(src, page_relative, draw_page_selector);
     for (row = 0; row < 16; ++row) {
         unsigned byte_in_row;
         for (byte_in_row = 0; byte_in_row < 2; ++byte_in_row) {
             uint16_t source = add16(0x4000, src++);
             uint8_t value = vga_cpu_read(source);
-            draw_page_write(dst++, value, clip_to_playfield);
+            vga_cpu_write(dst++, value);
         }
         dst = add16(dst, 0x26);
     }
+    scene_add_bitmap((uint16_t)source_offset, page_x(page_relative), page_y(page_relative));
     return 0;
 }
 
@@ -95,8 +91,9 @@ int16_t copy_planar_video_region(int16_t x, int16_t y, int16_t source_offset)
 {
     uint16_t dst = add16(add16(mul40((uint16_t)y), (uint16_t)x), 0x50);
     uint16_t src = (uint16_t)(dst - 0x78u - (uint16_t)source_offset);
+    uint16_t page_relative = dst;
     unsigned row;
-    capture_record_water(x, y, source_offset, draw_page_selector);
+    scene_before_draw();
     if ((draw_page_selector & 0xffu) != 0)
         dst = add16(dst, 0x2000);
     if ((draw_page_selector & 0xffu) != 0)
@@ -105,11 +102,12 @@ int16_t copy_planar_video_region(int16_t x, int16_t y, int16_t source_offset)
         unsigned byte_in_row;
         for (byte_in_row = 0; byte_in_row < 2; ++byte_in_row) {
             uint8_t value = vga_cpu_read(src++);
-            draw_page_write(dst++, value, 1);
+            vga_cpu_write(dst++, value);
         }
         dst = add16(dst, 0x26);
         src = (uint16_t)(src - 0x52u);
     }
+    scene_add_water(page_x(page_relative), page_y(page_relative), 16, 30);
     return 0;
 }
 
@@ -122,8 +120,10 @@ int16_t blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t 
 {
     uint16_t dst = add16((uint16_t)x, mul40((uint16_t)y));
     uint16_t source = 0;
+    /* Widescreen: a level sprite beyond the original playfield stays off the page. */
+    int off_page = scene_sprite_off_page((int)x * 8, (int)y);
     unsigned row;
-    capture_record_sprite(site, src, x, y);
+    scene_before_draw();
     if ((draw_page_selector & 0xffu) != 0)
         dst = add16(dst, 0x2000);
     outb(0x3c4, 2);
@@ -135,8 +135,11 @@ int16_t blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t 
             outw(0x3ce, (uint16_t)((uint16_t)mask << 8 | 8u));
             for (plane = 0; plane < 4; ++plane) {
                 outb(0x3c5, (uint8_t)(1u << plane));
-                (void)vga_cpu_read(dst); /* preserve the XCHG latch side effect */
-                draw_page_write(dst, src_byte(src, source++), 1);
+                if (!off_page) {
+                    (void)vga_cpu_read(dst); /* preserve the XCHG latch side effect */
+                    vga_cpu_write(dst, src_byte(src, source));
+                }
+                ++source;
             }
             ++dst;
         }
@@ -144,6 +147,7 @@ int16_t blit_planar_sprite_rows_at(uint32_t site, char *src, int16_t x, int16_t 
     }
     outb(0x3c5, 0x0f);
     outw(0x3ce, 0xff08);
+    scene_add_sprite(site, src, (int)x * 8, (int)y, !off_page);
     return 0;
 }
 
@@ -151,14 +155,16 @@ int16_t draw_ega_glyph(char *src, int16_t x, int16_t y)
 {
     uint16_t dst = add16((uint16_t)x, mul40((uint16_t)y));
     uint16_t source = 0;
+    uint8_t row_masks[8];
     unsigned row;
-    capture_mark_overlay(x, y, 8, 8);
+    scene_before_draw();
     if ((draw_page_selector & 0xffu) != 0)
         dst = add16(dst, 0x2000);
     outb(0x3c4, 2);
     for (row = 0; row < 8; ++row) {
         unsigned plane;
         uint8_t mask = src_byte(src, source++);
+        row_masks[row] = mask;
         outw(0x3ce, (uint16_t)((uint16_t)mask << 8 | 8u));
         for (plane = 0; plane < 4; ++plane) {
             outb(0x3c5, (uint8_t)(1u << plane));
@@ -168,6 +174,7 @@ int16_t draw_ega_glyph(char *src, int16_t x, int16_t y)
     }
     outb(0x3c5, 0x0f);
     outw(0x3ce, 0xff08);
+    scene_add_glyph((int)x * 8, (int)y, row_masks);
     return 0;
 }
 
@@ -175,14 +182,17 @@ int16_t blit_planar_masked_glyph(char *src, int16_t x, int16_t y)
 {
     uint16_t dst = add16((uint16_t)x, mul40((uint16_t)y));
     uint16_t source = 0;
+    uint8_t row_masks[8];
+    uint8_t caller_mask = vga_graphics_register(8);   /* the caller set the bit mask */
     unsigned row;
-    capture_mark_overlay(x, y, 8, 8);
+    scene_before_draw();
     if ((draw_page_selector & 0xffu) != 0)
         dst = add16(dst, 0x2000);
     outb(0x3c4, 2);
     for (row = 0; row < 8; ++row) {
         unsigned plane;
         ++source; /* The assembly consumes this mask byte; GC bit mask remains caller-set. */
+        row_masks[row] = caller_mask;
         for (plane = 0; plane < 4; ++plane) {
             outb(0x3c5, (uint8_t)(1u << plane));
             xchg_vram(dst, src_byte(src, source++));
@@ -191,21 +201,21 @@ int16_t blit_planar_masked_glyph(char *src, int16_t x, int16_t y)
     }
     outb(0x3c5, 0x0f);
     outw(0x3ce, 0xff08);
+    scene_add_glyph((int)x * 8, (int)y, row_masks);
     return 0;
 }
 
 int16_t select_draw_page(int16_t page)
 {
     draw_page_selector = (uint16_t)page;
+    scene_select_page((page & 0xff) != 0);
     return 0;
 }
 
 int16_t show_video_page(int16_t page)
 {
     bios_set_active_page((uint8_t)page);
-    if (capture_is_recording())
-        capture_publish_gameplay_frame();
-    else
-        capture_publish_non_gameplay_state();
+    scene_show_page((page & 0xff) != 0);
+    present_verify_shown();                      /* --verify-native only */
     return 0;
 }

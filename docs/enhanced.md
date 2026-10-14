@@ -38,32 +38,35 @@ Measured facts that shape the plan:
   view either shows those actors frozen, or widens the area in which they act, which
   changes the gameplay.  Both are offered (below).
 
-## Architecture
+## Architecture: a complete native presentation
 
-```
-game thread (16 Hz)                        render thread (display rate, e.g. 60-240 Hz)
-  src/ logic, unchanged
-  toolbox calls --record--> frame N {         frame N-1 + frame N + alpha(now)
-                               camera,          -> camera (smoothed), actor positions
-                               tiles region,       (interpolated), tiles from the map,
-                               draw commands       sprites from a decoded atlas,
-                               (sprite, world      overlays from the EGA page
-                               x/y, identity),  -> scaler -> window
-                               overlay mask }
-```
+The enhanced renderer never shows the emulated EGA page.  Everything the game draws becomes
+native items, and every picture - level, HUD, frame, dialogs, texts, menus, title pictures - is
+composed from them.
 
-* **Identity** of a draw command (needed to interpolate): the call site (the generator
-  tags each `blit_planar_sprite_rows` call with a site number) plus its occurrence number
-  within the frame.  Actors are drawn in record order, so this is stable while a record
-  lives; a big jump in position means a different object and snaps instead of sliding.
-* **Sprites and tiles** are decoded once from the game's own buffers (sprite banks in
-  memory, tiles in the emulated video memory) into an RGBA atlas, cached by source.
-* **Overlays**: during gameplay everything drawn outside the tile/sprite path (HUD
-  numbers, dialog boxes, hint texts, "Press any key") is taken from the EGA page through a
-  mask of the pixels such calls wrote this frame.
-* **Anchor test:** with every enhancement off, the native renderer must reproduce the EGA
-  page pixel for pixel in gameplay.  This test runs on scripted levels in all three
-  episodes and keeps the whole pipeline honest.
+* **Scene (game thread, `port/scene.c`).**  Each toolbox primitive (16x16 bitmaps: map tiles,
+  backdrop, frame, dialog borders; masked sprites; glyphs; the water copy) and every write that
+  bypasses the toolbox (the full-screen pictures, noticed by write accounting in the emulated
+  EGA) becomes an item on the video page it was drawn to.  An item keeps its position, size,
+  kind, its space - WORLD (level, with a level position), BACKDROP (screen-fixed cells behind
+  the level) or SCREEN (everything else) - and its own pixels, read back from the emulated page
+  right after the primitive ran, so items are exact by construction whatever register tricks
+  the original used.  A per-page ownership map drops items that later drawing hid completely,
+  so a page's list is exactly what it shows; the game's own clears (tile blits) empty it.
+* **Presenter (main thread, `port/present.c`).**  Takes a snapshot of the displayed page
+  whenever it changed and composes it into a canvas of palette indices, converted with the live
+  palette (fades work):
+  - at 320 wide: the items in drawing order at their positions - the original page exactly;
+  - wider, without a level view (title, menus, pictures): the 320x200 picture centred;
+  - wider, in the level: the backdrop as a stable screen-fixed layer across the width, the map
+    tiles of the wide view straight from the level map (animated tiles included), level sprites
+    at their level positions, dialogs and texts centred on the original view, the right column
+    (frame bar + HUD) at the right edge, the top and bottom bars rebuilt from their own tiles
+    (the plain tile repeated, the corner pieces kept, the "PRESS F1 FOR HELP" plate centred).
+* **Dialogs need nothing special:** what the game draws on the shown page while it waits for a
+  key is shown at once, in every layout.
+* **Anchor test:** at 320 wide the composed picture must equal the emulated page on every frame
+  - menus, dialogs, title screens and gameplay alike.
 
 ## Settings: `duke1.json`
 

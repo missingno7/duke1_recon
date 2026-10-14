@@ -48,10 +48,11 @@ def port_build() -> tuple:
             return False, (r.stdout + r.stderr).strip().splitlines()[-1:]
     if not (out / "duke1.exe").exists():
         return False, "duke1.exe missing"
-    r = subprocess.run([str(out / "vga_selftest.exe")], cwd=ROOT, capture_output=True, text=True)
-    if r.returncode != 0:
-        return False, "EGA self-test: " + (r.stdout + r.stderr).strip()
-    return True, f"{out / 'duke1.exe'}; EGA self-test passed"
+    for test, label in (("vga_selftest.exe", "EGA self-test"), ("scene_selftest.exe", "native scene self-test")):
+        r = subprocess.run([str(out / test)], cwd=ROOT, capture_output=True, text=True)
+        if r.returncode != 0:
+            return False, f"{label}: " + (r.stdout + r.stderr).strip()[-400:]
+    return True, f"{out / 'duke1.exe'}; EGA and native scene self-tests passed"
 
 
 def main() -> int:

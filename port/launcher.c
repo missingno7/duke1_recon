@@ -1,6 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include "platform.h"
-#include "capture.h"
+#include "scene.h"
 #include "pc_internal.h"
 #include "config.h"
 #include <stdio.h>
@@ -191,11 +191,7 @@ void platform_apply_port_setting(int row) {
         platform_apply_window_settings();
     if (row == PC_SETTING_VOLUME) pc_speaker_set_volume(pc_settings.volume);
     if (row == PC_SETTING_STEREO) pc_speaker_set_stereo(pc_settings.stereo);
-    if (row == PC_SETTING_RENDERER) capture_set_enhanced(pc_settings.renderer == PC_RENDERER_ENHANCED);
-    if (row == PC_SETTING_RENDERER || row == PC_SETTING_WIDESCREEN || row == PC_SETTING_WIDE_ACTIVITY)
-        capture_set_wide_settings(pc_settings.widescreen &&
-                                  pc_settings.renderer == PC_RENDERER_ENHANCED,
-                                  pc_settings.wide_activity);
+    if (row == PC_SETTING_RENDERER) scene_set_active(pc_settings.renderer == PC_RENDERER_ENHANCED);
     pc_config_save();
 }
 
@@ -373,7 +369,6 @@ int main(int argc, char **argv) {
         }
     }
     if (trace) pc_trace_flags = PC_TRACE_PORTS | PC_TRACE_VECTORS | PC_TRACE_FILES;
-    capture_set_wide_trace(trace);
     if (requested_episode < 0 || requested_episode > 3) {
         fprintf(stderr, "--episode must be 1, 2 or 3.\n");
         return 2;

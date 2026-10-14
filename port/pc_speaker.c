@@ -6,7 +6,7 @@
    instead of being rounded to audio buffer boundaries. */
 
 #include "pc_internal.h"
-#include "capture.h"
+#include "scene.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -74,22 +74,18 @@ void pc_speaker_set_stereo(int on)
 
 void pc_speaker_set_source_world_x(int16_t world_x, int16_t scroll_x)
 {
+    /* Pan by the source's position in the visible view (half-tile units): the original
+       playfield is 26 wide from scroll_x; widescreen shows the scene's wide view. */
     float left = (float)scroll_x;
-    float width = 28.0f;
+    float width = (float)((PLAYFIELD_X1 - PLAYFIELD_X0) / 8);
     float pan = 0.0f;
     if (world_x != PC_SOUND_SOURCE_CENTRE) {
-        int canvas_width = capture_wide_canvas_width();
-        if (capture_enhanced() && canvas_width > 335) {
-            int gameplay = 0;
-            const CaptureFrame *frame = capture_acquire_latest(&gameplay);
-            if (frame && gameplay) {
-                left = (float)capture_wide_camera_left(frame, canvas_width) / 8.0f;
-                width = (float)(canvas_width - 111) / 8.0f;
-            }
-            if (frame) capture_release_latest();
+        int canvas_width = scene_wide_canvas_width();
+        if (canvas_width > SCENE_WIDTH) {
+            left = (float)scene_wide_view_left(scroll_x, canvas_width) / 8.0f;
+            width = (float)(canvas_width - SCENE_WIDTH + PLAYFIELD_X1 - PLAYFIELD_X0) / 8.0f;
         }
-        if (width > 0.0f)
-            pan = ((float)world_x - left - width * 0.5f) / (width * 0.5f);
+        pan = ((float)world_x - left - width * 0.5f) / (width * 0.5f);
     }
     SDL_LockSpinlock(&event_lock);
     requested_pan = clamp_pan(pan);

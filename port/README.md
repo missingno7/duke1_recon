@@ -21,7 +21,11 @@ duke1.exe = episode 1 + episode 2 + episode 3 + launcher + emulated PC
 |---|---|
 | `platform.h` | the contract: everything the game can reach (ports, interrupts, memory, EGA, BIOS, DOS) |
 | `launcher.c` | finds the episodes, shows the episode dialog (drawn with the game's own routines), runs the chosen one |
-| `pc_sdl.c` | SDL3: window and presentation (70 Hz, 4:3), keyboard to XT scan codes, game thread, `--script` |
+| `pc_sdl.c` | SDL3: window, scaling (pixel aspect, integer scale, filter), keyboard to XT scan codes, game thread, `--script` |
+| `scene.c` | the native picture: everything the game draws, as items per video page (level, sprites, HUD, frame, dialogs, text, pictures) |
+| `present.c` | composes the shown page from its items: 1:1 the original exactly, wider the widescreen layout; the enhanced renderer never shows the emulated page |
+| `config.c` | `duke1.json` and the settings model behind the "Port settings" dialogs |
+| `game_hooks.h`, `pc_capture_hooks.c` | exact-width declarations of everything the generated game code may call (checked by the generator) |
 | `pc_interrupt.c` | interrupt vectors 8 and 9, CLI/STI (`disable`/`enable`), the PIT timer thread |
 | `pc_io.c` | I/O ports: PIT, keyboard controller, speaker gate, game port, EGA registers |
 | `pc_speaker.c` | PC speaker: PIT channel 2 square wave, replayed sample-exact on an SDL audio stream |
@@ -31,6 +35,7 @@ duke1.exe = episode 1 + episode 2 + episode 3 + launcher + emulated PC
 | `override/*.c` | game functions that write video memory through raw pointers, rewritten for `vga.c` |
 | `include/` | `dos.h`, `conio.h`, `alloc.h` for the translated game |
 | `tests/vga_selftest.c` | EGA write modes, latches, bit mask, set/reset; renders sample screens if the game files are present |
+| `tests/scene_selftest.c` | the native scene against the emulated EGA: tiles, sprites, glyphs, water, pictures, overdraw, both pages |
 
 ## Build
 
@@ -60,12 +65,16 @@ duke1.exe [--data DIR] [--episode N] [--select] [--trace]
 | `--select` | always show the episode dialog |
 | `--trace` | log port, interrupt and file activity (to `duke1.log` when there is no console) |
 | `--script FILE` | timed input and screenshots, for tests (below) |
-| `--no-restart` | quitting an episode ends the program instead of returning to the dialog |
 
-Quitting an episode returns to the episode dialog (the program restarts itself, so every
-episode starts with fresh globals); closing the window ends the program at once.
+Quitting an episode returns to the episode dialog in the same window: the episode's
+variables (one contiguous block per episode) and the emulated PC are reset in place, so every
+start is like a fresh DOS start.  Closing the window ends the program at once.
 
 ## Testing
+
+`--verify-native` (enhanced renderer) composes the shown page natively at every page flip and
+compares it with the emulated page; differences are logged (all screens, not only gameplay).
+`DUKE1_SCENE_DEBUG=1` logs every scene snapshot the presenter takes.
 
 `--script FILE` runs lines `<ms> key|keydown|keyup <name>`, `<ms> shot <file.png>` (the exact
 320x200 picture) and `<ms> quit`; key names are DOSBox-X mapper names (`space`, `enter`,

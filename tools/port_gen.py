@@ -680,11 +680,17 @@ def inject_pc_spin(source: str, source_name: str,
         # condition dependency, the loop can halt as long as its body writes none of the values
         # that the condition reads.
         is_async_wait = bool(async_names) and not writes
-        if empty or is_async_wait:
+        # A loop that waits on interrupt/port state but also updates what it tests (the title
+        # screen re-reads the joystick buttons and counts passes as its clock) keeps the CPU
+        # pacing; otherwise it runs at host speed and its pass counts become meaningless.
+        is_paced_poll = bool(async_names) and bool(writes)
+        if empty or is_async_wait or is_paced_poll:
             kind = "WAIT" if is_async_wait else "COUNTING"
             yield_call = "pc_halt" if is_async_wait else "pc_spin"
             reason = ("condition depends on interrupt/port state; body writes none of its condition values"
-                      if is_async_wait else "empty/pass-count loop retains CPU pacing")
+                      if is_async_wait else
+                      "polls interrupt/port state and updates its own condition: CPU pacing"
+                      if is_paced_poll else "empty/pass-count loop retains CPU pacing")
             report.append({"source": source_name,
                            "line": str(source.count("\n", 0, token.start) + 1),
                            "function": owner or "<unknown>", "classification": kind,
