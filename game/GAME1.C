@@ -106,7 +106,7 @@ int current_weapon_state;
 int title_graphic_frame_index;
 int level_play_state;
 int hidden_object_state;
-int actor_300e_object_state_table[100];
+int fire_wheel_object_state_table[100];
 long high_score_values[1];
 long high_score_entry_1_alias[1];
 long high_score_entry_2_alias[1];
@@ -121,31 +121,31 @@ int level_loading_state;
 char high_score_player_names[10][11];
 /* UNREFERENCED: [0x5076,0x5081), 11 bytes after the 110-byte high_score_player_names[10][11] table; no accepted symbol starts or direct or based DS references land here. */
 char high_score_name_edit_buffer[11];
-int actor_300c_object_marker_table[100];
-int actor_3035_state;
+int jumpbot_object_marker_table[100];
+int robohand_switch_state;
 void (far *level_update_callback_table[100])(void);
-int actor_3035_animation_state;
+int robohand_switch_animation_state;
 struct projectile_record projectile_records[5];
 int credits_text_position;
-int actor_3035_active_state;
-int actor_3037_object_count;
+int robohand_switch_active_state;
+int letter_bonus_object_count;
 char pending_sound_priority_flag;
-int actor_3037_animation_state;
+int letter_bonus_animation_state;
 char user_demo_recording_state;
 char secret_block_collision_state;
-int actor_3013_formation_state;
-int actor_303b_update_state;
+int snake_techbot_formation_state;
+int rabbit_bonus_update_state;
 int exit_lock_animation_state;
 int secret_block_animation_state;
 char game_session_abort_flag;
-int actor_3048_object_count;
+int door_tile_animation_count;
 char pending_sound_effect_index;
-int actor_302a_update_state;
+int falling_sign_update_state;
 int level_object_pool_531e_count;
 struct contact_flash_effect_record level_collision_sound_records[17];
 struct animated_actor_pool_record animated_actor_pool_records[7];
-int actor_3048_entity_count;
-int actor_3042_interaction_state;
+int door_lock_count;
+int dr_proton_interaction_state;
 char selected_save_slot;
 int keyboard_hotkey_count;
 char control_hint_up_flag;
@@ -159,62 +159,62 @@ void interrupt far (*saved_keyboard_interrupt_vector)(void);
 char hint_revealed_object_4;
 char hint_revealed_object_5;
 char hint_revealed_object_6;
-struct actor_3012_record actor_3012_records[100];
+struct dynamite_box_record dynamite_box_records[100];
 char far *user_demo_buffer;
 char hint_revealed_object_7;
-struct actor_3015_record actor_3015_records[100];
+struct soda_can_bonus_record soda_can_bonus_records[100];
 char hint_revealed_object_8;
 char hint_revealed_object_9;
 struct falling_hazard_record falling_hazard_records[100];
 char far *player_sprite_resource_buffer;
 char hint_revealed_object_10;
-struct actor_3022_record actor_3022_records[100];
+struct helicopter_techbot_record helicopter_techbot_records[100];
 char active_sprite_draw_flag;
 char far *sprite_graphics_buffer;
 char hint_revealed_object_11;
-struct actor_300b_record actor_300b_records[100];
-struct actor_3000_record actor_3000_records[100];
+struct flying_techbot_record flying_techbot_records[100];
+struct empty_bonus_box_record empty_bonus_box_records[100];
 char transporter_hint_pending;
 long player_score;
-struct actor_3024_record actor_3024_records[100];
+struct security_camera_record security_camera_records[100];
 char far *font_glyph_data_buffer;
-struct actor_3044_record actor_3044_records[15];
-struct actor_3007_record actor_3007_records[100];
+struct door_key_record door_key_records[15];
+struct rocket_record rocket_records[100];
 char draw_page_index;
-struct actor_302e_record actor_302e_records[100];
-struct actor_3029_record actor_3029_records[20];
-struct actor_3014_record actor_3014_records[100];
-struct actor_3021_record actor_3021_records[100];
-struct actor_303b_record actor_303b_records[100];
+struct radio_box_record radio_box_records[100];
+struct molecule_bonus_box_record molecule_bonus_box_records[20];
+struct water_shimmer_record water_shimmer_records[100];
+struct vertical_force_field_record vertical_force_field_records[100];
+struct rabbit_bonus_record rabbit_bonus_records[100];
 char keyboard_key_d_pressed;
 int joystick_x_axis_threshold_low[3];
 int joystick_y_axis_threshold_low[3];
 char keyboard_key_g_pressed;
 unsigned int far *level_tile_map;
 char keyboard_key_o_pressed;
-struct actor_3009_record actor_3009_records[100];
+struct right_flame_turret_record right_flame_turret_records[100];
 char far *vga_lower_page_pointer;
 int access_card_or_door_state;
-struct actor_301b_record actor_301b_records[100];
-struct actor_3023_record actor_3023_records[100];
-int actor_3034_active_state;
+struct rotating_fan_record rotating_fan_records[100];
+struct balloon_bonus_record balloon_bonus_records[100];
+int access_card_reader_active_state;
 struct animated_level_tile_record animated_level_tile_records[1000];
 int joystick_x_axis_threshold_high[3];
 int joystick_y_axis_threshold_high[3];
 int alternate_sprite_draw_offset;
 char far *saved_demo_buffer;
-struct actor_302c_record actor_302c_records[100];
-struct actor_301f_record actor_301f_records[100];
+struct popup_spikes_record popup_spikes_records[100];
+struct floppy_disk_box_record floppy_disk_box_records[100];
 int episode_sprite_resource_table;
-struct actor_300a_record actor_300a_records[100];
-int actor_3040_world_x;
-int actor_3040_world_y;
-int actor_3034_world_x;
+struct left_flame_turret_record left_flame_turret_records[100];
+int message_sign_world_x;
+int message_sign_world_y;
+int access_card_reader_world_x;
 char fire_button_latch;
-struct actor_301d_record actor_301d_records[100];
-int actor_3034_world_y;
+struct football_box_record football_box_records[100];
+int access_card_reader_world_y;
 char far *duke_graphics_buffer;
-struct actor_3037_record actor_3037_records[6];
+struct letter_bonus_record letter_bonus_records[6];
 char far *object_sprite_buffer;
 char jump_button_latch;
 
@@ -467,7 +467,7 @@ void pascal save_game_state_to_slot(char slot_character)
     putw(access_card_or_door_state, stream);
     putw(player_contact_state, stream);
     putw(title_graphic_frame_index, stream);
-    putw(actor_3020_active_state, stream);
+    putw(robohand_box_active_state, stream);
     putw(hint_revealed_object_7, stream);
     putw(hint_revealed_object_9, stream);
     putw(hint_revealed_object_2, stream);
@@ -1065,7 +1065,7 @@ char player_action_state = 0x04;
 
 char player_animation_phase = 0x00;
 
-int actor_3000_count = 0;
+int empty_bonus_box_count = 0;
 
 int collision_sound_record_count = 10;
 
@@ -1109,39 +1109,39 @@ int pickup_object_count = 10;
 
 int moving_actor_count = 8;
 
-int actor_3001_count = 0;
+int elevator_count = 0;
 
-int actor_3002_count = 0;
+int conveyor_belt_count = 0;
 
-int actor_3006_world_x = 0;
+int jump_boots_box_world_x = 0;
 
-int actor_3006_world_y = 0;
+int jump_boots_box_world_y = 0;
 
-int actor_3006_state = 0;
+int jump_boots_box_state = 0;
 
-int actor_3008_state = 0;
+int ceiling_clinger_box_state = 0;
 
-int actor_3020_world_x = 0;
+int robohand_box_world_x = 0;
 
-int actor_3020_world_y = 0;
+int robohand_box_world_y = 0;
 
-int actor_3020_state = 0;
+int robohand_box_state = 0;
 
-int actor_3033_world_x = 0;
+int access_card_box_world_x = 0;
 
-int actor_3033_world_y = 0;
+int access_card_box_world_y = 0;
 
-int actor_3033_state = 0;
+int access_card_box_state = 0;
 
-int actor_3033_enabled = 0;
+int access_card_box_enabled = 0;
 
-int actor_3007_count = 0;
+int rocket_count = 0;
 
-int actor_3009_count = 0;
+int right_flame_turret_count = 0;
 
-int actor_300a_count = 0;
+int left_flame_turret_count = 0;
 
-int actor_300b_count = 0;
+int flying_techbot_count = 0;
 
 int moving_item_path_delta_table_a[24] = {
     0, -64, 1, -32, 1, -16, 0, -1,
@@ -1155,86 +1155,86 @@ int moving_item_path_delta_table_b[24] = {
     -1, 128, -1, 128, -1, 256, 0, 0
 };
 
-int actor_300b_screen_anim_offset = 0;
+int fly_techbot_screen_anim_offset = 0;
 
-int actor_300b_animation_frame = 0;
+int flying_techbot_animation_frame = 0;
 
-int actor_300c_count = 0;
+int jumping_techbot_count = 0;
 
-int actor_300d_count = 0;
+int wheeled_techbot_count = 0;
 
-int actor_300e_animation_state = 0;
+int fire_wheel_animation_state = 0;
 
-int actor_300e_animation_counter = 0;
+int fire_wheel_animation_counter = 0;
 
-int actor_300e_count = 0;
+int fire_wheel_techbot_count = 0;
 
-int actor_300f_count = 0;
+int ammo_box_count = 0;
 
-int actor_3010_count = 0;
+int robot_techbot_count = 0;
 
-int actor_3012_count = 0;
+int dynamite_box_count = 0;
 
-int actor_3014_count = 0;
+int water_shimmer_count = 0;
 
-int actor_3015_count = 0;
+int soda_can_bonus_count = 0;
 
-int actor_3016_count = 0;
+int wallcrawler_count = 0;
 
-int actor_3018_count = 0;
+int turkey_bonus_count = 0;
 
-int actor_301a_count = 0;
+int horizontal_force_field_count = 0;
 
-int actor_301b_count = 0;
+int rotating_fan_count = 0;
 
-int actor_301d_count = 0;
+int football_box_count = 0;
 
-int actor_301e_count = 0;
+int joystick_box_count = 0;
 
-int actor_301f_count = 0;
+int floppy_disk_box_count = 0;
 
-int actor_3021_count = 0;
+int vertical_force_field_count = 0;
 
-int actor_3022_count = 0;
+int helicopter_techbot_count = 0;
 
-int actor_3023_count = 0;
+int balloon_bonus_count = 0;
 
-int actor_3024_count = 0;
+int security_camera_count = 0;
 
-int actor_3025_count = 0;
+int animated_level_tile_count = 0;
 
-int actor_3029_count = 0;
+int molecule_bonus_box_count = 0;
 
-int actor_302a_count = 0;
+int falling_sign_count = 0;
 
-int actor_302c_count = 0;
+int popup_spikes_count = 0;
 
-int actor_302d_count = 0;
+int magenta_flag_box_count = 0;
 
-int actor_302e_count = 0;
+int radio_box_count = 0;
 
-int actor_3031_count = 0;
+int red_bomb_count = 0;
 
 int level_vertical_motion_table[14] = {
     128, 96, 64, 32, 8, 4, 1, -1,
     -4, -8, -32, -64, -96, -128
 };
 
-int actor_303c_count = 0;
+int fire_creature_count = 0;
 
-int actor_303b_count = 0;
+int rabbit_bonus_count = 0;
 
-int actor_3042_animation_frame_0 = 0;
+int dr_proton_animation_frame_0 = 0;
 
-int actor_3042_animation_frame_1 = 0;
+int dr_proton_animation_frame_1 = 0;
 
-int actor_3042_animation_frame_2 = 0;
+int dr_proton_animation_frame_2 = 0;
 
-int actor_3042_animation_frame_3 = 0;
+int dr_proton_animation_frame_3 = 0;
 
-int actor_3042_animation_frame_4 = 0;
+int dr_proton_animation_frame_4 = 0;
 
-int actor_3042_animation_frame_5 = 10;
+int dr_proton_animation_frame_5 = 10;
 
 int gameplay_animation_flag = 0;
 
@@ -1269,7 +1269,7 @@ int ambient_object_sprite_offset = 0;
 
 int contact_flash_cycle_index = 0;
 
-int actor_3002_animation_phase = 0;
+int conveyor_belt_animation_phase = 0;
 
 int multi_tile_actor_sprite_offsets[36] = {
     -1, -1, 160, 320, 480, 640, -1, -1,
@@ -1279,7 +1279,7 @@ int multi_tile_actor_sprite_offsets[36] = {
     3360, 3520, 3680, 3840
 };
 
-int actor_300c_motion_delta_table[34] = {
+int jumpbot_motion_delta_table[34] = {
     1, 256, 2, 128, 0, 64, 1, 32,
     0, 16, 1, 8, 0, 4, 1, 2,
     0, 1, 1, -1, 0, -2, 1, -4,
@@ -1287,58 +1287,58 @@ int actor_300c_motion_delta_table[34] = {
     0, -128
 };
 
-int actor_300d_animation_phase = 0;
+int wheeled_techbot_animation_phase = 0;
 
-int actor_300d_animation_counter = 0;
+int wheelbot_animation_counter = 0;
 
-int actor_3010_sprite_offset = 0;
+int robot_techbot_sprite_offset = 0;
 
 char door_interaction_phase = 0x00;
 
-int actor_3013_sprite_offset = 0;
+int snake_techbot_sprite_offset = 0;
 
-int actor_3014_sprite_offset = 0;
+int water_shimmer_sprite_offset = 0;
 
-int actor_3015_sprite_offset = 0;
+int soda_can_bonus_sprite_offset = 0;
 
-int actor_3016_upper_sprite_offset = 0;
+int wallcrawler_upper_sprite_offset = 0;
 
-int actor_3016_lower_sprite_offset = 640;
+int wallcrawler_lower_sprite_offset = 640;
 
-int actor_301a_sprite_offset = 0;
+int h_force_field_sprite_offset = 0;
 
-int actor_3021_sprite_offset = 0;
+int v_force_field_sprite_offset = 0;
 
-int actor_3022_animation_phase = 0;
+int helicopter_animation_phase = 0;
 
-int actor_3023_sprite_offset = 0;
+int balloon_bonus_sprite_offset = 0;
 
-int actor_3024_sprite_offset = 0;
+int security_camera_sprite_offset = 0;
 
-int actor_3029_sprite_offset = 0;
+int molecule_box_sprite_offset = 0;
 
-int actor_302a_sprite_offset = 0;
+int falling_sign_sprite_offset = 0;
 
-int actor_302b_sprite_offset = 0;
+int reactor_sprite_offset = 0;
 
-char actor_302c_animation_phase = 0x00;
+char popup_spikes_animation_phase = 0x00;
 
-int actor_302d_sprite_offset = 0;
+int magenta_flag_box_sprite_offset = 0;
 
-int actor_303c_animation_phase = 0;
+int fire_creature_animation_phase = 0;
 
-int actor_3042_motion_delta_table[12] = {
+int dr_proton_motion_delta_table[12] = {
     128, 92, 64, 32, 16, 8, -8, -16,
     -32, -64, -92, -128
 };
 
-int actor_3041_sprite_frame = 0;
+int proton_display_sprite_frame = 0;
 
-int actor_3041_animation_counter = 0;
+int proton_screen_animation_counter = 0;
 
-int actor_3041_event_pending = 0;
+int proton_display_event_pending = 0;
 
-int actor_3041_sprite_offset = 0;
+int proton_display_sprite_offset = 0;
 
 /* Guides joystick calibration and records the measured axis thresholds. */
 void calibrate_joystick_controls(register int joystick_mode, int text_x)
@@ -1648,7 +1648,7 @@ void interrupt keyboard_interrupt_handler(void)
     last_keyboard_scan_code = inportb(0x60);
 
     if (player_animation_lock_state == 0 && current_weapon_state == 0 && control_confirmation_state == 0 &&
-        player_level_transition_state == 0 && actor_302f_interaction_state == 0 && actor_3030_interaction_state == 0) {
+        player_level_transition_state == 0 && tele_in_interaction_state == 0 && tele_out_interaction_state == 0) {
         if (last_keyboard_scan_code == key_binding_up) {
             control_up_pressed = 1;
         }
@@ -2154,15 +2154,15 @@ void update_player_and_level_state(void)
             jump_button_latch = 0;
     }
     draw_animated_level_strip();
-    update_actor_3035();
+    update_robohand_switch();
     draw_animated_level_tile();
-    update_actor_3024();
+    update_security_camera();
     handle_door_and_key_interaction();
-    update_actor_3040();
+    update_message_sign();
     update_level_lock_or_exit();
-    update_actor_3001();
-    update_actor_3034();
-    update_actor_3048();
+    update_elevator();
+    update_access_card_reader();
+    update_door_locks();
     if (title_graphic_animation_state != 0)
         return;
     if (player_death_state != 0 && control_fire_pressed == 0 && player_invulnerability_state == 0 && active_sprite_draw_flag == 0) {
@@ -2377,7 +2377,7 @@ void pascal allocate_collision_record(register int world_x, int world_y)
     }
 }
 
-/* Clear the first word of every 8-byte actor_302a_record in table ambient_object_records[0..ambient_object_count). */
+/* Clear the first word of every 8-byte falling_sign_record in table ambient_object_records[0..ambient_object_count). */
 /* Clears the active flags in the ambient-object pool. */
 void pascal clear_ambient_object_pool(void)
 {
@@ -2877,15 +2877,14 @@ int is_level_position_blocked(int world_x, int world_y)
    create_objects_from_level_map registers the routines for the current level.
    ============================================================================================ */
 
-/* Updates and draws records from level-map marker 0x3000; the concrete entity identity is not
-   established by source. */
-void update_actor_3000(void)
+/* Updates or activates empty grey bonus box from map word 0x3000. */
+void update_empty_bonus_box(void)
 {
     register int i;
-    struct actor_3000_record far *actor;
+    struct empty_bonus_box_record far *actor;
 
-    for (i = 0; i < actor_3000_count; ++i) {
-        actor = &actor_3000_records[i];
+    for (i = 0; i < empty_bonus_box_count; ++i) {
+        actor = &empty_bonus_box_records[i];
         if (actor->state != 0) {
             if (is_world_position_outside_view(actor->world_x, actor->world_y) == 0) {
                 if (is_level_position_blocked(actor->world_x, actor->world_y + 128) == 0)
@@ -2908,15 +2907,14 @@ void update_actor_3000(void)
 }
 
 /* Keep the backward jump: structured flow moves the shared draw and changes matching. */
-/* Updates and draws records from level-map marker 0x3001; the concrete entity identity is not
-   established by source. */
-void update_actor_3001(void)
+/* Updates or activates elevator from map word 0x3001. */
+void update_elevator(void)
 {
     register int i;
-    struct actor_3001_record far *actor;
+    struct elevator_record far *actor;
 
-    for (i = 0; i < actor_3001_count; ++i) {
-        actor = &actor_3001_records[i];
+    for (i = 0; i < elevator_count; ++i) {
+        actor = &elevator_records[i];
         if (is_world_position_outside_view(actor->world_x, actor->world_y) == 0) {
             if (test_player_x_alignment(actor->world_x, actor->world_y - 32)) {
                 if (hint_revealed_object_5) {
@@ -2949,7 +2947,7 @@ draw_second:
                                         ((actor->world_y - level_map_y_offset) >> 3) + 16);
             } else if (actor->active > 1) {
                 --actor->active;
-                *((level_tile_map + actor->world_y) + (actor->world_x >> 1) - 1) = actor_3001_tile_below_records[i];
+                *((level_tile_map + actor->world_y) + (actor->world_x >> 1) - 1) = elevator_tile_below_records[i];
                 actor->world_y += 128;
                 blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x320,
                                         actor->world_x - level_scroll_x,
@@ -2962,37 +2960,36 @@ draw_second:
             }
         } else if (actor->active > 1) {
             actor->active--;
-            *((level_tile_map + actor->world_y) + (actor->world_x >> 1) - 1) = actor_3001_tile_below_records[i];
+            *((level_tile_map + actor->world_y) + (actor->world_x >> 1) - 1) = elevator_tile_below_records[i];
             actor->world_y += 128;
         }
     }
 }
 
 /* Keep the label loops to preserve Turbo C's original SI/DI register allocation. */
-/* update_actor_3002 translation-unit declarations from skeleton2.c */
-/* Updates and draws records from level-map marker 0x3002; the concrete entity identity is not
-   established by source. */
-void update_actor_3002(void)
+/* update_conveyor_belt translation-unit declarations from skeleton2.c */
+/* Updates or activates left-moving conveyor belt start from map word 0x3002. */
+void update_conveyor_belt(void)
 {
     register int i;
     register int j;
-    struct actor_3002_record far *actor;
+    struct conveyor_belt_record far *actor;
     int actor_height;
 
-    ++actor_3002_animation_phase;
-    if (actor_3002_animation_phase == 4)
-        actor_3002_animation_phase = 0;
+    ++conveyor_belt_animation_phase;
+    if (conveyor_belt_animation_phase == 4)
+        conveyor_belt_animation_phase = 0;
     i = 0;
     goto otest;
 obody:
     {
-        actor = &actor_3002_records[i];
+        actor = &conveyor_belt_records[i];
         actor_height = actor->object_height;
         j = 0;
         goto test;
     body:
         *(level_tile_map + actor->map_column + actor->map_row + (j >> 1) - 2) =
-            0x1c00 + ((actor_3002_animation_phase & 1) << 5);
+            0x1c00 + ((conveyor_belt_animation_phase & 1) << 5);
         ++j;
     test:
         if (j < actor_height)
@@ -3000,16 +2997,16 @@ obody:
 
         if (actor->object_state == 1) {
             *(level_tile_map + actor->map_column + actor->map_row - 2) =
-                0x1b80 + (actor_3002_animation_phase << 5);
+                0x1b80 + (conveyor_belt_animation_phase << 5);
             *(level_tile_map + actor->map_column + actor->map_row + (actor_height >> 1) - 2) =
-                0x1c40 + (actor_3002_animation_phase << 5);
+                0x1c40 + (conveyor_belt_animation_phase << 5);
         }
 
         if (actor->object_state == 0) {
             *(level_tile_map + actor->map_column + actor->map_row - 2) =
-                0x1be0 - (actor_3002_animation_phase << 5);
+                0x1be0 - (conveyor_belt_animation_phase << 5);
             *(level_tile_map + actor->map_column + actor->map_row + (actor_height >> 1) - 2) =
-                0x1ca0 - (actor_3002_animation_phase << 5);
+                0x1ca0 - (conveyor_belt_animation_phase << 5);
         }
 
         if (test_player_vertical_range(actor->map_column - 2, actor->map_column + actor_height + 2,
@@ -3032,64 +3029,62 @@ obody:
     }
     i++;
 otest:
-    if (i < actor_3002_count)
+    if (i < conveyor_belt_count)
         goto obody;
 }
 
-/* Updates and draws records from level-map marker 0x3006; the concrete entity identity is not
-   established by source. */
-void update_actor_3006(void)
+/* Updates or activates jump boots bonus box from map word 0x3006. */
+void update_jump_boots_box(void)
 {
     if (access_card_or_door_state != 0)
         return;
 
-    if (is_world_position_outside_view(actor_3006_world_x, actor_3006_world_y) != 0)
+    if (is_world_position_outside_view(jump_boots_box_world_x, jump_boots_box_world_y) != 0)
         return;
 
-    if (is_level_position_blocked(actor_3006_world_x, actor_3006_world_y + 128) == 0)
-        actor_3006_world_y += 128;
+    if (is_level_position_blocked(jump_boots_box_world_x, jump_boots_box_world_y + 128) == 0)
+        jump_boots_box_world_y += 128;
 
-    if (test_player_overlap_with_object(actor_3006_world_x, actor_3006_world_y) != 0 && actor_3006_state != 0) {
+    if (test_player_overlap_with_object(jump_boots_box_world_x, jump_boots_box_world_y) != 0 && jump_boots_box_state != 0) {
         access_card_or_door_state = 1;
-        queue_ambient_sprite_animation(0x3c0, actor_3006_world_x, actor_3006_world_y);
+        queue_ambient_sprite_animation(0x3c0, jump_boots_box_world_x, jump_boots_box_world_y);
         add_and_draw_player_score(1000L);
         draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x640);
         request_priority_sound_effect(0x0c);
         return;
     }
 
-    if (actor_3006_state == 0) {
-        if (remove_world_actor_at_position(actor_3006_world_x, actor_3006_world_y) != 0) {
-            spawn_contact_flash_effect(actor_3006_world_x, actor_3006_world_y);
-            actor_3006_state = 1;
-            if (is_level_position_blocked(actor_3006_world_x, actor_3006_world_y + 128) == 0) {
+    if (jump_boots_box_state == 0) {
+        if (remove_world_actor_at_position(jump_boots_box_world_x, jump_boots_box_world_y) != 0) {
+            spawn_contact_flash_effect(jump_boots_box_world_x, jump_boots_box_world_y);
+            jump_boots_box_state = 1;
+            if (is_level_position_blocked(jump_boots_box_world_x, jump_boots_box_world_y + 128) == 0) {
                 add_and_draw_player_score(500L);
-                queue_ambient_sprite_animation(0x280, actor_3006_world_x, actor_3006_world_y);
+                queue_ambient_sprite_animation(0x280, jump_boots_box_world_x, jump_boots_box_world_y);
             }
         }
     }
 
-    if (actor_3006_state == 0) {
+    if (jump_boots_box_state == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer,
-                                actor_3006_world_x - level_scroll_x,
-                                ((actor_3006_world_y - level_map_y_offset) >> 3) + 16);
+                                jump_boots_box_world_x - level_scroll_x,
+                                ((jump_boots_box_world_y - level_map_y_offset) >> 3) + 16);
     } else {
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x640,
-                                actor_3006_world_x - level_scroll_x,
-                                ((actor_3006_world_y - level_map_y_offset) >> 3) + 16);
+                                jump_boots_box_world_x - level_scroll_x,
+                                ((jump_boots_box_world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-/* Updates and draws records from level-map marker 0x3007; the concrete entity identity is not
-   established by source. */
-void update_actor_3007(void)
+/* Updates or activates rocket from map word 0x3007. */
+void update_rocket(void)
 {
     register int i;
-    struct actor_3007_record far *actor;
+    struct rocket_record far *actor;
 
     hidden_object_state = 1;
-    for (i = 0; i < actor_3007_count; ++i) {
-        actor = &actor_3007_records[i];
+    for (i = 0; i < rocket_count; ++i) {
+        actor = &rocket_records[i];
         if (actor->state == 0)
             continue;
 
@@ -3176,53 +3171,51 @@ void update_actor_3007(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3008; the concrete entity identity is not
-   established by source. */
-void update_actor_3008(void)
+/* Updates or activates ceiling-clinger bonus box from map word 0x3008. */
+void update_ceiling_clinger_box(void)
 {
     if (player_contact_state != 0)
         return;
-    if (is_world_position_outside_view(actor_3008_world_x, actor_3008_world_y) != 0)
+    if (is_world_position_outside_view(ceiling_clinger_box_world_x, ceiling_clinger_box_world_y) != 0)
         return;
-    if (is_level_position_blocked(actor_3008_world_x, actor_3008_world_y + 128) == 0)
-        actor_3008_world_y += 128;
-    if (test_player_overlap_with_object(actor_3008_world_x, actor_3008_world_y) != 0 && actor_3008_state != 0) {
+    if (is_level_position_blocked(ceiling_clinger_box_world_x, ceiling_clinger_box_world_y + 128) == 0)
+        ceiling_clinger_box_world_y += 128;
+    if (test_player_overlap_with_object(ceiling_clinger_box_world_x, ceiling_clinger_box_world_y) != 0 && ceiling_clinger_box_state != 0) {
         player_contact_state = 1;
         draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
-        queue_ambient_sprite_animation(0x3c0, actor_3008_world_x, actor_3008_world_y);
+        queue_ambient_sprite_animation(0x3c0, ceiling_clinger_box_world_x, ceiling_clinger_box_world_y);
         add_and_draw_player_score(1000L);
         return;
     }
 
-    if (actor_3008_state == 0 && remove_world_actor_at_position(actor_3008_world_x, actor_3008_world_y) != 0) {
-        spawn_contact_flash_effect(actor_3008_world_x, actor_3008_world_y);
-        actor_3008_state = 1;
-        if (is_level_position_blocked(actor_3008_world_x, actor_3008_world_y + 128) == 0) {
+    if (ceiling_clinger_box_state == 0 && remove_world_actor_at_position(ceiling_clinger_box_world_x, ceiling_clinger_box_world_y) != 0) {
+        spawn_contact_flash_effect(ceiling_clinger_box_world_x, ceiling_clinger_box_world_y);
+        ceiling_clinger_box_state = 1;
+        if (is_level_position_blocked(ceiling_clinger_box_world_x, ceiling_clinger_box_world_y + 128) == 0) {
             add_and_draw_player_score(500L);
-            queue_ambient_sprite_animation(0x280, actor_3008_world_x, actor_3008_world_y);
+            queue_ambient_sprite_animation(0x280, ceiling_clinger_box_world_x, ceiling_clinger_box_world_y);
         }
     }
 
-    if (actor_3008_state == 0) {
+    if (ceiling_clinger_box_state == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer,
-                                actor_3008_world_x - level_scroll_x,
-                                ((actor_3008_world_y - level_map_y_offset) >> 3) + 16);
+                                ceiling_clinger_box_world_x - level_scroll_x,
+                                ((ceiling_clinger_box_world_y - level_map_y_offset) >> 3) + 16);
         return;
     }
     blit_planar_sprite_rows(sprite_pixel_data_pointer + 0xb40,
-                            actor_3008_world_x - level_scroll_x,
-                            ((actor_3008_world_y - level_map_y_offset) >> 3) + 16);
+                            ceiling_clinger_box_world_x - level_scroll_x,
+                            ((ceiling_clinger_box_world_y - level_map_y_offset) >> 3) + 16);
 }
 
-/* Updates and draws records from level-map marker 0x3009; the concrete entity identity is not
-   established by source. */
-void update_actor_3009(void)
+/* Updates or activates right-firing flamethrower from map word 0x3009. */
+void update_right_flame_turret(void)
 {
     register int i;
-    struct actor_3009_record far *actor;
+    struct right_flame_turret_record far *actor;
 
-    for (i = 0; i < actor_3009_count; ++i) {
-        actor = &actor_3009_records[i];
+    for (i = 0; i < right_flame_turret_count; ++i) {
+        actor = &right_flame_turret_records[i];
         if (actor->state == 0)
             continue;
         ++actor->state;
@@ -3271,15 +3264,14 @@ void update_actor_3009(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x300A; the concrete entity identity is not
-   established by source. */
-void update_actor_300a(void)
+/* Updates or activates left-firing flamethrower from map word 0x300A. */
+void update_left_flame_turret(void)
 {
     register int i;
-    struct actor_300a_record far *actor;
+    struct left_flame_turret_record far *actor;
 
-    for (i = 0; i < actor_300a_count; ++i) {
-        actor = &actor_300a_records[i];
+    for (i = 0; i < left_flame_turret_count; ++i) {
+        actor = &left_flame_turret_records[i];
         if (actor->state != 0) {
             ++actor->state;
 
@@ -3322,22 +3314,21 @@ void update_actor_300a(void)
 }
 
 /* Keep the shared-tail jump because restructuring moves its call after rendering. */
-/* Updates and draws records from level-map marker 0x300B; the concrete entity identity is not
-   established by source. */
-void update_actor_300b(void)
+/* Updates or activates flying techbot from map word 0x300B. */
+void update_flying_techbot(void)
 {
     register int i;
-    struct actor_300b_record far *actor;
+    struct flying_techbot_record far *actor;
 
-    ++actor_300b_animation_frame;
-    if (actor_300b_animation_frame == 10)
-        actor_300b_animation_frame = 0;
-    actor_300b_screen_anim_offset += 160;
-    if (actor_300b_screen_anim_offset == 640)
-        actor_300b_screen_anim_offset = 0;
+    ++flying_techbot_animation_frame;
+    if (flying_techbot_animation_frame == 10)
+        flying_techbot_animation_frame = 0;
+    fly_techbot_screen_anim_offset += 160;
+    if (fly_techbot_screen_anim_offset == 640)
+        fly_techbot_screen_anim_offset = 0;
 
-    for (i = 0; i < actor_300b_count; ++i) {
-        actor = &actor_300b_records[i];
+    for (i = 0; i < flying_techbot_count; ++i) {
+        actor = &flying_techbot_records[i];
         if (actor->motion_state == 0xfe) {
             if (is_level_position_blocked(actor->world_x, actor->world_y + 128)) {
                 spawn_contact_flash_effect(actor->world_x, actor->world_y);
@@ -3422,17 +3413,17 @@ void update_actor_300b(void)
             actor->world_y += 8;
         if (is_level_position_blocked(actor->world_x, actor->world_y + 128)) {
             actor->world_y -= 8;
-            if (!is_level_position_blocked(actor->world_x, actor->world_y + 128) && actor_300b_screen_anim_offset == 0)
+            if (!is_level_position_blocked(actor->world_x, actor->world_y + 128) && fly_techbot_screen_anim_offset == 0)
                 allocate_collision_record(actor->world_x, actor->world_y);
         }
 
-        if (actor_300b_screen_anim_offset == 0) {
+        if (fly_techbot_screen_anim_offset == 0) {
             if (actor->world_x > player_screen_x + level_scroll_x) {
                 if (actor->motion_state > 1) {
                     --actor->motion_state;
                 } else if (!test_level_tile_special_state(actor->world_x - 1, actor->world_y - 5)) {
                     --actor->world_x;
-                    if (actor_300b_animation_frame == 0)
+                    if (flying_techbot_animation_frame == 0)
                         spawn_projectile(1, actor->world_x - 1, actor->world_y - 160);
                 }
             }
@@ -3441,13 +3432,13 @@ void update_actor_300b(void)
                     ++actor->motion_state;
                 } else if (!test_level_tile_special_state(actor->world_x + 2, actor->world_y - 5)) {
                     ++actor->world_x;
-                    if (actor_300b_animation_frame == 0)
+                    if (flying_techbot_animation_frame == 0)
                         spawn_projectile(2, actor->world_x + 1, actor->world_y - 160);
                 }
             }
         }
 
-        blit_planar_sprite_rows(sprite_graphics_buffer + actor_300b_screen_anim_offset + 0x3c0,
+        blit_planar_sprite_rows(sprite_graphics_buffer + fly_techbot_screen_anim_offset + 0x3c0,
                                 actor->world_x - level_scroll_x,
                                 ((actor->world_y - level_map_y_offset) >> 3) + 16);
         blit_planar_sprite_rows(sprite_graphics_buffer + (actor->motion_state - 1) * 0xa0,
@@ -3456,8 +3447,8 @@ void update_actor_300b(void)
     }
 }
 
-/* Draws the six sprite cells that form a two-column, three-row actor graphic. */
-void pascal draw_six_tile_actor_sprite(int sprite_index, int x_coord, register int world_y)
+/* Draws the six-cell Jumping Techbot sprite from map word 0x300C. */
+void pascal draw_jumping_techbot_sprite(int sprite_index, int x_coord, register int world_y)
 {
     register int world_x = x_coord;
     if (multi_tile_actor_sprite_offsets[sprite_index * 6] > 0 && is_world_position_outside_view(world_x, world_y - 256) == 0)
@@ -3494,15 +3485,14 @@ void pascal draw_six_tile_actor_sprite(int sprite_index, int x_coord, register i
         active_sprite_draw_flag = 1;
 }
 
-/* Updates and draws records from level-map marker 0x300C; the concrete entity identity is not
-   established by source. */
-void update_actor_300c(void)
+/* Updates or activates jumping techbot from map word 0x300C. */
+void update_jumping_techbot(void)
 {
     register int i;
-    struct actor_300c_record far *actor;
+    struct jumping_techbot_record far *actor;
 
-    for (i = 0; i < actor_300c_count; ++i) {
-        actor = &actor_300c_records[i];
+    for (i = 0; i < jumping_techbot_count; ++i) {
+        actor = &jumping_techbot_records[i];
         if (is_world_position_outside_view(actor->world_x, actor->world_y) == 0 && actor->marker_state == 0)
             actor->marker_state = 1;
         if (actor->state == 0 || actor->marker_state == 0)
@@ -3511,8 +3501,8 @@ void update_actor_300c(void)
         while (1) {
             if (remove_world_actor_at_position(actor->world_x + 1, actor->world_y - 128) != 0 ||
                 remove_world_actor_at_position(actor->world_x + 1, actor->world_y) != 0)
-                ++actor_300c_object_marker_table[i];
-            if (actor_300c_object_marker_table[i] == 3) {
+                ++jumpbot_object_marker_table[i];
+            if (jumpbot_object_marker_table[i] == 3) {
                 spawn_contact_flash_effect(actor->world_x + 1, actor->world_y - 256);
                 spawn_contact_flash_effect(actor->world_x, actor->world_y - 128);
                 spawn_contact_flash_effect(actor->world_x + 2, actor->world_y);
@@ -3527,9 +3517,9 @@ void update_actor_300c(void)
                 break;
             }
 
-            if (actor_300c_object_marker_table[i] == 1 && world_animation_phase == 0)
+            if (jumpbot_object_marker_table[i] == 1 && world_animation_phase == 0)
                 spawn_pickup_object(actor->world_x, actor->world_y - 192);
-            if (actor_300c_object_marker_table[i] == 2 && world_animation_phase == 0) {
+            if (jumpbot_object_marker_table[i] == 2 && world_animation_phase == 0) {
                 spawn_pickup_object(actor->world_x + 2, actor->world_y - 192);
                 spawn_pickup_object(actor->world_x, actor->world_y - 192);
             }
@@ -3537,9 +3527,9 @@ void update_actor_300c(void)
             if (actor->state < 25) {
                 if (is_level_position_blocked(actor->world_x + 1, actor->world_y + 128) == 0) {
                     if (actor->world_x > player_screen_x + level_scroll_x - 3)
-                        draw_six_tile_actor_sprite(2, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(2, actor->world_x, actor->world_y);
                     else
-                        draw_six_tile_actor_sprite(5, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(5, actor->world_x, actor->world_y);
                     actor->world_y += 128;
                     break;
                 }
@@ -3547,10 +3537,10 @@ void update_actor_300c(void)
                 if (actor->world_x > player_screen_x + level_scroll_x - 3) {
                     actor->marker_state = 1;
                     if (actor->state != 12)
-                        draw_six_tile_actor_sprite(0, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(0, actor->world_x, actor->world_y);
                 } else {
                     if (actor->state != 12)
-                        draw_six_tile_actor_sprite(3, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(3, actor->world_x, actor->world_y);
                     actor->marker_state = 2;
                 }
                 ++actor->state;
@@ -3559,11 +3549,11 @@ void update_actor_300c(void)
                 if (actor->state == 13) {
                     if (actor->marker_state == 1) {
                         spawn_projectile(1, actor->world_x - 1, actor->world_y - 80);
-                        draw_six_tile_actor_sprite(1, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(1, actor->world_x, actor->world_y);
                     }
                     if (actor->marker_state == 2) {
                         spawn_projectile(2, actor->world_x + 3, actor->world_y - 80);
-                        draw_six_tile_actor_sprite(4, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(4, actor->world_x, actor->world_y);
                     }
                     ++actor->state;
                 }
@@ -3574,34 +3564,34 @@ void update_actor_300c(void)
                 if (actor->marker_state == 1) {
                     if (is_level_position_blocked(actor->world_x + 1, actor->world_y - 256) != 0) {
                         actor->world_y = (actor->world_y >> 7) << 7;
-                        draw_six_tile_actor_sprite(2, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(2, actor->world_x, actor->world_y);
                         actor->state = 1;
                         break;
                     }
                     if (test_level_tile_special_state(actor->world_x - 1, actor->world_y) == 0) {
-                        actor->world_x -= actor_300c_motion_delta_table[actor->state - 25];
-                        actor->world_y -= actor_300c_motion_delta_table[actor->state - 24];
+                        actor->world_x -= jumpbot_motion_delta_table[actor->state - 25];
+                        actor->world_y -= jumpbot_motion_delta_table[actor->state - 24];
                     } else {
-                        actor->world_y -= actor_300c_motion_delta_table[actor->state - 24];
+                        actor->world_y -= jumpbot_motion_delta_table[actor->state - 24];
                     }
-                    draw_six_tile_actor_sprite(2, actor->world_x, actor->world_y);
+                    draw_jumping_techbot_sprite(2, actor->world_x, actor->world_y);
                     actor->state += 2;
                     break;
                 }
                 if (actor->marker_state == 2) {
                     if (is_level_position_blocked(actor->world_x + 1, actor->world_y - 256) != 0) {
                         actor->world_y = (actor->world_y >> 7) << 7;
-                        draw_six_tile_actor_sprite(5, actor->world_x, actor->world_y);
+                        draw_jumping_techbot_sprite(5, actor->world_x, actor->world_y);
                         actor->state = 1;
                         break;
                     }
                     if (test_level_tile_special_state(actor->world_x + 4, actor->world_y) == 0) {
-                        actor->world_x += actor_300c_motion_delta_table[actor->state - 25];
-                        actor->world_y -= actor_300c_motion_delta_table[actor->state - 24];
+                        actor->world_x += jumpbot_motion_delta_table[actor->state - 25];
+                        actor->world_y -= jumpbot_motion_delta_table[actor->state - 24];
                     } else {
-                        actor->world_y -= actor_300c_motion_delta_table[actor->state - 24];
+                        actor->world_y -= jumpbot_motion_delta_table[actor->state - 24];
                     }
-                    draw_six_tile_actor_sprite(5, actor->world_x, actor->world_y);
+                    draw_jumping_techbot_sprite(5, actor->world_x, actor->world_y);
                     actor->state += 2;
                     break;
                 }
@@ -3612,8 +3602,8 @@ void update_actor_300c(void)
     }
 }
 
-/* Draws a two-cell-wide actor row and marks player contact when the row overlaps Duke. */
-void pascal draw_two_tile_wide_actor_sprite(int frame, int world_x, int world_y)
+/* Draws the two-cell Wheeled Techbot sprite from map word 0x300D. */
+void pascal draw_wheeled_techbot_sprite(int frame, int world_x, int world_y)
 {
     register int sprite_offset;
 
@@ -3633,31 +3623,30 @@ void pascal draw_two_tile_wide_actor_sprite(int frame, int world_x, int world_y)
         active_sprite_draw_flag = 1;
 }
 
-/* Updates and draws records from level-map marker 0x300D; the concrete entity identity is not
-   established by source. */
-void update_actor_300d(void)
+/* Updates or activates wheeled techbot from map word 0x300D. */
+void update_wheeled_techbot(void)
 {
     register int i;
-    struct actor_300d_record far *actor;
+    struct wheeled_techbot_record far *actor;
 
-    ++actor_300d_animation_counter;
-    if (actor_300d_animation_counter == 2) {
-        actor_300d_animation_counter = 0;
-        ++actor_300d_animation_phase;
+    ++wheelbot_animation_counter;
+    if (wheelbot_animation_counter == 2) {
+        wheelbot_animation_counter = 0;
+        ++wheeled_techbot_animation_phase;
     }
-    if (actor_300d_animation_phase == 2)
-        actor_300d_animation_phase = 0;
+    if (wheeled_techbot_animation_phase == 2)
+        wheeled_techbot_animation_phase = 0;
 
-    for (i = 0; i < actor_300d_count; ++i) {
-        actor = &actor_300d_records[i];
+    for (i = 0; i < wheeled_techbot_count; ++i) {
+        actor = &wheeled_techbot_records[i];
         if (actor->state == 0)
             continue;
 
         if (remove_world_actor_at_position(actor->world_x, actor->world_y) != 0 ||
             remove_world_actor_at_position(actor->world_x + 2, actor->world_y) != 0)
-            ++actor_300d_auxiliary_states[i];
+            ++wheelbot_auxiliary_states[i];
 
-        if (actor_300d_auxiliary_states[i] == 2) {
+        if (wheelbot_auxiliary_states[i] == 2) {
             spawn_contact_flash_effect(actor->world_x + 2, actor->world_y);
             spawn_contact_flash_effect(actor->world_x, actor->world_y);
             spawn_moving_actor(1, actor->world_x + 1, actor->world_y);
@@ -3667,12 +3656,12 @@ void update_actor_300d(void)
             continue;
         }
 
-        if (actor_300d_auxiliary_states[i] == 1 && world_animation_phase == 0) {
+        if (wheelbot_auxiliary_states[i] == 1 && world_animation_phase == 0) {
             spawn_pickup_object(actor->world_x + 2, actor->world_y - 64);
         }
         if (is_level_position_blocked(actor->world_x, actor->world_y + 128) == 0) {
             actor->world_y += 32;
-            draw_two_tile_wide_actor_sprite(0, actor->world_x, actor->world_y);
+            draw_wheeled_techbot_sprite(0, actor->world_x, actor->world_y);
             continue;
         }
 
@@ -3684,9 +3673,9 @@ void update_actor_300d(void)
                 actor->state = 2;
                 spawn_projectile(2, actor->world_x + 4, actor->world_y - 64);
             } else {
-                if (actor_300d_animation_counter == 0)
+                if (wheelbot_animation_counter == 0)
                     --actor->world_x;
-                draw_two_tile_wide_actor_sprite(actor_300d_animation_phase, actor->world_x, actor->world_y);
+                draw_wheeled_techbot_sprite(wheeled_techbot_animation_phase, actor->world_x, actor->world_y);
             }
         }
 
@@ -3695,108 +3684,106 @@ void update_actor_300d(void)
                 test_level_tile_special_state(actor->world_x + 4, actor->world_y + 128) == 0) {
                 actor->state = 1;
                 spawn_projectile(1, actor->world_x - 2, actor->world_y - 64);
-                draw_two_tile_wide_actor_sprite(actor_300d_animation_phase + 2, actor->world_x - 1, actor->world_y);
+                draw_wheeled_techbot_sprite(wheeled_techbot_animation_phase + 2, actor->world_x - 1, actor->world_y);
                 continue;
             }
-            if (actor_300d_animation_counter == 0)
+            if (wheelbot_animation_counter == 0)
                 ++actor->world_x;
-            draw_two_tile_wide_actor_sprite(actor_300d_animation_phase + 2, actor->world_x, actor->world_y);
+            draw_wheeled_techbot_sprite(wheeled_techbot_animation_phase + 2, actor->world_x, actor->world_y);
         }
     }
 }
 
-/* Updates and draws records from level-map marker 0x3020; the concrete entity identity is not
-   established by source. */
-void update_actor_3020(void)
+/* Updates or activates robohand bonus box from map word 0x3020. */
+void update_robohand_box(void)
 {
-    if (actor_3020_active_state != 0)
+    if (robohand_box_active_state != 0)
         return;
 
-    if (is_world_position_outside_view(actor_3020_world_x, actor_3020_world_y) != 0)
+    if (is_world_position_outside_view(robohand_box_world_x, robohand_box_world_y) != 0)
         return;
 
-    if (is_level_position_blocked(actor_3020_world_x, actor_3020_world_y + 128) == 0)
-        actor_3020_world_y += 128;
+    if (is_level_position_blocked(robohand_box_world_x, robohand_box_world_y + 128) == 0)
+        robohand_box_world_y += 128;
 
-    if (test_player_overlap_with_object(actor_3020_world_x, actor_3020_world_y) != 0 && actor_3020_state != 0) {
-        actor_3020_active_state = 1;
-        queue_ambient_sprite_animation(0x3c0, actor_3020_world_x, actor_3020_world_y);
+    if (test_player_overlap_with_object(robohand_box_world_x, robohand_box_world_y) != 0 && robohand_box_state != 0) {
+        robohand_box_active_state = 1;
+        queue_ambient_sprite_animation(0x3c0, robohand_box_world_x, robohand_box_world_y);
         add_and_draw_player_score(1000L);
         request_priority_sound_effect(12);
         draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
         return;
     }
 
-    if (actor_3020_state == 0) {
-        if (remove_world_actor_at_position(actor_3020_world_x, actor_3020_world_y) != 0) {
-            spawn_contact_flash_effect(actor_3020_world_x, actor_3020_world_y);
-            actor_3020_state = 1;
-            if (is_level_position_blocked(actor_3020_world_x, actor_3020_world_y + 128) == 0) {
+    if (robohand_box_state == 0) {
+        if (remove_world_actor_at_position(robohand_box_world_x, robohand_box_world_y) != 0) {
+            spawn_contact_flash_effect(robohand_box_world_x, robohand_box_world_y);
+            robohand_box_state = 1;
+            if (is_level_position_blocked(robohand_box_world_x, robohand_box_world_y + 128) == 0) {
                 add_and_draw_player_score(500L);
-                queue_ambient_sprite_animation(0x280, actor_3020_world_x, actor_3020_world_y);
+                queue_ambient_sprite_animation(0x280, robohand_box_world_x, robohand_box_world_y);
             }
         }
     }
 
-    if (actor_3020_state == 0) {
+    if (robohand_box_state == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer,
-                                actor_3020_world_x - level_scroll_x,
-                                ((actor_3020_world_y - level_map_y_offset) >> 3) + 16);
+                                robohand_box_world_x - level_scroll_x,
+                                ((robohand_box_world_y - level_map_y_offset) >> 3) + 16);
         return;
     }
 
     blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2760,
-                            actor_3020_world_x - level_scroll_x,
-                            ((actor_3020_world_y - level_map_y_offset) >> 3) + 16);
+                            robohand_box_world_x - level_scroll_x,
+                            ((robohand_box_world_y - level_map_y_offset) >> 3) + 16);
 }
 
-/* Updates and draws records from level-map marker 0x3033; the concrete entity identity is not
-   established by source. */
-void update_actor_3033(void)
+/* Updates or activates access-card bonus box from map word 0x3033. */
+void update_access_card_box(void)
 {
-    if (actor_3033_active_state != 0)
+    if (access_card_box_active_state != 0)
         return;
-    if (actor_3033_enabled == 0)
+    if (access_card_box_enabled == 0)
         return;
-    if (is_world_position_outside_view(actor_3033_world_x, actor_3033_world_y) != 0)
+    if (is_world_position_outside_view(access_card_box_world_x, access_card_box_world_y) != 0)
         return;
 
-    if (is_level_position_blocked(actor_3033_world_x, actor_3033_world_y + 128) == 0)
-        actor_3033_world_y += 128;
+    if (is_level_position_blocked(access_card_box_world_x, access_card_box_world_y + 128) == 0)
+        access_card_box_world_y += 128;
 
-    if (test_player_overlap_with_object(actor_3033_world_x, actor_3033_world_y) != 0 && actor_3033_state != 0) {
-        actor_3033_active_state = 1;
-        queue_ambient_sprite_animation(0x3c0, actor_3033_world_x, actor_3033_world_y);
+    if (test_player_overlap_with_object(access_card_box_world_x, access_card_box_world_y) != 0 && access_card_box_state != 0) {
+        access_card_box_active_state = 1;
+        queue_ambient_sprite_animation(0x3c0, access_card_box_world_x, access_card_box_world_y);
         add_and_draw_player_score(1000L);
         draw_current_planar_sprite();
         request_priority_sound_effect(12);
         return;
     }
 
-    if (actor_3033_state == 0) {
-        if (remove_world_actor_at_position(actor_3033_world_x, actor_3033_world_y) != 0) {
-            spawn_contact_flash_effect(actor_3033_world_x, actor_3033_world_y);
-            actor_3033_state = 1;
-            if (is_level_position_blocked(actor_3033_world_x, actor_3033_world_y + 128) == 0) {
+    if (access_card_box_state == 0) {
+        if (remove_world_actor_at_position(access_card_box_world_x, access_card_box_world_y) != 0) {
+            spawn_contact_flash_effect(access_card_box_world_x, access_card_box_world_y);
+            access_card_box_state = 1;
+            if (is_level_position_blocked(access_card_box_world_x, access_card_box_world_y + 128) == 0) {
                 add_and_draw_player_score(500L);
-                queue_ambient_sprite_animation(0x280, actor_3033_world_x, actor_3033_world_y);
+                queue_ambient_sprite_animation(0x280, access_card_box_world_x, access_card_box_world_y);
             }
         }
     }
 
-    if (actor_3033_state == 0) {
+    if (access_card_box_state == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer,
-                                actor_3033_world_x - level_scroll_x,
-                                ((actor_3033_world_y - level_map_y_offset) >> 3) + 16);
+                                access_card_box_world_x - level_scroll_x,
+                                ((access_card_box_world_y - level_map_y_offset) >> 3) + 16);
     } else {
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x2800,
-                                actor_3033_world_x - level_scroll_x,
-                                ((actor_3033_world_y - level_map_y_offset) >> 3) + 16);
+                                access_card_box_world_x - level_scroll_x,
+                                ((access_card_box_world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-/* Draws a two-column, two-row actor graphic and marks player contact when it overlaps Duke. */
-void pascal draw_two_by_two_actor_sprite(int frame, int world_x, int world_y)
+/* Draws the two-by-two Fire Wheel Techbot sprite from map word 0x300E. */
+void pascal draw_fire_wheel_techbot_sprite(int frame, int world_x, int world_y)
 {
     register int sprite_offset;
 
@@ -3827,31 +3814,30 @@ void pascal draw_two_by_two_actor_sprite(int frame, int world_x, int world_y)
         active_sprite_draw_flag = 1;
 }
 
-/* Updates and draws records from level-map marker 0x300E; the concrete entity identity is not
-   established by source. */
-void update_actor_300e(void)
+/* Updates or activates fire wheel techbot from map word 0x300E. */
+void update_fire_wheel_techbot(void)
 {
     register int i;
-    struct actor_300e_record far *actor;
+    struct fire_wheel_techbot_record far *actor;
 
-    ++actor_300e_animation_state;
-    ++actor_300e_animation_counter;
-    if (actor_300e_animation_counter == 60)
-        actor_300e_animation_counter = 0;
+    ++fire_wheel_animation_state;
+    ++fire_wheel_animation_counter;
+    if (fire_wheel_animation_counter == 60)
+        fire_wheel_animation_counter = 0;
 
-    if (actor_300e_animation_counter < 25 && actor_300e_animation_state >= 4)
-        actor_300e_animation_state = 0;
-    if (actor_300e_animation_counter >= 25 && actor_300e_animation_state >= 8)
-        actor_300e_animation_state = 4;
+    if (fire_wheel_animation_counter < 25 && fire_wheel_animation_state >= 4)
+        fire_wheel_animation_state = 0;
+    if (fire_wheel_animation_counter >= 25 && fire_wheel_animation_state >= 8)
+        fire_wheel_animation_state = 4;
 
-    for (i = 0; i < actor_300e_count; ++i) {
-        actor = &actor_300e_records[i];
+    for (i = 0; i < fire_wheel_techbot_count; ++i) {
+        actor = &fire_wheel_techbot_records[i];
         if (actor->state != 0) {
             if ((remove_world_actor_at_position(actor->world_x, actor->world_y) != 0 ||
-                 remove_world_actor_at_position(actor->world_x + 2, actor->world_y) != 0) && actor_300e_animation_counter < 25)
-                ++actor_300e_object_state_table[i];
+                 remove_world_actor_at_position(actor->world_x + 2, actor->world_y) != 0) && fire_wheel_animation_counter < 25)
+                ++fire_wheel_object_state_table[i];
 
-            if (actor_300e_object_state_table[i] == 2) {
+            if (fire_wheel_object_state_table[i] == 2) {
                 spawn_contact_flash_effect(actor->world_x + 2, actor->world_y);
                 spawn_contact_flash_effect(actor->world_x, actor->world_y);
                 spawn_pickup_object(actor->world_x + 2, actor->world_y - 128);
@@ -3863,12 +3849,12 @@ void update_actor_300e(void)
                 continue;
             }
 
-            if (actor_300e_object_state_table[i] == 1 && world_animation_phase == 0)
+            if (fire_wheel_object_state_table[i] == 1 && world_animation_phase == 0)
                 spawn_pickup_object(actor->world_x + 2, actor->world_y - 64);
 
             if (is_level_position_blocked(actor->world_x + 1, actor->world_y + 128) == 0) {
                 actor->world_y += 128;
-                draw_two_by_two_actor_sprite(actor_300e_animation_state, actor->world_x, actor->world_y);
+                draw_fire_wheel_techbot_sprite(fire_wheel_animation_state, actor->world_x, actor->world_y);
                 continue;
             }
 
@@ -3878,7 +3864,7 @@ void update_actor_300e(void)
                 } else {
                     if (world_animation_phase == 0x40 || world_animation_phase == 0)
                         --actor->world_x;
-                    draw_two_by_two_actor_sprite(actor_300e_animation_state, actor->world_x, actor->world_y);
+                    draw_fire_wheel_techbot_sprite(fire_wheel_animation_state, actor->world_x, actor->world_y);
                     continue;
                 }
             }
@@ -3888,21 +3874,20 @@ void update_actor_300e(void)
                     actor->state = 1;
                 else if (world_animation_phase == 0x40 || world_animation_phase == 0)
                     ++actor->world_x;
-                draw_two_by_two_actor_sprite(actor_300e_animation_state, actor->world_x, actor->world_y);
+                draw_fire_wheel_techbot_sprite(fire_wheel_animation_state, actor->world_x, actor->world_y);
             }
         }
     }
 }
 
-/* Updates and draws records from level-map marker 0x300F; the concrete entity identity is not
-   established by source. */
-void update_actor_300f(void)
+/* Updates or activates raygun ammunition bonus from map word 0x300F. */
+void update_ammo_box(void)
 {
     register int i;
-    struct actor_300f_record far *actor;
+    struct ammo_box_record far *actor;
 
-    for (i = 0; i < actor_300f_count; ++i) {
-        actor = &actor_300f_records[i];
+    for (i = 0; i < ammo_box_count; ++i) {
+        actor = &ammo_box_records[i];
         if (actor->active != 0) {
             if (is_world_position_outside_view(actor->world_x, actor->world_y) == 0) {
                 if (is_level_position_blocked(actor->world_x, actor->world_y + 128) == 0)
@@ -3940,20 +3925,19 @@ void update_actor_300f(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3010; the concrete entity identity is not
-   established by source. */
-void update_actor_3010(void)
+/* Updates or activates robot techbot from map word 0x3010. */
+void update_robot_techbot(void)
 {
     register int i;
-    struct actor_3010_record far *actor;
+    struct robot_techbot_record far *actor;
     char removed_actor_state;
 
-    actor_3010_sprite_offset += 0xa0;
-    if (actor_3010_sprite_offset == 0x1e0)
-        actor_3010_sprite_offset = 0;
+    robot_techbot_sprite_offset += 0xa0;
+    if (robot_techbot_sprite_offset == 0x1e0)
+        robot_techbot_sprite_offset = 0;
 
-    for (i = 0; i < actor_3010_count; i++) {
-        actor = &actor_3010_records[i];
+    for (i = 0; i < robot_techbot_count; i++) {
+        actor = &robot_techbot_records[i];
         if (actor->state == 0)
             continue;
         if (is_world_position_outside_view(actor->world_x, actor->world_y) != 0)
@@ -3974,22 +3958,22 @@ void update_actor_3010(void)
             if (test_level_tile_special_state(actor->world_x - 1, actor->world_y) != 0 ||
                 test_level_tile_special_state(actor->world_x - 1, actor->world_y + 128) == 0) {
                 actor->state = 2;
-            } else if (actor_3010_sprite_offset == 0) {
+            } else if (robot_techbot_sprite_offset == 0) {
                 --actor->world_x;
             }
             if (is_world_position_outside_view(actor->world_x, actor->world_y) == 0)
-                blit_planar_sprite_rows(sprite_graphics_buffer + actor_3010_sprite_offset + 0x3200,
+                blit_planar_sprite_rows(sprite_graphics_buffer + robot_techbot_sprite_offset + 0x3200,
                                         actor->world_x - level_scroll_x,
                                         ((actor->world_y - level_map_y_offset) >> 3) + 16);
         } else if (actor->state == 2) {
             if (test_level_tile_special_state(actor->world_x + 2, actor->world_y) != 0 ||
                 test_level_tile_special_state(actor->world_x + 2, actor->world_y + 128) == 0) {
                 actor->state = 1;
-            } else if (actor_3010_sprite_offset == 0) {
+            } else if (robot_techbot_sprite_offset == 0) {
                 ++actor->world_x;
             }
             if (is_world_position_outside_view(actor->world_x, actor->world_y) == 0)
-                blit_planar_sprite_rows(sprite_graphics_buffer + actor_3010_sprite_offset + 0x3200,
+                blit_planar_sprite_rows(sprite_graphics_buffer + robot_techbot_sprite_offset + 0x3200,
                                         actor->world_x - level_scroll_x,
                                         ((actor->world_y - level_map_y_offset) >> 3) + 16);
         } else if (actor->state >= 3) {
@@ -4105,15 +4089,14 @@ void handle_door_and_key_interaction(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3012; the concrete entity identity is not
-   established by source. */
-void update_actor_3012(void)
+/* Updates or activates dynamite bonus from map word 0x3012. */
+void update_dynamite_box(void)
 {
     register int i;
-    struct actor_3012_record far *actor;
+    struct dynamite_box_record far *actor;
 
-    for (i = 0; i < actor_3012_count; ++i) {
-        actor = &actor_3012_records[i];
+    for (i = 0; i < dynamite_box_count; ++i) {
+        actor = &dynamite_box_records[i];
         if (actor->state != 0) {
             if (is_level_position_blocked(actor->world_x, actor->world_y + 128) == 0)
                 actor->world_y += 128;
@@ -4226,9 +4209,8 @@ void update_actor_3012(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3013; the concrete entity identity is not
-   established by source. */
-void update_actor_3013(void)
+/* Updates or activates snake techbots from map word 0x3013. */
+void update_snake_techbot(void)
 {
     register int i;
     register int all_inactive;
@@ -4244,7 +4226,7 @@ void update_actor_3013(void)
         if (all_inactive != 0) {
             formation_update_enabled = 0;
             add_and_draw_player_score(10000L);
-            actor_3013_formation_state = 1;
+            snake_techbot_formation_state = 1;
             return;
         }
     } else {
@@ -4256,7 +4238,7 @@ void update_actor_3013(void)
 
     for (i = 1; i < 10; ++i) {
         if (is_world_position_outside_view(formation_object_x_positions[i], formation_object_y_positions[i]) == 0 && formation_object_active_flags[i] != 0) {
-            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3013_sprite_offset + 0x4b00,
+            blit_planar_sprite_rows(sprite_graphics_buffer + snake_techbot_sprite_offset + 0x4b00,
                                     formation_object_x_positions[i] - level_scroll_x,
                                     ((formation_object_y_positions[i] - level_map_y_offset) >> 3) + 16);
             if (test_player_overlap_with_object(formation_object_x_positions[i], formation_object_y_positions[i]) != 0)
@@ -4264,9 +4246,9 @@ void update_actor_3013(void)
         }
 
         if (world_animation_phase != 0)
-            actor_3013_sprite_offset += 0xa0;
-        if (actor_3013_sprite_offset == 0x460)
-            actor_3013_sprite_offset = 0;
+            snake_techbot_sprite_offset += 0xa0;
+        if (snake_techbot_sprite_offset == 0x460)
+            snake_techbot_sprite_offset = 0;
         if (formation_object_active_flags[i] != 0 &&
             remove_world_actor_at_position(formation_object_x_positions[i], formation_object_y_positions[i] - 128) != 0) {
             spawn_moving_actor(3, formation_object_x_positions[i], formation_object_y_positions[i]);
@@ -4282,43 +4264,41 @@ void update_actor_3013(void)
         formation_active_object_count = 0;
 }
 
-/* Updates and draws records from level-map marker 0x3014; the concrete entity identity is not
-   established by source. */
-void update_actor_3014(void)
+/* Updates or activates shimmering water effect from map word 0x3014. */
+void update_water_shimmer(void)
 {
     register int i;
-    struct actor_3014_record far *actor;
+    struct water_shimmer_record far *actor;
 
     /* Select VGA graphics-controller register 5 with value 1. */
     outport(0x3ce, 0x105);
-    actor_3014_sprite_offset += 40;
-    if (actor_3014_sprite_offset > 40)
-        actor_3014_sprite_offset = 0;
-    for (i = 0; i < actor_3014_count; ++i) {
-        actor = &actor_3014_records[i];
+    water_shimmer_sprite_offset += 40;
+    if (water_shimmer_sprite_offset > 40)
+        water_shimmer_sprite_offset = 0;
+    for (i = 0; i < water_shimmer_count; ++i) {
+        actor = &water_shimmer_records[i];
         if (is_world_position_outside_view(actor->world_x, actor->world_y) == 0)
             copy_planar_video_region(actor->world_x - level_scroll_x,
                                      ((actor->world_y - level_map_y_offset) >> 3) + 16,
-                                     actor_3014_sprite_offset);
+                                     water_shimmer_sprite_offset);
     }
 }
 
-/* Updates and draws records from level-map marker 0x3015; the concrete entity identity is not
-   established by source. */
-void update_actor_3015(void)
+/* Updates or activates soda-can bonus box from map word 0x3015. */
+void update_soda_can_bonus(void)
 {
     register int i;
-    struct actor_3015_record far *actor;
+    struct soda_can_bonus_record far *actor;
 
     if (world_animation_phase == 0)
-        actor_3015_sprite_offset += 0xa0;
+        soda_can_bonus_sprite_offset += 0xa0;
 
-    if (actor_3015_sprite_offset == 0x280)
-        actor_3015_sprite_offset = 0;
+    if (soda_can_bonus_sprite_offset == 0x280)
+        soda_can_bonus_sprite_offset = 0;
     i = 0;
 
-    for (; i < actor_3015_count; ++i) {
-        actor = &actor_3015_records[i];
+    for (; i < soda_can_bonus_count; ++i) {
+        actor = &soda_can_bonus_records[i];
 
         if (actor->state >= 3 && is_world_position_outside_view(actor->world_x, actor->world_y))
             actor->state = 0;
@@ -4385,32 +4365,31 @@ void update_actor_3015(void)
                                     actor->world_x - level_scroll_x,
                                     ((actor->world_y - level_map_y_offset) >> 3) + 16);
         if (actor->state == 2)
-            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3015_sprite_offset + 0x5000,
+            blit_planar_sprite_rows(sprite_graphics_buffer + soda_can_bonus_sprite_offset + 0x5000,
                                     actor->world_x - level_scroll_x,
                                     ((actor->world_y - level_map_y_offset) >> 3) + 16);
         if (actor->state >= 3)
-            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3015_sprite_offset + 0x5280,
+            blit_planar_sprite_rows(sprite_graphics_buffer + soda_can_bonus_sprite_offset + 0x5280,
                                     actor->world_x - level_scroll_x,
                                     ((actor->world_y - level_map_y_offset) >> 3) + 16);
     }
 }
 
-/* Updates and draws records from level-map marker 0x3016; the concrete entity identity is not
-   established by source. */
-void update_actor_3016(void)
+/* Updates or activates right-facing wallcrawler from map word 0x3016. */
+void update_wallcrawler(void)
 {
     register int i;
-    struct actor_3016_record far *actor_record;
+    struct wallcrawler_record far *actor_record;
 
-    actor_3016_upper_sprite_offset += 0xa0;
-    actor_3016_lower_sprite_offset -= 0xa0;
-    if (actor_3016_lower_sprite_offset == -0xa0)
-        actor_3016_lower_sprite_offset = 0x1e0;
-    if (actor_3016_upper_sprite_offset == 0x280)
-        actor_3016_upper_sprite_offset = 0;
+    wallcrawler_upper_sprite_offset += 0xa0;
+    wallcrawler_lower_sprite_offset -= 0xa0;
+    if (wallcrawler_lower_sprite_offset == -0xa0)
+        wallcrawler_lower_sprite_offset = 0x1e0;
+    if (wallcrawler_upper_sprite_offset == 0x280)
+        wallcrawler_upper_sprite_offset = 0;
 
-    for (i = 0; i < actor_3016_count; ++i) {
-        actor_record = &actor_3016_records[i];
+    for (i = 0; i < wallcrawler_count; ++i) {
+        actor_record = &wallcrawler_records[i];
         if (actor_record->state == 0)
             continue;
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y) != 0)
@@ -4418,7 +4397,7 @@ void update_actor_3016(void)
 
         if (actor_record->state == 1) {
             actor_record->world_y -= 8;
-            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_upper_sprite_offset + 0x5500,
+            blit_planar_sprite_rows(sprite_graphics_buffer + wallcrawler_upper_sprite_offset + 0x5500,
                                     actor_record->world_x - level_scroll_x,
                                     ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
             if (is_level_position_blocked(actor_record->world_x - 2, actor_record->world_y) == 0 ||
@@ -4426,7 +4405,7 @@ void update_actor_3016(void)
                 actor_record->state = 2;
         } else if (actor_record->state == 2) {
             actor_record->world_y += 8;
-            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_lower_sprite_offset + 0x5500,
+            blit_planar_sprite_rows(sprite_graphics_buffer + wallcrawler_lower_sprite_offset + 0x5500,
                                     actor_record->world_x - level_scroll_x,
                                     ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
             if (is_level_position_blocked(actor_record->world_x - 2, actor_record->world_y + 128) == 0 ||
@@ -4434,7 +4413,7 @@ void update_actor_3016(void)
                 actor_record->state = 1;
         } else if (actor_record->state == 3) {
             actor_record->world_y -= 8;
-            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_upper_sprite_offset + 0x5780,
+            blit_planar_sprite_rows(sprite_graphics_buffer + wallcrawler_upper_sprite_offset + 0x5780,
                                     actor_record->world_x - level_scroll_x,
                                     ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
             if (is_level_position_blocked(actor_record->world_x + 2, actor_record->world_y) == 0 ||
@@ -4442,7 +4421,7 @@ void update_actor_3016(void)
                 actor_record->state = 4;
         } else if (actor_record->state == 4) {
             actor_record->world_y += 8;
-            blit_planar_sprite_rows(sprite_graphics_buffer + actor_3016_lower_sprite_offset + 0x5780,
+            blit_planar_sprite_rows(sprite_graphics_buffer + wallcrawler_lower_sprite_offset + 0x5780,
                                     actor_record->world_x - level_scroll_x,
                                     ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
             if (is_level_position_blocked(actor_record->world_x + 2, actor_record->world_y + 128) == 0 ||
@@ -4462,15 +4441,14 @@ void update_actor_3016(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3018; the concrete entity identity is not
-   established by source. */
-void update_actor_3018(void)
+/* Updates or activates turkey drumstick bonus box from map word 0x3018. */
+void update_turkey_bonus(void)
 {
     register int i;
-    struct actor_3018_record far *actor_record;
+    struct turkey_bonus_record far *actor_record;
 
-    for (i = 0; i < actor_3018_count; i++) {
-        actor_record = &actor_3018_records[i];
+    for (i = 0; i < turkey_bonus_count; i++) {
+        actor_record = &turkey_bonus_records[i];
         if (actor_record->state == 0)
             continue;
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y) != 0)
@@ -4534,58 +4512,56 @@ void update_actor_3018(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3019; the concrete entity identity is not
-   established by source. */
-void update_actor_3019(void)
+/* Updates or activates collapsing bridge from map word 0x3019. */
+void update_collapsing_bridge(void)
 {
     register int tile_column;
 
-    if (actor_3019_enabled == 0)
+    if (collapsing_bridge_enabled == 0)
         return;
-    if (test_player_vertical_range(actor_3019_world_x - 2, actor_3019_world_x + actor_3019_width, actor_3019_world_y - 32) != 0) {
-        if (actor_3019_animation_state == 2) {
-            for (tile_column = 0; tile_column < (actor_3019_width >> 1); tile_column++) {
+    if (test_player_vertical_range(collapsing_bridge_world_x - 2, collapsing_bridge_world_x + collapsing_bridge_width, collapsing_bridge_world_y - 32) != 0) {
+        if (weak_bridge_animation_state == 2) {
+            for (tile_column = 0; tile_column < (collapsing_bridge_width >> 1); tile_column++) {
                 /* The row stride is 128 words; keep this pointer form for the match. */
-                *((level_tile_map + actor_3019_screen_x + tile_column) + (actor_3019_map_row << 7) - 2) =
-                    *((level_tile_map + actor_3019_screen_x + tile_column) + (actor_3019_map_row << 7) - 130);
+                *((level_tile_map + collapsing_bridge_screen_x + tile_column) + (collapsing_bridge_map_row << 7) - 2) =
+                    *((level_tile_map + collapsing_bridge_screen_x + tile_column) + (collapsing_bridge_map_row << 7) - 130);
                 if (tile_column % 2 != 0)
-                    spawn_contact_flash_effect(actor_3019_world_x * 2 + tile_column * 2, actor_3019_world_y);
+                    spawn_contact_flash_effect(collapsing_bridge_world_x * 2 + tile_column * 2, collapsing_bridge_world_y);
                 else
-                    spawn_moving_actor(1, actor_3019_world_x * 2 + tile_column * 2, actor_3019_world_y);
+                    spawn_moving_actor(1, collapsing_bridge_world_x * 2 + tile_column * 2, collapsing_bridge_world_y);
             }
-            actor_3019_enabled = 0;
-            actor_3019_animation_state = 0;
-            actor_3019_animation_state = 1;
+            collapsing_bridge_enabled = 0;
+            weak_bridge_animation_state = 0;
+            weak_bridge_animation_state = 1;
             return;
         }
-        actor_3019_animation_state = 1;
+        weak_bridge_animation_state = 1;
         return;
     }
-    if (actor_3019_animation_state == 1)
-        actor_3019_animation_state = 2;
+    if (weak_bridge_animation_state == 1)
+        weak_bridge_animation_state = 2;
 }
 
-/* Updates and draws records from level-map marker 0x301A; the concrete entity identity is not
-   established by source. */
-void update_actor_301a(void)
+/* Updates or activates horizontal blue force field from map word 0x301A. */
+void update_horizontal_force_field(void)
 {
     register int i;
-    struct actor_301a_record far *p;
+    struct horizontal_force_field_record far *p;
 
-    actor_301a_sprite_offset += 0xa0;
-    if (actor_301a_sprite_offset == 0x280)
-        actor_301a_sprite_offset = 0;
+    h_force_field_sprite_offset += 0xa0;
+    if (h_force_field_sprite_offset == 0x280)
+        h_force_field_sprite_offset = 0;
 
-    for (i = 0; i < actor_301a_count; ++i) {
-        p = &actor_301a_records[i];
+    for (i = 0; i < horizontal_force_field_count; ++i) {
+        p = &horizontal_force_field_records[i];
         if (p->active != 0 && is_world_position_outside_view(p->world_x, p->world_y) == 0) {
             if (test_player_overlap_with_object(p->world_x, p->world_y) != 0) {
-                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_301a_sprite_offset + 0x21c0,
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + h_force_field_sprite_offset + 0x21c0,
                                         p->world_x - level_scroll_x,
                                         ((p->world_y - level_map_y_offset) >> 3) + 16);
                 active_sprite_draw_flag = 1;
             } else {
-                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_301a_sprite_offset + 0x1f40,
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + h_force_field_sprite_offset + 0x1f40,
                                         p->world_x - level_scroll_x,
                                         ((p->world_y - level_map_y_offset) >> 3) + 16);
             }
@@ -4595,8 +4571,8 @@ void update_actor_301a(void)
     }
 }
 
-/* Draws two vertically stacked sprite cells for an actor. */
-void pascal draw_two_tile_tall_actor_sprite(int row, int horizontal, int vertical)
+/* Draws the rotating fan sprite for map words 0x301B and 0x301C. */
+void pascal draw_rotating_fan_sprite(int row, int horizontal, int vertical)
 {
     register int index = row * 0x140 + 0x6180;
 
@@ -4608,15 +4584,14 @@ void pascal draw_two_tile_tall_actor_sprite(int row, int horizontal, int vertica
                                 ((vertical - level_map_y_offset) >> 3) + 16);
 }
 
-/* Updates and draws records from level-map marker 0x301B; the concrete entity identity is not
-   established by source. */
-void update_actor_301b(void)
+/* Updates or activates left-blowing rotating fan from map word 0x301B. */
+void update_rotating_fan(void)
 {
     register int i;
-    struct actor_301b_record far *p;
+    struct rotating_fan_record far *p;
 
-    for (i = 0; i < actor_301b_count; i++) {
-        p = &actor_301b_records[i];
+    for (i = 0; i < rotating_fan_count; i++) {
+        p = &rotating_fan_records[i];
         if (p->state != 0 &&
             (p->state <= 3 || p->state == 5 || p->state == 9 ||
              p->state == 15 || p->state == 25))
@@ -4642,7 +4617,7 @@ void update_actor_301b(void)
             p->state++;
         if (p->state == 26)
             p->state = 0;
-        draw_two_tile_tall_actor_sprite(p->animation_count, p->world_x, p->world_y);
+        draw_rotating_fan_sprite(p->animation_count, p->world_x, p->world_y);
 
         if (p->state == 1) {
             if (test_player_overlap_with_object(p->world_x - 2, p->world_y - 64) ||
@@ -4664,15 +4639,14 @@ void update_actor_301b(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x301D; the concrete entity identity is not
-   established by source. */
-void update_actor_301d(void)
+/* Updates or activates football bonus box from map word 0x301D. */
+void update_football_box(void)
 {
     register int i;
-    struct actor_301d_record far *p;
+    struct football_box_record far *p;
 
-    for (i = 0; i < actor_301d_count; i++) {
-        p = &actor_301d_records[i];
+    for (i = 0; i < football_box_count; i++) {
+        p = &football_box_records[i];
         if (p->active != 0) {
             if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
                 if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
@@ -4706,15 +4680,14 @@ void update_actor_301d(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x301E; the concrete entity identity is not
-   established by source. */
-void update_actor_301e(void)
+/* Updates or activates joystick bonus box from map word 0x301E. */
+void update_joystick_box(void)
 {
     register int i;
-    struct actor_301e_record far *p;
+    struct joystick_box_record far *p;
 
-    for (i = 0; i < actor_301e_count; ++i) {
-        p = &actor_301e_records[i];
+    for (i = 0; i < joystick_box_count; ++i) {
+        p = &joystick_box_records[i];
         if (p->state == 0)
             continue;
         if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
@@ -4747,15 +4720,14 @@ void update_actor_301e(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x301F; the concrete entity identity is not
-   established by source. */
-void update_actor_301f(void)
+/* Updates or activates dn floppy bonus box from map word 0x301F. */
+void update_floppy_disk_box(void)
 {
     register int i;
-    struct actor_301f_record far *p;
+    struct floppy_disk_box_record far *p;
 
-    for (i = 0; i < actor_301f_count; ++i) {
-        p = &actor_301f_records[i];
+    for (i = 0; i < floppy_disk_box_count; ++i) {
+        p = &floppy_disk_box_records[i];
         if (p->state == 0)
             continue;
         if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
@@ -4788,19 +4760,18 @@ void update_actor_301f(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3021; the concrete entity identity is not
-   established by source. */
-void update_actor_3021(void)
+/* Updates or activates vertical force field from map word 0x3021. */
+void update_vertical_force_field(void)
 {
     register int i;
-    struct actor_3021_record far *actor_record;
+    struct vertical_force_field_record far *actor_record;
 
-    actor_3021_sprite_offset += 0xa0;
-    if (actor_3021_sprite_offset == 0x280)
-        actor_3021_sprite_offset = 0;
-    for (i = 0; i < actor_3021_count; ++i) {
-        actor_record = &actor_3021_records[i];
-        if (actor_record[1].world_x == 0) /* Keep this next-actor_302a_record access form for the match. */
+    v_force_field_sprite_offset += 0xa0;
+    if (v_force_field_sprite_offset == 0x280)
+        v_force_field_sprite_offset = 0;
+    for (i = 0; i < vertical_force_field_count; ++i) {
+        actor_record = &vertical_force_field_records[i];
+        if (actor_record[1].world_x == 0) /* Keep this next-falling_sign_record access form for the match. */
             continue;
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y) != 0)
             continue;
@@ -4811,7 +4782,7 @@ void update_actor_3021(void)
         if (test_player_overlap_with_object(actor_record->world_x - 1, actor_record->world_y) != 0 &&
             control_right_pressed != 0 && test_player_floor_clearance() != 0)
             --player_screen_x;
-        blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3021_sprite_offset + 0x28a0,
+        blit_planar_sprite_rows(sprite_pixel_data_pointer + v_force_field_sprite_offset + 0x28a0,
                                 actor_record->world_x - level_scroll_x,
                                 ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
         if (world_animation_phase == 0)
@@ -4819,8 +4790,8 @@ void update_actor_3021(void)
     }
 }
 
-/* Draws a four-cell-wide actor row and marks player contact in its center cells. */
-void pascal draw_four_wide_actor_sprite(int frame, int x, int y)
+/* Draws a four-cell Helicopter Techbot row from map word 0x3022. */
+void pascal draw_helicopter_quad_sprite(int frame, int x, int y)
 {
     register int offset;
 
@@ -4849,8 +4820,8 @@ void pascal draw_four_wide_actor_sprite(int frame, int x, int y)
         active_sprite_draw_flag = 1;
 }
 
-/* Draws the wide actor sprite using the active page and graphics resources. */
-void pascal draw_wide_actor_sprite(int frame, int x, int y)
+/* Draws a wide Helicopter Techbot row from map word 0x3022. */
+void pascal draw_helicopter_wide_sprite(int frame, int x, int y)
 {
     register int offset;
 
@@ -4867,16 +4838,15 @@ void pascal draw_wide_actor_sprite(int frame, int x, int y)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3022; the concrete entity identity is not
-   established by source. */
-void update_actor_3022(void)
+/* Updates or activates helicopter techbot from map word 0x3022. */
+void update_helicopter_techbot(void)
 {
     register int i;
-    struct actor_3022_record far *actor_record;
+    struct helicopter_techbot_record far *actor_record;
 
-    actor_3022_animation_phase = !actor_3022_animation_phase;
-    for (i = 0; i < actor_3022_count; i++) {
-        actor_record = &actor_3022_records[i];
+    helicopter_animation_phase = !helicopter_animation_phase;
+    for (i = 0; i < helicopter_techbot_count; i++) {
+        actor_record = &helicopter_techbot_records[i];
         if (actor_record->movement_state == 0)
             continue;
 
@@ -4959,30 +4929,29 @@ void update_actor_3022(void)
 
         switch (actor_record->movement_state) {
         case 2:
-            draw_wide_actor_sprite(actor_3022_animation_phase, actor_record->world_x, actor_record->world_y - 128);
-            draw_four_wide_actor_sprite(0, actor_record->world_x, actor_record->world_y);
+            draw_helicopter_wide_sprite(helicopter_animation_phase, actor_record->world_x, actor_record->world_y - 128);
+            draw_helicopter_quad_sprite(0, actor_record->world_x, actor_record->world_y);
             break;
         case 1:
-            draw_wide_actor_sprite(actor_3022_animation_phase + 2, actor_record->world_x, actor_record->world_y - 128);
-            draw_four_wide_actor_sprite(1, actor_record->world_x, actor_record->world_y);
+            draw_helicopter_wide_sprite(helicopter_animation_phase + 2, actor_record->world_x, actor_record->world_y - 128);
+            draw_helicopter_quad_sprite(1, actor_record->world_x, actor_record->world_y);
             break;
         case 3:
-            draw_wide_actor_sprite(actor_3022_animation_phase + 4, actor_record->world_x, actor_record->world_y - 128);
-            draw_four_wide_actor_sprite(2, actor_record->world_x, actor_record->world_y);
+            draw_helicopter_wide_sprite(helicopter_animation_phase + 4, actor_record->world_x, actor_record->world_y - 128);
+            draw_helicopter_quad_sprite(2, actor_record->world_x, actor_record->world_y);
             break;
         }
     }
 }
 
-/* Updates and draws records from level-map marker 0x3023; the concrete entity identity is not
-   established by source. */
-void update_actor_3023(void)
+/* Updates or activates balloon bonus box from map word 0x3023. */
+void update_balloon_bonus(void)
 {
     register int i;
-    struct actor_3023_record far *actor_record;
+    struct balloon_bonus_record far *actor_record;
 
-    for (i = 0; i < actor_3023_count; i++) {
-        actor_record = &actor_3023_records[i];
+    for (i = 0; i < balloon_bonus_count; i++) {
+        actor_record = &balloon_bonus_records[i];
         if (actor_record->state == 0)
             continue;
 
@@ -5006,9 +4975,9 @@ void update_actor_3023(void)
         }
 
         if (world_animation_phase == 0)
-            actor_3023_sprite_offset += 0xa0;
-        if (actor_3023_sprite_offset == 0x1e0)
-            actor_3023_sprite_offset = 0;
+            balloon_bonus_sprite_offset += 0xa0;
+        if (balloon_bonus_sprite_offset == 0x1e0)
+            balloon_bonus_sprite_offset = 0;
 
         if (is_level_position_blocked(actor_record->world_x, actor_record->world_y - 128) == 0)
             actor_record->world_y -= 8;
@@ -5026,7 +4995,7 @@ void update_actor_3023(void)
                                     actor_record->world_x - level_scroll_x,
                                     (actor_record->world_y - level_map_y_offset) >> 3);
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y) == 0)
-            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3023_sprite_offset + 0x2bc0,
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + balloon_bonus_sprite_offset + 0x2bc0,
                                     actor_record->world_x - level_scroll_x,
                                     ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
         if (test_player_overlap_with_object(actor_record->world_x, actor_record->world_y) != 0) {
@@ -5038,16 +5007,15 @@ void update_actor_3023(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3024; the concrete entity identity is not
-   established by source. */
-void update_actor_3024(void)
+/* Updates or activates security camera from map word 0x3024. */
+void update_security_camera(void)
 {
     register int i;
-    struct actor_3024_record far *actor_record;
+    struct security_camera_record far *actor_record;
 
     level_play_state = 1;
-    for (i = 0; i < actor_3024_count; ++i) {
-        actor_record = &actor_3024_records[i];
+    for (i = 0; i < security_camera_count; ++i) {
+        actor_record = &security_camera_records[i];
         if (actor_record->state == 0)
             continue;
 
@@ -5085,7 +5053,7 @@ void draw_animated_level_tile(void)
     register unsigned int i;
     struct animated_level_tile_record far *p;
 
-    for (i = 0; i < actor_3025_count; ++i) {
+    for (i = 0; i < animated_level_tile_count; ++i) {
         p = &animated_level_tile_records[i];
         if (is_world_position_outside_view(p->world_x, p->world_y) == 0)
             blit_planar_sprite_rows(sprite_graphics_buffer + p->sprite_resource_offset,
@@ -5094,19 +5062,18 @@ void draw_animated_level_tile(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3029; the concrete entity identity is not
-   established by source. */
-void update_actor_3029(void)
+/* Updates or activates nuclear molecule bonus box from map word 0x3029. */
+void update_molecule_bonus_box(void)
 {
     register unsigned int actor_index;
-    struct actor_3029_record far *actor_record;
+    struct molecule_bonus_box_record far *actor_record;
 
-    actor_3024_sprite_offset += 0xa0;
-    if (actor_3024_sprite_offset == 0x5a0)
-        actor_3024_sprite_offset = 0;
+    security_camera_sprite_offset += 0xa0;
+    if (security_camera_sprite_offset == 0x5a0)
+        security_camera_sprite_offset = 0;
 
-    for (actor_index = 0; actor_index < actor_3029_count; ++actor_index) {
-        actor_record = &actor_3029_records[actor_index];
+    for (actor_index = 0; actor_index < molecule_bonus_box_count; ++actor_index) {
+        actor_record = &molecule_bonus_box_records[actor_index];
         if (actor_record->state == 0)
             continue;
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y) != 0)
@@ -5144,26 +5111,25 @@ void update_actor_3029(void)
                                     actor_record->world_x - level_scroll_x,
                                     ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
         } else {
-            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3024_sprite_offset + 0x2e40,
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + security_camera_sprite_offset + 0x2e40,
                                     actor_record->world_x - level_scroll_x,
                                     ((actor_record->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-/* Updates and draws records from level-map marker 0x302A; the concrete entity identity is not
-   established by source. */
-void update_actor_302a(void)
+/* Updates or activates falling acme sign from map word 0x302A. */
+void update_falling_sign(void)
 {
-    struct actor_302a_record far *p;
+    struct falling_sign_record far *p;
     register int i;
 
-    actor_302a_update_state = 1;
-    for (i = 0; i < actor_302a_count; ++i) {
-        p = &actor_302a_records[i];
+    falling_sign_update_state = 1;
+    for (i = 0; i < falling_sign_count; ++i) {
+        p = &falling_sign_records[i];
         if (p->state == 0)
             continue;
-        actor_302a_update_state = 0;
+        falling_sign_update_state = 0;
         if (is_world_position_outside_view(p->world_x, p->world_y) && is_world_position_outside_view(p->world_x, p->world_y)) {
             if (p->state > 15) {
                 p->state = 0;
@@ -5231,82 +5197,81 @@ void update_actor_302a(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x302B; the concrete entity identity is not
-   established by source. */
-void update_actor_302b(void)
+/* Updates or activates blue reactor hazard from map word 0x302B. */
+void update_reactor(void)
 {
     register int i;
     register int event;
 
     event = 0;
-    actor_3029_sprite_offset += 0xa0;
-    if (actor_3029_sprite_offset == 0x320)
-        actor_3029_sprite_offset = 0;
-    if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y) != 0) {
-        if (actor_302b_open_state < 2)
+    molecule_box_sprite_offset += 0xa0;
+    if (molecule_box_sprite_offset == 0x320)
+        molecule_box_sprite_offset = 0;
+    if (is_world_position_outside_view(reactor_world_x, reactor_world_y) != 0) {
+        if (reactor_open_state < 2)
             return;
-        actor_302b_open_state = 0;
-        for (i = 0; i < actor_301a_count; ++i)
-            actor_301a_records[i].active = 0;
+        reactor_open_state = 0;
+        for (i = 0; i < horizontal_force_field_count; ++i)
+            horizontal_force_field_records[i].active = 0;
         return;
     }
 
-    if (actor_302b_active_state != 0 && actor_302b_open_state == 0)
+    if (reactor_active_state != 0 && reactor_open_state == 0)
         return;
 
-    if (remove_world_actor_at_position(actor_302b_world_x, actor_302b_world_y) != 0) {
-        --actor_302b_animation_counter;
-        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y);
-        if (actor_302b_animation_counter == 0)
-            actor_302b_active_state = 1;
+    if (remove_world_actor_at_position(reactor_world_x, reactor_world_y) != 0) {
+        --reactor_animation_counter;
+        spawn_contact_flash_effect(reactor_world_x, reactor_world_y);
+        if (reactor_animation_counter == 0)
+            reactor_active_state = 1;
         event = 1;
         request_priority_sound_effect(10);
     }
-    if (remove_world_actor_at_position(actor_302b_world_x, actor_302b_world_y - 128) != 0) {
-        --actor_302b_animation_counter;
-        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y - 128);
-        if (actor_302b_animation_counter == 0)
-            actor_302b_active_state = 1;
+    if (remove_world_actor_at_position(reactor_world_x, reactor_world_y - 128) != 0) {
+        --reactor_animation_counter;
+        spawn_contact_flash_effect(reactor_world_x, reactor_world_y - 128);
+        if (reactor_animation_counter == 0)
+            reactor_active_state = 1;
         event = 1;
         request_priority_sound_effect(10);
     }
-    if (remove_world_actor_at_position(actor_302b_world_x, actor_302b_world_y - 256) != 0) {
-        --actor_302b_animation_counter;
-        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y - 256);
-        if (actor_302b_animation_counter == 0)
-            actor_302b_active_state = 1;
+    if (remove_world_actor_at_position(reactor_world_x, reactor_world_y - 256) != 0) {
+        --reactor_animation_counter;
+        spawn_contact_flash_effect(reactor_world_x, reactor_world_y - 256);
+        if (reactor_animation_counter == 0)
+            reactor_active_state = 1;
         event = 1;
         request_priority_sound_effect(10);
     }
 
-    if (actor_302b_active_state == 0) {
+    if (reactor_active_state == 0) {
         request_priority_sound_effect(36);
         if (event == 0) {
-            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3029_sprite_offset + 0x3840,
-                                    actor_302b_world_x - level_scroll_x,
-                                    ((actor_302b_world_y - level_map_y_offset) >> 3) + 16);
-            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 128) == 0)
-                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3029_sprite_offset + 0x3840,
-                                        actor_302b_world_x - level_scroll_x,
-                                        (actor_302b_world_y - level_map_y_offset) >> 3);
-            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 256) == 0)
-                blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_3029_sprite_offset + 0x3840,
-                                        actor_302b_world_x - level_scroll_x,
-                                        ((actor_302b_world_y - level_map_y_offset) >> 3) - 16);
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + molecule_box_sprite_offset + 0x3840,
+                                    reactor_world_x - level_scroll_x,
+                                    ((reactor_world_y - level_map_y_offset) >> 3) + 16);
+            if (is_world_position_outside_view(reactor_world_x, reactor_world_y - 128) == 0)
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + molecule_box_sprite_offset + 0x3840,
+                                        reactor_world_x - level_scroll_x,
+                                        (reactor_world_y - level_map_y_offset) >> 3);
+            if (is_world_position_outside_view(reactor_world_x, reactor_world_y - 256) == 0)
+                blit_planar_sprite_rows(sprite_pixel_data_pointer + molecule_box_sprite_offset + 0x3840,
+                                        reactor_world_x - level_scroll_x,
+                                        ((reactor_world_y - level_map_y_offset) >> 3) - 16);
         } else {
             blit_planar_sprite_rows(sprite_graphics_buffer + 0x9f60,
-                                    actor_302b_world_x - level_scroll_x,
-                                    ((actor_302b_world_y - level_map_y_offset) >> 3) + 16);
-            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 128) == 0)
+                                    reactor_world_x - level_scroll_x,
+                                    ((reactor_world_y - level_map_y_offset) >> 3) + 16);
+            if (is_world_position_outside_view(reactor_world_x, reactor_world_y - 128) == 0)
                 blit_planar_sprite_rows(sprite_graphics_buffer + 0x9f60,
-                                        actor_302b_world_x - level_scroll_x,
-                                        (actor_302b_world_y - level_map_y_offset) >> 3);
-            if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 256) == 0)
+                                        reactor_world_x - level_scroll_x,
+                                        (reactor_world_y - level_map_y_offset) >> 3);
+            if (is_world_position_outside_view(reactor_world_x, reactor_world_y - 256) == 0)
                 blit_planar_sprite_rows(sprite_graphics_buffer + 0x9f60,
-                                        actor_302b_world_x - level_scroll_x,
-                                        ((actor_302b_world_y - level_map_y_offset) >> 3) - 16);
+                                        reactor_world_x - level_scroll_x,
+                                        ((reactor_world_y - level_map_y_offset) >> 3) - 16);
         }
-        if (test_player_overlap_with_object(actor_302b_world_x, actor_302b_world_y - 64) != 0) {
+        if (test_player_overlap_with_object(reactor_world_x, reactor_world_y - 64) != 0) {
             if (title_graphic_frame_index > 0) {
                 title_graphic_frame_index = 0;
                 draw_title_screen_graphic();
@@ -5316,25 +5281,25 @@ void update_actor_302b(void)
     }
 
     blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3840,
-                            actor_302b_world_x - level_scroll_x,
-                            ((actor_302b_world_y - level_map_y_offset) >> 3) + 16);
-    if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 128) == 0)
+                            reactor_world_x - level_scroll_x,
+                            ((reactor_world_y - level_map_y_offset) >> 3) + 16);
+    if (is_world_position_outside_view(reactor_world_x, reactor_world_y - 128) == 0)
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3840,
-                                actor_302b_world_x - level_scroll_x,
-                                (actor_302b_world_y - level_map_y_offset) >> 3);
-    if (is_world_position_outside_view(actor_302b_world_x, actor_302b_world_y - 256) == 0)
+                                reactor_world_x - level_scroll_x,
+                                (reactor_world_y - level_map_y_offset) >> 3);
+    if (is_world_position_outside_view(reactor_world_x, reactor_world_y - 256) == 0)
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x3840,
-                                actor_302b_world_x - level_scroll_x,
-                                ((actor_302b_world_y - level_map_y_offset) >> 3) - 16);
-    ++actor_302b_open_state;
+                                reactor_world_x - level_scroll_x,
+                                ((reactor_world_y - level_map_y_offset) >> 3) - 16);
+    ++reactor_open_state;
     if (world_animation_phase == 0)
-        spawn_pickup_object(actor_302b_world_x - 1, actor_302b_world_y);
+        spawn_pickup_object(reactor_world_x - 1, reactor_world_y);
     if (world_animation_phase == 0x40)
-        spawn_pickup_object(actor_302b_world_x + 1, actor_302b_world_y);
-    if (actor_302b_open_state == 32) {
-        actor_302b_open_state = 0;
-        for (i = 0; i < actor_301a_count; ++i)
-            actor_301a_records[i].active = 0;
+        spawn_pickup_object(reactor_world_x + 1, reactor_world_y);
+    if (reactor_open_state == 32) {
+        reactor_open_state = 0;
+        for (i = 0; i < horizontal_force_field_count; ++i)
+            horizontal_force_field_records[i].active = 0;
         add_and_draw_player_score(20000L);
         request_priority_sound_effect(17);
         return;
@@ -5342,95 +5307,94 @@ void update_actor_302b(void)
     if (world_animation_phase == 0)
         return;
 
-    switch (actor_302b_open_state) {
+    switch (reactor_open_state) {
     case 2:
-        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y);
+        spawn_moving_actor(1, reactor_world_x - 1, reactor_world_y);
         break;
     case 8:
-        spawn_moving_actor(1, actor_302b_world_x - 2, actor_302b_world_y - 128);
+        spawn_moving_actor(1, reactor_world_x - 2, reactor_world_y - 128);
         break;
     case 10:
-        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
+        spawn_moving_actor(1, reactor_world_x + 1, reactor_world_y + 256);
         break;
     case 13:
-        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y + 128);
-        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y + 384);
-        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y - 384);
-        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y);
-        spawn_moving_actor(3, actor_302b_world_x, actor_302b_world_y + 128);
+        spawn_moving_actor(1, reactor_world_x, reactor_world_y + 128);
+        spawn_moving_actor(1, reactor_world_x - 1, reactor_world_y + 384);
+        spawn_moving_actor(1, reactor_world_x, reactor_world_y - 384);
+        spawn_moving_actor(3, reactor_world_x + 2, reactor_world_y);
+        spawn_moving_actor(3, reactor_world_x, reactor_world_y + 128);
         break;
     case 15:
-        spawn_moving_actor(1, actor_302b_world_x + 2, actor_302b_world_y - 128);
+        spawn_moving_actor(1, reactor_world_x + 2, reactor_world_y - 128);
         break;
     case 17:
-        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
-        spawn_moving_actor(1, actor_302b_world_x + 2, actor_302b_world_y);
-        spawn_moving_actor(1, actor_302b_world_x - 3, actor_302b_world_y - 256);
-        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y);
+        spawn_moving_actor(1, reactor_world_x + 1, reactor_world_y + 256);
+        spawn_moving_actor(1, reactor_world_x + 2, reactor_world_y);
+        spawn_moving_actor(1, reactor_world_x - 3, reactor_world_y - 256);
+        spawn_contact_flash_effect(reactor_world_x - 1, reactor_world_y);
         break;
     case 18:
-        spawn_contact_flash_effect(actor_302b_world_x + 3, actor_302b_world_y - 256);
-        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
+        spawn_contact_flash_effect(reactor_world_x + 3, reactor_world_y - 256);
+        spawn_moving_actor(1, reactor_world_x + 1, reactor_world_y + 256);
         break;
     case 23:
-        spawn_animated_actor_sprite(actor_302b_world_x, actor_302b_world_y + 64);
-        spawn_animated_actor_sprite(actor_302b_world_x - 1, actor_302b_world_y - 64);
-        spawn_moving_actor(3, actor_302b_world_x, actor_302b_world_y + 128);
-        spawn_contact_flash_effect(actor_302b_world_x + 2, actor_302b_world_y);
-        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y + 384);
-        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y + 384);
-        spawn_moving_actor(3, actor_302b_world_x, actor_302b_world_y - 384);
-        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y - 128);
-        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
+        spawn_animated_actor_sprite(reactor_world_x, reactor_world_y + 64);
+        spawn_animated_actor_sprite(reactor_world_x - 1, reactor_world_y - 64);
+        spawn_moving_actor(3, reactor_world_x, reactor_world_y + 128);
+        spawn_contact_flash_effect(reactor_world_x + 2, reactor_world_y);
+        spawn_contact_flash_effect(reactor_world_x - 1, reactor_world_y + 384);
+        spawn_moving_actor(1, reactor_world_x - 1, reactor_world_y + 384);
+        spawn_moving_actor(3, reactor_world_x, reactor_world_y - 384);
+        spawn_moving_actor(3, reactor_world_x + 2, reactor_world_y - 128);
+        spawn_moving_actor(1, reactor_world_x + 1, reactor_world_y + 256);
         break;
     case 24:
-        spawn_contact_flash_effect(actor_302b_world_x + 1, actor_302b_world_y + 128);
-        spawn_contact_flash_effect(actor_302b_world_x - 2, actor_302b_world_y - 256);
-        spawn_moving_actor(1, actor_302b_world_x + 2, actor_302b_world_y);
-        spawn_moving_actor(3, actor_302b_world_x - 3, actor_302b_world_y - 256);
-        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y);
-        spawn_contact_flash_effect(actor_302b_world_x + 3, actor_302b_world_y - 256);
-        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y);
-        spawn_moving_actor(3, actor_302b_world_x - 2, actor_302b_world_y - 128);
-        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
+        spawn_contact_flash_effect(reactor_world_x + 1, reactor_world_y + 128);
+        spawn_contact_flash_effect(reactor_world_x - 2, reactor_world_y - 256);
+        spawn_moving_actor(1, reactor_world_x + 2, reactor_world_y);
+        spawn_moving_actor(3, reactor_world_x - 3, reactor_world_y - 256);
+        spawn_contact_flash_effect(reactor_world_x - 1, reactor_world_y);
+        spawn_contact_flash_effect(reactor_world_x + 3, reactor_world_y - 256);
+        spawn_moving_actor(1, reactor_world_x - 1, reactor_world_y);
+        spawn_moving_actor(3, reactor_world_x - 2, reactor_world_y - 128);
+        spawn_moving_actor(1, reactor_world_x + 1, reactor_world_y + 256);
         break;
     case 29:
-        spawn_animated_actor_sprite(actor_302b_world_x + 3, actor_302b_world_y - 128);
-        spawn_animated_actor_sprite(actor_302b_world_x + 2, actor_302b_world_y + 256);
-        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y + 128);
-        spawn_contact_flash_effect(actor_302b_world_x + 2, actor_302b_world_y);
-        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y + 384);
-        spawn_moving_actor(3, actor_302b_world_x - 1, actor_302b_world_y + 384);
-        spawn_moving_actor(1, actor_302b_world_x, actor_302b_world_y - 384);
-        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y - 128);
-        spawn_moving_actor(1, actor_302b_world_x + 1, actor_302b_world_y + 256);
+        spawn_animated_actor_sprite(reactor_world_x + 3, reactor_world_y - 128);
+        spawn_animated_actor_sprite(reactor_world_x + 2, reactor_world_y + 256);
+        spawn_moving_actor(1, reactor_world_x, reactor_world_y + 128);
+        spawn_contact_flash_effect(reactor_world_x + 2, reactor_world_y);
+        spawn_contact_flash_effect(reactor_world_x - 1, reactor_world_y + 384);
+        spawn_moving_actor(3, reactor_world_x - 1, reactor_world_y + 384);
+        spawn_moving_actor(1, reactor_world_x, reactor_world_y - 384);
+        spawn_moving_actor(3, reactor_world_x + 2, reactor_world_y - 128);
+        spawn_moving_actor(1, reactor_world_x + 1, reactor_world_y + 256);
         break;
     case 31:
-        spawn_animated_actor_sprite(actor_302b_world_x - 2, actor_302b_world_y - 384);
-        spawn_contact_flash_effect(actor_302b_world_x + 1, actor_302b_world_y + 128);
-        spawn_contact_flash_effect(actor_302b_world_x, actor_302b_world_y);
-        spawn_moving_actor(3, actor_302b_world_x + 2, actor_302b_world_y);
-        spawn_moving_actor(3, actor_302b_world_x - 3, actor_302b_world_y - 256);
-        spawn_contact_flash_effect(actor_302b_world_x - 1, actor_302b_world_y);
-        spawn_contact_flash_effect(actor_302b_world_x + 3, actor_302b_world_y - 256);
-        spawn_moving_actor(1, actor_302b_world_x - 1, actor_302b_world_y);
-        spawn_moving_actor(1, actor_302b_world_x - 2, actor_302b_world_y - 128);
-        spawn_moving_actor(3, actor_302b_world_x + 1, actor_302b_world_y + 256);
-        queue_ambient_sprite_animation(0x780, actor_302b_world_x - 1, actor_302b_world_y);
-        queue_ambient_sprite_animation(0x780, actor_302b_world_x + 1, actor_302b_world_y);
+        spawn_animated_actor_sprite(reactor_world_x - 2, reactor_world_y - 384);
+        spawn_contact_flash_effect(reactor_world_x + 1, reactor_world_y + 128);
+        spawn_contact_flash_effect(reactor_world_x, reactor_world_y);
+        spawn_moving_actor(3, reactor_world_x + 2, reactor_world_y);
+        spawn_moving_actor(3, reactor_world_x - 3, reactor_world_y - 256);
+        spawn_contact_flash_effect(reactor_world_x - 1, reactor_world_y);
+        spawn_contact_flash_effect(reactor_world_x + 3, reactor_world_y - 256);
+        spawn_moving_actor(1, reactor_world_x - 1, reactor_world_y);
+        spawn_moving_actor(1, reactor_world_x - 2, reactor_world_y - 128);
+        spawn_moving_actor(3, reactor_world_x + 1, reactor_world_y + 256);
+        queue_ambient_sprite_animation(0x780, reactor_world_x - 1, reactor_world_y);
+        queue_ambient_sprite_animation(0x780, reactor_world_x + 1, reactor_world_y);
         break;
     }
 }
 
-/* Updates and draws records from level-map marker 0x302C; the concrete entity identity is not
-   established by source. */
-void update_actor_302c(void)
+/* Updates or activates pop-up floor spike from map word 0x302C. */
+void update_popup_spikes(void)
 {
     register int i;
-    struct actor_302c_record far *p;
+    struct popup_spikes_record far *p;
 
-    for (i = 0; i < actor_302c_count; ++i) {
-        p = &actor_302c_records[i];
+    for (i = 0; i < popup_spikes_count; ++i) {
+        p = &popup_spikes_records[i];
         if (is_world_position_outside_view(p->world_x, p->world_y) == 0) {
             if (test_player_overlap_with_object(p->world_x, p->world_y)) {
                 active_sprite_draw_flag = 1;
@@ -5446,18 +5410,17 @@ void update_actor_302c(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x302D; the concrete entity identity is not
-   established by source. */
-void update_actor_302d(void)
+/* Updates or activates magenta flag bonus box from map word 0x302D. */
+void update_magenta_flag_box(void)
 {
     register int i;
-    struct actor_302d_record far *p;
+    struct magenta_flag_box_record far *p;
 
-    actor_302a_sprite_offset += 0xa0;
-    if (actor_302a_sprite_offset == 0x1e0)
-        actor_302a_sprite_offset = 0;
-    for (i = 0; i < actor_302d_count; i++) {
-        p = &actor_302d_records[i];
+    falling_sign_sprite_offset += 0xa0;
+    if (falling_sign_sprite_offset == 0x1e0)
+        falling_sign_sprite_offset = 0;
+    for (i = 0; i < magenta_flag_box_count; i++) {
+        p = &magenta_flag_box_records[i];
         if (p->state == 0)
             continue;
         if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
@@ -5502,26 +5465,25 @@ void update_actor_302d(void)
                                     p->world_x - level_scroll_x,
                                     ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
-            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_302a_sprite_offset + 0x3ca0,
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + falling_sign_sprite_offset + 0x3ca0,
                                     p->world_x - level_scroll_x,
                                     ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-/* Updates and draws records from level-map marker 0x302E; the concrete entity identity is not
-   established by source. */
-void update_actor_302e(void)
+/* Updates or activates radio bonus box from map word 0x302E. */
+void update_radio_box(void)
 {
     register int si;
-    struct actor_302e_record far *p;
+    struct radio_box_record far *p;
 
-    actor_302b_sprite_offset += 0xa0;
-    if (actor_302b_sprite_offset == 0x1e0)
-        actor_302b_sprite_offset = 0;
+    reactor_sprite_offset += 0xa0;
+    if (reactor_sprite_offset == 0x1e0)
+        reactor_sprite_offset = 0;
 
-    for (si = 0; si < actor_302e_count; ++si) {
-        p = &actor_302e_records[si];
+    for (si = 0; si < radio_box_count; ++si) {
+        p = &radio_box_records[si];
         if (p->state == 0)
             continue;
         if (is_world_position_outside_view(p->world_x, p->world_y) != 0)
@@ -5571,7 +5533,7 @@ void update_actor_302e(void)
                                     p->world_x - level_scroll_x,
                                     ((p->world_y - level_map_y_offset) >> 3) + 16);
         } else {
-            blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_302b_sprite_offset + 0x3fc0,
+            blit_planar_sprite_rows(sprite_pixel_data_pointer + reactor_sprite_offset + 0x3fc0,
                                     p->world_x - level_scroll_x,
                                     ((p->world_y - level_map_y_offset) >> 3) + 16);
         }
@@ -5581,9 +5543,9 @@ void update_actor_302e(void)
 /* Draws the level object animation using the active page and graphics resources. */
 void pascal draw_level_object_animation(int frame, register int x, register int y)
 {
-    ++actor_302c_animation_phase;
-    if (actor_302c_animation_phase == 3)
-        actor_302c_animation_phase = 0;
+    ++popup_spikes_animation_phase;
+    if (popup_spikes_animation_phase == 3)
+        popup_spikes_animation_phase = 0;
 
     if (is_world_position_outside_view(x, y - 256) == 0)
         blit_planar_sprite_rows(sprite_graphics_buffer + 0x8480, x - level_scroll_x,
@@ -5610,7 +5572,7 @@ void pascal draw_level_object_animation(int frame, register int x, register int 
         blit_planar_sprite_rows(sprite_graphics_buffer + 0x8980, x - level_scroll_x + 4,
                                 ((y - level_map_y_offset) >> 3) + 16);
 
-    switch (actor_302c_animation_phase) {
+    switch (popup_spikes_animation_phase) {
     case 0:
         if (is_world_position_outside_view(x + 2, y - 128) == 0)
             blit_planar_sprite_rows(sprite_graphics_buffer + 0x8700, x - level_scroll_x + 2,
@@ -5656,96 +5618,95 @@ void pascal draw_level_object_animation(int frame, register int x, register int 
     }
 }
 
-/* Activates the level object created from map marker 0x302F when its trigger condition is met. */
-void activate_actor_302f(void)
+/* Updates or activates teleporter endpoint leading to 0x3030 from map word 0x302F. */
+void activate_teleporter_entry(void)
 {
-    if (actor_302f_active_state != 0) {
-        if (actor_302f_interaction_state == 1) {
-            actor_302f_interaction_state = 0;
-            level_scroll_x = actor_3030_world_x - player_screen_x + 2;
-            level_map_y_offset = actor_3030_world_y - 768;
+    if (teleporter_entry_active_state != 0) {
+        if (tele_in_interaction_state == 1) {
+            tele_in_interaction_state = 0;
+            level_scroll_x = teleporter_exit_world_x - player_screen_x + 2;
+            level_map_y_offset = teleporter_exit_world_y - 768;
             player_sprite_draw_state = 1;
             control_up_pressed = 0;
-            actor_302f_animation_phase = 8;
-            actor_302f_interaction_phase = 0;
+            tele_in_animation_phase = 8;
+            tele_in_interaction_phase = 0;
         }
 
-        if (actor_302f_interaction_state > 1)
-            --actor_302f_interaction_state;
-        if (actor_302f_interaction_phase > 0) {
-            draw_level_object_animation(actor_302f_interaction_phase % 4, actor_302f_world_x, actor_302f_world_y);
-            --actor_302f_interaction_phase;
+        if (tele_in_interaction_state > 1)
+            --tele_in_interaction_state;
+        if (tele_in_interaction_phase > 0) {
+            draw_level_object_animation(tele_in_interaction_phase % 4, teleporter_entry_world_x, teleporter_entry_world_y);
+            --tele_in_interaction_phase;
         } else {
-            draw_level_object_animation(actor_302f_interaction_state % 4, actor_302f_world_x, actor_302f_world_y);
+            draw_level_object_animation(tele_in_interaction_state % 4, teleporter_entry_world_x, teleporter_entry_world_y);
         }
 
         if (transporter_hint_pending != 0) {
-            if (test_player_overlap_with_object(actor_302f_world_x + 2, actor_302f_world_y)) {
+            if (test_player_overlap_with_object(teleporter_entry_world_x + 2, teleporter_entry_world_y)) {
                 transporter_hint_pending = 0;
                 show_secret_tip_transporter();
             }
         }
-        if (test_player_overlap_with_object(actor_302f_world_x + 2, actor_302f_world_y)) {
-            if (control_up_pressed != 0 && actor_302f_interaction_state == 0 && control_left_pressed == 0 &&
+        if (test_player_overlap_with_object(teleporter_entry_world_x + 2, teleporter_entry_world_y)) {
+            if (control_up_pressed != 0 && tele_in_interaction_state == 0 && control_left_pressed == 0 &&
                 control_right_pressed == 0 && control_jump_pressed == 0) {
-                actor_302f_interaction_state = 8;
+                tele_in_interaction_state = 8;
                 request_priority_sound_effect(7);
             }
         }
     }
 }
 
-/* Activates the level object created from map marker 0x3030 when its trigger condition is met. */
-void activate_actor_3030(void)
+/* Updates or activates teleporter endpoint leading to 0x302f from map word 0x3030. */
+void activate_teleporter_exit(void)
 {
-    if (actor_3030_active_state == 0)
+    if (teleporter_exit_active_state == 0)
         return;
 
-    if (actor_3030_interaction_state == 1) {
-        actor_3030_interaction_state = 0;
-        level_scroll_x = actor_302f_world_x - player_screen_x + 2;
+    if (tele_out_interaction_state == 1) {
+        tele_out_interaction_state = 0;
+        level_scroll_x = teleporter_entry_world_x - player_screen_x + 2;
         /* The 16-bit wrap applies the -768-pixel camera offset. */
-        level_map_y_offset = actor_302f_world_y + 0xfd00;
+        level_map_y_offset = teleporter_entry_world_y + 0xfd00;
         player_sprite_draw_state = 1;
         control_up_pressed = 0;
-        actor_302f_interaction_phase = 8;
-        actor_302f_animation_phase = 0;
+        tele_in_interaction_phase = 8;
+        tele_in_animation_phase = 0;
     }
 
-    if (actor_3030_interaction_state > 1)
-        --actor_3030_interaction_state;
+    if (tele_out_interaction_state > 1)
+        --tele_out_interaction_state;
 
-    if (actor_302f_animation_phase > 0) {
-        draw_level_object_animation(actor_302f_animation_phase % 4, actor_3030_world_x, actor_3030_world_y);
-        --actor_302f_animation_phase;
+    if (tele_in_animation_phase > 0) {
+        draw_level_object_animation(tele_in_animation_phase % 4, teleporter_exit_world_x, teleporter_exit_world_y);
+        --tele_in_animation_phase;
     } else {
-        draw_level_object_animation(actor_3030_interaction_state % 4, actor_3030_world_x, actor_3030_world_y);
+        draw_level_object_animation(tele_out_interaction_state % 4, teleporter_exit_world_x, teleporter_exit_world_y);
     }
 
-    if (transporter_hint_pending != 0 && test_player_overlap_with_object(actor_3030_world_x + 2, actor_3030_world_y)) {
+    if (transporter_hint_pending != 0 && test_player_overlap_with_object(teleporter_exit_world_x + 2, teleporter_exit_world_y)) {
         transporter_hint_pending = 0;
         show_secret_tip_transporter();
     }
 
-    if (!test_player_overlap_with_object(actor_3030_world_x + 2, actor_3030_world_y))
+    if (!test_player_overlap_with_object(teleporter_exit_world_x + 2, teleporter_exit_world_y))
         return;
 
-    if (control_up_pressed != 0 && actor_3030_interaction_state == 0 && control_left_pressed == 0 &&
+    if (control_up_pressed != 0 && tele_out_interaction_state == 0 && control_left_pressed == 0 &&
         control_right_pressed == 0 && control_jump_pressed == 0) {
-        actor_3030_interaction_state = 8;
+        tele_out_interaction_state = 8;
         request_priority_sound_effect(7);
     }
 }
 
-/* Updates and draws records from level-map marker 0x3031; the concrete entity identity is not
-   established by source. */
-void update_actor_3031(void)
+/* Updates or activates bouncing spiky bomb from map word 0x3031. */
+void update_red_bomb(void)
 {
     register int i;
-    struct actor_3031_record far *actor_record;
+    struct red_bomb_record far *actor_record;
 
-    for (i = 0; i < actor_3031_count; ++i) {
-        actor_record = &actor_3031_records[i];
+    for (i = 0; i < red_bomb_count; ++i) {
+        actor_record = &red_bomb_records[i];
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y) == 0) {
             actor_record->world_y -= level_vertical_motion_table[actor_record->state + 6];
             ++actor_record->state;
@@ -5764,8 +5725,8 @@ void update_actor_3031(void)
     }
 }
 
-/* Advances and draws falling hazards, applying player contact and spawning their impact effect. */
-void update_falling_hazards(void)
+/* Updates the stationary spiky bomb placed by map word 0x3057. */
+void update_stationary_bomb_hazards(void)
 {
     register int i;
     struct falling_hazard_record far *p;
@@ -5790,115 +5751,113 @@ void update_falling_hazards(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3034; the concrete entity identity is not
-   established by source. */
-void update_actor_3034(void)
+/* Updates or activates access-card reader from map word 0x3034. */
+void update_access_card_reader(void)
 {
     register int i;
 
-    if (actor_3034_active_state == -1)
+    if (access_card_reader_active_state == -1)
         return;
-    if (is_world_position_outside_view(actor_3034_world_x, actor_3034_world_y) != 0)
+    if (is_world_position_outside_view(access_card_reader_world_x, access_card_reader_world_y) != 0)
         return;
 
-    if (actor_3034_active_state == 0) {
+    if (access_card_reader_active_state == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x46a0,
-                                actor_3034_world_x - level_scroll_x,
-                                ((actor_3034_world_y - level_map_y_offset) >> 3) + 16);
+                                access_card_reader_world_x - level_scroll_x,
+                                ((access_card_reader_world_y - level_map_y_offset) >> 3) + 16);
         return;
     }
 
-    actor_302d_sprite_offset += 0xa0;
-    if (actor_302d_sprite_offset == 0x500)
-        actor_302d_sprite_offset = 0;
+    magenta_flag_box_sprite_offset += 0xa0;
+    if (magenta_flag_box_sprite_offset == 0x500)
+        magenta_flag_box_sprite_offset = 0;
 
-    blit_planar_sprite_rows(sprite_pixel_data_pointer + actor_302d_sprite_offset + 0x41a0,
-                            actor_3034_world_x - level_scroll_x,
-                            ((actor_3034_world_y - level_map_y_offset) >> 3) + 16);
+    blit_planar_sprite_rows(sprite_pixel_data_pointer + magenta_flag_box_sprite_offset + 0x41a0,
+                            access_card_reader_world_x - level_scroll_x,
+                            ((access_card_reader_world_y - level_map_y_offset) >> 3) + 16);
 
-    if (test_player_overlap_with_object(actor_3034_world_x, actor_3034_world_y) != 0 && hint_revealed_object_1 != 0) {
+    if (test_player_overlap_with_object(access_card_reader_world_x, access_card_reader_world_y) != 0 && hint_revealed_object_1 != 0) {
         hint_revealed_object_1 = 0;
         show_secret_tip_access_card();
     }
 
-    if (test_player_overlap_with_object(actor_3034_world_x, actor_3034_world_y) != 0 && actor_3033_active_state != 0 && control_up_pressed != 0) {
-        for (i = 0; i < actor_3021_count; ++i)
-            (&actor_3021_records[i].world_x)[2] = 0;      /* Direct next-record indexing changes output; this clears the following actor's world_x. */
+    if (test_player_overlap_with_object(access_card_reader_world_x, access_card_reader_world_y) != 0 && access_card_box_active_state != 0 && control_up_pressed != 0) {
+        for (i = 0; i < vertical_force_field_count; ++i)
+            (&vertical_force_field_records[i].world_x)[2] = 0;      /* Direct next-record indexing changes output; this clears the following actor's world_x. */
 
-        actor_3034_active_state = 0;
+        access_card_reader_active_state = 0;
         draw_planar_sprite_frame();
         request_priority_sound_effect(31);
-        actor_3033_enabled = 0;
-        actor_3033_active_state = 0;
+        access_card_box_enabled = 0;
+        access_card_box_active_state = 0;
     }
 
-    if (test_player_overlap_with_object(actor_3034_world_x, actor_3034_world_y) != 0 &&
-        actor_3033_active_state == 0 && control_up_pressed != 0 &&
-        actor_3034_active_state != 0 && hint_revealed_object_3 != 0)
+    if (test_player_overlap_with_object(access_card_reader_world_x, access_card_reader_world_y) != 0 &&
+        access_card_box_active_state == 0 && control_up_pressed != 0 &&
+        access_card_reader_active_state != 0 && hint_revealed_object_3 != 0)
         show_secret_tip_insert_card();
 }
 
-/* Updates and draws records from level-map marker 0x3035; the concrete entity identity is not
-   established by source. */
-void update_actor_3035(void)
+/* Updates or activates robohand activation switch from map word 0x3035. */
+void update_robohand_switch(void)
 {
-    if (actor_3035_active_state == 0)
+    if (robohand_switch_active_state == 0)
         return;
 
-    if (is_world_position_outside_view(actor_3035_world_x - 2, actor_3035_world_y) == 0) {
+    if (is_world_position_outside_view(robohand_switch_world_x - 2, robohand_switch_world_y) == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4880,
-                                actor_3035_world_x - level_scroll_x - 2,
-                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
+                                robohand_switch_world_x - level_scroll_x - 2,
+                                ((robohand_switch_world_y - level_map_y_offset) >> 3) + 16);
     }
 
-    if (is_world_position_outside_view(actor_3035_world_x + 2, actor_3035_world_y) == 0) {
+    if (is_world_position_outside_view(robohand_switch_world_x + 2, robohand_switch_world_y) == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4920,
-                                actor_3035_world_x - level_scroll_x + 2,
-                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
+                                robohand_switch_world_x - level_scroll_x + 2,
+                                ((robohand_switch_world_y - level_map_y_offset) >> 3) + 16);
     }
 
-    if (is_world_position_outside_view(actor_3035_world_x, actor_3035_world_y) != 0) {
-        actor_3035_animation_state = 0;
+    if (is_world_position_outside_view(robohand_switch_world_x, robohand_switch_world_y) != 0) {
+        robohand_switch_animation_state = 0;
         return;
     }
 
-    if (test_player_overlap_with_object(actor_3035_world_x, actor_3035_world_y) != 0 && hint_revealed_object_6 != 0) {
+    if (test_player_overlap_with_object(robohand_switch_world_x, robohand_switch_world_y) != 0 && hint_revealed_object_6 != 0) {
         hint_revealed_object_6 = 0;
         show_secret_tip_robohand();
     }
 
-    if (test_player_overlap_with_object(actor_3035_world_x, actor_3035_world_y) != 0) {
-        if (control_up_pressed != 0 && actor_3035_state == 0) {
-            if (actor_3020_active_state != 0) {
-                actor_3035_state = 1;
+    if (test_player_overlap_with_object(robohand_switch_world_x, robohand_switch_world_y) != 0) {
+        if (control_up_pressed != 0 && robohand_switch_state == 0) {
+            if (robohand_box_active_state != 0) {
+                robohand_switch_state = 1;
                 secret_block_state = 1;
                 request_priority_sound_effect(5);
             } else {
-                actor_3035_animation_state = 1;
+                robohand_switch_animation_state = 1;
             }
         }
     }
 
-    if (actor_3035_state == 0 && world_animation_phase == 0) {
+    if (robohand_switch_state == 0 && world_animation_phase == 0) {
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4740,
-                                actor_3035_world_x - level_scroll_x,
-                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
+                                robohand_switch_world_x - level_scroll_x,
+                                ((robohand_switch_world_y - level_map_y_offset) >> 3) + 16);
     } else {
         blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x47e0,
-                                actor_3035_world_x - level_scroll_x,
-                                ((actor_3035_world_y - level_map_y_offset) >> 3) + 16);
+                                robohand_switch_world_x - level_scroll_x,
+                                ((robohand_switch_world_y - level_map_y_offset) >> 3) + 16);
     }
 
-    if (actor_3035_animation_state != 0) {
+    if (robohand_switch_animation_state != 0) {
         if (world_animation_phase == 0)
-            spawn_projectile(1, actor_3035_world_x + 2, actor_3035_world_y - 36);
+            spawn_projectile(1, robohand_switch_world_x + 2, robohand_switch_world_y - 36);
         if (world_animation_phase == 0x40)
-            spawn_projectile(2, actor_3035_world_x - 2, actor_3035_world_y - 36);
+            spawn_projectile(2, robohand_switch_world_x - 2, robohand_switch_world_y - 36);
     }
 }
 
-/* Updates the secret block state from its current state and inputs. */
-void update_secret_block_state(void)
+/* Completes the robohand-operated bridge raised by map word 0x3036 when its solid tile appears. */
+void update_robohand_bridge_state(void)
 {
     if (secret_block_animation_state == 0)
         return;
@@ -5915,15 +5874,14 @@ void update_secret_block_state(void)
     secret_block_world_x += 2;
 }
 
-/* Updates and draws records from level-map marker 0x3037; the concrete entity identity is not
-   established by source. */
-void update_actor_3037(void)
+/* Updates or activates letter d bonus from map word 0x3037. */
+void update_letter_bonus(void)
 {
     register int i;
-    struct actor_3037_record far *actor_record;
+    struct letter_bonus_record far *actor_record;
 
-    for (i = 0; i < actor_3037_object_count; i++) {
-        actor_record = &actor_3037_records[i];
+    for (i = 0; i < letter_bonus_object_count; i++) {
+        actor_record = &letter_bonus_records[i];
         if (actor_record->state == 0)
             continue;
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y) != 0)
@@ -5941,16 +5899,16 @@ void update_actor_3037(void)
         if (actor_record->animation_flag != 0) {
             if (test_player_overlap_with_object(actor_record->world_x, actor_record->world_y) != 0) {
                 if (actor_record->state != 'E') {
-                    secret_code_character_0[actor_3037_bonus_state++] = actor_record->state;
+                    secret_code_character_0[letter_bonus_state++] = actor_record->state;
                     add_and_draw_player_score(500L);
                     queue_ambient_sprite_animation(0x280, actor_record->world_x, actor_record->world_y);
                     request_priority_sound_effect(16);
-                } else if (actor_3037_bonus_state == 3 && secret_code_character_0[0] == 'D' &&
+                } else if (letter_bonus_state == 3 && secret_code_character_0[0] == 'D' &&
                            secret_code_character_1 == 'U' && secret_code_character_2 == 'K') {
                     add_and_draw_player_score(10000L);
                     queue_ambient_sprite_animation(0x780, actor_record->world_x, actor_record->world_y);
                     request_priority_sound_effect(37);
-                    actor_3037_animation_state = 1;
+                    letter_bonus_animation_state = 1;
                 } else {
                     add_and_draw_player_score(500L);
                     queue_ambient_sprite_animation(0x280, actor_record->world_x, actor_record->world_y);
@@ -5981,8 +5939,8 @@ void update_actor_3037(void)
     }
 }
 
-/* Draws the two sprite cells used by the climbing actor. */
-void pascal draw_climbing_actor_sprite(int frame, register int x, int y)
+/* Draws the Wallcrawler sprite for map words 0x3016 and 0x3017. */
+void pascal draw_wallcrawler_sprite(int frame, register int x, int y)
 {
     register int offset;
 
@@ -6002,33 +5960,32 @@ void pascal draw_climbing_actor_sprite(int frame, register int x, int y)
                                 ((y - level_map_y_offset) >> 3) + 16);
 }
 
-/* Updates and draws records from level-map marker 0x303B; the concrete entity identity is not
-   established by source. */
-void update_actor_303b(void)
+/* Updates or activates purple rabbit bonus from map word 0x303B. */
+void update_rabbit_bonus(void)
 {
     register int i;
-    struct actor_303b_record far *p;
+    struct rabbit_bonus_record far *p;
 
-    actor_303b_update_state = 1;
-    for (i = 0; i < actor_303b_count; ++i) {
-        p = &actor_303b_records[i];
+    rabbit_bonus_update_state = 1;
+    for (i = 0; i < rabbit_bonus_count; ++i) {
+        p = &rabbit_bonus_records[i];
         if (p->state == 0)
             continue;
 
-        actor_303b_update_state = 0;
+        rabbit_bonus_update_state = 0;
         if (p->state > 2) {
             switch (p->object_kind) {
             case 0:
-                draw_climbing_actor_sprite(0, p->world_x, p->world_y);
+                draw_wallcrawler_sprite(0, p->world_x, p->world_y);
                 break;
             case 1:
-                draw_climbing_actor_sprite(6, p->world_x, p->world_y);
+                draw_wallcrawler_sprite(6, p->world_x, p->world_y);
                 break;
             case 2:
-                draw_climbing_actor_sprite(3, p->world_x, p->world_y);
+                draw_wallcrawler_sprite(3, p->world_x, p->world_y);
                 break;
             case 3:
-                draw_climbing_actor_sprite(7, p->world_x, p->world_y);
+                draw_wallcrawler_sprite(7, p->world_x, p->world_y);
                 break;
             }
             ++p->state;
@@ -6062,9 +6019,9 @@ void update_actor_303b(void)
 
             if (p->object_kind == 0) {
                 if (p->state == 1)
-                    draw_climbing_actor_sprite(6, p->world_x, p->world_y);
+                    draw_wallcrawler_sprite(6, p->world_x, p->world_y);
                 if (p->state == 2)
-                    draw_climbing_actor_sprite(7, p->world_x, p->world_y);
+                    draw_wallcrawler_sprite(7, p->world_x, p->world_y);
                 if (world_animation_phase != 0x40 && world_animation_phase != 0)
                     continue;
                 p->object_kind = 1;
@@ -6075,9 +6032,9 @@ void update_actor_303b(void)
                 if (world_animation_phase == 0 || world_animation_phase == 0x40)
                     --p->world_x;
                 if (p->object_kind < 3)
-                    draw_climbing_actor_sprite(p->object_kind, p->world_x, p->world_y);
+                    draw_wallcrawler_sprite(p->object_kind, p->world_x, p->world_y);
                 else
-                    draw_climbing_actor_sprite(5 - p->object_kind, p->world_x, p->world_y);
+                    draw_wallcrawler_sprite(5 - p->object_kind, p->world_x, p->world_y);
                 if (world_animation_phase == 0 || world_animation_phase == 0x40) {
                     if (is_level_position_blocked(p->world_x, p->world_y + 128))
                         ++p->object_kind;
@@ -6090,9 +6047,9 @@ void update_actor_303b(void)
                 if (world_animation_phase == 0 || world_animation_phase == 0x40)
                     ++p->world_x;
                 if (p->object_kind < 3)
-                    draw_climbing_actor_sprite(p->object_kind + 2, p->world_x, p->world_y);
+                    draw_wallcrawler_sprite(p->object_kind + 2, p->world_x, p->world_y);
                 else
-                    draw_climbing_actor_sprite(8 - p->object_kind, p->world_x, p->world_y);
+                    draw_wallcrawler_sprite(8 - p->object_kind, p->world_x, p->world_y);
                 if (world_animation_phase == 0 || world_animation_phase == 0x40) {
                     if (is_level_position_blocked(p->world_x, p->world_y + 128))
                         ++p->object_kind;
@@ -6138,20 +6095,19 @@ void pascal draw_tall_effect_sprite(int frame, int x, int y)
         blit_planar_sprite_rows(sprite_graphics_buffer + row + 0xa0, col - level_scroll_x, ((y - level_map_y_offset) >> 3) + 16);
 }
 
-/* Updates and draws records from level-map marker 0x303C; the concrete entity identity is not
-   established by source. */
-void update_actor_303c(void)
+/* Updates or activates flame creature from map word 0x303C. */
+void update_fire_creature(void)
 {
     register int i;
-    struct actor_303c_record far *p;
+    struct fire_creature_record far *p;
 
     if (world_animation_phase == 0 || world_animation_phase == 0x40)
-        ++actor_303c_animation_phase;
-    if (actor_303c_animation_phase == 3)
-        actor_303c_animation_phase = 0;
+        ++fire_creature_animation_phase;
+    if (fire_creature_animation_phase == 3)
+        fire_creature_animation_phase = 0;
 
-    for (i = 0; i < actor_303c_count; ++i) {
-        p = &actor_303c_records[i];
+    for (i = 0; i < fire_creature_count; ++i) {
+        p = &fire_creature_records[i];
         if (p->state != 0) {
             if (is_level_position_blocked(p->world_x, p->world_y + 128) == 0)
                 p->world_y += 0x40;
@@ -6165,12 +6121,12 @@ void update_actor_303c(void)
             if (p->state == 1) {
                 if (world_animation_phase == 0 || world_animation_phase == 0x40)
                     --p->world_x;
-                draw_tall_effect_sprite(actor_303c_animation_phase, p->world_x, p->world_y);
+                draw_tall_effect_sprite(fire_creature_animation_phase, p->world_x, p->world_y);
             }
             if (p->state == 2) {
                 if (world_animation_phase == 0 || world_animation_phase == 0x40)
                     ++p->world_x;
-                draw_tall_effect_sprite(actor_303c_animation_phase + 3, p->world_x, p->world_y);
+                draw_tall_effect_sprite(fire_creature_animation_phase + 3, p->world_x, p->world_y);
             }
             remove_world_actor_at_position(p->world_x, p->world_y);
             if (test_player_overlap_with_object(p->world_x, p->world_y) != 0)
@@ -6205,29 +6161,28 @@ void wait_for_level_start(void)
     timer_tick_counter = 0;
 }
 
-/* Updates and draws records from level-map marker 0x3040; the concrete entity identity is not
-   established by source. */
-void update_actor_3040(void)
+/* Updates or activates message sign from map word 0x3040. */
+void update_message_sign(void)
 {
-    if (actor_3040_active_state != 0) {
-        if (is_world_position_outside_view(actor_3040_world_x, actor_3040_world_y) == 0) {
-            if (hint_revealed_object_9 == 1 && test_player_overlap_with_object(actor_3040_world_x, actor_3040_world_y) != 0) {
+    if (message_sign_active_state != 0) {
+        if (is_world_position_outside_view(message_sign_world_x, message_sign_world_y) == 0) {
+            if (hint_revealed_object_9 == 1 && test_player_overlap_with_object(message_sign_world_x, message_sign_world_y) != 0) {
                 hint_revealed_object_9 = 0;
                 show_secret_tip_read_notes();
             }
-            if (test_player_overlap_with_object(actor_3040_world_x, actor_3040_world_y) != 0 && control_up_pressed != 0) {
+            if (test_player_overlap_with_object(message_sign_world_x, message_sign_world_y) != 0 && control_up_pressed != 0) {
                 request_priority_sound_effect(28);
                 wait_for_level_start();
             }
             blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x4ce0,
-                                    actor_3040_world_x - level_scroll_x,
-                                    ((actor_3040_world_y - level_map_y_offset) >> 3) + 16);
+                                    message_sign_world_x - level_scroll_x,
+                                    ((message_sign_world_y - level_map_y_offset) >> 3) + 16);
         }
     }
 }
 
-/* Draws a two-by-two actor graphic selected by its animation variant and marks player contact. */
-void pascal draw_actor_sprite_by_variant(int variant, register int x, register int y)
+/* Draws Dr. Proton's boss frames for map words 0x3042 and 0x3043. */
+void pascal draw_dr_proton_boss_sprite(int variant, register int x, register int y)
 {
     if (variant < 2) {
         if (is_world_position_outside_view(x, y - 128) == 0)
@@ -6296,78 +6251,77 @@ void pascal draw_actor_sprite_by_variant(int variant, register int x, register i
         active_sprite_draw_flag = 1;
 }
 
-/* Updates and draws records from level-map marker 0x3042; the concrete entity identity is not
-   established by source. */
-void update_actor_3042(void)
+/* Updates or activates dr. proton boss (episode 3) from map word 0x3042. */
+void update_dr_proton(void)
 {
-    if (actor_3042_interaction_state != 0) {
-        ++actor_3042_interaction_state;
-        if (actor_3042_interaction_state == 10)
-            actor_3042_hint_state = 1;
+    if (dr_proton_interaction_state != 0) {
+        ++dr_proton_interaction_state;
+        if (dr_proton_interaction_state == 10)
+            dr_proton_hint_state = 1;
         return;
     }
 
-    actor_3042_animation_frame_0 = !actor_3042_animation_frame_0;
-    if (actor_3042_active_state == 0)
+    dr_proton_animation_frame_0 = !dr_proton_animation_frame_0;
+    if (dr_proton_active_state == 0)
         return;
 
-    if (actor_3042_open_state != 2) {
-        if (actor_3042_open_state != 0) {
-            if (actor_3042_animation_frame_3 == 0) {
-                ++actor_3042_animation_frame_1;
-                if (actor_3042_animation_frame_1 == (actor_3042_animation_frame_5 >> 1)) {
-                    if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
-                        spawn_projectile(1, actor_3042_world_x, actor_3042_world_y - 32);
+    if (dr_proton_open_state != 2) {
+        if (dr_proton_open_state != 0) {
+            if (dr_proton_animation_frame_3 == 0) {
+                ++dr_proton_animation_frame_1;
+                if (dr_proton_animation_frame_1 == (dr_proton_animation_frame_5 >> 1)) {
+                    if (player_screen_x + level_scroll_x - 2 < dr_proton_world_x)
+                        spawn_projectile(1, dr_proton_world_x, dr_proton_world_y - 32);
                     else
-                        spawn_projectile(2, actor_3042_world_x + 3, actor_3042_world_y - 32);
+                        spawn_projectile(2, dr_proton_world_x + 3, dr_proton_world_y - 32);
                 }
-                if (actor_3042_animation_frame_1 > actor_3042_animation_frame_5) {
-                    actor_3042_animation_frame_1 = 0;
-                    actor_3042_animation_frame_2 = 0;
-                    actor_3042_animation_frame_3 = 1;
-                    if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
-                        actor_3042_animation_frame_4 = 1;
+                if (dr_proton_animation_frame_1 > dr_proton_animation_frame_5) {
+                    dr_proton_animation_frame_1 = 0;
+                    dr_proton_animation_frame_2 = 0;
+                    dr_proton_animation_frame_3 = 1;
+                    if (player_screen_x + level_scroll_x - 2 < dr_proton_world_x)
+                        dr_proton_animation_frame_4 = 1;
                     else
-                        actor_3042_animation_frame_4 = 0;
+                        dr_proton_animation_frame_4 = 0;
                 }
             } else {
-                actor_3042_world_y += actor_3042_motion_delta_table[actor_3042_animation_frame_2];
-                if (actor_3042_animation_frame_4 != 0) {
-                    if (!test_level_tile_special_state(actor_3042_world_x - 1, actor_3042_world_y - 64))
-                        --actor_3042_world_x;
+                dr_proton_world_y += dr_proton_motion_delta_table[dr_proton_animation_frame_2];
+                if (dr_proton_animation_frame_4 != 0) {
+                    if (!test_level_tile_special_state(dr_proton_world_x - 1, dr_proton_world_y - 64))
+                        --dr_proton_world_x;
                 } else {
-                    if (!test_level_tile_special_state(actor_3042_world_x + 3, actor_3042_world_y - 64))
-                        ++actor_3042_world_x;
+                    if (!test_level_tile_special_state(dr_proton_world_x + 3, dr_proton_world_y - 64))
+                        ++dr_proton_world_x;
                 }
-                ++actor_3042_animation_frame_2;
-                if (actor_3042_animation_frame_2 == 12) {
-                    actor_3042_animation_frame_3 = 0;
-                    actor_3042_animation_frame_5 = (world_animation_phase >> 1) + 1;
-                    actor_3042_animation_frame_1 = 0;
+                ++dr_proton_animation_frame_2;
+                if (dr_proton_animation_frame_2 == 12) {
+                    dr_proton_animation_frame_3 = 0;
+                    dr_proton_animation_frame_5 = (world_animation_phase >> 1) + 1;
+                    dr_proton_animation_frame_1 = 0;
                 }
             }
-            if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
-                draw_actor_sprite_by_variant(actor_3042_animation_frame_0, actor_3042_world_x, actor_3042_world_y);
+            if (player_screen_x + level_scroll_x - 2 < dr_proton_world_x)
+                draw_dr_proton_boss_sprite(dr_proton_animation_frame_0, dr_proton_world_x, dr_proton_world_y);
             else
-                draw_actor_sprite_by_variant(actor_3042_animation_frame_0 + 2, actor_3042_world_x, actor_3042_world_y);
-            if (remove_world_actor_at_position(actor_3042_world_x + 1, actor_3042_world_y - 64)) {
-                spawn_moving_actor(3, actor_3042_world_x + 2, actor_3042_world_y - 92);
-                --actor_3042_animation_counter;
+                draw_dr_proton_boss_sprite(dr_proton_animation_frame_0 + 2, dr_proton_world_x, dr_proton_world_y);
+            if (remove_world_actor_at_position(dr_proton_world_x + 1, dr_proton_world_y - 64)) {
+                spawn_moving_actor(3, dr_proton_world_x + 2, dr_proton_world_y - 92);
+                --dr_proton_animation_counter;
             }
-            if (world_animation_phase != 0 && actor_3042_animation_counter < 10) {
-                if (actor_3042_animation_counter < 10)
-                    spawn_pickup_object(actor_3042_world_x + 2, actor_3042_world_y - 32);
-                if (actor_3042_animation_counter < 6)
-                    spawn_pickup_object(actor_3042_world_x + 1, actor_3042_world_y - 64);
-                if (actor_3042_animation_counter < 2)
-                    spawn_pickup_object(actor_3042_world_x + 3, actor_3042_world_y - 64);
+            if (world_animation_phase != 0 && dr_proton_animation_counter < 10) {
+                if (dr_proton_animation_counter < 10)
+                    spawn_pickup_object(dr_proton_world_x + 2, dr_proton_world_y - 32);
+                if (dr_proton_animation_counter < 6)
+                    spawn_pickup_object(dr_proton_world_x + 1, dr_proton_world_y - 64);
+                if (dr_proton_animation_counter < 2)
+                    spawn_pickup_object(dr_proton_world_x + 3, dr_proton_world_y - 64);
             }
-            if (actor_3042_animation_counter == 1 && ending_sequence_enabled != 0)
-                actor_3042_open_state = 0;
-            else if (actor_3042_animation_counter == 0)
-                actor_3042_open_state = 2;
+            if (dr_proton_animation_counter == 1 && ending_sequence_enabled != 0)
+                dr_proton_open_state = 0;
+            else if (dr_proton_animation_counter == 0)
+                dr_proton_open_state = 2;
         } else {
-            if (!is_world_position_outside_view(actor_3042_world_x, actor_3042_world_y) && player_animation_lock_state == 0) {
+            if (!is_world_position_outside_view(dr_proton_world_x, dr_proton_world_y) && player_animation_lock_state == 0) {
                 player_animation_lock_state = 1;
                 request_priority_sound_effect(40);
                 disable();
@@ -6375,45 +6329,44 @@ void update_actor_3042(void)
                 enable();
             }
             if (player_animation_lock_state > 30)
-                actor_3042_hint_state = 1;
+                dr_proton_hint_state = 1;
             if (player_animation_lock_state != 0)
                 ++player_animation_lock_state;
-            if (player_animation_lock_state != 0 && actor_3042_world_y > 0x100 && level_map_y_offset > 0x100) {
-                actor_3042_world_y -= 0x80;
+            if (player_animation_lock_state != 0 && dr_proton_world_y > 0x100 && level_map_y_offset > 0x100) {
+                dr_proton_world_y -= 0x80;
                 level_map_y_offset -= 0x80;
                 gameplay_animation_flag = 1;
             }
-            if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
-                draw_actor_sprite_by_variant(actor_3042_animation_frame_0, actor_3042_world_x, actor_3042_world_y);
+            if (player_screen_x + level_scroll_x - 2 < dr_proton_world_x)
+                draw_dr_proton_boss_sprite(dr_proton_animation_frame_0, dr_proton_world_x, dr_proton_world_y);
             else
-                draw_actor_sprite_by_variant(actor_3042_animation_frame_0 + 2, actor_3042_world_x, actor_3042_world_y);
+                draw_dr_proton_boss_sprite(dr_proton_animation_frame_0 + 2, dr_proton_world_x, dr_proton_world_y);
             return;
         }
     } else {
-        actor_3042_world_y += 32;
+        dr_proton_world_y += 32;
         if (world_animation_phase == 0)
-            spawn_contact_flash_effect(actor_3042_world_x + 2, actor_3042_world_y);
+            spawn_contact_flash_effect(dr_proton_world_x + 2, dr_proton_world_y);
         if (world_animation_phase == 32)
-            spawn_moving_actor(1, actor_3042_world_x + 2, actor_3042_world_y);
+            spawn_moving_actor(1, dr_proton_world_x + 2, dr_proton_world_y);
         if (world_animation_phase == 64)
-            spawn_contact_flash_effect(actor_3042_world_x, actor_3042_world_y);
+            spawn_contact_flash_effect(dr_proton_world_x, dr_proton_world_y);
         if (world_animation_phase == 96)
-            spawn_moving_actor(3, actor_3042_world_x + 2, actor_3042_world_y);
-        if (player_screen_x + level_scroll_x - 2 < actor_3042_world_x)
-            draw_actor_sprite_by_variant(0, actor_3042_world_x, actor_3042_world_y);
+            spawn_moving_actor(3, dr_proton_world_x + 2, dr_proton_world_y);
+        if (player_screen_x + level_scroll_x - 2 < dr_proton_world_x)
+            draw_dr_proton_boss_sprite(0, dr_proton_world_x, dr_proton_world_y);
         else
-            draw_actor_sprite_by_variant(2, actor_3042_world_x, actor_3042_world_y);
-        if (is_level_position_blocked(actor_3042_world_x + 1, actor_3042_world_y)) {
+            draw_dr_proton_boss_sprite(2, dr_proton_world_x, dr_proton_world_y);
+        if (is_level_position_blocked(dr_proton_world_x + 1, dr_proton_world_y)) {
             request_priority_sound_effect(41);
-            actor_3042_interaction_state = 1;
+            dr_proton_interaction_state = 1;
         }
         return;
     }
 }
 
-/* Draws a large two-by-two actor graphic and clears its active flag when the right edge is
-   outside the view. */
-void pascal draw_large_actor_sprite(int sprite_frame, int actor_world_x, int actor_world_y)
+/* Draws the Dr. Proton display for map word 0x3041. */
+void pascal draw_proton_display_sprite(int sprite_frame, int actor_world_x, int actor_world_y)
 {
     register int sprite_data_offset;
 
@@ -6438,7 +6391,7 @@ void pascal draw_large_actor_sprite(int sprite_frame, int actor_world_x, int act
                                 actor_world_x + 2 - level_scroll_x,
                                 ((actor_world_y - level_map_y_offset) >> 3) + 0x10);
     } else {
-        actor_3041_interaction_state = 0;
+        proton_screen_interaction_state = 0;
     }
 }
 
@@ -6447,17 +6400,17 @@ void update_level_lock_or_exit(void)
 {
     register int unused_register;
 
-    if (actor_3041_active_state == 0 || current_level_index == 0)
+    if (proton_display_active_state == 0 || current_level_index == 0)
         return;
 
-    ++actor_3041_sprite_frame;
-    if (actor_3041_sprite_frame == 3)
-        actor_3041_sprite_frame = 0;
-    ++actor_3041_animation_counter;
+    ++proton_display_sprite_frame;
+    if (proton_display_sprite_frame == 3)
+        proton_display_sprite_frame = 0;
+    ++proton_screen_animation_counter;
 
-    if (actor_3041_event_pending != 0) {
+    if (proton_display_event_pending != 0) {
         wait_for_level_start();
-        actor_3041_event_pending = 0;
+        proton_display_event_pending = 0;
         if (control_confirmation_state == 0) {
             enable();
             while ((last_keyboard_scan_code & 0x80) == 0) {
@@ -6466,40 +6419,40 @@ void update_level_lock_or_exit(void)
         }
     }
 
-    if (actor_3041_animation_counter == 125)
-        actor_3041_animation_counter = 0;
+    if (proton_screen_animation_counter == 125)
+        proton_screen_animation_counter = 0;
 
-    if (actor_3041_interaction_state == 0 && exit_lock_animation_state == 0) {
-        if (test_player_overlap_with_object(actor_3041_world_x - 6, actor_3041_world_y) != 0) {
+    if (proton_screen_interaction_state == 0 && exit_lock_animation_state == 0) {
+        if (test_player_overlap_with_object(proton_display_world_x - 6, proton_display_world_y) != 0) {
             request_priority_sound_effect(0x1d);
-            actor_3041_interaction_state = 1;
+            proton_screen_interaction_state = 1;
             exit_lock_animation_state = 1;
-            actor_3041_event_pending = 1;
-        } else if (test_player_overlap_with_object(actor_3041_world_x + 8, actor_3041_world_y) != 0) {
+            proton_display_event_pending = 1;
+        } else if (test_player_overlap_with_object(proton_display_world_x + 8, proton_display_world_y) != 0) {
             request_priority_sound_effect(0x1d);
-            actor_3041_interaction_state = 1;
+            proton_screen_interaction_state = 1;
             exit_lock_animation_state = 1;
-            actor_3041_event_pending = 1;
+            proton_display_event_pending = 1;
         }
     }
 
     if (control_up_pressed != 0 &&
-        (test_player_overlap_with_object(actor_3041_world_x, actor_3041_world_y) != 0 ||
-         test_player_overlap_with_object(actor_3041_world_x + 2, actor_3041_world_y) != 0)) {
-        actor_3041_interaction_state = 1;
+        (test_player_overlap_with_object(proton_display_world_x, proton_display_world_y) != 0 ||
+         test_player_overlap_with_object(proton_display_world_x + 2, proton_display_world_y) != 0)) {
+        proton_screen_interaction_state = 1;
         request_priority_sound_effect(0x1d);
-        actor_3041_event_pending = 1;
+        proton_display_event_pending = 1;
         exit_lock_animation_state = 1;
     }
 
-    if (actor_3041_interaction_state == 0) {
-        draw_large_actor_sprite(actor_3041_sprite_frame, actor_3041_world_x, actor_3041_world_y);
-    } else if (player_screen_x + level_scroll_x < actor_3041_world_x - 1) {
-        draw_large_actor_sprite(3, actor_3041_world_x, actor_3041_world_y);
-    } else if (player_screen_x + level_scroll_x > actor_3041_world_x + 3) {
-        draw_large_actor_sprite(5, actor_3041_world_x, actor_3041_world_y);
+    if (proton_screen_interaction_state == 0) {
+        draw_proton_display_sprite(proton_display_sprite_frame, proton_display_world_x, proton_display_world_y);
+    } else if (player_screen_x + level_scroll_x < proton_display_world_x - 1) {
+        draw_proton_display_sprite(3, proton_display_world_x, proton_display_world_y);
+    } else if (player_screen_x + level_scroll_x > proton_display_world_x + 3) {
+        draw_proton_display_sprite(5, proton_display_world_x, proton_display_world_y);
     } else {
-        draw_large_actor_sprite(4, actor_3041_world_x, actor_3041_world_y);
+        draw_proton_display_sprite(4, proton_display_world_x, proton_display_world_y);
     }
 }
 
@@ -6534,15 +6487,14 @@ void pascal draw_level_marker_tiles(void)
     } while (draw_pass == 1);
 }
 
-/* Updates and draws records from level-map marker 0x3044; the concrete entity identity is not
-   established by source. */
-void update_actor_3044(void)
+/* Updates or activates red key from map word 0x3044. */
+void update_door_keys(void)
 {
     register int record_index;
-    struct actor_3044_record far *actor_record;
+    struct door_key_record far *actor_record;
 
-    for (record_index = 0; record_index < actor_3044_entity_count; record_index++) {
-        actor_record = &actor_3044_records[record_index];
+    for (record_index = 0; record_index < door_key_count; record_index++) {
+        actor_record = &door_key_records[record_index];
         if (actor_record->state == 0)
             continue;
         if (is_world_position_outside_view(actor_record->world_x, actor_record->world_y))
@@ -6575,21 +6527,20 @@ void update_actor_3044(void)
     }
 }
 
-/* Updates and draws records from level-map marker 0x3048; the concrete entity identity is not
-   established by source. */
-void update_actor_3048(void)
+/* Updates or activates red key lock from map word 0x3048. */
+void update_door_locks(void)
 {
     register int i;
     register int j;
     struct level_tile_animation_record far *marker_record;
 
     if (world_animation_phase == 0)
-        ++actor_3041_sprite_offset;
-    if (actor_3041_sprite_offset == 320)
-        actor_3041_sprite_offset = 0;
+        ++proton_display_sprite_offset;
+    if (proton_display_sprite_offset == 320)
+        proton_display_sprite_offset = 0;
 
-    for (j = 0; j < actor_3048_entity_count; ++j) {
-        marker_record = &actor_3048_records[j];
+    for (j = 0; j < door_lock_count; ++j) {
+        marker_record = &door_lock_records[j];
         if (is_world_position_outside_view(marker_record->world_x, marker_record->world_y))
             continue;
 
@@ -6603,7 +6554,7 @@ void update_actor_3048(void)
                 (control_hint_down_flag != 0 && marker_record->sprite_resource_offset == 0x1e0) ||
                 (control_hint_left_flag != 0 && marker_record->sprite_resource_offset == 0x280) ||
                 (control_hint_right_flag != 0 && marker_record->sprite_resource_offset == 0x320)) {
-                for (i = 0; i < actor_3048_object_count; ++i) {
+                for (i = 0; i < door_tile_animation_count; ++i) {
                     if (level_tile_animation_records[i].sprite_resource_offset != marker_record->sprite_resource_offset - 0xa0)
                         continue;
                     level_tile_animation_records[i].alternate_frame = 1;
@@ -6638,7 +6589,7 @@ void update_actor_3048(void)
             blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x5460 + marker_record->alternate_frame,
                                     marker_record->world_x - level_scroll_x,
                                     ((marker_record->world_y - level_map_y_offset) >> 3) + 0x10);
-        } else if (actor_3041_sprite_offset % 2 != 0) {
+        } else if (proton_display_sprite_offset % 2 != 0) {
             blit_planar_sprite_rows(sprite_pixel_data_pointer + 0x5500,
                                     marker_record->world_x - level_scroll_x,
                                     ((marker_record->world_y - level_map_y_offset) >> 3) + 0x10);
@@ -6656,7 +6607,7 @@ void animate_level_tile_records(void)
     register int i;
     struct level_tile_animation_record far *animation_record;
 
-    for (i = 0; i < actor_3048_object_count; ++i) {
+    for (i = 0; i < door_tile_animation_count; ++i) {
         animation_record = &level_tile_animation_records[i];
         if (animation_record->sprite_resource_offset != 0 && is_world_position_outside_view(animation_record->world_x, animation_record->world_y) == 0) {
             if (animation_record->alternate_frame != 0) {
@@ -6678,14 +6629,14 @@ void animate_level_tile_records(void)
     }
 }
 
-/* Draws visible marker 0x3058 objects and marks player contact when one overlaps Duke. */
-void draw_marker_3058_objects(void)
+/* Draws the spike hazards placed by map words 0x3058 and 0x3059. */
+void draw_spike_hazard_sprites(void)
 {
     register int i;
-    struct actor_3058_record far *marker_record;
+    struct spike_hazard_record far *marker_record;
 
     for (i = 0; i < level_object_pool_531e_count; ++i) {
-        marker_record = &actor_3058_records[i];
+        marker_record = &spike_hazard_records[i];
         if (is_world_position_outside_view(marker_record->world_x, marker_record->world_y) == 0) {
             if (test_player_overlap_with_object(marker_record->world_x, marker_record->world_y) != 0)
                 active_sprite_draw_flag = 1;
@@ -6729,143 +6680,143 @@ void pascal create_objects_from_level_map(unsigned int row_count)
             if (*tile_cell >= 0x3000) {
                 switch (*tile_cell) {
                 case 0x3000:
-                    actor_3000_records[actor_3000_count].state = 1;
-                    actor_3000_records[actor_3000_count].world_x = col * 2 + 2;
-                    actor_3000_records[actor_3000_count].world_y = row * 128;
-                    register_level_update_callback(update_actor_3000);
+                    empty_bonus_box_records[empty_bonus_box_count].state = 1;
+                    empty_bonus_box_records[empty_bonus_box_count].world_x = col * 2 + 2;
+                    empty_bonus_box_records[empty_bonus_box_count].world_y = row * 128;
+                    register_level_update_callback(update_empty_bonus_box);
                     *tile_cell = tile_cell[-1];
-                    ++actor_3000_count;
+                    ++empty_bonus_box_count;
                     break;
                 case 0x3001:
-                    actor_3001_records[actor_3001_count].active = 1;
-                    actor_3001_records[actor_3001_count].world_x = col * 2 + 2;
-                    actor_3001_tile_below_records[actor_3001_count] = tile_cell[-128];
-                    actor_3001_records[actor_3001_count].world_y = row * 128;
+                    elevator_records[elevator_count].active = 1;
+                    elevator_records[elevator_count].world_x = col * 2 + 2;
+                    elevator_tile_below_records[elevator_count] = tile_cell[-128];
+                    elevator_records[elevator_count].world_y = row * 128;
                     *tile_cell = 0x1ae0;
-                    ++actor_3001_count;
+                    ++elevator_count;
                     break;
                 case 0x3002:
-                    actor_3002_records[actor_3002_count].reserved = 0;
-                    actor_3002_records[actor_3002_count].map_column = col + 2;
-                    actor_3002_records[actor_3002_count].map_row = row * 128;
+                    conveyor_belt_records[conveyor_belt_count].reserved = 0;
+                    conveyor_belt_records[conveyor_belt_count].map_column = col + 2;
+                    conveyor_belt_records[conveyor_belt_count].map_row = row * 128;
                     k = 0;
                     while (tile_cell[k] != 0x3003)
                         ++k;
-                    actor_3002_records[actor_3002_count].object_height = k * 2;
-                    actor_3002_records[actor_3002_count].object_state = 0;
-                    register_level_update_callback(update_actor_3002);
+                    conveyor_belt_records[conveyor_belt_count].object_height = k * 2;
+                    conveyor_belt_records[conveyor_belt_count].object_state = 0;
+                    register_level_update_callback(update_conveyor_belt);
                     *tile_cell = 0x1820;
-                    ++actor_3002_count;
+                    ++conveyor_belt_count;
                     break;
                 case 0x3003:
                     break;
                 case 0x3004:
-                    actor_3002_records[actor_3002_count].reserved = 0;
-                    actor_3002_records[actor_3002_count].map_column = col + 2;
-                    actor_3002_records[actor_3002_count].map_row = row * 128;
+                    conveyor_belt_records[conveyor_belt_count].reserved = 0;
+                    conveyor_belt_records[conveyor_belt_count].map_column = col + 2;
+                    conveyor_belt_records[conveyor_belt_count].map_row = row * 128;
                     k = 0;
                     while (tile_cell[k] != 0x3005)
                         ++k;
-                    actor_3002_records[actor_3002_count].object_height = k * 2;
-                    actor_3002_records[actor_3002_count].object_state = 1;
-                    register_level_update_callback(update_actor_3002);
-                    ++actor_3002_count;
+                    conveyor_belt_records[conveyor_belt_count].object_height = k * 2;
+                    conveyor_belt_records[conveyor_belt_count].object_state = 1;
+                    register_level_update_callback(update_conveyor_belt);
+                    ++conveyor_belt_count;
                     break;
                 case 0x3005:
                     break;
                 case 0x3006:
-                    actor_3006_world_x = col * 2 + 2;
-                    actor_3006_world_y = row * 128;
-                    actor_3006_state = 0;
-                    register_level_update_callback(update_actor_3006);
+                    jump_boots_box_world_x = col * 2 + 2;
+                    jump_boots_box_world_y = row * 128;
+                    jump_boots_box_state = 0;
+                    register_level_update_callback(update_jump_boots_box);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3007:
-                    actor_3007_records[actor_3007_count].state = 1;
-                    actor_3007_records[actor_3007_count].world_x = col * 2 + 2;
-                    actor_3007_records[actor_3007_count].world_y = row * 128;
-                    register_level_update_callback(update_actor_3007);
+                    rocket_records[rocket_count].state = 1;
+                    rocket_records[rocket_count].world_x = col * 2 + 2;
+                    rocket_records[rocket_count].world_y = row * 128;
+                    register_level_update_callback(update_rocket);
                     level_loading_state = 1;
                     *tile_cell = tile_cell[-128];
-                    ++actor_3007_count;
+                    ++rocket_count;
                     break;
                 case 0x3008:
-                    actor_3008_world_x = col * 2 + 2;
-                    actor_3008_world_y = row * 128;
-                    actor_3008_state = 0;
-                    register_level_update_callback(update_actor_3008);
+                    ceiling_clinger_box_world_x = col * 2 + 2;
+                    ceiling_clinger_box_world_y = row * 128;
+                    ceiling_clinger_box_state = 0;
+                    register_level_update_callback(update_ceiling_clinger_box);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3009:
-                    actor_3009_records[actor_3009_count].state = 1;
-                    actor_3009_records[actor_3009_count].world_x = col * 2 + 2;
-                    actor_3009_records[actor_3009_count].world_y = row * 128;
-                    register_level_update_callback(update_actor_3009);
+                    right_flame_turret_records[right_flame_turret_count].state = 1;
+                    right_flame_turret_records[right_flame_turret_count].world_x = col * 2 + 2;
+                    right_flame_turret_records[right_flame_turret_count].world_y = row * 128;
+                    register_level_update_callback(update_right_flame_turret);
                     *tile_cell = tile_cell[1];
-                    ++actor_3009_count;
+                    ++right_flame_turret_count;
                     break;
                 case 0x300a:
-                    actor_300a_records[actor_300a_count].state = 1;
-                    actor_300a_records[actor_300a_count].world_x = col * 2 + 2;
-                    actor_300a_records[actor_300a_count].world_y = row * 128;
-                    register_level_update_callback(update_actor_300a);
+                    left_flame_turret_records[left_flame_turret_count].state = 1;
+                    left_flame_turret_records[left_flame_turret_count].world_x = col * 2 + 2;
+                    left_flame_turret_records[left_flame_turret_count].world_y = row * 128;
+                    register_level_update_callback(update_left_flame_turret);
                     *tile_cell = tile_cell[-1];
-                    ++actor_300a_count;
+                    ++left_flame_turret_count;
                     break;
                 case 0x300b:
-                    actor_300b_records[actor_300b_count].motion_state = 1;
-                    actor_300b_records[actor_300b_count].world_x = col * 2 + 2;
-                    actor_300b_records[actor_300b_count].world_y = row * 128;
-                    actor_300b_records[actor_300b_count].trajectory_step = 0;
-                    register_level_update_callback(update_actor_300b);
+                    flying_techbot_records[flying_techbot_count].motion_state = 1;
+                    flying_techbot_records[flying_techbot_count].world_x = col * 2 + 2;
+                    flying_techbot_records[flying_techbot_count].world_y = row * 128;
+                    flying_techbot_records[flying_techbot_count].trajectory_step = 0;
+                    register_level_update_callback(update_flying_techbot);
                     *tile_cell = tile_cell[-1];
-                    ++actor_300b_count;
+                    ++flying_techbot_count;
                     break;
                 case 0x300c:
-                    actor_300c_records[actor_300c_count].state = 1;
-                    actor_300c_records[actor_300c_count].world_x = col * 2 + 2;
-                    actor_300c_records[actor_300c_count].world_y = row * 128;
-                    actor_300c_records[actor_300c_count].marker_state = 0;
-                    actor_300c_object_marker_table[actor_300c_count] = 0;
-                    register_level_update_callback(update_actor_300c);
+                    jumping_techbot_records[jumping_techbot_count].state = 1;
+                    jumping_techbot_records[jumping_techbot_count].world_x = col * 2 + 2;
+                    jumping_techbot_records[jumping_techbot_count].world_y = row * 128;
+                    jumping_techbot_records[jumping_techbot_count].marker_state = 0;
+                    jumpbot_object_marker_table[jumping_techbot_count] = 0;
+                    register_level_update_callback(update_jumping_techbot);
                     *tile_cell = tile_cell[-1];
-                    ++actor_300c_count;
+                    ++jumping_techbot_count;
                     break;
                 case 0x300d:
-                    actor_300d_records[actor_300d_count].state = 1;
-                    actor_300d_records[actor_300d_count].world_x = col * 2 + 2;
-                    actor_300d_records[actor_300d_count].world_y = row * 128;
-                    actor_300d_auxiliary_states[actor_300d_count] = 0;
-                    register_level_update_callback(update_actor_300d);
+                    wheeled_techbot_records[wheeled_techbot_count].state = 1;
+                    wheeled_techbot_records[wheeled_techbot_count].world_x = col * 2 + 2;
+                    wheeled_techbot_records[wheeled_techbot_count].world_y = row * 128;
+                    wheelbot_auxiliary_states[wheeled_techbot_count] = 0;
+                    register_level_update_callback(update_wheeled_techbot);
                     *tile_cell = tile_cell[-1];
-                    ++actor_300d_count;
+                    ++wheeled_techbot_count;
                     break;
                 case 0x300e:
-                    actor_300e_records[actor_300e_count].state = 1;
-                    actor_300e_records[actor_300e_count].world_x = col * 2 + 2;
-                    actor_300e_records[actor_300e_count].world_y = row * 128;
-                    actor_300e_object_state_table[actor_300e_count] = 0;
-                    register_level_update_callback(update_actor_300e);
+                    fire_wheel_techbot_records[fire_wheel_techbot_count].state = 1;
+                    fire_wheel_techbot_records[fire_wheel_techbot_count].world_x = col * 2 + 2;
+                    fire_wheel_techbot_records[fire_wheel_techbot_count].world_y = row * 128;
+                    fire_wheel_object_state_table[fire_wheel_techbot_count] = 0;
+                    register_level_update_callback(update_fire_wheel_techbot);
                     *tile_cell = tile_cell[-1];
-                    ++actor_300e_count;
+                    ++fire_wheel_techbot_count;
                     break;
                 case 0x300f:
-                    actor_300f_records[actor_300f_count].active = 1;
-                    actor_300f_records[actor_300f_count].world_x = col * 2 + 2;
-                    actor_300f_records[actor_300f_count].world_y = row * 128;
-                    actor_300f_records[actor_300f_count].animation_state = 0;
-                    register_level_update_callback(update_actor_300f);
+                    ammo_box_records[ammo_box_count].active = 1;
+                    ammo_box_records[ammo_box_count].world_x = col * 2 + 2;
+                    ammo_box_records[ammo_box_count].world_y = row * 128;
+                    ammo_box_records[ammo_box_count].animation_state = 0;
+                    register_level_update_callback(update_ammo_box);
                     *tile_cell = tile_cell[-1];
-                    ++actor_300f_count;
+                    ++ammo_box_count;
                     break;
                 case 0x3010:
-                    actor_3010_records[actor_3010_count].state = 1;
-                    actor_3010_records[actor_3010_count].world_x = col * 2 + 2;
-                    actor_3010_records[actor_3010_count].world_y = row * 128;
-                    actor_3010_records[actor_3010_count].animation_phase = 0;
-                    register_level_update_callback(update_actor_3010);
+                    robot_techbot_records[robot_techbot_count].state = 1;
+                    robot_techbot_records[robot_techbot_count].world_x = col * 2 + 2;
+                    robot_techbot_records[robot_techbot_count].world_y = row * 128;
+                    robot_techbot_records[robot_techbot_count].animation_phase = 0;
+                    register_level_update_callback(update_robot_techbot);
                     *tile_cell = tile_cell[-1];
-                    ++actor_3010_count;
+                    ++robot_techbot_count;
                     break;
                 case 0x3011:
                     current_weapon_state = 0;
@@ -6875,18 +6826,18 @@ void pascal create_objects_from_level_map(unsigned int row_count)
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3012:
-                    actor_3012_records[actor_3012_count].state = 1;
-                    actor_3012_records[actor_3012_count].world_x = col * 2 + 2;
-                    actor_3012_records[actor_3012_count].world_y = row * 128;
-                    actor_3012_records[actor_3012_count].object_kind = 0;
-                    actor_3012_records[actor_3012_count].unknown_flag_8 = 1;
-                    actor_3012_records[actor_3012_count].unknown_flag_10 = 1;
-                    register_level_update_callback(update_actor_3012);
+                    dynamite_box_records[dynamite_box_count].state = 1;
+                    dynamite_box_records[dynamite_box_count].world_x = col * 2 + 2;
+                    dynamite_box_records[dynamite_box_count].world_y = row * 128;
+                    dynamite_box_records[dynamite_box_count].object_kind = 0;
+                    dynamite_box_records[dynamite_box_count].unknown_flag_8 = 1;
+                    dynamite_box_records[dynamite_box_count].unknown_flag_10 = 1;
+                    register_level_update_callback(update_dynamite_box);
                     *tile_cell = tile_cell[-1];
-                    ++actor_3012_count;
+                    ++dynamite_box_count;
                     break;
                 case 0x3013:
-                    actor_3013_formation_state = 0;
+                    snake_techbot_formation_state = 0;
                     formation_update_enabled = 1;
                     formation_active_object_count = 0;
                     for (k = 9; k > 0; --k) {
@@ -6894,60 +6845,60 @@ void pascal create_objects_from_level_map(unsigned int row_count)
                         formation_object_y_positions[k] = row * 128 + 2;
                         formation_object_active_flags[k] = 1;
                     }
-                    register_level_update_callback(update_actor_3013);
+                    register_level_update_callback(update_snake_techbot);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3014:
-                    actor_3014_records[actor_3014_count].world_x = col * 2 + 2;
-                    actor_3014_records[actor_3014_count].world_y = row * 128;
-                    ++actor_3014_count;
+                    water_shimmer_records[water_shimmer_count].world_x = col * 2 + 2;
+                    water_shimmer_records[water_shimmer_count].world_y = row * 128;
+                    ++water_shimmer_count;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3015:
                 case 0x3052:
                     if (*tile_cell == 0x3052)
-                        actor_3015_records[actor_3015_count].state = 2;
+                        soda_can_bonus_records[soda_can_bonus_count].state = 2;
                     else
-                        actor_3015_records[actor_3015_count].state = 1;
-                    actor_3015_records[actor_3015_count].world_x = col * 2 + 2;
-                    actor_3015_records[actor_3015_count].world_y = row * 128;
-                    ++actor_3015_count;
+                        soda_can_bonus_records[soda_can_bonus_count].state = 1;
+                    soda_can_bonus_records[soda_can_bonus_count].world_x = col * 2 + 2;
+                    soda_can_bonus_records[soda_can_bonus_count].world_y = row * 128;
+                    ++soda_can_bonus_count;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_3015);
+                    register_level_update_callback(update_soda_can_bonus);
                     break;
                 case 0x3016:
                 case 0x3017:
                     if (*tile_cell == 0x3016) {
-                        actor_3016_records[actor_3016_count].state = 1;
+                        wallcrawler_records[wallcrawler_count].state = 1;
                         *tile_cell = tile_cell[1];
                     } else {
-                        actor_3016_records[actor_3016_count].state = 3;
+                        wallcrawler_records[wallcrawler_count].state = 3;
                         *tile_cell = tile_cell[-1];
                     }
-                    actor_3016_records[actor_3016_count].world_x = col * 2 + 2;
-                    actor_3016_records[actor_3016_count].world_y = row * 128;
-                    ++actor_3016_count;
-                    register_level_update_callback(update_actor_3016);
+                    wallcrawler_records[wallcrawler_count].world_x = col * 2 + 2;
+                    wallcrawler_records[wallcrawler_count].world_y = row * 128;
+                    ++wallcrawler_count;
+                    register_level_update_callback(update_wallcrawler);
                     break;
                 case 0x3018:
                 case 0x3051:
                     if (*tile_cell == 0x3051)
-                        actor_3018_records[actor_3018_count].state = 2;
+                        turkey_bonus_records[turkey_bonus_count].state = 2;
                     else
-                        actor_3018_records[actor_3018_count].state = 1;
-                    actor_3018_records[actor_3018_count].world_x = col * 2 + 2;
-                    actor_3018_records[actor_3018_count].world_y = row * 128;
-                    ++actor_3018_count;
+                        turkey_bonus_records[turkey_bonus_count].state = 1;
+                    turkey_bonus_records[turkey_bonus_count].world_x = col * 2 + 2;
+                    turkey_bonus_records[turkey_bonus_count].world_y = row * 128;
+                    ++turkey_bonus_count;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_3018);
+                    register_level_update_callback(update_turkey_bonus);
                     break;
                 case 0x3019:
-                    actor_3019_screen_x = col + 2;
-                    actor_3019_map_row = row;
-                    actor_3019_enabled = 1;
-                    actor_3019_animation_state = 0;
-                    actor_3019_world_x = col + 2;
-                    actor_3019_world_y = row * 128;
+                    collapsing_bridge_screen_x = col + 2;
+                    collapsing_bridge_map_row = row;
+                    collapsing_bridge_enabled = 1;
+                    weak_bridge_animation_state = 0;
+                    collapsing_bridge_world_x = col + 2;
+                    collapsing_bridge_world_y = row * 128;
                     k = 0;
                     /* Direct cell indexing changes this far-pointer access sequence. */
                     while (((struct level_map_cell_pair far *)(tile_cell + k))->second_tile_value < 0x1800) {
@@ -6955,221 +6906,221 @@ void pascal create_objects_from_level_map(unsigned int row_count)
                         ((struct level_map_cell_pair far *)(tile_cell + k))->second_tile_value = 0x21c0;
                         k += 2;
                     }
-                    actor_3019_width = k * 2;
-                    register_level_update_callback(update_actor_3019);
+                    collapsing_bridge_width = k * 2;
+                    register_level_update_callback(update_collapsing_bridge);
                     *tile_cell = 0x21a0;
                     break;
                 case 0x301a:
-                    actor_301a_records[actor_301a_count].world_x = col * 2 + 2;
-                    actor_301a_records[actor_301a_count].world_y = row * 128;
-                    actor_301a_records[actor_301a_count].active = 1;
-                    register_level_update_callback(update_actor_301a);
-                    ++actor_301a_count;
+                    horizontal_force_field_records[horizontal_force_field_count].world_x = col * 2 + 2;
+                    horizontal_force_field_records[horizontal_force_field_count].world_y = row * 128;
+                    horizontal_force_field_records[horizontal_force_field_count].active = 1;
+                    register_level_update_callback(update_horizontal_force_field);
+                    ++horizontal_force_field_count;
                     *tile_cell = tile_cell[-128];
                     break;
                 case 0x301b:
                 case 0x301c:
                     if (*tile_cell == 0x301b) {
-                        actor_301b_records[actor_301b_count].state = 1;
+                        rotating_fan_records[rotating_fan_count].state = 1;
                         *tile_cell = tile_cell[-1];
                     } else {
-                        actor_301b_records[actor_301b_count].state = 2;
+                        rotating_fan_records[rotating_fan_count].state = 2;
                         *tile_cell = tile_cell[1];
                     }
-                    actor_301b_records[actor_301b_count].world_x = col * 2 + 2;
-                    actor_301b_records[actor_301b_count].world_y = row * 128;
-                    actor_301b_records[actor_301b_count].animation_count = 0;
-                    register_level_update_callback(update_actor_301b);
-                    ++actor_301b_count;
+                    rotating_fan_records[rotating_fan_count].world_x = col * 2 + 2;
+                    rotating_fan_records[rotating_fan_count].world_y = row * 128;
+                    rotating_fan_records[rotating_fan_count].animation_count = 0;
+                    register_level_update_callback(update_rotating_fan);
+                    ++rotating_fan_count;
                     break;
                 case 0x301d:
                 case 0x3050:
-                    actor_301d_records[actor_301d_count].active = 1;
-                    actor_301d_records[actor_301d_count].world_x = col * 2 + 2;
-                    actor_301d_records[actor_301d_count].world_y = row * 128;
+                    football_box_records[football_box_count].active = 1;
+                    football_box_records[football_box_count].world_x = col * 2 + 2;
+                    football_box_records[football_box_count].world_y = row * 128;
                     if (*tile_cell == 0x3050)
-                        actor_301d_records[actor_301d_count].animation_state = 1;
+                        football_box_records[football_box_count].animation_state = 1;
                     else
-                        actor_301d_records[actor_301d_count].animation_state = 0;
-                    ++actor_301d_count;
+                        football_box_records[football_box_count].animation_state = 0;
+                    ++football_box_count;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_301d);
+                    register_level_update_callback(update_football_box);
                     break;
                 case 0x301e:
                 case 0x3054:
-                    actor_301e_records[actor_301e_count].state = 1;
-                    actor_301e_records[actor_301e_count].world_x = col * 2 + 2;
-                    actor_301e_records[actor_301e_count].world_y = row * 128;
+                    joystick_box_records[joystick_box_count].state = 1;
+                    joystick_box_records[joystick_box_count].world_x = col * 2 + 2;
+                    joystick_box_records[joystick_box_count].world_y = row * 128;
                     if (*tile_cell == 0x3054)
-                        actor_301e_records[actor_301e_count].animation_flag = 1;
+                        joystick_box_records[joystick_box_count].animation_flag = 1;
                     else
-                        actor_301e_records[actor_301e_count].animation_flag = 0;
-                    ++actor_301e_count;
+                        joystick_box_records[joystick_box_count].animation_flag = 0;
+                    ++joystick_box_count;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_301e);
+                    register_level_update_callback(update_joystick_box);
                     break;
                 case 0x301f:
                 case 0x3053:
-                    actor_301f_records[actor_301f_count].state = 1;
-                    actor_301f_records[actor_301f_count].world_x = col * 2 + 2;
-                    actor_301f_records[actor_301f_count].world_y = row * 128;
+                    floppy_disk_box_records[floppy_disk_box_count].state = 1;
+                    floppy_disk_box_records[floppy_disk_box_count].world_x = col * 2 + 2;
+                    floppy_disk_box_records[floppy_disk_box_count].world_y = row * 128;
                     if (*tile_cell == 0x3053)
-                        actor_301f_records[actor_301f_count].animation_flag = 1;
+                        floppy_disk_box_records[floppy_disk_box_count].animation_flag = 1;
                     else
-                        actor_301f_records[actor_301f_count].animation_flag = 0;
-                    ++actor_301f_count;
+                        floppy_disk_box_records[floppy_disk_box_count].animation_flag = 0;
+                    ++floppy_disk_box_count;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_301f);
+                    register_level_update_callback(update_floppy_disk_box);
                     break;
                 case 0x3020:
-                    actor_3020_world_x = col * 2 + 2;
-                    actor_3020_world_y = row * 128;
-                    actor_3020_state = 0;
-                    register_level_update_callback(update_actor_3020);
+                    robohand_box_world_x = col * 2 + 2;
+                    robohand_box_world_y = row * 128;
+                    robohand_box_state = 0;
+                    register_level_update_callback(update_robohand_box);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3021:
-                    actor_3021_records[actor_3021_count].world_x = col * 2 + 2;
-                    actor_3021_records[actor_3021_count].world_y = row * 128;
+                    vertical_force_field_records[vertical_force_field_count].world_x = col * 2 + 2;
+                    vertical_force_field_records[vertical_force_field_count].world_y = row * 128;
                     /* Direct next-record indexing changes output; this sets the following actor's world_x. */
-                    (&actor_3021_records[actor_3021_count].world_x)[2] = 1;
-                    register_level_update_callback(update_actor_3021);
-                    ++actor_3021_count;
+                    (&vertical_force_field_records[vertical_force_field_count].world_x)[2] = 1;
+                    register_level_update_callback(update_vertical_force_field);
+                    ++vertical_force_field_count;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3022:
-                    actor_3022_records[actor_3022_count].movement_state = 1;
-                    actor_3022_records[actor_3022_count].world_x = col * 2 + 2;
-                    actor_3022_records[actor_3022_count].world_y = row * 128;
-                    actor_3022_records[actor_3022_count].jump_timer = 0;
-                    actor_3022_records[actor_3022_count].hit_points = 4;
-                    actor_3022_records[actor_3022_count].fall_counter = 0;
-                    register_level_update_callback(update_actor_3022);
-                    ++actor_3022_count;
+                    helicopter_techbot_records[helicopter_techbot_count].movement_state = 1;
+                    helicopter_techbot_records[helicopter_techbot_count].world_x = col * 2 + 2;
+                    helicopter_techbot_records[helicopter_techbot_count].world_y = row * 128;
+                    helicopter_techbot_records[helicopter_techbot_count].jump_timer = 0;
+                    helicopter_techbot_records[helicopter_techbot_count].hit_points = 4;
+                    helicopter_techbot_records[helicopter_techbot_count].fall_counter = 0;
+                    register_level_update_callback(update_helicopter_techbot);
+                    ++helicopter_techbot_count;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3023:
-                    actor_3023_records[actor_3023_count].state = 1;
-                    actor_3023_records[actor_3023_count].world_x = col * 2 + 2;
-                    actor_3023_records[actor_3023_count].world_y = row * 128;
-                    register_level_update_callback(update_actor_3023);
-                    ++actor_3023_count;
+                    balloon_bonus_records[balloon_bonus_count].state = 1;
+                    balloon_bonus_records[balloon_bonus_count].world_x = col * 2 + 2;
+                    balloon_bonus_records[balloon_bonus_count].world_y = row * 128;
+                    register_level_update_callback(update_balloon_bonus);
+                    ++balloon_bonus_count;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3024:
                     level_progress_word = 1;
-                    actor_3024_records[actor_3024_count].state = 1;
-                    actor_3024_records[actor_3024_count].world_x = col * 2 + 2;
-                    actor_3024_records[actor_3024_count].world_y = row * 128;
-                    ++actor_3024_count;
+                    security_camera_records[security_camera_count].state = 1;
+                    security_camera_records[security_camera_count].world_x = col * 2 + 2;
+                    security_camera_records[security_camera_count].world_y = row * 128;
+                    ++security_camera_count;
                     *tile_cell = tile_cell[128];
                     break;
                 case 0x3025:
-                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = 0x7ee0;
-                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
-                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
-                    ++actor_3025_count;
+                    animated_level_tile_records[animated_level_tile_count].sprite_resource_offset = 0x7ee0;
+                    animated_level_tile_records[animated_level_tile_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[animated_level_tile_count].world_y = row * 128;
+                    ++animated_level_tile_count;
                     *tile_cell = tile_cell[-128];
                     break;
                 case 0x3026:
                 case 0x3027:
-                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = (*tile_cell + 0xcfda) * 0xa0 + 0x7f80;
-                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
-                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
-                    ++actor_3025_count;
+                    animated_level_tile_records[animated_level_tile_count].sprite_resource_offset = (*tile_cell + 0xcfda) * 0xa0 + 0x7f80;
+                    animated_level_tile_records[animated_level_tile_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[animated_level_tile_count].world_y = row * 128;
+                    ++animated_level_tile_count;
                     if (*tile_cell == 0x3026)
                         *tile_cell = tile_cell[-1];
                     else
                         *tile_cell = tile_cell[1];
                     break;
                 case 0x3028:
-                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = 0x80c0;
-                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
-                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
-                    ++actor_3025_count;
+                    animated_level_tile_records[animated_level_tile_count].sprite_resource_offset = 0x80c0;
+                    animated_level_tile_records[animated_level_tile_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[animated_level_tile_count].world_y = row * 128;
+                    ++animated_level_tile_count;
                     *tile_cell = 0;
                     break;
                 case 0x3029:
-                    actor_3029_records[actor_3029_count].state = 1;
-                    actor_3029_records[actor_3029_count].world_x = col * 2 + 2;
-                    actor_3029_records[actor_3029_count].world_y = row * 128;
-                    ++actor_3029_count;
-                    register_level_update_callback(update_actor_3029);
+                    molecule_bonus_box_records[molecule_bonus_box_count].state = 1;
+                    molecule_bonus_box_records[molecule_bonus_box_count].world_x = col * 2 + 2;
+                    molecule_bonus_box_records[molecule_bonus_box_count].world_y = row * 128;
+                    ++molecule_bonus_box_count;
+                    register_level_update_callback(update_molecule_bonus_box);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x302a:
-                    actor_302a_records[actor_302a_count].state = 1;
-                    actor_302a_records[actor_302a_count].world_x = col * 2 + 2;
-                    actor_302a_records[actor_302a_count].world_y = row * 128;
-                    ++actor_302a_count;
-                    register_level_update_callback(update_actor_302a);
+                    falling_sign_records[falling_sign_count].state = 1;
+                    falling_sign_records[falling_sign_count].world_x = col * 2 + 2;
+                    falling_sign_records[falling_sign_count].world_y = row * 128;
+                    ++falling_sign_count;
+                    register_level_update_callback(update_falling_sign);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x302b:
-                    actor_302b_active_state = 0;
-                    actor_302b_world_x = col * 2 + 2;
-                    actor_302b_world_y = row * 128;
-                    actor_302b_open_state = 1;
-                    actor_302b_animation_counter = 10;
-                    register_level_update_callback(update_actor_302b);
+                    reactor_active_state = 0;
+                    reactor_world_x = col * 2 + 2;
+                    reactor_world_y = row * 128;
+                    reactor_open_state = 1;
+                    reactor_animation_counter = 10;
+                    register_level_update_callback(update_reactor);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x302c:
-                    actor_302c_records[actor_302c_count].world_x = col * 2 + 2;
-                    actor_302c_records[actor_302c_count].world_y = row * 128;
-                    register_level_update_callback(update_actor_302c);
-                    ++actor_302c_count;
+                    popup_spikes_records[popup_spikes_count].world_x = col * 2 + 2;
+                    popup_spikes_records[popup_spikes_count].world_y = row * 128;
+                    register_level_update_callback(update_popup_spikes);
+                    ++popup_spikes_count;
                     *tile_cell = tile_cell[-128];
                     break;
                 case 0x302d:
                 case 0x3055:
                     if (*tile_cell == 0x3055)
-                        actor_302d_records[actor_302d_count].state = 2;
+                        magenta_flag_box_records[magenta_flag_box_count].state = 2;
                     else
-                        actor_302d_records[actor_302d_count].state = 1;
-                    actor_302d_records[actor_302d_count].world_x = col * 2 + 2;
-                    actor_302d_records[actor_302d_count].world_y = row * 128;
-                    ++actor_302d_count;
-                    register_level_update_callback(update_actor_302d);
+                        magenta_flag_box_records[magenta_flag_box_count].state = 1;
+                    magenta_flag_box_records[magenta_flag_box_count].world_x = col * 2 + 2;
+                    magenta_flag_box_records[magenta_flag_box_count].world_y = row * 128;
+                    ++magenta_flag_box_count;
+                    register_level_update_callback(update_magenta_flag_box);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x302e:
                 case 0x3056:
                     if (*tile_cell == 0x3056)
-                        actor_302e_records[actor_302e_count].state = 2;
+                        radio_box_records[radio_box_count].state = 2;
                     else
-                        actor_302e_records[actor_302e_count].state = 1;
-                    actor_302e_records[actor_302e_count].world_x = col * 2 + 2;
-                    actor_302e_records[actor_302e_count].world_y = row * 128;
-                    ++actor_302e_count;
-                    register_level_update_callback(update_actor_302e);
+                        radio_box_records[radio_box_count].state = 1;
+                    radio_box_records[radio_box_count].world_x = col * 2 + 2;
+                    radio_box_records[radio_box_count].world_y = row * 128;
+                    ++radio_box_count;
+                    register_level_update_callback(update_radio_box);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x302f:
-                    actor_302f_active_state = 1;
-                    actor_302f_world_x = col * 2 + 2;
-                    actor_302f_world_y = row * 128;
-                    actor_302f_interaction_state = 0;
-                    actor_302f_interaction_phase = 0;
-                    register_level_update_callback(activate_actor_302f);
+                    teleporter_entry_active_state = 1;
+                    teleporter_entry_world_x = col * 2 + 2;
+                    teleporter_entry_world_y = row * 128;
+                    tele_in_interaction_state = 0;
+                    tele_in_interaction_phase = 0;
+                    register_level_update_callback(activate_teleporter_entry);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3030:
-                    actor_3030_active_state = 1;
-                    actor_3030_world_x = col * 2 + 2;
-                    actor_3030_world_y = row * 128;
-                    actor_3030_interaction_state = 0;
-                    actor_302f_animation_phase = 0;
-                    register_level_update_callback(activate_actor_3030);
+                    teleporter_exit_active_state = 1;
+                    teleporter_exit_world_x = col * 2 + 2;
+                    teleporter_exit_world_y = row * 128;
+                    tele_out_interaction_state = 0;
+                    tele_in_animation_phase = 0;
+                    register_level_update_callback(activate_teleporter_exit);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3031:
-                    actor_3031_records[actor_3031_count].state = 0xfffa;
-                    actor_3031_records[actor_3031_count].world_x = col * 2 + 2;
-                    actor_3031_records[actor_3031_count].world_y = row * 128;
-                    register_level_update_callback(update_actor_3031);
+                    red_bomb_records[red_bomb_count].state = 0xfffa;
+                    red_bomb_records[red_bomb_count].world_x = col * 2 + 2;
+                    red_bomb_records[red_bomb_count].world_y = row * 128;
+                    register_level_update_callback(update_red_bomb);
                     *tile_cell = tile_cell[-1];
-                    ++actor_3031_count;
+                    ++red_bomb_count;
                     break;
                 case 0x3032:
                     level_scroll_x = col * 2 - 14;
@@ -7178,26 +7129,26 @@ void pascal create_objects_from_level_map(unsigned int row_count)
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3033:
-                    actor_3033_active_state = 0;
-                    actor_3033_enabled = 1;
-                    actor_3033_world_x = col * 2 + 2;
-                    actor_3033_world_y = row * 128;
-                    actor_3033_state = 0;
-                    register_level_update_callback(update_actor_3033);
+                    access_card_box_active_state = 0;
+                    access_card_box_enabled = 1;
+                    access_card_box_world_x = col * 2 + 2;
+                    access_card_box_world_y = row * 128;
+                    access_card_box_state = 0;
+                    register_level_update_callback(update_access_card_box);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3034:
-                    actor_3034_active_state = 1;
-                    actor_3034_world_x = col * 2 + 2;
-                    actor_3034_world_y = row * 128;
+                    access_card_reader_active_state = 1;
+                    access_card_reader_world_x = col * 2 + 2;
+                    access_card_reader_world_y = row * 128;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3035:
-                    actor_3035_active_state = 1;
-                    actor_3035_animation_state = 0;
-                    actor_3035_state = 0;
-                    actor_3035_world_x = col * 2 + 2;
-                    actor_3035_world_y = row * 128;
+                    robohand_switch_active_state = 1;
+                    robohand_switch_animation_state = 0;
+                    robohand_switch_state = 0;
+                    robohand_switch_world_x = col * 2 + 2;
+                    robohand_switch_world_y = row * 128;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3036:
@@ -7206,119 +7157,119 @@ void pascal create_objects_from_level_map(unsigned int row_count)
                     secret_block_world_x = col * 2 + 2;
                     secret_block_world_y = row * 128;
                     *tile_cell = 0x2fe0;
-                    register_level_update_callback(update_secret_block_state);
+                    register_level_update_callback(update_robohand_bridge_state);
                     break;
                 case 0x3037:
                 case 0x3038:
                 case 0x3039:
                 case 0x303a:
-                    actor_3037_animation_state = 0;
+                    letter_bonus_animation_state = 0;
                     switch (*tile_cell) {
                     case 0x3037:
-                        actor_3037_records[actor_3037_object_count].state = 0x44;
+                        letter_bonus_records[letter_bonus_object_count].state = 0x44;
                         break;
                     case 0x3038:
-                        actor_3037_records[actor_3037_object_count].state = 0x55;
+                        letter_bonus_records[letter_bonus_object_count].state = 0x55;
                         break;
                     case 0x3039:
-                        actor_3037_records[actor_3037_object_count].state = 0x4b;
+                        letter_bonus_records[letter_bonus_object_count].state = 0x4b;
                         break;
                     case 0x303a:
-                        actor_3037_records[actor_3037_object_count].state = 0x45;
+                        letter_bonus_records[letter_bonus_object_count].state = 0x45;
                         break;
                     }
-                    actor_3037_records[actor_3037_object_count].world_x = col * 2 + 2;
-                    actor_3037_records[actor_3037_object_count].world_y = row * 128;
-                    actor_3037_records[actor_3037_object_count].animation_flag = 0;
+                    letter_bonus_records[letter_bonus_object_count].world_x = col * 2 + 2;
+                    letter_bonus_records[letter_bonus_object_count].world_y = row * 128;
+                    letter_bonus_records[letter_bonus_object_count].animation_flag = 0;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_3037);
-                    ++actor_3037_object_count;
+                    register_level_update_callback(update_letter_bonus);
+                    ++letter_bonus_object_count;
                     break;
                 case 0x303b:
-                    actor_303b_records[actor_303b_count].state = 1;
-                    actor_303b_records[actor_303b_count].world_x = col * 2 + 2;
-                    actor_303b_records[actor_303b_count].world_y = row * 128;
-                    actor_303b_records[actor_303b_count].object_kind = 0;
-                    ++actor_303b_count;
-                    register_level_update_callback(update_actor_303b);
+                    rabbit_bonus_records[rabbit_bonus_count].state = 1;
+                    rabbit_bonus_records[rabbit_bonus_count].world_x = col * 2 + 2;
+                    rabbit_bonus_records[rabbit_bonus_count].world_y = row * 128;
+                    rabbit_bonus_records[rabbit_bonus_count].object_kind = 0;
+                    ++rabbit_bonus_count;
+                    register_level_update_callback(update_rabbit_bonus);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x303c:
-                    actor_303c_records[actor_303c_count].state = 1;
-                    actor_303c_records[actor_303c_count].world_x = col * 2 + 2;
-                    actor_303c_records[actor_303c_count].world_y = row * 128;
-                    ++actor_303c_count;
-                    register_level_update_callback(update_actor_303c);
+                    fire_creature_records[fire_creature_count].state = 1;
+                    fire_creature_records[fire_creature_count].world_x = col * 2 + 2;
+                    fire_creature_records[fire_creature_count].world_y = row * 128;
+                    ++fire_creature_count;
+                    register_level_update_callback(update_fire_creature);
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x303d:
                 case 0x303e:
                 case 0x303f:
-                    animated_level_tile_records[actor_3025_count].sprite_resource_offset = (*tile_cell + 0xcfc3) * 0xa0 + 0x9d80;
-                    animated_level_tile_records[actor_3025_count].world_x = col * 2 + 2;
-                    animated_level_tile_records[actor_3025_count].world_y = row * 128;
-                    ++actor_3025_count;
+                    animated_level_tile_records[animated_level_tile_count].sprite_resource_offset = (*tile_cell + 0xcfc3) * 0xa0 + 0x9d80;
+                    animated_level_tile_records[animated_level_tile_count].world_x = col * 2 + 2;
+                    animated_level_tile_records[animated_level_tile_count].world_y = row * 128;
+                    ++animated_level_tile_count;
                     *tile_cell = 0;
                     break;
                 case 0x3040:
-                    actor_3040_active_state = 1;
-                    actor_3040_world_x = col * 2 + 2;
-                    actor_3040_world_y = row * 128;
+                    message_sign_active_state = 1;
+                    message_sign_world_x = col * 2 + 2;
+                    message_sign_world_y = row * 128;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3041:
-                    actor_3041_active_state = 1;
-                    actor_3041_interaction_state = 0;
-                    actor_3041_world_x = col * 2 + 2;
-                    actor_3041_world_y = row * 128;
+                    proton_display_active_state = 1;
+                    proton_screen_interaction_state = 0;
+                    proton_display_world_x = col * 2 + 2;
+                    proton_display_world_y = row * 128;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x3042:
                 case 0x3043:
-                    actor_3042_active_state = 1;
-                    actor_3042_world_x = col * 2 + 2;
-                    actor_3042_world_y = row * 128;
-                    actor_3042_open_state = 1;
+                    dr_proton_active_state = 1;
+                    dr_proton_world_x = col * 2 + 2;
+                    dr_proton_world_y = row * 128;
+                    dr_proton_open_state = 1;
                     if (*tile_cell == 0x3043)
                         ending_sequence_enabled = 1;
                     else
                         ending_sequence_enabled = 0;
-                    actor_3042_animation_counter = 10;
+                    dr_proton_animation_counter = 10;
                     player_animation_lock_state = 0;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_3042);
+                    register_level_update_callback(update_dr_proton);
                     break;
                 case 0x3044:
                 case 0x3045:
                 case 0x3046:
                 case 0x3047:
-                    actor_3044_records[actor_3044_entity_count].state = (*tile_cell + 0xcfbd) * 0xa0;
-                    actor_3044_records[actor_3044_entity_count].world_x = col * 2 + 2;
-                    actor_3044_records[actor_3044_entity_count].world_y = row * 128;
-                    ++actor_3044_entity_count;
+                    door_key_records[door_key_count].state = (*tile_cell + 0xcfbd) * 0xa0;
+                    door_key_records[door_key_count].world_x = col * 2 + 2;
+                    door_key_records[door_key_count].world_y = row * 128;
+                    ++door_key_count;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_actor_3044);
+                    register_level_update_callback(update_door_keys);
                     break;
                 case 0x3048:
                 case 0x3049:
                 case 0x304a:
                 case 0x304b:
-                    actor_3048_records[actor_3048_entity_count].sprite_resource_offset = (*tile_cell + 0xcfba) * 0xa0;
-                    actor_3048_records[actor_3048_entity_count].world_x = col * 2 + 2;
-                    actor_3048_records[actor_3048_entity_count].world_y = row * 128;
-                    actor_3048_records[actor_3048_entity_count].alternate_frame = (*tile_cell + 0xcfba) * 0xa0;
-                    ++actor_3048_entity_count;
+                    door_lock_records[door_lock_count].sprite_resource_offset = (*tile_cell + 0xcfba) * 0xa0;
+                    door_lock_records[door_lock_count].world_x = col * 2 + 2;
+                    door_lock_records[door_lock_count].world_y = row * 128;
+                    door_lock_records[door_lock_count].alternate_frame = (*tile_cell + 0xcfba) * 0xa0;
+                    ++door_lock_count;
                     *tile_cell = tile_cell[-1];
                     break;
                 case 0x304c:
                 case 0x304d:
                 case 0x304e:
                 case 0x304f:
-                    level_tile_animation_records[actor_3048_object_count].sprite_resource_offset = (*tile_cell + 0xcfb5) * 0xa0;
-                    level_tile_animation_records[actor_3048_object_count].world_x = col * 2 + 2;
-                    level_tile_animation_records[actor_3048_object_count].world_y = row * 128;
-                    level_tile_animation_records[actor_3048_object_count].alternate_frame = 0;
-                    ++actor_3048_object_count;
+                    level_tile_animation_records[door_tile_animation_count].sprite_resource_offset = (*tile_cell + 0xcfb5) * 0xa0;
+                    level_tile_animation_records[door_tile_animation_count].world_x = col * 2 + 2;
+                    level_tile_animation_records[door_tile_animation_count].world_y = row * 128;
+                    level_tile_animation_records[door_tile_animation_count].alternate_frame = 0;
+                    ++door_tile_animation_count;
                     *tile_cell = 0x1820;
                     register_level_update_callback(animate_level_tile_records);
                     break;
@@ -7328,18 +7279,18 @@ void pascal create_objects_from_level_map(unsigned int row_count)
                     falling_hazard_records[level_hazard_count].world_y = row * 128;
                     ++level_hazard_count;
                     *tile_cell = tile_cell[-1];
-                    register_level_update_callback(update_falling_hazards);
+                    register_level_update_callback(update_stationary_bomb_hazards);
                     break;
                 case 0x3058:
                 case 0x3059:
-                    actor_3058_records[level_object_pool_531e_count].world_x = col * 2 + 2;
-                    actor_3058_records[level_object_pool_531e_count].world_y = row * 128;
-                    register_level_update_callback(draw_marker_3058_objects);
+                    spike_hazard_records[level_object_pool_531e_count].world_x = col * 2 + 2;
+                    spike_hazard_records[level_object_pool_531e_count].world_y = row * 128;
+                    register_level_update_callback(draw_spike_hazard_sprites);
                     if (*tile_cell == 0x3058) {
-                        actor_3058_records[level_object_pool_531e_count].sprite_resource_offset = 0x5c80;
+                        spike_hazard_records[level_object_pool_531e_count].sprite_resource_offset = 0x5c80;
                         *tile_cell = tile_cell[-128];
                     } else {
-                        actor_3058_records[level_object_pool_531e_count].sprite_resource_offset = 0x5d20;
+                        spike_hazard_records[level_object_pool_531e_count].sprite_resource_offset = 0x5d20;
                         *tile_cell = tile_cell[128];
                     }
                     ++level_object_pool_531e_count;
@@ -7509,62 +7460,62 @@ void pascal load_level_and_init_objects(char far *level_filename)
     player_action_state = 4;
     player_animation_phase = 0;
     player_invulnerability_state = 0;
-    actor_3000_count = 0;
+    empty_bonus_box_count = 0;
     collision_sound_record_count = 12;
     projectile_count = 3;
     moving_object_count = 7;
     pickup_object_count = 0x12;
     moving_actor_count = 8;
-    actor_3001_count = 0;
-    actor_3002_count = 0;
-    actor_3007_count = 0;
-    actor_3009_count = 0;
-    actor_300a_count = 0;
-    actor_300b_count = 0;
-    actor_300b_screen_anim_offset = 0;
-    actor_300b_animation_frame = 0;
-    actor_300c_count = 0;
-    actor_300d_count = 0;
-    actor_300e_count = 0;
+    elevator_count = 0;
+    conveyor_belt_count = 0;
+    rocket_count = 0;
+    right_flame_turret_count = 0;
+    left_flame_turret_count = 0;
+    flying_techbot_count = 0;
+    fly_techbot_screen_anim_offset = 0;
+    flying_techbot_animation_frame = 0;
+    jumping_techbot_count = 0;
+    wheeled_techbot_count = 0;
+    fire_wheel_techbot_count = 0;
     keyboard_hotkey_count = 0;
-    actor_300f_count = 0;
-    actor_3010_count = 0;
+    ammo_box_count = 0;
+    robot_techbot_count = 0;
     current_weapon_state = 0;
     door_or_key_interaction_state = 0;
-    actor_3012_count = 0;
+    dynamite_box_count = 0;
     formation_update_enabled = 0;
-    actor_3014_count = 0;
-    actor_3015_count = 0;
-    actor_3016_count = 0;
-    actor_3018_count = 0;
-    actor_3019_enabled = 0;
-    actor_301a_count = 0;
-    actor_301b_count = 0;
-    actor_301d_count = 0;
-    actor_301e_count = 0;
-    actor_301f_count = 0;
-    actor_3021_count = 0;
-    actor_3022_count = 0;
-    actor_3023_count = 0;
-    actor_3024_count = 0;
-    actor_3025_count = 0;
-    actor_3029_count = 0;
-    actor_302a_count = 0;
-    actor_302c_count = 0;
-    actor_302b_active_state = 1;
-    actor_302b_open_state = 0;
-    actor_302d_count = 0;
-    actor_302e_count = 0;
-    actor_3031_count = actor_3030_active_state = actor_3030_interaction_state = actor_302f_active_state = actor_302f_interaction_state = 0;
-    actor_3034_active_state = -1;
-    actor_3042_active_state = actor_3041_active_state = actor_3040_active_state = actor_303c_count = actor_303b_count = actor_3037_bonus_state = actor_3037_object_count = secret_block_animation_state = actor_3035_active_state = 0;
+    water_shimmer_count = 0;
+    soda_can_bonus_count = 0;
+    wallcrawler_count = 0;
+    turkey_bonus_count = 0;
+    collapsing_bridge_enabled = 0;
+    horizontal_force_field_count = 0;
+    rotating_fan_count = 0;
+    football_box_count = 0;
+    joystick_box_count = 0;
+    floppy_disk_box_count = 0;
+    vertical_force_field_count = 0;
+    helicopter_techbot_count = 0;
+    balloon_bonus_count = 0;
+    security_camera_count = 0;
+    animated_level_tile_count = 0;
+    molecule_bonus_box_count = 0;
+    falling_sign_count = 0;
+    popup_spikes_count = 0;
+    reactor_active_state = 1;
+    reactor_open_state = 0;
+    magenta_flag_box_count = 0;
+    radio_box_count = 0;
+    red_bomb_count = teleporter_exit_active_state = tele_out_interaction_state = teleporter_entry_active_state = tele_in_interaction_state = 0;
+    access_card_reader_active_state = -1;
+    dr_proton_active_state = proton_display_active_state = message_sign_active_state = fire_creature_count = rabbit_bonus_count = letter_bonus_state = letter_bonus_object_count = secret_block_animation_state = robohand_switch_active_state = 0;
     active_sprite_draw_flag = 0;
     player_projectile_state = 0x15;
-    exit_lock_animation_state = actor_3048_object_count = actor_3044_entity_count = actor_3048_entity_count = actor_3033_enabled = actor_3033_active_state = 0;
-    actor_302b_animation_counter = 10;
-    actor_3042_animation_frame_4 = actor_3042_animation_frame_3 = actor_3042_animation_frame_2 = actor_3042_animation_frame_1 = actor_3042_animation_frame_0 = level_hazard_count = 0;
-    actor_3042_animation_frame_5 = 10;
-    actor_3042_interaction_state = level_object_pool_531e_count = ending_sequence_enabled = player_animation_lock_state = 0;
+    exit_lock_animation_state = door_tile_animation_count = door_key_count = door_lock_count = access_card_box_enabled = access_card_box_active_state = 0;
+    reactor_animation_counter = 10;
+    dr_proton_animation_frame_4 = dr_proton_animation_frame_3 = dr_proton_animation_frame_2 = dr_proton_animation_frame_1 = dr_proton_animation_frame_0 = level_hazard_count = 0;
+    dr_proton_animation_frame_5 = 10;
+    dr_proton_interaction_state = level_object_pool_531e_count = ending_sequence_enabled = player_animation_lock_state = 0;
 
     load_level_tile_map(level_filename);
     outport(0x3ce, 5);
@@ -7578,7 +7529,7 @@ void pascal load_level_and_init_objects(char far *level_filename)
 
     if (current_level_index % 2 == 0) {
         player_gameplay_state = 1;
-        actor_303b_update_state = 0;
+        rabbit_bonus_update_state = 0;
         clear_ambient_object_pool();
     }
 
@@ -7601,29 +7552,29 @@ void init_player_and_level_state(void)
 {
     long saved_score;
 
-    actor_300e_animation_state = 0;
-    actor_300e_animation_counter = 0;
+    fire_wheel_animation_state = 0;
+    fire_wheel_animation_counter = 0;
     player_action_state = 4;
     player_animation_phase = 0;
     player_invulnerability_state = 0;
-    actor_3006_world_x = 0;
-    actor_3006_world_y = 0;
+    jump_boots_box_world_x = 0;
+    jump_boots_box_world_y = 0;
     access_card_or_door_state = 0;
-    actor_3006_state = 0;
-    actor_3008_state = 0;
+    jump_boots_box_state = 0;
+    ceiling_clinger_box_state = 0;
     player_contact_state = 0;
-    actor_3020_world_x = 0;
-    actor_3020_world_y = 0;
-    actor_3020_active_state = 0;
-    actor_3020_state = 0;
-    actor_3033_world_x = 0;
-    actor_3033_world_y = 0;
-    actor_3033_active_state = 0;
-    actor_3033_state = 0;
+    robohand_box_world_x = 0;
+    robohand_box_world_y = 0;
+    robohand_box_active_state = 0;
+    robohand_box_state = 0;
+    access_card_box_world_x = 0;
+    access_card_box_world_y = 0;
+    access_card_box_active_state = 0;
+    access_card_box_state = 0;
     alternate_sprite_draw_offset = 0;
     episode_sprite_resource_table = 0;
-    actor_3013_formation_state = 0;
-    actor_3037_animation_state = 0;
+    snake_techbot_formation_state = 0;
+    letter_bonus_animation_state = 0;
     world_actor_count = 1;
     level_loading_state = 0;
     player_airborne_state = 1;
@@ -7636,7 +7587,7 @@ void init_player_and_level_state(void)
     player_score = 0L;
     level_progress_word = 0;
     level_play_state = 0;
-    actor_302a_update_state = 0;
+    falling_sign_update_state = 0;
     current_level_index = 0;
     title_graphic_frame_index = 9;
 
@@ -7654,7 +7605,7 @@ void init_player_and_level_state(void)
         if (player_contact_state) {
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
         }
-        if (actor_3020_active_state) {
+        if (robohand_box_active_state) {
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
         }
     } else {
@@ -7929,7 +7880,7 @@ void run_game_loop(void)
     credits_text_position = 0;
     credit_scroll_delay = 0;
     timer_tick_counter = 0;
-    actor_3042_hint_state = 0;
+    dr_proton_hint_state = 0;
     disable();
     control_fire_pressed = control_jump_pressed = control_left_pressed = control_right_pressed = control_up_pressed = control_down_pressed = 0;
     enable();
@@ -7943,7 +7894,7 @@ void run_game_loop(void)
         timer_tick_counter = 0;
         advance_player_transition();
         if (control_confirmation_state != 0) {
-            if (actor_302f_interaction_state == 0 && actor_3030_interaction_state == 0)
+            if (tele_in_interaction_state == 0 && tele_out_interaction_state == 0)
                 configure_joystick_axes(1);
             update_joystick_axis_state();
         }
@@ -8023,8 +7974,8 @@ void run_game_loop(void)
             animate_credits_scroll();
         }
         if (keyboard_key_g_pressed != 0 && keyboard_key_o_pressed != 0 && keyboard_key_d_pressed != 0 && demo_mode_enabled != 0) {
-            actor_3033_active_state = access_card_or_door_state = player_contact_state = actor_3020_active_state = 1;
-            actor_3033_enabled = 0;
+            access_card_box_active_state = access_card_or_door_state = player_contact_state = robohand_box_active_state = 1;
+            access_card_box_enabled = 0;
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x640);
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
@@ -8054,7 +8005,7 @@ void run_game_loop(void)
             control_down_pressed = 0;
         }
         update_moving_actor_pool();
-        update_actor_3014();
+        update_water_shimmer();
         draw_video_page_template();
         if (demo_mode_state != 0)
             blit_bitmap_to_video_page(0x3200, 2);
@@ -8172,13 +8123,13 @@ void run_game_loop(void)
                     level_play_state = 0;
                     level_progress_word = 0;
                 }
-                if (actor_302a_update_state != 0) {
+                if (falling_sign_update_state != 0) {
                     queue_ambient_sprite_animation(0xdc0, player_screen_x + level_scroll_x + 4,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     queue_ambient_sprite_animation(0xf00, player_screen_x + level_scroll_x + 6,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     add_and_draw_player_score(10000L);
-                    actor_302a_update_state = 0;
+                    falling_sign_update_state = 0;
                 }
                 player_gameplay_state = 1;
                 if (hidden_object_state != 0 && level_loading_state != 0) {
@@ -8190,32 +8141,32 @@ void run_game_loop(void)
                     add_and_draw_player_score(10000L);
                     hidden_object_state = 0;
                 }
-                if (actor_3037_animation_state != 0) {
+                if (letter_bonus_animation_state != 0) {
                     queue_ambient_sprite_animation(0x12c0, player_screen_x + level_scroll_x + 4,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     queue_ambient_sprite_animation(0x1400, player_screen_x + level_scroll_x + 6,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     add_and_draw_player_score(10000L);
                     sprite_offset += 0x100;
-                    actor_3037_animation_state = 0;
+                    letter_bonus_animation_state = 0;
                 }
-                if (actor_3013_formation_state != 0) {
+                if (snake_techbot_formation_state != 0) {
                     queue_ambient_sprite_animation(0x1540, player_screen_x + level_scroll_x + 4,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     queue_ambient_sprite_animation(0x1680, player_screen_x + level_scroll_x + 6,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     add_and_draw_player_score(10000L);
                     sprite_offset += 0x100;
-                    actor_3013_formation_state = 0;
+                    snake_techbot_formation_state = 0;
                 }
-                if (actor_303b_update_state != 0) {
+                if (rabbit_bonus_update_state != 0) {
                     queue_ambient_sprite_animation(0x17c0, player_screen_x + level_scroll_x + 4,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     queue_ambient_sprite_animation(0x1900, player_screen_x + level_scroll_x + 6,
                                                    (((player_screen_y - 29) >> 4) << 7) + sprite_offset + level_map_y_offset + 0x300);
                     add_and_draw_player_score(10000L);
                     sprite_offset += 0x100;
-                    actor_303b_update_state = 0;
+                    rabbit_bonus_update_state = 0;
                 }
                 save_game_state_to_slot('T');
             }
@@ -8357,9 +8308,9 @@ void run_game_loop(void)
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x640);
         if (player_contact_state != 0)
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0xb40);
-        if (actor_3020_active_state != 0)
+        if (robohand_box_active_state != 0)
             draw_alternate_planar_sprite(sprite_pixel_data_pointer + 0x2760);
-        actor_3033_active_state = 0;
+        access_card_box_active_state = 0;
 
     /* These paths skip the mode-change cleanup above. */
     post_mode:
@@ -8373,7 +8324,7 @@ void run_game_loop(void)
             goto state_tail;
     /* The player_level_transition_state == 0 path joins the timed demo path here. */
     state_c293:
-        if (actor_3042_hint_state == 0)
+        if (dr_proton_hint_state == 0)
             goto state_event;
         play_level_transition_sequence();
         select_draw_page(draw_page_index);

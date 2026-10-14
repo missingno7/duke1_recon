@@ -46,11 +46,11 @@ struct animated_actor_pool_record { int animation_state, sprite_frame_index, ver
 /* Stores the active contact-flash state, four world-coordinate pairs, and their sprite offsets. */
 struct contact_flash_effect_record { int effect_values[15]; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3000. */
-struct actor_3000_record { int state, world_x, world_y; };
+struct empty_bonus_box_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3001. */
-struct actor_3001_record { int active, world_x, world_y; };
+struct elevator_record { int active, world_x, world_y; };
 /* Stores map coordinates, object height, state, and one reserved word for marker type 0x3002. */
-struct actor_3002_record {
+struct conveyor_belt_record {
     int reserved;
     int map_column;
     int map_row;
@@ -58,27 +58,27 @@ struct actor_3002_record {
     int object_state;
 };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3007. */
-struct actor_3007_record { int state, world_x, world_y; };
+struct rocket_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3009. */
-struct actor_3009_record { int state, world_x, world_y; };
+struct right_flame_turret_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x300A. */
-struct actor_300a_record { int state, world_x, world_y; };
+struct left_flame_turret_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x300B. */
-struct actor_300b_record { int motion_state; int world_x; int world_y; int trajectory_step; };
+struct flying_techbot_record { int motion_state; int world_x; int world_y; int trajectory_step; };
 /* Stores the six sprite-resource offsets for a two-column by three-row actor graphic. */
 struct actor_tile_graphic_offsets { int top_left_sprite_offset, top_right_sprite_offset, middle_left_sprite_offset, middle_right_sprite_offset, bottom_left_sprite_offset, bottom_right_sprite_offset; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x300C. */
-struct actor_300c_record { int state, world_x, world_y, marker_state; };
+struct jumping_techbot_record { int state, world_x, world_y, marker_state; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x300D. */
-struct actor_300d_record { int state, world_x, world_y; };
+struct wheeled_techbot_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x300E. */
-struct actor_300e_record { int state, world_x, world_y; };
+struct fire_wheel_techbot_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x300F. */
-struct actor_300f_record { int active, world_x, world_y, animation_state; };
+struct ammo_box_record { int active, world_x, world_y, animation_state; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3010. */
-struct actor_3010_record { int state, world_x, world_y, animation_phase; };
+struct robot_techbot_record { int state, world_x, world_y, animation_phase; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3012. */
-struct actor_3012_record {
+struct dynamite_box_record {
     int state;
     int world_x;
     int world_y;
@@ -87,64 +87,64 @@ struct actor_3012_record {
     int unknown_flag_10;
 };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3014. */
-struct actor_3014_record { int world_x; int world_y; };
+struct water_shimmer_record { int world_x; int world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3015. */
-struct actor_3015_record { int state, world_x, world_y; };
+struct soda_can_bonus_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3016. */
-struct actor_3016_record { int state, world_x, world_y; };
+struct wallcrawler_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3018. */
-struct actor_3018_record { int state, world_x, world_y; };
+struct turkey_bonus_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x301A. */
-struct actor_301a_record { int world_x, world_y, active; };
+struct horizontal_force_field_record { int world_x, world_y, active; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x301B. */
-struct actor_301b_record { int state, world_x, world_y, animation_count; };
+struct rotating_fan_record { int state, world_x, world_y, animation_count; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x301D. */
-struct actor_301d_record { int active, world_x, world_y, animation_state; };
+struct football_box_record { int active, world_x, world_y, animation_state; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x301E. */
-struct actor_301e_record { int state, world_x, world_y, animation_flag; };
+struct joystick_box_record { int state, world_x, world_y, animation_flag; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x301F. */
-struct actor_301f_record { int state, world_x, world_y, animation_flag; };
+struct floppy_disk_box_record { int state, world_x, world_y, animation_flag; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3021. */
-struct actor_3021_record { int world_x, world_y; };
+struct vertical_force_field_record { int world_x, world_y; };
 /* Stores type 0x3022 actor movement, position, health, and movement counters. */
-struct actor_3022_record { int movement_state, world_x, world_y, jump_timer, hit_points, fall_counter; };
+struct helicopter_techbot_record { int movement_state, world_x, world_y, jump_timer, hit_points, fall_counter; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3023. */
-struct actor_3023_record { int state, world_x, world_y; };
+struct balloon_bonus_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3024. */
-struct actor_3024_record { int state, world_x, world_y; };
+struct security_camera_record { int state, world_x, world_y; };
 /* Stores a sprite-resource offset and world position for one animated level tile. */
 struct animated_level_tile_record { int sprite_resource_offset; int world_x; unsigned int world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3029. */
-struct actor_3029_record { int state, world_x; unsigned int world_y; };
+struct molecule_bonus_box_record { int state, world_x; unsigned int world_y; };
 /* Stores the state and world position of one level-object type 0x302a record. */
-struct actor_302a_record {
+struct falling_sign_record {
     int state;
     int world_x;
     int world_y;
 };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x302C. */
-struct actor_302c_record { int world_x; int world_y; };
+struct popup_spikes_record { int world_x; int world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x302D. */
-struct actor_302d_record { int state, world_x, world_y; };
+struct magenta_flag_box_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x302E. */
-struct actor_302e_record { int state, world_x, world_y; };
+struct radio_box_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3031. */
-struct actor_3031_record { int state, world_x, world_y; };
+struct red_bomb_record { int state, world_x, world_y; };
 /* Stores the active flag and world position of one falling hazard. */
 struct falling_hazard_record { int active; int world_x; int world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3037. */
-struct actor_3037_record { int state, world_x, world_y, animation_flag; };
+struct letter_bonus_record { int state, world_x, world_y, animation_flag; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x303B. */
-struct actor_303b_record { int state, world_x, world_y, object_kind; };
+struct rabbit_bonus_record { int state, world_x, world_y, object_kind; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x303C. */
-struct actor_303c_record { int state, world_x, world_y; };
+struct fire_creature_record { int state, world_x, world_y; };
 /* Stores world coordinates and type-specific data for level objects created from marker 0x3044. */
-struct actor_3044_record { int state, world_x, world_y; };
+struct door_key_record { int state, world_x, world_y; };
 /* Stores sprite offset, world position, and alternate-frame state for animated tiles and marker
    0x3048 objects. */
 struct level_tile_animation_record { int sprite_resource_offset, world_x, world_y, alternate_frame; };
 /* Stores a sprite-resource offset and world position for one marker 0x3058 object. */
-struct actor_3058_record {
+struct spike_hazard_record {
     int sprite_resource_offset;
     int world_x;
     int world_y;
@@ -214,77 +214,77 @@ int test_player_vertical_range(int x_min, int x_max, int world_y);
 int test_player_x_alignment(int world_x, int world_y);
 int test_level_tile_special_state(int world_x, int world_y);
 int is_level_position_blocked(int world_x, int world_y);
-void update_actor_3000(void);
-void update_actor_3001(void);
-void update_actor_3002(void);
-void update_actor_3006(void);
-void update_actor_3007(void);
-void update_actor_3008(void);
-void update_actor_3009(void);
-void update_actor_300a(void);
-void update_actor_300b(void);
-void pascal draw_six_tile_actor_sprite(int sprite_index, int x_coord, int world_y);
-void update_actor_300c(void);
-void pascal draw_two_tile_wide_actor_sprite(int frame, int world_x, int world_y);
-void update_actor_300d(void);
-void update_actor_3020(void);
-void update_actor_3033(void);
-void pascal draw_two_by_two_actor_sprite(int frame, int world_x, int world_y);
-void update_actor_300e(void);
-void update_actor_300f(void);
-void update_actor_3010(void);
+void update_empty_bonus_box(void);
+void update_elevator(void);
+void update_conveyor_belt(void);
+void update_jump_boots_box(void);
+void update_rocket(void);
+void update_ceiling_clinger_box(void);
+void update_right_flame_turret(void);
+void update_left_flame_turret(void);
+void update_flying_techbot(void);
+void pascal draw_jumping_techbot_sprite(int sprite_index, int x_coord, int world_y);
+void update_jumping_techbot(void);
+void pascal draw_wheeled_techbot_sprite(int frame, int world_x, int world_y);
+void update_wheeled_techbot(void);
+void update_robohand_box(void);
+void update_access_card_box(void);
+void pascal draw_fire_wheel_techbot_sprite(int frame, int world_x, int world_y);
+void update_fire_wheel_techbot(void);
+void update_ammo_box(void);
+void update_robot_techbot(void);
 void pascal draw_two_by_two_actor_variant(int frame, int world_x, int world_y);
 void handle_door_and_key_interaction(void);
-void update_actor_3012(void);
-void update_actor_3013(void);
-void update_actor_3014(void);
-void update_actor_3015(void);
-void update_actor_3016(void);
-void update_actor_3018(void);
-void update_actor_3019(void);
-void update_actor_301a(void);
-void pascal draw_two_tile_tall_actor_sprite(int row, int horizontal, int vertical);
-void update_actor_301b(void);
-void update_actor_301d(void);
-void update_actor_301e(void);
-void update_actor_301f(void);
-void update_actor_3021(void);
-void pascal draw_four_wide_actor_sprite(int frame, int x, int y);
-void pascal draw_wide_actor_sprite(int frame, int x, int y);
-void update_actor_3022(void);
-void update_actor_3023(void);
-void update_actor_3024(void);
+void update_dynamite_box(void);
+void update_snake_techbot(void);
+void update_water_shimmer(void);
+void update_soda_can_bonus(void);
+void update_wallcrawler(void);
+void update_turkey_bonus(void);
+void update_collapsing_bridge(void);
+void update_horizontal_force_field(void);
+void pascal draw_rotating_fan_sprite(int row, int horizontal, int vertical);
+void update_rotating_fan(void);
+void update_football_box(void);
+void update_joystick_box(void);
+void update_floppy_disk_box(void);
+void update_vertical_force_field(void);
+void pascal draw_helicopter_quad_sprite(int frame, int x, int y);
+void pascal draw_helicopter_wide_sprite(int frame, int x, int y);
+void update_helicopter_techbot(void);
+void update_balloon_bonus(void);
+void update_security_camera(void);
 void draw_animated_level_tile(void);
-void update_actor_3029(void);
-void update_actor_302a(void);
-void update_actor_302b(void);
-void update_actor_302c(void);
-void update_actor_302d(void);
-void update_actor_302e(void);
+void update_molecule_bonus_box(void);
+void update_falling_sign(void);
+void update_reactor(void);
+void update_popup_spikes(void);
+void update_magenta_flag_box(void);
+void update_radio_box(void);
 void pascal draw_level_object_animation(int frame, int x, int y);
-void activate_actor_302f(void);
-void activate_actor_3030(void);
-void update_actor_3031(void);
-void update_falling_hazards(void);
-void update_actor_3034(void);
-void update_actor_3035(void);
-void update_secret_block_state(void);
-void update_actor_3037(void);
-void pascal draw_climbing_actor_sprite(int frame, int x, int y);
-void update_actor_303b(void);
+void activate_teleporter_entry(void);
+void activate_teleporter_exit(void);
+void update_red_bomb(void);
+void update_stationary_bomb_hazards(void);
+void update_access_card_reader(void);
+void update_robohand_switch(void);
+void update_robohand_bridge_state(void);
+void update_letter_bonus(void);
+void pascal draw_wallcrawler_sprite(int frame, int x, int y);
+void update_rabbit_bonus(void);
 void pascal draw_tall_effect_sprite(int frame, int x, int y);
-void update_actor_303c(void);
+void update_fire_creature(void);
 void wait_for_level_start(void);
-void update_actor_3040(void);
-void pascal draw_actor_sprite_by_variant(int variant, int x, int y);
-void update_actor_3042(void);
-void pascal draw_large_actor_sprite(int sprite_frame, int actor_world_x, int actor_world_y);
+void update_message_sign(void);
+void pascal draw_dr_proton_boss_sprite(int variant, int x, int y);
+void update_dr_proton(void);
+void pascal draw_proton_display_sprite(int sprite_frame, int actor_world_x, int actor_world_y);
 void update_level_lock_or_exit(void);
 void pascal draw_level_marker_tiles(void);
-void update_actor_3044(void);
-void update_actor_3048(void);
+void update_door_keys(void);
+void update_door_locks(void);
 void animate_level_tile_records(void);
-void draw_marker_3058_objects(void);
+void draw_spike_hazard_sprites(void);
 void pascal register_level_update_callback(void(far *update_callback)(void));
 void pascal create_objects_from_level_map(unsigned int row_count);
 void load_level_tile_map(char far *filename);
@@ -439,7 +439,7 @@ extern int abs(int);
 #define title_graphic_frame_index       d_4ed4_
 #define level_play_state                d_4ed6_
 #define hidden_object_state             d_4ed8_
-#define actor_300e_object_state_table   d_4eda_
+#define fire_wheel_object_state_table   d_4eda_
 #define high_score_values               d_4fa2_
 #define high_score_entry_1_alias        d_4fa6_
 #define high_score_entry_2_alias        d_4faa_
@@ -453,31 +453,31 @@ extern int abs(int);
 #define level_loading_state             d_5006_
 #define high_score_player_names         d_5008_
 #define high_score_name_edit_buffer     d_5076_
-#define actor_300c_object_marker_table  d_5081_
-#define actor_3035_state                d_5149_
+#define jumpbot_object_marker_table  d_5081_
+#define robohand_switch_state                d_5149_
 #define level_update_callback_table     d_514b_
-#define actor_3035_animation_state      d_52db_
+#define robohand_switch_animation_state      d_52db_
 #define projectile_records              d_52dd_
 #define credits_text_position           d_5305_
-#define actor_3035_active_state         d_5307_
-#define actor_3037_object_count         d_5309_
+#define robohand_switch_active_state         d_5307_
+#define letter_bonus_object_count         d_5309_
 #define pending_sound_priority_flag     d_530b_
-#define actor_3037_animation_state      d_530c_
+#define letter_bonus_animation_state      d_530c_
 #define user_demo_recording_state       d_530e_
 #define secret_block_collision_state    d_530f_
-#define actor_3013_formation_state      d_5310_
-#define actor_303b_update_state         d_5312_
+#define snake_techbot_formation_state      d_5310_
+#define rabbit_bonus_update_state         d_5312_
 #define exit_lock_animation_state       d_5314_
 #define secret_block_animation_state    d_5316_
 #define game_session_abort_flag         d_5318_
-#define actor_3048_object_count         d_5319_
+#define door_tile_animation_count         d_5319_
 #define pending_sound_effect_index      d_531b_
-#define actor_302a_update_state         d_531c_
+#define falling_sign_update_state         d_531c_
 #define level_object_pool_531e_count    d_531e_
 #define level_collision_sound_records   d_5320_
 #define animated_actor_pool_records     d_551e_
-#define actor_3048_entity_count         d_5548_
-#define actor_3042_interaction_state    d_554a_
+#define door_lock_count         d_5548_
+#define dr_proton_interaction_state    d_554a_
 #define selected_save_slot              d_554c_
 #define keyboard_hotkey_count           d_554d_
 #define control_hint_up_flag            d_554f_
@@ -491,182 +491,182 @@ extern int abs(int);
 #define hint_revealed_object_4          d_555a_
 #define hint_revealed_object_5          d_555b_
 #define hint_revealed_object_6          d_555c_
-#define actor_3012_records              d_555d_
+#define dynamite_box_records              d_555d_
 #define user_demo_buffer                d_5a0d_
 #define hint_revealed_object_7          d_5a11_
-#define actor_3015_records              d_5a12_
+#define soda_can_bonus_records              d_5a12_
 #define hint_revealed_object_8          d_5c6a_
 #define hint_revealed_object_9          d_5c6b_
 #define falling_hazard_records          d_5c6c_
 #define player_sprite_resource_buffer   d_5ec4_
 #define hint_revealed_object_10         d_5ec8_
-#define actor_3022_records              d_5ec9_
+#define helicopter_techbot_records              d_5ec9_
 #define active_sprite_draw_flag         d_6379_
 #define sprite_graphics_buffer          d_637a_
 #define hint_revealed_object_11         d_637e_
-#define actor_300b_records              d_637f_
-#define actor_3000_records              d_669f_
+#define flying_techbot_records              d_637f_
+#define empty_bonus_box_records              d_669f_
 #define transporter_hint_pending        d_68f7_
 #define player_score                    d_68f8_
-#define actor_3024_records              d_68fc_
+#define security_camera_records              d_68fc_
 #define font_glyph_data_buffer          d_6b54_
-#define actor_3044_records              d_6b58_
-#define actor_3007_records              d_6bb2_
+#define door_key_records              d_6b58_
+#define rocket_records              d_6bb2_
 #define draw_page_index                 d_6e0a_
-#define actor_302e_records              d_6e0b_
-#define actor_3029_records              d_7063_
-#define actor_3014_records              d_70db_
-#define actor_3021_records              d_726b_
-#define actor_303b_records              d_73fb_
+#define radio_box_records              d_6e0b_
+#define molecule_bonus_box_records              d_7063_
+#define water_shimmer_records              d_70db_
+#define vertical_force_field_records              d_726b_
+#define rabbit_bonus_records              d_73fb_
 #define keyboard_key_d_pressed          d_771b_
 #define joystick_x_axis_threshold_low   d_771c_
 #define joystick_y_axis_threshold_low   d_7722_
 #define keyboard_key_g_pressed          d_7728_
 #define level_tile_map                  d_7729_
 #define keyboard_key_o_pressed          d_772d_
-#define actor_3009_records              d_772e_
+#define right_flame_turret_records              d_772e_
 #define vga_lower_page_pointer          d_7986_
 #define access_card_or_door_state       d_798a_
-#define actor_301b_records              d_798c_
-#define actor_3023_records              d_7cac_
-#define actor_3034_active_state         d_7f04_
+#define rotating_fan_records              d_798c_
+#define balloon_bonus_records              d_7cac_
+#define access_card_reader_active_state         d_7f04_
 #define animated_level_tile_records     d_7f06_
 #define joystick_x_axis_threshold_high  d_9676_
 #define joystick_y_axis_threshold_high  d_967c_
 #define alternate_sprite_draw_offset    d_9682_
 #define saved_demo_buffer               d_9684_
-#define actor_302c_records              d_9688_
-#define actor_301f_records              d_9818_
+#define popup_spikes_records              d_9688_
+#define floppy_disk_box_records              d_9818_
 #define episode_sprite_resource_table   d_9b38_
-#define actor_300a_records              d_9b3a_
-#define actor_3040_world_x              d_9d92_
-#define actor_3040_world_y              d_9d94_
-#define actor_3034_world_x              d_9d96_
+#define left_flame_turret_records              d_9b3a_
+#define message_sign_world_x              d_9d92_
+#define message_sign_world_y              d_9d94_
+#define access_card_reader_world_x              d_9d96_
 #define fire_button_latch               d_9d98_
-#define actor_301d_records              d_9d99_
-#define actor_3034_world_y              d_a0b9_
+#define football_box_records              d_9d99_
+#define access_card_reader_world_y              d_a0b9_
 #define duke_graphics_buffer            d_a0bb_
-#define actor_3037_records              d_a0bf_
+#define letter_bonus_records              d_a0bf_
 #define object_sprite_buffer            d_a0ef_
 #define jump_button_latch               d_a0f3_
 #define previous_timer_interrupt_vector d_a0f4_
 #define player_contact_state            d_a0f8_
 #define last_keyboard_scan_code         d_a0fa_
 #define sprite_pixel_data_pointer       d_a0fb_
-#define actor_300d_records              d_a0ff_
-#define actor_301e_records              d_a357_
-#define actor_3040_active_state         d_a677_
+#define wheeled_techbot_records              d_a0ff_
+#define joystick_box_records              d_a357_
+#define message_sign_active_state         d_a677_
 #define player_sprite_refresh_state     d_a679_
-#define actor_3008_world_x              d_a67b_
+#define ceiling_clinger_box_world_x              d_a67b_
 #define keyboard_backspace_pressed      d_a67d_
-#define actor_3008_world_y              d_a67e_
-#define actor_303c_records              d_a680_
+#define ceiling_clinger_box_world_y              d_a67e_
+#define fire_creature_records              d_a680_
 #define sound_interrupt_active_state    d_a8d8_
 #define keyboard_interrupt_state        d_a8d9_
-#define actor_3001_records              d_a8da_
-#define actor_300f_records              d_ab32_
+#define elevator_records              d_a8da_
+#define ammo_box_records              d_ab32_
 #define formation_active_object_count   d_abd2_
 #define formation_object_x_positions    d_abd4_
 #define formation_world_x_accumulator   d_abe6_
 #define formation_x_auxiliary_bytes     d_abe8_
-#define actor_300e_records              d_abec_
-#define actor_3031_records              d_ae44_
+#define fire_wheel_techbot_records              d_abec_
+#define red_bomb_records              d_ae44_
 #define formation_object_y_positions    d_b09c_
 #define formation_world_y_accumulator   d_b0ae_
 #define formation_y_auxiliary_bytes     d_b0b0_
-#define actor_3010_records              d_b0b4_
-#define actor_3033_active_state         d_b3d4_
-#define actor_301a_records              d_b3d6_
-#define actor_3019_world_x              d_b62e_
-#define actor_3042_world_x              d_b630_
-#define actor_3019_world_y              d_b632_
-#define actor_3042_world_y              d_b634_
+#define robot_techbot_records              d_b0b4_
+#define access_card_box_active_state         d_b3d4_
+#define horizontal_force_field_records              d_b3d6_
+#define collapsing_bridge_world_x              d_b62e_
+#define dr_proton_world_x              d_b630_
+#define collapsing_bridge_world_y              d_b632_
+#define dr_proton_world_y              d_b634_
 #define formation_update_enabled        d_b636_
 #define title_screen_buffer         d_b638_
 #define moving_actor_records            d_b63c_
-#define actor_300c_records              d_b6bc_
+#define jumping_techbot_records              d_b6bc_
 #define ending_sequence_enabled         d_b9dc_
 #define level_tile_animation_records    d_b9de_
-#define actor_3018_records              d_c01e_
-#define actor_3041_world_x              d_c276_
+#define turkey_bonus_records              d_c01e_
+#define proton_display_world_x              d_c276_
 #define demo_file_load_success          d_c278_
-#define actor_302f_world_x              d_c279_
-#define actor_3030_world_x              d_c27b_
+#define teleporter_entry_world_x              d_c279_
+#define teleporter_exit_world_x              d_c27b_
 #define badguy_graphics_buffer          d_c27d_
-#define actor_3019_enabled              d_c281_
-#define actor_3042_active_state         d_c283_
+#define collapsing_bridge_enabled              d_c281_
+#define dr_proton_active_state         d_c283_
 #define credits_graphics_buffer         d_c285_
-#define actor_3041_world_y              d_c289_
-#define actor_302f_world_y              d_c28b_
-#define actor_3030_world_y              d_c28d_
+#define proton_display_world_y              d_c289_
+#define teleporter_entry_world_y              d_c28b_
+#define teleporter_exit_world_y              d_c28d_
 #define ending_graphics_buffer          d_c28f_
-#define actor_3042_hint_state           d_c293_
+#define dr_proton_hint_state           d_c293_
 #define world_actor_count               d_c295_
 #define joystick_configuration_mode     d_c297_
-#define actor_3002_records              d_c299_
-#define actor_3041_active_state         d_c681_
+#define conveyor_belt_records              d_c299_
+#define proton_display_active_state         d_c681_
 #define player_level_transition_state   d_c683_
-#define actor_302f_active_state         d_c684_
-#define actor_302f_interaction_phase    d_c686_
-#define actor_3030_active_state         d_c688_
-#define actor_302f_animation_phase      d_c68a_
+#define teleporter_entry_active_state         d_c684_
+#define tele_in_interaction_phase    d_c686_
+#define teleporter_exit_active_state         d_c688_
+#define tele_in_animation_phase      d_c68a_
 #define control_up_pressed              d_c68c_
-#define actor_302b_world_x              d_c68d_
-#define actor_302b_world_y              d_c68f_
-#define actor_302a_records              d_c691_
-#define actor_302b_active_state         d_c8e9_
+#define reactor_world_x              d_c68d_
+#define reactor_world_y              d_c68f_
+#define falling_sign_records              d_c691_
+#define reactor_active_state         d_c8e9_
 #define object_collision_pool_records   d_c8eb_
-#define actor_302d_records              d_c915_
+#define magenta_flag_box_records              d_c915_
 #define world_actor_records             d_cb6d_
 #define sound_sample_pointer_table      d_cbb5_
 #define vga_upper_page_pointer          d_cc7d_
 #define control_confirmation_state      d_cc81_
-#define actor_3020_active_state         d_cc82_
-#define actor_3058_records              d_cc84_
+#define robohand_box_active_state         d_cc82_
+#define spike_hazard_records              d_cc84_
 #define control_down_pressed            d_d134_
 #define control_fire_pressed            d_d135_
-#define actor_3019_width                d_d136_
+#define collapsing_bridge_width                d_d136_
 #define control_jump_pressed            d_d138_
-#define actor_302f_interaction_state    d_d139_
-#define actor_3030_interaction_state    d_d13b_
-#define actor_3035_world_x              d_d13d_
+#define tele_in_interaction_state    d_d139_
+#define tele_out_interaction_state    d_d13b_
+#define robohand_switch_world_x              d_d13d_
 #define control_left_pressed            d_d13f_
-#define actor_3035_world_y              d_d140_
-#define actor_3042_animation_counter    d_d142_
+#define robohand_switch_world_y              d_d140_
+#define dr_proton_animation_counter    d_d142_
 #define player_sprite_animation_index   d_d144_
-#define actor_3041_interaction_state    d_d146_
+#define proton_screen_interaction_state    d_d146_
 #define keyboard_control_lock_state     d_d148_
 #define secret_code_character_0         d_d149_
 #define secret_code_character_1         d_d14b_
 #define secret_code_character_2         d_d14d_
 #define secret_code_input_buffer        d_d14f_
-#define actor_3019_animation_state      d_d155_
-#define actor_3048_records              d_d157_
+#define weak_bridge_animation_state      d_d155_
+#define door_lock_records              d_d157_
 #define free_object_pool_records        d_d1cf_
 #define player_gameplay_state           d_d247_
 #define formation_object_active_flags   d_d249_
-#define actor_3016_records              d_d261_
-#define actor_3019_screen_x             d_d4b9_
-#define actor_3019_map_row              d_d4bb_
+#define wallcrawler_records              d_d261_
+#define collapsing_bridge_screen_x             d_d4b9_
+#define collapsing_bridge_map_row              d_d4bb_
 #define door_lock_world_x               d_d4bd_
 #define player_projectile_state         d_d4bf_
 #define control_right_pressed           d_d4c0_
 #define door_lock_world_y               d_d4c1_
 #define ambient_object_records          d_d4c3_
 #define joystick_enabled                d_d56b_
-#define actor_3042_open_state           d_d56c_
-#define actor_302b_animation_counter    d_d56e_
+#define dr_proton_open_state           d_d56c_
+#define reactor_animation_counter    d_d56e_
 #define door_or_key_interaction_state   d_d570_
-#define actor_302b_open_state           d_d572_
+#define reactor_open_state           d_d572_
 #define secret_block_world_x            d_d574_
 #define player_invulnerability_state    d_d576_
 #define secret_block_world_y            d_d577_
 #define current_sound_priority          d_d579_
-#define actor_3037_bonus_state          d_d57a_
+#define letter_bonus_state          d_d57a_
 #define level_progress_word             d_d57c_
-#define actor_300d_auxiliary_states     d_d57e_
-#define actor_3001_tile_below_records   d_d646_
-#define actor_3044_entity_count         d_d70e_
+#define wheelbot_auxiliary_states     d_d57e_
+#define elevator_tile_below_records   d_d646_
+#define door_key_count         d_d70e_
 #define secondary_sound_bank_buffer     d_d710_
 #define primary_sound_bank_buffer       d_d714_
 #define bios_timer_chain_divider        d_d718_
@@ -724,7 +724,7 @@ extern int world_animation_phase;  /* Tracks the current animation or interactio
 extern char player_death_state;              /* Tracks the current state of player death. */
 extern char player_action_state;             /* Tracks the current state of player action. */
 extern char player_animation_phase;  /* Tracks the current animation or interaction phase for player animation. */
-extern int actor_3000_count;  /* Stores the current count or capacity for level object marker 0x3000 records. */
+extern int empty_bonus_box_count;            /* Counts empty grey bonus box instances placed by map word 0x3000. */
 extern int collision_sound_record_count;  /* Stores the current count or capacity for collision sound record records. */
 /* Provides coordinate changes used to animate the first pair of contact-flash points. */
 extern int contact_flash_delta_table_a[];
@@ -740,67 +740,72 @@ extern int projectile_count;                 /* Stores the current count or capa
 extern int moving_object_count;              /* Stores the current count or capacity for moving object records. */
 extern int pickup_object_count;              /* Stores the current count or capacity for pickup object records. */
 extern int moving_actor_count;               /* Stores the current count or capacity for moving actor records. */
-extern int actor_3001_count;  /* Stores the current count or capacity for level object marker 0x3001 records. */
-extern int actor_3002_count;  /* Stores the current count or capacity for level object marker 0x3002 records. */
-extern int actor_3006_world_x;  /* Stores the X-coordinate or X-related value for level object marker 0x3006 world. */
-extern int actor_3006_world_y;  /* Stores the Y-coordinate or Y-related value for level object marker 0x3006 world. */
-extern int actor_3006_state;                 /* Tracks the current state of level object marker 0x3006. */
-extern int actor_3008_state;                 /* Tracks the current state of level object marker 0x3008. */
-extern int actor_3020_world_x;  /* Stores the X-coordinate or X-related value for level object marker 0x3020 world. */
-extern int actor_3020_world_y;  /* Stores the Y-coordinate or Y-related value for level object marker 0x3020 world. */
-extern int actor_3020_state;                 /* Tracks the current state of level object marker 0x3020. */
-extern int actor_3033_world_x;  /* Stores the X-coordinate or X-related value for level object marker 0x3033 world. */
-extern int actor_3033_world_y;  /* Stores the Y-coordinate or Y-related value for level object marker 0x3033 world. */
-extern int actor_3033_state;                 /* Tracks the current state of level object marker 0x3033. */
-extern int actor_3033_enabled;               /* Tracks whether level object marker 0x3033 is active. */
-extern int actor_3007_count;  /* Stores the current count or capacity for level object marker 0x3007 records. */
-extern int actor_3009_count;  /* Stores the current count or capacity for level object marker 0x3009 records. */
-extern int actor_300a_count;  /* Stores the current count or capacity for level object marker 0x300A records. */
-extern int actor_300b_count;  /* Stores the current count or capacity for level object marker 0x300B records. */
+extern int elevator_count;                   /* Counts elevator instances placed by map word 0x3001. */
+extern int conveyor_belt_count;  /* Counts left-moving conveyor belt start instances placed by map word 0x3002. */
+extern int jump_boots_box_world_x;  /* Stores the world X coordinate for jump boots bonus box from map word 0x3006. */
+extern int jump_boots_box_world_y;  /* Stores the world Y coordinate for jump boots bonus box from map word 0x3006. */
+extern int jump_boots_box_state;  /* Tracks the current state of jump boots bonus box from map word 0x3006. */
+extern int ceiling_clinger_box_state;  /* Tracks the current state of ceiling-clinger bonus box from map word 0x3008. */
+extern int robohand_box_world_x;  /* Stores the world X coordinate for robohand bonus box from map word 0x3020. */
+extern int robohand_box_world_y;  /* Stores the world Y coordinate for robohand bonus box from map word 0x3020. */
+extern int robohand_box_state;               /* Tracks the current state of robohand bonus box from map word 0x3020. */
+extern int access_card_box_world_x;  /* Stores the world X coordinate for access-card bonus box from map word 0x3033. */
+extern int access_card_box_world_y;  /* Stores the world Y coordinate for access-card bonus box from map word 0x3033. */
+extern int access_card_box_state;  /* Tracks the current state of access-card bonus box from map word 0x3033. */
+extern int access_card_box_enabled;          /* Tracks whether access-card bonus box from map word 0x3033 is active. */
+extern int rocket_count;                     /* Counts rocket instances placed by map word 0x3007. */
+extern int right_flame_turret_count;         /* Counts right-firing flamethrower instances placed by map word 0x3009. */
+extern int left_flame_turret_count;          /* Counts left-firing flamethrower instances placed by map word 0x300A. */
+extern int flying_techbot_count;             /* Counts flying techbot instances placed by map word 0x300B. */
 /* Stores paired horizontal and vertical movement deltas for one moving-item trajectory. */
 extern int moving_item_path_delta_table_a[];
 /* Stores paired horizontal and vertical movement deltas for a second moving-item trajectory. */
 extern int moving_item_path_delta_table_b[];
-extern int actor_300b_screen_anim_offset;  /* Stores the current sprite or map offset for marker 0x300B screen anim. */
-/* Selects the animation frame for the object records created from marker type 0x300B. */
-extern int actor_300b_animation_frame;
-extern int actor_300c_count;  /* Stores the current count or capacity for level object marker 0x300C records. */
-extern int actor_300d_count;  /* Stores the current count or capacity for level object marker 0x300D records. */
-extern int actor_300e_animation_state;       /* Tracks the current state of marker 0x300E animation. */
-extern int actor_300e_animation_counter;     /* Counts updates for marker 0x300E animation. */
-extern int actor_300e_count;  /* Stores the current count or capacity for level object marker 0x300E records. */
-extern int actor_300f_count;  /* Stores the current count or capacity for level object marker 0x300F records. */
-extern int actor_3010_count;  /* Stores the current count or capacity for level object marker 0x3010 records. */
-extern int actor_3012_count;  /* Stores the current count or capacity for level object marker 0x3012 records. */
-extern int actor_3014_count;  /* Stores the current count or capacity for level object marker 0x3014 records. */
-extern int actor_3015_count;  /* Stores the current count or capacity for level object marker 0x3015 records. */
-extern int actor_3016_count;  /* Stores the current count or capacity for level object marker 0x3016 records. */
-extern int actor_3018_count;  /* Stores the current count or capacity for level object marker 0x3018 records. */
-extern int actor_301a_count;  /* Stores the current count or capacity for level object marker 0x301A records. */
-extern int actor_301b_count;  /* Stores the current count or capacity for level object marker 0x301B records. */
-extern int actor_301d_count;  /* Stores the current count or capacity for level object marker 0x301D records. */
-extern int actor_301e_count;  /* Stores the current count or capacity for level object marker 0x301E records. */
-extern int actor_301f_count;  /* Stores the current count or capacity for level object marker 0x301F records. */
-extern int actor_3021_count;  /* Stores the current count or capacity for level object marker 0x3021 records. */
-extern int actor_3022_count;  /* Stores the current count or capacity for level object marker 0x3022 records. */
-extern int actor_3023_count;  /* Stores the current count or capacity for level object marker 0x3023 records. */
-extern int actor_3024_count;  /* Stores the current count or capacity for level object marker 0x3024 records. */
-extern int actor_3025_count;  /* Stores the current count or capacity for level object marker 0x3025 records. */
-extern int actor_3029_count;  /* Stores the current count or capacity for level object marker 0x3029 records. */
-extern int actor_302a_count;  /* Stores the current count or capacity for level object marker 0x302A records. */
-extern int actor_302c_count;  /* Stores the current count or capacity for level object marker 0x302C records. */
-extern int actor_302d_count;  /* Stores the current count or capacity for level object marker 0x302D records. */
-extern int actor_302e_count;  /* Stores the current count or capacity for level object marker 0x302E records. */
-extern int actor_3031_count;  /* Stores the current count or capacity for level object marker 0x3031 records. */
+extern int fly_techbot_screen_anim_offset;   /* Stores screen anim offset for flying techbot from map word 0x300B. */
+extern int flying_techbot_animation_frame;   /* Selects an animation frame for flying techbot from map word 0x300B. */
+extern int jumping_techbot_count;            /* Counts jumping techbot instances placed by map word 0x300C. */
+extern int wheeled_techbot_count;            /* Counts wheeled techbot instances placed by map word 0x300D. */
+extern int fire_wheel_animation_state;       /* Tracks animation for fire wheel techbot from map word 0x300E. */
+extern int fire_wheel_animation_counter;     /* Counts fire wheel techbot instances placed by map word 0x300E. */
+extern int fire_wheel_techbot_count;         /* Counts fire wheel techbot instances placed by map word 0x300E. */
+extern int ammo_box_count;                   /* Counts raygun ammunition bonus instances placed by map word 0x300F. */
+extern int robot_techbot_count;              /* Counts robot techbot instances placed by map word 0x3010. */
+extern int dynamite_box_count;               /* Counts dynamite bonus instances placed by map word 0x3012. */
+extern int water_shimmer_count;              /* Counts shimmering water effect instances placed by map word 0x3014. */
+extern int soda_can_bonus_count;             /* Counts soda-can bonus box instances placed by map word 0x3015. */
+extern int wallcrawler_count;                /* Counts right-facing wallcrawler instances placed by map word 0x3016. */
+extern int turkey_bonus_count;  /* Counts turkey drumstick bonus box instances placed by map word 0x3018. */
+extern int horizontal_force_field_count;  /* Counts horizontal blue force field instances placed by map word 0x301A. */
+extern int rotating_fan_count;               /* Counts left-blowing rotating fan instances placed by map word 0x301B. */
+extern int football_box_count;               /* Counts football bonus box instances placed by map word 0x301D. */
+extern int joystick_box_count;               /* Counts joystick bonus box instances placed by map word 0x301E. */
+extern int floppy_disk_box_count;            /* Counts dn floppy bonus box instances placed by map word 0x301F. */
+extern int vertical_force_field_count;       /* Counts vertical force field instances placed by map word 0x3021. */
+extern int helicopter_techbot_count;         /* Counts helicopter techbot instances placed by map word 0x3022. */
+extern int balloon_bonus_count;              /* Counts balloon bonus box instances placed by map word 0x3023. */
+extern int security_camera_count;            /* Counts security camera instances placed by map word 0x3024. */
+extern int animated_level_tile_count;  /* Counts animated decorations from map words 0x3025-0x3028 and 0x303D-0x303F. */
+extern int molecule_bonus_box_count;  /* Counts nuclear molecule bonus box instances placed by map word 0x3029. */
+extern int falling_sign_count;               /* Counts falling acme sign instances placed by map word 0x302A. */
+extern int popup_spikes_count;               /* Counts pop-up floor spike instances placed by map word 0x302C. */
+extern int magenta_flag_box_count;           /* Counts magenta flag bonus box instances placed by map word 0x302D. */
+extern int radio_box_count;                  /* Counts radio bonus box instances placed by map word 0x302E. */
+extern int red_bomb_count;                   /* Counts bouncing spiky bomb instances placed by map word 0x3031. */
 extern int level_vertical_motion_table[];    /* Provides vertical movement values for a level-object animation. */
-extern int actor_303c_count;  /* Stores the current count or capacity for level object marker 0x303C records. */
-extern int actor_303b_count;  /* Stores the current count or capacity for level object marker 0x303B records. */
-extern int actor_3042_animation_frame_0;     /* Stores one frame value in the marker type 0x3042 animation sequence. */
-extern int actor_3042_animation_frame_1;     /* Stores one frame value in the marker type 0x3042 animation sequence. */
-extern int actor_3042_animation_frame_2;     /* Stores one frame value in the marker type 0x3042 animation sequence. */
-extern int actor_3042_animation_frame_3;     /* Stores one frame value in the marker type 0x3042 animation sequence. */
-extern int actor_3042_animation_frame_4;     /* Stores one frame value in the marker type 0x3042 animation sequence. */
-extern int actor_3042_animation_frame_5;     /* Stores one frame value in the marker type 0x3042 animation sequence. */
+extern int fire_creature_count;              /* Counts flame creature instances placed by map word 0x303C. */
+extern int rabbit_bonus_count;               /* Counts purple rabbit bonus instances placed by map word 0x303B. */
+/* Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_animation_frame_0;
+/* Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_animation_frame_1;
+/* Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_animation_frame_2;
+/* Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_animation_frame_3;
+/* Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_animation_frame_4;
+/* Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_animation_frame_5;
 extern int gameplay_animation_flag;          /* Tracks whether gameplay animation is active. */
 extern char player_airborne_state;           /* Tracks the current state of player airborne. */
 extern char player_damage_immunity_state;    /* Tracks the current state of player damage immunity. */
@@ -815,37 +820,44 @@ extern int projectile_flash_sprite_offset;
 /* Selects successive sprite cells while ambient object animations are drawn. */
 extern int ambient_object_sprite_offset;
 extern int contact_flash_cycle_index;  /* Cycles the palette or sprite phase assigned to a new contact-flash record. */
-extern int actor_3002_animation_phase;       /* Tracks the animation phase of level-map marker type 0x3002. */
+/* Tracks animation for left-moving conveyor belt start from map word 0x3002. */
+extern int conveyor_belt_animation_phase;
 /* Stores six sprite-resource offsets for each multi-tile actor graphic. */
 extern int multi_tile_actor_sprite_offsets[];
-extern int actor_300c_motion_delta_table[];  /* Provides movement deltas used by level-map marker type 0x300C. */
-extern int actor_300d_animation_phase;       /* Tracks one animation phase for marker type 0x300D. */
-extern int actor_300d_animation_counter;     /* Counts animation updates for marker type 0x300D. */
-extern int actor_3010_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3010 sprite. */
+extern int jumpbot_motion_delta_table[];     /* Holds movement deltas for jumping techbot from map word 0x300C. */
+extern int wheeled_techbot_animation_phase;  /* Tracks animation for wheeled techbot from map word 0x300D. */
+extern int wheelbot_animation_counter;       /* Counts wheeled techbot instances placed by map word 0x300D. */
+extern int robot_techbot_sprite_offset;      /* Selects the sprite data for robot techbot from map word 0x3010. */
 extern char door_interaction_phase;  /* Tracks the current animation or interaction phase for door interaction. */
-extern int actor_3013_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3013 sprite. */
-extern int actor_3014_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3014 sprite. */
-extern int actor_3015_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3015 sprite. */
-extern int actor_3016_upper_sprite_offset;  /* Stores the current sprite or map offset for marker 0x3016 upper sprite. */
-extern int actor_3016_lower_sprite_offset;  /* Stores the current sprite or map offset for marker 0x3016 lower sprite. */
-extern int actor_301a_sprite_offset;         /* Stores the current sprite or map offset for marker 0x301A sprite. */
-extern int actor_3021_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3021 sprite. */
-extern int actor_3022_animation_phase;       /* Alternates the sprite variant selected by marker type 0x3022. */
-extern int actor_3023_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3023 sprite. */
-extern int actor_3024_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3024 sprite. */
-extern int actor_3029_sprite_offset;         /* Stores the current sprite or map offset for marker 0x3029 sprite. */
-extern int actor_302a_sprite_offset;         /* Stores the current sprite or map offset for marker 0x302A sprite. */
-extern int actor_302b_sprite_offset;         /* Stores the current sprite or map offset for marker 0x302B sprite. */
-/* Tracks the current animation or interaction phase for marker 0x302C animation. */
-extern char actor_302c_animation_phase;
-extern int actor_302d_sprite_offset;         /* Stores the current sprite or map offset for marker 0x302D sprite. */
-/* Tracks the current animation or interaction phase for marker 0x303C animation. */
-extern int actor_303c_animation_phase;
-extern int actor_3042_motion_delta_table[];  /* Provides paired movement deltas used by marker type 0x3042. */
-extern int actor_3041_sprite_frame;          /* Selects the sprite frame drawn for marker type 0x3041. */
-extern int actor_3041_animation_counter;     /* Counts animation updates for marker type 0x3041. */
-extern int actor_3041_event_pending;         /* Signals that marker type 0x3041 has a pending state change. */
-extern int actor_3041_sprite_offset;         /* Stores the sprite-resource offset selected by marker type 0x3041. */
+extern int snake_techbot_sprite_offset;      /* Selects the sprite data for snake techbots from map word 0x3013. */
+extern int water_shimmer_sprite_offset;  /* Selects the sprite data for shimmering water effect from map word 0x3014. */
+extern int soda_can_bonus_sprite_offset;     /* Selects the sprite data for soda-can bonus box from map word 0x3015. */
+/* Selects the sprite data for right-facing wallcrawler from map word 0x3016. */
+extern int wallcrawler_upper_sprite_offset;
+/* Selects the sprite data for right-facing wallcrawler from map word 0x3016. */
+extern int wallcrawler_lower_sprite_offset;
+/* Selects the sprite data for horizontal blue force field from map word 0x301A. */
+extern int h_force_field_sprite_offset;
+extern int v_force_field_sprite_offset;  /* Selects the sprite data for vertical force field from map word 0x3021. */
+extern int helicopter_animation_phase;       /* Tracks animation for helicopter techbot from map word 0x3022. */
+extern int balloon_bonus_sprite_offset;      /* Selects the sprite data for balloon bonus box from map word 0x3023. */
+extern int security_camera_sprite_offset;    /* Selects the sprite data for security camera from map word 0x3024. */
+/* Selects the sprite data for nuclear molecule bonus box from map word 0x3029. */
+extern int molecule_box_sprite_offset;
+extern int falling_sign_sprite_offset;       /* Selects the sprite data for falling acme sign from map word 0x302A. */
+extern int reactor_sprite_offset;            /* Selects the sprite data for blue reactor hazard from map word 0x302B. */
+extern char popup_spikes_animation_phase;    /* Tracks animation for pop-up floor spike from map word 0x302C. */
+/* Selects the sprite data for magenta flag bonus box from map word 0x302D. */
+extern int magenta_flag_box_sprite_offset;
+extern int fire_creature_animation_phase;    /* Tracks animation for flame creature from map word 0x303C. */
+/* Holds movement deltas for dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_motion_delta_table[];
+/* Selects an animation frame for dr. proton display screen from map word 0x3041. */
+extern int proton_display_sprite_frame;
+extern int proton_screen_animation_counter;  /* Counts dr. proton display screen instances placed by map word 0x3041. */
+extern int proton_display_event_pending;  /* Stores event pending for dr. proton display screen from map word 0x3041. */
+/* Selects the sprite data for dr. proton display screen from map word 0x3041. */
+extern int proton_display_sprite_offset;
 extern char hint_mode_enabled;  /* Stores hint-mode state; its initial value is on in DN1 and off in DN2 and DN3. */
 /* Holds the episode-specific drop-asset filename list used when a level is loaded. */
 extern char far *episode_drop_filename_table[];
@@ -862,7 +874,7 @@ extern int current_weapon_state;             /* Tracks the current state of curr
 extern int title_graphic_frame_index;        /* Stores the current index for title graphic frame. */
 extern int level_play_state;                 /* Tracks the current state of level play. */
 extern int hidden_object_state;              /* Tracks the current state of hidden object. */
-extern int actor_300e_object_state_table[];  /* Holds the lookup or pointer table for marker 0x300E object state. */
+extern int fire_wheel_object_state_table[];  /* Holds the state lookup for fire wheel techbot from map word 0x300E. */
 extern long high_score_values[];  /* Stores the high-score values as 32-bit entries used by the score table. */
 /* Aliases the second long-score entry in the contiguous high-score table beginning at d_4fa2. */
 extern long high_score_entry_1_alias[];
@@ -884,33 +896,34 @@ extern char high_score_player_names[10][11];  /* Stores the ten player-name stri
 /* Provides an additional high-score name buffer adjacent to the ten saved name rows; its direct
    use is not established. */
 extern char high_score_name_edit_buffer[11];
-extern int actor_300c_object_marker_table[];  /* Holds the lookup or pointer table for marker 0x300C object marker. */
-extern int actor_3035_state;                 /* Tracks the current state of marker 0x3035. */
+extern int jumpbot_object_marker_table[];    /* Holds the state lookup for jumping techbot from map word 0x300C. */
+extern int robohand_switch_state;  /* Tracks the current state of robohand activation switch from map word 0x3035. */
 extern void (far *level_update_callback_table[])(void);
-extern int actor_3035_animation_state;       /* Tracks the current state of marker 0x3035 animation. */
+extern int robohand_switch_animation_state;  /* Tracks animation for robohand activation switch from map word 0x3035. */
 extern struct projectile_record projectile_records[];  /* Holds the record array for projectile. */
 extern int credits_text_position;            /* Tracks the current character offset in the credits scroll text. */
-extern int actor_3035_active_state;          /* Tracks the current state of marker 0x3035 active. */
-extern int actor_3037_object_count;  /* Stores the current count or capacity for marker 0x3037 object records. */
+extern int robohand_switch_active_state;  /* Tracks whether robohand activation switch from map word 0x3035 is active. */
+extern int letter_bonus_object_count;        /* Counts letter d bonus instances placed by map word 0x3037. */
 extern char pending_sound_priority_flag;     /* Tracks whether pending sound priority is active. */
-extern int actor_3037_animation_state;       /* Tracks the current state of marker 0x3037 animation. */
+extern int letter_bonus_animation_state;     /* Tracks animation for letter d bonus from map word 0x3037. */
 extern char user_demo_recording_state;       /* Tracks the current state of user demo recording. */
 extern char secret_block_collision_state;    /* Tracks the current state of secret block collision. */
-extern int actor_3013_formation_state;       /* Tracks the current state of marker 0x3013 formation. */
-extern int actor_303b_update_state;          /* Tracks the current state of marker 0x303B update. */
+extern int snake_techbot_formation_state;    /* Tracks the formation from map word 0x3013. */
+extern int rabbit_bonus_update_state;        /* Tracks the current state of purple rabbit bonus from map word 0x303B. */
 extern int exit_lock_animation_state;        /* Tracks the current state of exit lock animation. */
 extern int secret_block_animation_state;     /* Tracks the current state of secret block animation. */
 extern char game_session_abort_flag;         /* Tracks whether game session abort is active. */
-extern int actor_3048_object_count;  /* Stores the current count or capacity for marker 0x3048 object records. */
+extern int door_tile_animation_count;        /* Counts animated door tiles placed by map word 0x304C. */
 extern char pending_sound_effect_index;      /* Stores the current index for pending sound effect. */
-extern int actor_302a_update_state;          /* Tracks the current state of marker 0x302A update. */
+extern int falling_sign_update_state;        /* Tracks the current state of falling acme sign from map word 0x302A. */
 extern int level_object_pool_531e_count;  /* Stores the current count or capacity for level object pool 531e records. */
 /* Holds the record array for level collision sound. */
 extern struct contact_flash_effect_record level_collision_sound_records[];
 /* Holds the record array for animated actor pool. */
 extern struct animated_actor_pool_record animated_actor_pool_records[];
-extern int actor_3048_entity_count;  /* Stores the current count or capacity for marker 0x3048 entity records. */
-extern int actor_3042_interaction_state;     /* Tracks the current state of marker 0x3042 interaction. */
+extern int door_lock_count;                  /* Counts door locks placed by map word 0x3048. */
+/* Tracks player interaction with dr. proton boss (episode 3) from map word 0x3042. */
+extern int dr_proton_interaction_state;
 extern char selected_save_slot;  /* Stores the save-slot character selected for save or restore operations. */
 extern int keyboard_hotkey_count;            /* Stores the current count or capacity for keyboard hotkey records. */
 extern char control_hint_up_flag;            /* Tracks whether control hint up is active. */
@@ -925,36 +938,47 @@ extern void interrupt far (*saved_keyboard_interrupt_vector)(void);
 extern char hint_revealed_object_4;          /* Indicates whether the fourth hidden-object hint has been revealed. */
 extern char hint_revealed_object_5;          /* Indicates whether the fifth hidden-object hint has been revealed. */
 extern char hint_revealed_object_6;          /* Indicates whether the sixth hidden-object hint has been revealed. */
-extern struct actor_3012_record actor_3012_records[];  /* Holds the record array for level object marker 0x3012. */
+/* Stores per-instance state for dynamite bonus from map word 0x3012. */
+extern struct dynamite_box_record dynamite_box_records[];
 extern char far *user_demo_buffer;  /* Points to the user-demo recording buffer; d_5a0f is its segment-word alias. */
 extern char hint_revealed_object_7;          /* Indicates whether the seventh hidden-object hint has been revealed. */
-extern struct actor_3015_record actor_3015_records[];  /* Holds the record array for level object marker 0x3015. */
+/* Stores per-instance state for soda-can bonus box from map word 0x3015. */
+extern struct soda_can_bonus_record soda_can_bonus_records[];
 extern char hint_revealed_object_8;          /* Indicates whether the eighth hidden-object hint has been revealed. */
 extern char hint_revealed_object_9;          /* Indicates whether the ninth hidden-object hint has been revealed. */
 extern struct falling_hazard_record falling_hazard_records[];  /* Holds the record array for falling hazard. */
 /* Points to the player sprite resource buffer; d_5ec6 is its segment-word alias. */
 extern char far *player_sprite_resource_buffer;
 extern char hint_revealed_object_10;         /* Indicates whether the tenth hidden-object hint has been revealed. */
-extern struct actor_3022_record actor_3022_records[];  /* Holds the record array for level object marker 0x3022. */
+/* Stores per-instance state for helicopter techbot from map word 0x3022. */
+extern struct helicopter_techbot_record helicopter_techbot_records[];
 extern char active_sprite_draw_flag;         /* Tracks whether active sprite draw is active. */
 extern char far *sprite_graphics_buffer;     /* Points to sprite graphics data; d_637c is its segment-word alias. */
 extern char hint_revealed_object_11;         /* Indicates whether the eleventh hidden-object hint has been revealed. */
-extern struct actor_300b_record actor_300b_records[];  /* Holds the record array for level object marker 0x300B. */
-extern struct actor_3000_record actor_3000_records[];  /* Holds the record array for level object marker 0x3000. */
+/* Stores per-instance state for flying techbot from map word 0x300B. */
+extern struct flying_techbot_record flying_techbot_records[];
+/* Stores per-instance state for empty grey bonus box from map word 0x3000. */
+extern struct empty_bonus_box_record empty_bonus_box_records[];
 extern char transporter_hint_pending;        /* Signals that the transporter hint should be displayed. */
 extern long player_score;                    /* Stores the player's 32-bit score; d_68fa is its upper-word alias. */
-extern struct actor_3024_record actor_3024_records[];  /* Holds the record array for level object marker 0x3024. */
+/* Stores per-instance state for security camera from map word 0x3024. */
+extern struct security_camera_record security_camera_records[];
 /* Points to the font glyph data used by text rendering; d_6b56 is its segment-word alias. */
 extern char far *font_glyph_data_buffer;
-extern struct actor_3044_record actor_3044_records[];  /* Holds the record array for level object marker 0x3044. */
-extern struct actor_3007_record actor_3007_records[];  /* Holds the record array for level object marker 0x3007. */
+extern struct door_key_record door_key_records[];  /* Stores per-instance state for red key from map word 0x3044. */
+extern struct rocket_record rocket_records[];  /* Stores per-instance state for rocket from map word 0x3007. */
 /* Selects the current draw/display page, toggled while the game renders alternating pages. */
 extern char draw_page_index;
-extern struct actor_302e_record actor_302e_records[];  /* Holds the record array for level object marker 0x302E. */
-extern struct actor_3029_record actor_3029_records[];  /* Holds the record array for level object marker 0x3029. */
-extern struct actor_3014_record actor_3014_records[];  /* Holds the record array for level object marker 0x3014. */
-extern struct actor_3021_record actor_3021_records[];  /* Holds the record array for level object marker 0x3021. */
-extern struct actor_303b_record actor_303b_records[];  /* Holds the record array for level object marker 0x303B. */
+/* Stores per-instance state for radio bonus box from map word 0x302E. */
+extern struct radio_box_record radio_box_records[];
+/* Stores per-instance state for nuclear molecule bonus box from map word 0x3029. */
+extern struct molecule_bonus_box_record molecule_bonus_box_records[];
+/* Stores per-instance state for shimmering water effect from map word 0x3014. */
+extern struct water_shimmer_record water_shimmer_records[];
+/* Stores per-instance state for vertical force field from map word 0x3021. */
+extern struct vertical_force_field_record vertical_force_field_records[];
+/* Stores per-instance state for purple rabbit bonus from map word 0x303B. */
+extern struct rabbit_bonus_record rabbit_bonus_records[];
 extern char keyboard_key_d_pressed;          /* Records whether the keyboard D scan code is currently held. */
 extern int joystick_x_axis_threshold_low[];  /* Stores the lower joystick X-axis threshold for each calibration mode. */
 extern int joystick_y_axis_threshold_low[];  /* Stores the lower joystick Y-axis threshold for each calibration mode. */
@@ -962,12 +986,15 @@ extern char keyboard_key_g_pressed;          /* Records whether the keyboard G s
 /* Points to the loaded 16-bit level tile map; d_772b is its segment-word alias. */
 extern unsigned int far *level_tile_map;
 extern char keyboard_key_o_pressed;          /* Records whether the keyboard O scan code is currently held. */
-extern struct actor_3009_record actor_3009_records[];  /* Holds the record array for level object marker 0x3009. */
+/* Stores per-instance state for right-firing flamethrower from map word 0x3009. */
+extern struct right_flame_turret_record right_flame_turret_records[];
 extern char far *vga_lower_page_pointer;     /* Points to the vga lower page data used by the game. */
 extern int access_card_or_door_state;        /* Tracks the current state of access card or door. */
-extern struct actor_301b_record actor_301b_records[];  /* Holds the record array for level object marker 0x301B. */
-extern struct actor_3023_record actor_3023_records[];  /* Holds the record array for level object marker 0x3023. */
-extern int actor_3034_active_state;          /* Tracks the current state of marker 0x3034 active. */
+/* Stores per-instance state for left-blowing rotating fan from map word 0x301B. */
+extern struct rotating_fan_record rotating_fan_records[];
+/* Stores per-instance state for balloon bonus box from map word 0x3023. */
+extern struct balloon_bonus_record balloon_bonus_records[];
+extern int access_card_reader_active_state;  /* Tracks whether access-card reader from map word 0x3034 is active. */
 /* Holds the record array for animated level tile. */
 extern struct animated_level_tile_record animated_level_tile_records[];
 extern int joystick_x_axis_threshold_high[];  /* Stores the upper joystick X-axis threshold for each calibration mode. */
@@ -978,19 +1005,24 @@ extern int alternate_sprite_draw_offset;     /* Stores the current sprite or map
 extern char alternate_sprite_draw_offset;    /* Stores the current sprite or map offset for alternate sprite draw. */
 #endif
 extern char far *saved_demo_buffer;  /* Points to the saved-demo playback buffer; d_9686 is its segment-word alias. */
-extern struct actor_302c_record actor_302c_records[];  /* Holds the record array for level object marker 0x302C. */
-extern struct actor_301f_record actor_301f_records[];  /* Holds the record array for level object marker 0x301F. */
+/* Stores per-instance state for pop-up floor spike from map word 0x302C. */
+extern struct popup_spikes_record popup_spikes_records[];
+/* Stores per-instance state for dn floppy bonus box from map word 0x301F. */
+extern struct floppy_disk_box_record floppy_disk_box_records[];
 extern int episode_sprite_resource_table;    /* Holds the lookup or pointer table for episode sprite resource. */
-extern struct actor_300a_record actor_300a_records[];  /* Holds the record array for level object marker 0x300A. */
-extern int actor_3040_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3040 world. */
-extern int actor_3040_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3040 world. */
-extern int actor_3034_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3034 world. */
+/* Stores per-instance state for left-firing flamethrower from map word 0x300A. */
+extern struct left_flame_turret_record left_flame_turret_records[];
+extern int message_sign_world_x;             /* Stores the world X coordinate for message sign from map word 0x3040. */
+extern int message_sign_world_y;             /* Stores the world Y coordinate for message sign from map word 0x3040. */
+extern int access_card_reader_world_x;  /* Stores the world X coordinate for access-card reader from map word 0x3034. */
 /* Latches the last processed fire-button state to prevent repeated edge-triggered actions. */
 extern char fire_button_latch;
-extern struct actor_301d_record actor_301d_records[];  /* Holds the record array for level object marker 0x301D. */
-extern int actor_3034_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3034 world. */
+/* Stores per-instance state for football bonus box from map word 0x301D. */
+extern struct football_box_record football_box_records[];
+extern int access_card_reader_world_y;  /* Stores the world Y coordinate for access-card reader from map word 0x3034. */
 extern char far *duke_graphics_buffer;       /* Holds the buffer used for duke graphics. */
-extern struct actor_3037_record actor_3037_records[];  /* Holds the record array for level object marker 0x3037. */
+/* Stores per-instance state for letter d bonus from map word 0x3037. */
+extern struct letter_bonus_record letter_bonus_records[];
 extern char far *object_sprite_buffer;       /* Points to the object sprite buffer; d_a0f1 is its segment-word alias. */
 /* Latches the last processed jump-button state to prevent repeated edge-triggered actions. */
 extern char jump_button_latch;
@@ -1001,18 +1033,24 @@ extern int player_contact_state;             /* Tracks the current state of play
 extern char last_keyboard_scan_code;
 /* Points to the current sprite pixel data; d_a0fd is its segment-word alias. */
 extern char far *sprite_pixel_data_pointer;
-extern struct actor_300d_record actor_300d_records[];  /* Holds the record array for level object marker 0x300D. */
-extern struct actor_301e_record actor_301e_records[];  /* Holds the record array for level object marker 0x301E. */
-extern int actor_3040_active_state;          /* Tracks the current state of marker 0x3040 active. */
+/* Stores per-instance state for wheeled techbot from map word 0x300D. */
+extern struct wheeled_techbot_record wheeled_techbot_records[];
+/* Stores per-instance state for joystick bonus box from map word 0x301E. */
+extern struct joystick_box_record joystick_box_records[];
+extern int message_sign_active_state;        /* Tracks whether message sign from map word 0x3040 is active. */
 extern int player_sprite_refresh_state;      /* Tracks the current state of player sprite refresh. */
-extern int actor_3008_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3008 world. */
+/* Stores the world X coordinate for ceiling-clinger bonus box from map word 0x3008. */
+extern int ceiling_clinger_box_world_x;
 extern char keyboard_backspace_pressed;      /* Records whether the Backspace scan code is currently held. */
-extern int actor_3008_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3008 world. */
-extern struct actor_303c_record actor_303c_records[];  /* Holds the record array for level object marker 0x303C. */
+/* Stores the world Y coordinate for ceiling-clinger bonus box from map word 0x3008. */
+extern int ceiling_clinger_box_world_y;
+/* Stores per-instance state for flame creature from map word 0x303C. */
+extern struct fire_creature_record fire_creature_records[];
 extern char sound_interrupt_active_state;    /* Tracks the current state of sound interrupt active. */
 extern char keyboard_interrupt_state;        /* Tracks the current state of keyboard interrupt. */
-extern struct actor_3001_record actor_3001_records[];  /* Holds the record array for level object marker 0x3001. */
-extern struct actor_300f_record actor_300f_records[];  /* Holds the record array for level object marker 0x300F. */
+extern struct elevator_record elevator_records[];  /* Stores per-instance state for elevator from map word 0x3001. */
+/* Stores per-instance state for raygun ammunition bonus from map word 0x300F. */
+extern struct ammo_box_record ammo_box_records[];
 /* Stores the current count or capacity for formation active object records. */
 extern int formation_active_object_count;
 extern int formation_object_x_positions[];  /* Stores the horizontal positions of the active enemy-formation members. */
@@ -1020,113 +1058,136 @@ extern int formation_world_x_accumulator;  /* Accumulates horizontal movement de
 /* Provides four auxiliary bytes beside the formation state; the checked-in sources do not show
    their use. */
 extern char formation_x_auxiliary_bytes[4];
-extern struct actor_300e_record actor_300e_records[];  /* Holds the record array for level object marker 0x300E. */
-extern struct actor_3031_record actor_3031_records[];  /* Holds the record array for level object marker 0x3031. */
+/* Stores per-instance state for fire wheel techbot from map word 0x300E. */
+extern struct fire_wheel_techbot_record fire_wheel_techbot_records[];
+/* Stores per-instance state for bouncing spiky bomb from map word 0x3031. */
+extern struct red_bomb_record red_bomb_records[];
 extern int formation_object_y_positions[];   /* Stores the vertical positions of the active enemy-formation members. */
 extern int formation_world_y_accumulator;    /* Accumulates vertical movement deltas for the active enemy formation. */
 /* Provides four auxiliary bytes beside the formation state; the checked-in sources do not show
    their use. */
 extern char formation_y_auxiliary_bytes[4];
-extern struct actor_3010_record actor_3010_records[];  /* Holds the record array for level object marker 0x3010. */
-extern int actor_3033_active_state;          /* Tracks the current state of marker 0x3033 active. */
-extern struct actor_301a_record actor_301a_records[];  /* Holds the record array for level object marker 0x301A. */
-extern int actor_3019_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3019 world. */
-extern int actor_3042_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3042 world. */
-extern int actor_3019_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3019 world. */
-extern int actor_3042_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3042 world. */
+/* Stores per-instance state for robot techbot from map word 0x3010. */
+extern struct robot_techbot_record robot_techbot_records[];
+extern int access_card_box_active_state;     /* Tracks whether access-card bonus box from map word 0x3033 is active. */
+/* Stores per-instance state for horizontal blue force field from map word 0x301A. */
+extern struct horizontal_force_field_record horizontal_force_field_records[];
+extern int collapsing_bridge_world_x;  /* Stores the world X coordinate for collapsing bridge from map word 0x3019. */
+extern int dr_proton_world_x;  /* Stores the world X coordinate for dr. proton boss (episode 3) from map word 0x3042. */
+extern int collapsing_bridge_world_y;  /* Stores the world Y coordinate for collapsing bridge from map word 0x3019. */
+extern int dr_proton_world_y;  /* Stores the world Y coordinate for dr. proton boss (episode 3) from map word 0x3042. */
 extern int formation_update_enabled;         /* Tracks whether formation update is active. */
 extern char far *title_screen_buffer;        /* The title screen bitmap (dn.dnX), four planes of 8000 bytes. */
 extern struct moving_actor_record moving_actor_records[];  /* Holds the record array for moving actor. */
-extern struct actor_300c_record actor_300c_records[];  /* Holds the record array for level object marker 0x300C. */
+/* Stores per-instance state for jumping techbot from map word 0x300C. */
+extern struct jumping_techbot_record jumping_techbot_records[];
 extern int ending_sequence_enabled;          /* Tracks whether ending sequence is active. */
 /* Holds the record array for level tile animation. */
 extern struct level_tile_animation_record level_tile_animation_records[];
-extern struct actor_3018_record actor_3018_records[];  /* Holds the record array for level object marker 0x3018. */
-extern int actor_3041_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3041 world. */
+/* Stores per-instance state for turkey drumstick bonus box from map word 0x3018. */
+extern struct turkey_bonus_record turkey_bonus_records[];
+/* Stores the world X coordinate for dr. proton display screen from map word 0x3041. */
+extern int proton_display_world_x;
 extern char demo_file_load_success;          /* Records whether the requested demo file was loaded successfully. */
-extern int actor_302f_world_x;               /* Stores the X-coordinate or X-related value for marker 0x302F world. */
-extern int actor_3030_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3030 world. */
+/* Stores the world X coordinate for teleporter endpoint leading to 0x3030 from map word 0x302F. */
+extern int teleporter_entry_world_x;
+/* Stores the world X coordinate for teleporter endpoint leading to 0x302f from map word 0x3030. */
+extern int teleporter_exit_world_x;
 extern char far *badguy_graphics_buffer;     /* Holds the buffer used for badguy graphics. */
-extern int actor_3019_enabled;               /* Tracks whether level object marker 0x3019 is active. */
-extern int actor_3042_active_state;          /* Tracks the current state of marker 0x3042 active. */
+extern int collapsing_bridge_enabled;        /* Tracks whether collapsing bridge from map word 0x3019 is active. */
+extern int dr_proton_active_state;  /* Tracks whether dr. proton boss (episode 3) from map word 0x3042 is active. */
 extern char far *credits_graphics_buffer;    /* Holds the buffer used for credits graphics. */
-extern int actor_3041_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3041 world. */
-extern int actor_302f_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x302F world. */
-extern int actor_3030_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3030 world. */
+/* Stores the world Y coordinate for dr. proton display screen from map word 0x3041. */
+extern int proton_display_world_y;
+/* Stores the world Y coordinate for teleporter endpoint leading to 0x3030 from map word 0x302F. */
+extern int teleporter_entry_world_y;
+/* Stores the world Y coordinate for teleporter endpoint leading to 0x302f from map word 0x3030. */
+extern int teleporter_exit_world_y;
 extern char far *ending_graphics_buffer;     /* Holds the buffer used for ending graphics. */
-extern int actor_3042_hint_state;            /* Tracks the current state of marker 0x3042 hint. */
+extern int dr_proton_hint_state;  /* Tracks hint display state for dr. proton boss (episode 3) from map word 0x3042. */
 extern int world_actor_count;                /* Stores the current count or capacity for world actor records. */
 extern int joystick_configuration_mode;      /* Selects which joystick axis and button mapping is active. */
-extern struct actor_3002_record actor_3002_records[];  /* Holds the record array for level object marker 0x3002. */
-extern int actor_3041_active_state;          /* Tracks the current state of marker 0x3041 active. */
+/* Stores per-instance state for left-moving conveyor belt start from map word 0x3002. */
+extern struct conveyor_belt_record conveyor_belt_records[];
+extern int proton_display_active_state;  /* Tracks whether dr. proton display screen from map word 0x3041 is active. */
 extern char player_level_transition_state;   /* Tracks the current state of player level transition. */
-extern int actor_302f_active_state;          /* Tracks the current state of marker 0x302F active. */
-/* Tracks the current animation or interaction phase for marker 0x302F interaction. */
-extern int actor_302f_interaction_phase;
-extern int actor_3030_active_state;          /* Tracks the current state of marker 0x3030 active. */
-/* Tracks the current animation or interaction phase for marker 0x302F animation. */
-extern int actor_302f_animation_phase;
+/* Tracks whether teleporter endpoint leading to 0x3030 from map word 0x302F is active. */
+extern int teleporter_entry_active_state;
+/* Tracks player interaction with teleporter endpoint leading to 0x3030 from map word 0x302F. */
+extern int tele_in_interaction_phase;
+/* Tracks whether teleporter endpoint leading to 0x302f from map word 0x3030 is active. */
+extern int teleporter_exit_active_state;
+/* Tracks animation for teleporter endpoint leading to 0x3030 from map word 0x302F. */
+extern int tele_in_animation_phase;
 extern char control_up_pressed;              /* Records whether the up control is currently pressed. */
-extern int actor_302b_world_x;               /* Stores the X-coordinate or X-related value for marker 0x302B world. */
-extern int actor_302b_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x302B world. */
-extern struct actor_302a_record actor_302a_records[];  /* Holds the record array for level object marker 0x302A. */
-extern int actor_302b_active_state;          /* Tracks the current state of marker 0x302B active. */
+extern int reactor_world_x;  /* Stores the world X coordinate for blue reactor hazard from map word 0x302B. */
+extern int reactor_world_y;  /* Stores the world Y coordinate for blue reactor hazard from map word 0x302B. */
+/* Stores per-instance state for falling acme sign from map word 0x302A. */
+extern struct falling_sign_record falling_sign_records[];
+extern int reactor_active_state;             /* Tracks whether blue reactor hazard from map word 0x302B is active. */
 /* Holds the record array for object collision pool. */
 extern struct collision_effect_record object_collision_pool_records[];
-extern struct actor_302d_record actor_302d_records[];  /* Holds the record array for level object marker 0x302D. */
+/* Stores per-instance state for magenta flag bonus box from map word 0x302D. */
+extern struct magenta_flag_box_record magenta_flag_box_records[];
 extern struct world_actor_record world_actor_records[];  /* Holds the record array for world actor. */
 /* Holds pointers to sound sample sequences used by the timer interrupt handler. */
 extern char far *sound_sample_pointer_table[];
 extern char far *vga_upper_page_pointer;     /* Points to the vga upper page data used by the game. */
 extern char control_confirmation_state;      /* Tracks the current state of control confirmation. */
-extern int actor_3020_active_state;          /* Tracks the current state of marker 0x3020 active. */
-extern struct actor_3058_record actor_3058_records[];  /* Holds the record array for level object marker 0x3058. */
+extern int robohand_box_active_state;        /* Tracks whether robohand bonus box from map word 0x3020 is active. */
+/* Stores per-instance state for upward floor spikes from map word 0x3058. */
+extern struct spike_hazard_record spike_hazard_records[];
 extern char control_down_pressed;            /* Records whether the down control is currently pressed. */
 extern char control_fire_pressed;            /* Records whether the fire control is currently pressed. */
-extern int actor_3019_width;  /* Stores the width used by level-map marker type 0x3019 collision checks. */
+extern int collapsing_bridge_width;          /* Stores the width of collapsing bridge from map word 0x3019. */
 extern char control_jump_pressed;            /* Records whether the jump control is currently pressed. */
-extern int actor_302f_interaction_state;     /* Tracks the current state of marker 0x302F interaction. */
-extern int actor_3030_interaction_state;     /* Tracks the current state of marker 0x3030 interaction. */
-extern int actor_3035_world_x;               /* Stores the X-coordinate or X-related value for marker 0x3035 world. */
+/* Tracks player interaction with teleporter endpoint leading to 0x3030 from map word 0x302F. */
+extern int tele_in_interaction_state;
+/* Tracks player interaction with teleporter endpoint leading to 0x302f from map word 0x3030. */
+extern int tele_out_interaction_state;
+/* Stores the world X coordinate for robohand activation switch from map word 0x3035. */
+extern int robohand_switch_world_x;
 extern char control_left_pressed;            /* Records whether the left control is currently pressed. */
-extern int actor_3035_world_y;               /* Stores the Y-coordinate or Y-related value for marker 0x3035 world. */
-extern int actor_3042_animation_counter;     /* Counts updates for marker 0x3042 animation. */
+/* Stores the world Y coordinate for robohand activation switch from map word 0x3035. */
+extern int robohand_switch_world_y;
+extern int dr_proton_animation_counter;  /* Counts dr. proton boss (episode 3) instances placed by map word 0x3042. */
 extern unsigned int player_sprite_animation_index;  /* Stores the current index for player sprite animation. */
-extern int actor_3041_interaction_state;     /* Tracks the current state of marker 0x3041 interaction. */
+/* Tracks player interaction with dr. proton display screen from map word 0x3041. */
+extern int proton_screen_interaction_state;
 extern char keyboard_control_lock_state;     /* Tracks the current state of keyboard control lock. */
 extern int secret_code_character_0[];        /* Stores the first character entered for the secret-code sequence. */
 extern int secret_code_character_1;          /* Stores the second character entered for the secret-code sequence. */
 extern int secret_code_character_2;          /* Stores the third character entered for the secret-code sequence. */
 extern char secret_code_input_buffer[6];     /* Holds the buffer used for secret code input. */
-extern int actor_3019_animation_state;       /* Tracks the current state of marker 0x3019 animation. */
-/* Holds the record array for level object marker 0x3048. */
-extern struct level_tile_animation_record actor_3048_records[];
+extern int weak_bridge_animation_state;      /* Tracks animation for collapsing bridge from map word 0x3019. */
+/* Stores per-instance state for red key lock from map word 0x3048. */
+extern struct level_tile_animation_record door_lock_records[];
 extern struct pickup_object_record free_object_pool_records[];  /* Holds the record array for free object pool. */
 extern int player_gameplay_state;            /* Tracks the current state of player gameplay. */
 extern int formation_object_active_flags[];  /* Stores active-state flags for the members of the enemy formation. */
-extern struct actor_3016_record actor_3016_records[];  /* Holds the record array for level object marker 0x3016. */
-extern int actor_3019_screen_x;              /* Stores the X-coordinate or X-related value for marker 0x3019 screen. */
-extern int actor_3019_map_row;               /* Stores the map row of the level-map marker type 0x3019 object. */
+/* Stores per-instance state for right-facing wallcrawler from map word 0x3016. */
+extern struct wallcrawler_record wallcrawler_records[];
+extern int collapsing_bridge_screen_x;  /* Stores the screen X coordinate for collapsing bridge from map word 0x3019. */
+extern int collapsing_bridge_map_row;        /* Stores the map row for collapsing bridge from map word 0x3019. */
 extern int door_lock_world_x;                /* Stores the X-coordinate or X-related value for door lock world. */
 extern char player_projectile_state;         /* Tracks the current state of player projectile. */
 extern char control_right_pressed;           /* Records whether the right control is currently pressed. */
 extern int door_lock_world_y;                /* Stores the Y-coordinate or Y-related value for door lock world. */
 extern struct ambient_object_record ambient_object_records[];  /* Holds the record array for ambient object. */
 extern char joystick_enabled;                /* Tracks whether joystick is active. */
-extern int actor_3042_open_state;            /* Tracks the current state of marker 0x3042 open. */
-extern int actor_302b_animation_counter;     /* Counts updates for marker 0x302B animation. */
+extern int dr_proton_open_state;  /* Tracks the open state of dr. proton boss (episode 3) from map word 0x3042. */
+extern int reactor_animation_counter;        /* Counts blue reactor hazard instances placed by map word 0x302B. */
 extern int door_or_key_interaction_state;    /* Tracks the current state of door or key interaction. */
-extern int actor_302b_open_state;            /* Tracks the current state of marker 0x302B open. */
+extern int reactor_open_state;               /* Tracks the open state of blue reactor hazard from map word 0x302B. */
 extern int secret_block_world_x;             /* Stores the X-coordinate or X-related value for secret block world. */
 extern char player_invulnerability_state;    /* Tracks the current state of player invulnerability. */
 extern int secret_block_world_y;             /* Stores the Y-coordinate or Y-related value for secret block world. */
 extern char current_sound_priority;          /* Stores the priority of the currently playing sound effect. */
-extern int actor_3037_bonus_state;           /* Tracks the current state of marker 0x3037 bonus. */
+extern int letter_bonus_state;               /* Tracks the current state of letter d bonus from map word 0x3037. */
 extern int level_progress_word;              /* Stores the current level-progress word written to saved-game data. */
-/* Stores auxiliary state bytes for the level-map marker type 0x300D objects. */
-extern int actor_300d_auxiliary_states[];
-extern int actor_3001_tile_below_records[];  /* Holds the record array for marker 0x3001 tile below. */
-extern int actor_3044_entity_count;  /* Stores the current count or capacity for marker 0x3044 entity records. */
+extern int wheelbot_auxiliary_states[];      /* Tracks the current state of wheeled techbot from map word 0x300D. */
+extern int elevator_tile_below_records[];    /* Stores per-instance state for elevator from map word 0x3001. */
+extern int door_key_count;                   /* Counts door keys placed by map word 0x3044. */
 extern char far *secondary_sound_bank_buffer;  /* Holds the buffer used for secondary sound bank. */
 extern char far *primary_sound_bank_buffer;  /* Holds the buffer used for primary sound bank. */
 /* Counts timer interrupts between calls to the prior BIOS timer handler; the handler chains

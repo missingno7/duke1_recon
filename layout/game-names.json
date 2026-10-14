@@ -46,7 +46,7 @@
   "d_0439": "Tracks the current state of player death.",
   "d_043a": "Tracks the current state of player action.",
   "d_043b": "Tracks the current animation or interaction phase for player animation.",
-  "d_043c": "Stores the current count or capacity for level object marker 0x3000 records.",
+  "d_043c": "Counts empty grey bonus box instances placed by map word 0x3000.",
   "d_043e": "Stores the current count or capacity for collision sound record records.",
   "d_0440": "Provides coordinate changes used to animate the first pair of contact-flash points.",
   "d_0476": "Provides coordinate changes used to animate the second pair of contact-flash points.",
@@ -58,64 +58,64 @@
   "d_051e": "Stores the current count or capacity for moving object records.",
   "d_0520": "Stores the current count or capacity for pickup object records.",
   "d_0522": "Stores the current count or capacity for moving actor records.",
-  "d_0524": "Stores the current count or capacity for level object marker 0x3001 records.",
-  "d_0526": "Stores the current count or capacity for level object marker 0x3002 records.",
-  "d_0528": "Stores the X-coordinate or X-related value for level object marker 0x3006 world.",
-  "d_052a": "Stores the Y-coordinate or Y-related value for level object marker 0x3006 world.",
-  "d_052c": "Tracks the current state of level object marker 0x3006.",
-  "d_052e": "Tracks the current state of level object marker 0x3008.",
-  "d_0530": "Stores the X-coordinate or X-related value for level object marker 0x3020 world.",
-  "d_0532": "Stores the Y-coordinate or Y-related value for level object marker 0x3020 world.",
-  "d_0534": "Tracks the current state of level object marker 0x3020.",
-  "d_0536": "Stores the X-coordinate or X-related value for level object marker 0x3033 world.",
-  "d_0538": "Stores the Y-coordinate or Y-related value for level object marker 0x3033 world.",
-  "d_053a": "Tracks the current state of level object marker 0x3033.",
-  "d_053c": "Tracks whether level object marker 0x3033 is active.",
-  "d_053e": "Stores the current count or capacity for level object marker 0x3007 records.",
-  "d_0540": "Stores the current count or capacity for level object marker 0x3009 records.",
-  "d_0542": "Stores the current count or capacity for level object marker 0x300A records.",
-  "d_0544": "Stores the current count or capacity for level object marker 0x300B records.",
+  "d_0524": "Counts elevator instances placed by map word 0x3001.",
+  "d_0526": "Counts left-moving conveyor belt start instances placed by map word 0x3002.",
+  "d_0528": "Stores the world X coordinate for jump boots bonus box from map word 0x3006.",
+  "d_052a": "Stores the world Y coordinate for jump boots bonus box from map word 0x3006.",
+  "d_052c": "Tracks the current state of jump boots bonus box from map word 0x3006.",
+  "d_052e": "Tracks the current state of ceiling-clinger bonus box from map word 0x3008.",
+  "d_0530": "Stores the world X coordinate for robohand bonus box from map word 0x3020.",
+  "d_0532": "Stores the world Y coordinate for robohand bonus box from map word 0x3020.",
+  "d_0534": "Tracks the current state of robohand bonus box from map word 0x3020.",
+  "d_0536": "Stores the world X coordinate for access-card bonus box from map word 0x3033.",
+  "d_0538": "Stores the world Y coordinate for access-card bonus box from map word 0x3033.",
+  "d_053a": "Tracks the current state of access-card bonus box from map word 0x3033.",
+  "d_053c": "Tracks whether access-card bonus box from map word 0x3033 is active.",
+  "d_053e": "Counts rocket instances placed by map word 0x3007.",
+  "d_0540": "Counts right-firing flamethrower instances placed by map word 0x3009.",
+  "d_0542": "Counts left-firing flamethrower instances placed by map word 0x300A.",
+  "d_0544": "Counts flying techbot instances placed by map word 0x300B.",
   "d_0546": "Stores paired horizontal and vertical movement deltas for one moving-item trajectory.",
   "d_0576": "Stores paired horizontal and vertical movement deltas for a second moving-item trajectory.",
-  "d_05a6": "Stores the current sprite or map offset for marker 0x300B screen anim.",
-  "d_05a8": "Selects the animation frame for the object records created from marker type 0x300B.",
-  "d_05aa": "Stores the current count or capacity for level object marker 0x300C records.",
-  "d_05ac": "Stores the current count or capacity for level object marker 0x300D records.",
-  "d_05ae": "Tracks the current state of marker 0x300E animation.",
-  "d_05b0": "Counts updates for marker 0x300E animation.",
-  "d_05b2": "Stores the current count or capacity for level object marker 0x300E records.",
-  "d_05b4": "Stores the current count or capacity for level object marker 0x300F records.",
-  "d_05b6": "Stores the current count or capacity for level object marker 0x3010 records.",
-  "d_05b8": "Stores the current count or capacity for level object marker 0x3012 records.",
-  "d_05ba": "Stores the current count or capacity for level object marker 0x3014 records.",
-  "d_05bc": "Stores the current count or capacity for level object marker 0x3015 records.",
-  "d_05be": "Stores the current count or capacity for level object marker 0x3016 records.",
-  "d_05c0": "Stores the current count or capacity for level object marker 0x3018 records.",
-  "d_05c2": "Stores the current count or capacity for level object marker 0x301A records.",
-  "d_05c4": "Stores the current count or capacity for level object marker 0x301B records.",
-  "d_05c6": "Stores the current count or capacity for level object marker 0x301D records.",
-  "d_05c8": "Stores the current count or capacity for level object marker 0x301E records.",
-  "d_05ca": "Stores the current count or capacity for level object marker 0x301F records.",
-  "d_05cc": "Stores the current count or capacity for level object marker 0x3021 records.",
-  "d_05ce": "Stores the current count or capacity for level object marker 0x3022 records.",
-  "d_05d0": "Stores the current count or capacity for level object marker 0x3023 records.",
-  "d_05d2": "Stores the current count or capacity for level object marker 0x3024 records.",
-  "d_05d4": "Stores the current count or capacity for level object marker 0x3025 records.",
-  "d_05d6": "Stores the current count or capacity for level object marker 0x3029 records.",
-  "d_05d8": "Stores the current count or capacity for level object marker 0x302A records.",
-  "d_05da": "Stores the current count or capacity for level object marker 0x302C records.",
-  "d_05dc": "Stores the current count or capacity for level object marker 0x302D records.",
-  "d_05de": "Stores the current count or capacity for level object marker 0x302E records.",
-  "d_05e0": "Stores the current count or capacity for level object marker 0x3031 records.",
+  "d_05a6": "Stores screen anim offset for flying techbot from map word 0x300B.",
+  "d_05a8": "Selects an animation frame for flying techbot from map word 0x300B.",
+  "d_05aa": "Counts jumping techbot instances placed by map word 0x300C.",
+  "d_05ac": "Counts wheeled techbot instances placed by map word 0x300D.",
+  "d_05ae": "Tracks animation for fire wheel techbot from map word 0x300E.",
+  "d_05b0": "Counts fire wheel techbot instances placed by map word 0x300E.",
+  "d_05b2": "Counts fire wheel techbot instances placed by map word 0x300E.",
+  "d_05b4": "Counts raygun ammunition bonus instances placed by map word 0x300F.",
+  "d_05b6": "Counts robot techbot instances placed by map word 0x3010.",
+  "d_05b8": "Counts dynamite bonus instances placed by map word 0x3012.",
+  "d_05ba": "Counts shimmering water effect instances placed by map word 0x3014.",
+  "d_05bc": "Counts soda-can bonus box instances placed by map word 0x3015.",
+  "d_05be": "Counts right-facing wallcrawler instances placed by map word 0x3016.",
+  "d_05c0": "Counts turkey drumstick bonus box instances placed by map word 0x3018.",
+  "d_05c2": "Counts horizontal blue force field instances placed by map word 0x301A.",
+  "d_05c4": "Counts left-blowing rotating fan instances placed by map word 0x301B.",
+  "d_05c6": "Counts football bonus box instances placed by map word 0x301D.",
+  "d_05c8": "Counts joystick bonus box instances placed by map word 0x301E.",
+  "d_05ca": "Counts dn floppy bonus box instances placed by map word 0x301F.",
+  "d_05cc": "Counts vertical force field instances placed by map word 0x3021.",
+  "d_05ce": "Counts helicopter techbot instances placed by map word 0x3022.",
+  "d_05d0": "Counts balloon bonus box instances placed by map word 0x3023.",
+  "d_05d2": "Counts security camera instances placed by map word 0x3024.",
+  "d_05d4": "Counts animated decorations from map words 0x3025-0x3028 and 0x303D-0x303F.",
+  "d_05d6": "Counts nuclear molecule bonus box instances placed by map word 0x3029.",
+  "d_05d8": "Counts falling acme sign instances placed by map word 0x302A.",
+  "d_05da": "Counts pop-up floor spike instances placed by map word 0x302C.",
+  "d_05dc": "Counts magenta flag bonus box instances placed by map word 0x302D.",
+  "d_05de": "Counts radio bonus box instances placed by map word 0x302E.",
+  "d_05e0": "Counts bouncing spiky bomb instances placed by map word 0x3031.",
   "d_05e2": "Provides vertical movement values for a level-object animation.",
-  "d_05fe": "Stores the current count or capacity for level object marker 0x303C records.",
-  "d_0600": "Stores the current count or capacity for level object marker 0x303B records.",
-  "d_0602": "Stores one frame value in the marker type 0x3042 animation sequence.",
-  "d_0604": "Stores one frame value in the marker type 0x3042 animation sequence.",
-  "d_0606": "Stores one frame value in the marker type 0x3042 animation sequence.",
-  "d_0608": "Stores one frame value in the marker type 0x3042 animation sequence.",
-  "d_060a": "Stores one frame value in the marker type 0x3042 animation sequence.",
-  "d_060c": "Stores one frame value in the marker type 0x3042 animation sequence.",
+  "d_05fe": "Counts flame creature instances placed by map word 0x303C.",
+  "d_0600": "Counts purple rabbit bonus instances placed by map word 0x303B.",
+  "d_0602": "Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042.",
+  "d_0604": "Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042.",
+  "d_0606": "Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042.",
+  "d_0608": "Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042.",
+  "d_060a": "Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042.",
+  "d_060c": "Selects an animation frame for dr. proton boss (episode 3) from map word 0x3042.",
   "d_060e": "Tracks whether gameplay animation is active.",
   "d_0610": "Tracks the current state of player airborne.",
   "d_0611": "Tracks the current state of player damage immunity.",
@@ -127,34 +127,34 @@
   "d_0648": "Selects successive sprite cells while projectile contact effects are drawn.",
   "d_064a": "Selects successive sprite cells while ambient object animations are drawn.",
   "d_064c": "Cycles the palette or sprite phase assigned to a new contact-flash record.",
-  "d_064e": "Tracks the animation phase of level-map marker type 0x3002.",
+  "d_064e": "Tracks animation for left-moving conveyor belt start from map word 0x3002.",
   "d_0650": "Stores six sprite-resource offsets for each multi-tile actor graphic.",
-  "d_0698": "Provides movement deltas used by level-map marker type 0x300C.",
-  "d_06dc": "Tracks one animation phase for marker type 0x300D.",
-  "d_06de": "Counts animation updates for marker type 0x300D.",
-  "d_06e0": "Stores the current sprite or map offset for marker 0x3010 sprite.",
+  "d_0698": "Holds movement deltas for jumping techbot from map word 0x300C.",
+  "d_06dc": "Tracks animation for wheeled techbot from map word 0x300D.",
+  "d_06de": "Counts wheeled techbot instances placed by map word 0x300D.",
+  "d_06e0": "Selects the sprite data for robot techbot from map word 0x3010.",
   "d_06e2": "Tracks the current animation or interaction phase for door interaction.",
-  "d_06e3": "Stores the current sprite or map offset for marker 0x3013 sprite.",
-  "d_06e5": "Stores the current sprite or map offset for marker 0x3014 sprite.",
-  "d_06e7": "Stores the current sprite or map offset for marker 0x3015 sprite.",
-  "d_06e9": "Stores the current sprite or map offset for marker 0x3016 upper sprite.",
-  "d_06eb": "Stores the current sprite or map offset for marker 0x3016 lower sprite.",
-  "d_06ed": "Stores the current sprite or map offset for marker 0x301A sprite.",
-  "d_06ef": "Stores the current sprite or map offset for marker 0x3021 sprite.",
-  "d_06f1": "Alternates the sprite variant selected by marker type 0x3022.",
-  "d_06f3": "Stores the current sprite or map offset for marker 0x3023 sprite.",
-  "d_06f5": "Stores the current sprite or map offset for marker 0x3024 sprite.",
-  "d_06f7": "Stores the current sprite or map offset for marker 0x3029 sprite.",
-  "d_06f9": "Stores the current sprite or map offset for marker 0x302A sprite.",
-  "d_06fb": "Stores the current sprite or map offset for marker 0x302B sprite.",
-  "d_06fd": "Tracks the current animation or interaction phase for marker 0x302C animation.",
-  "d_06fe": "Stores the current sprite or map offset for marker 0x302D sprite.",
-  "d_0700": "Tracks the current animation or interaction phase for marker 0x303C animation.",
-  "d_0702": "Provides paired movement deltas used by marker type 0x3042.",
-  "d_071a": "Selects the sprite frame drawn for marker type 0x3041.",
-  "d_071c": "Counts animation updates for marker type 0x3041.",
-  "d_071e": "Signals that marker type 0x3041 has a pending state change.",
-  "d_0720": "Stores the sprite-resource offset selected by marker type 0x3041.",
+  "d_06e3": "Selects the sprite data for snake techbots from map word 0x3013.",
+  "d_06e5": "Selects the sprite data for shimmering water effect from map word 0x3014.",
+  "d_06e7": "Selects the sprite data for soda-can bonus box from map word 0x3015.",
+  "d_06e9": "Selects the sprite data for right-facing wallcrawler from map word 0x3016.",
+  "d_06eb": "Selects the sprite data for right-facing wallcrawler from map word 0x3016.",
+  "d_06ed": "Selects the sprite data for horizontal blue force field from map word 0x301A.",
+  "d_06ef": "Selects the sprite data for vertical force field from map word 0x3021.",
+  "d_06f1": "Tracks animation for helicopter techbot from map word 0x3022.",
+  "d_06f3": "Selects the sprite data for balloon bonus box from map word 0x3023.",
+  "d_06f5": "Selects the sprite data for security camera from map word 0x3024.",
+  "d_06f7": "Selects the sprite data for nuclear molecule bonus box from map word 0x3029.",
+  "d_06f9": "Selects the sprite data for falling acme sign from map word 0x302A.",
+  "d_06fb": "Selects the sprite data for blue reactor hazard from map word 0x302B.",
+  "d_06fd": "Tracks animation for pop-up floor spike from map word 0x302C.",
+  "d_06fe": "Selects the sprite data for magenta flag bonus box from map word 0x302D.",
+  "d_0700": "Tracks animation for flame creature from map word 0x303C.",
+  "d_0702": "Holds movement deltas for dr. proton boss (episode 3) from map word 0x3042.",
+  "d_071a": "Selects an animation frame for dr. proton display screen from map word 0x3041.",
+  "d_071c": "Counts dr. proton display screen instances placed by map word 0x3041.",
+  "d_071e": "Stores event pending for dr. proton display screen from map word 0x3041.",
+  "d_0720": "Selects the sprite data for dr. proton display screen from map word 0x3041.",
   "d_0b46": "Stores hint-mode state; its initial value is on in DN1 and off in DN2 and DN3.",
   "d_0b47": "Holds the episode-specific drop-asset filename list used when a level is loaded.",
   "d_0b9f": "Tracks the current horizontal scroll position of the credits screen.",
@@ -169,7 +169,7 @@
   "d_4ed4_": "Stores the current index for title graphic frame.",
   "d_4ed6_": "Tracks the current state of level play.",
   "d_4ed8_": "Tracks the current state of hidden object.",
-  "d_4eda_": "Holds the lookup or pointer table for marker 0x300E object state.",
+  "d_4eda_": "Holds the state lookup for fire wheel techbot from map word 0x300E.",
   "d_4fa2_": "Stores the high-score values as 32-bit entries used by the score table.",
   "d_4fa4_": "Aliases the upper word of the first long in d_4fa2; the source uses it as an overlapping word view.",
   "d_4fa6_": "Aliases the second long-score entry in the contiguous high-score table beginning at d_4fa2.",
@@ -184,31 +184,31 @@
   "d_5006_": "Tracks the current state of level loading.",
   "d_5008_": "Stores the ten player-name strings paired with the high-score table.",
   "d_5076_": "Provides an additional high-score name buffer adjacent to the ten saved name rows; its direct use is not established.",
-  "d_5081_": "Holds the lookup or pointer table for marker 0x300C object marker.",
-  "d_5149_": "Tracks the current state of marker 0x3035.",
+  "d_5081_": "Holds the state lookup for jumping techbot from map word 0x300C.",
+  "d_5149_": "Tracks the current state of robohand activation switch from map word 0x3035.",
   "d_514b_": "Holds the level-object update callbacks registered by map-marker initialization and invoked each game tick.",
-  "d_52db_": "Tracks the current state of marker 0x3035 animation.",
+  "d_52db_": "Tracks animation for robohand activation switch from map word 0x3035.",
   "d_52dd_": "Holds the record array for projectile.",
   "d_5305_": "Tracks the current character offset in the credits scroll text.",
-  "d_5307_": "Tracks the current state of marker 0x3035 active.",
-  "d_5309_": "Stores the current count or capacity for marker 0x3037 object records.",
+  "d_5307_": "Tracks whether robohand activation switch from map word 0x3035 is active.",
+  "d_5309_": "Counts letter d bonus instances placed by map word 0x3037.",
   "d_530b_": "Tracks whether pending sound priority is active.",
-  "d_530c_": "Tracks the current state of marker 0x3037 animation.",
+  "d_530c_": "Tracks animation for letter d bonus from map word 0x3037.",
   "d_530e_": "Tracks the current state of user demo recording.",
   "d_530f_": "Tracks the current state of secret block collision.",
-  "d_5310_": "Tracks the current state of marker 0x3013 formation.",
-  "d_5312_": "Tracks the current state of marker 0x303B update.",
+  "d_5310_": "Tracks the formation from map word 0x3013.",
+  "d_5312_": "Tracks the current state of purple rabbit bonus from map word 0x303B.",
   "d_5314_": "Tracks the current state of exit lock animation.",
   "d_5316_": "Tracks the current state of secret block animation.",
   "d_5318_": "Tracks whether game session abort is active.",
-  "d_5319_": "Stores the current count or capacity for marker 0x3048 object records.",
+  "d_5319_": "Counts animated door tiles placed by map word 0x304C.",
   "d_531b_": "Stores the current index for pending sound effect.",
-  "d_531c_": "Tracks the current state of marker 0x302A update.",
+  "d_531c_": "Tracks the current state of falling acme sign from map word 0x302A.",
   "d_531e_": "Stores the current count or capacity for level object pool 531e records.",
   "d_5320_": "Holds the record array for level collision sound.",
   "d_551e_": "Holds the record array for animated actor pool.",
-  "d_5548_": "Stores the current count or capacity for marker 0x3048 entity records.",
-  "d_554a_": "Tracks the current state of marker 0x3042 interaction.",
+  "d_5548_": "Counts door locks placed by map word 0x3048.",
+  "d_554a_": "Tracks player interaction with dr. proton boss (episode 3) from map word 0x3042.",
   "d_554c_": "Stores the save-slot character selected for save or restore operations.",
   "d_554d_": "Stores the current count or capacity for keyboard hotkey records.",
   "d_554f_": "Tracks whether control hint up is active.",
@@ -223,11 +223,11 @@
   "d_555a_": "Indicates whether the fourth hidden-object hint has been revealed.",
   "d_555b_": "Indicates whether the fifth hidden-object hint has been revealed.",
   "d_555c_": "Indicates whether the sixth hidden-object hint has been revealed.",
-  "d_555d_": "Holds the record array for level object marker 0x3012.",
+  "d_555d_": "Stores per-instance state for dynamite bonus from map word 0x3012.",
   "d_5a0d_": "Points to the user-demo recording buffer; d_5a0f is its segment-word alias.",
   "d_5a0f_": "Aliases the segment word of d_5a0d, the user-demo recording buffer pointer.",
   "d_5a11_": "Indicates whether the seventh hidden-object hint has been revealed.",
-  "d_5a12_": "Holds the record array for level object marker 0x3015.",
+  "d_5a12_": "Stores per-instance state for soda-can bonus box from map word 0x3015.",
   "d_5c6a_": "Indicates whether the eighth hidden-object hint has been revealed.",
   "d_5c6b_": "Indicates whether the ninth hidden-object hint has been revealed.",
   "d_5c6c_": "Holds the record array for falling hazard.",
@@ -235,27 +235,27 @@
   "d_5ec4_": "Points to the player sprite resource buffer; d_5ec6 is its segment-word alias.",
   "d_5ec6_": "Aliases the segment word of d_5ec4, the player sprite resource buffer pointer.",
   "d_5ec8_": "Indicates whether the tenth hidden-object hint has been revealed.",
-  "d_5ec9_": "Holds the record array for level object marker 0x3022.",
+  "d_5ec9_": "Stores per-instance state for helicopter techbot from map word 0x3022.",
   "d_6379_": "Tracks whether active sprite draw is active.",
   "d_637a_": "Points to sprite graphics data; d_637c is its segment-word alias.",
   "d_637c_": "Aliases the segment word of d_637a, the sprite graphics buffer pointer.",
   "d_637e_": "Indicates whether the eleventh hidden-object hint has been revealed.",
-  "d_637f_": "Holds the record array for level object marker 0x300B.",
-  "d_669f_": "Holds the record array for level object marker 0x3000.",
+  "d_637f_": "Stores per-instance state for flying techbot from map word 0x300B.",
+  "d_669f_": "Stores per-instance state for empty grey bonus box from map word 0x3000.",
   "d_68f7_": "Signals that the transporter hint should be displayed.",
   "d_68f8_": "Stores the player's 32-bit score; d_68fa is its upper-word alias.",
   "d_68fa_": "Provides the overlapping player score upper word word view for the adjacent far pointer or value.",
-  "d_68fc_": "Holds the record array for level object marker 0x3024.",
+  "d_68fc_": "Stores per-instance state for security camera from map word 0x3024.",
   "d_6b54_": "Points to the font glyph data used by text rendering; d_6b56 is its segment-word alias.",
   "d_6b56_": "Aliases the segment word of d_6b54, the font glyph data pointer.",
-  "d_6b58_": "Holds the record array for level object marker 0x3044.",
-  "d_6bb2_": "Holds the record array for level object marker 0x3007.",
+  "d_6b58_": "Stores per-instance state for red key from map word 0x3044.",
+  "d_6bb2_": "Stores per-instance state for rocket from map word 0x3007.",
   "d_6e0a_": "Selects the current draw/display page, toggled while the game renders alternating pages.",
-  "d_6e0b_": "Holds the record array for level object marker 0x302E.",
-  "d_7063_": "Holds the record array for level object marker 0x3029.",
-  "d_70db_": "Holds the record array for level object marker 0x3014.",
-  "d_726b_": "Holds the record array for level object marker 0x3021.",
-  "d_73fb_": "Holds the record array for level object marker 0x303B.",
+  "d_6e0b_": "Stores per-instance state for radio bonus box from map word 0x302E.",
+  "d_7063_": "Stores per-instance state for nuclear molecule bonus box from map word 0x3029.",
+  "d_70db_": "Stores per-instance state for shimmering water effect from map word 0x3014.",
+  "d_726b_": "Stores per-instance state for vertical force field from map word 0x3021.",
+  "d_73fb_": "Stores per-instance state for purple rabbit bonus from map word 0x303B.",
   "d_771b_": "Records whether the keyboard D scan code is currently held.",
   "d_771c_": "Stores the lower joystick X-axis threshold for each calibration mode.",
   "d_7722_": "Stores the lower joystick Y-axis threshold for each calibration mode.",
@@ -263,30 +263,30 @@
   "d_7729_": "Points to the loaded 16-bit level tile map; d_772b is its segment-word alias.",
   "d_772b_": "Aliases the segment word of d_7729, the level-map pointer.",
   "d_772d_": "Records whether the keyboard O scan code is currently held.",
-  "d_772e_": "Holds the record array for level object marker 0x3009.",
+  "d_772e_": "Stores per-instance state for right-firing flamethrower from map word 0x3009.",
   "d_7986_": "Points to the vga lower page data used by the game.",
   "d_798a_": "Tracks the current state of access card or door.",
-  "d_798c_": "Holds the record array for level object marker 0x301B.",
-  "d_7cac_": "Holds the record array for level object marker 0x3023.",
-  "d_7f04_": "Tracks the current state of marker 0x3034 active.",
+  "d_798c_": "Stores per-instance state for left-blowing rotating fan from map word 0x301B.",
+  "d_7cac_": "Stores per-instance state for balloon bonus box from map word 0x3023.",
+  "d_7f04_": "Tracks whether access-card reader from map word 0x3034 is active.",
   "d_7f06_": "Holds the record array for animated level tile.",
   "d_9676_": "Stores the upper joystick X-axis threshold for each calibration mode.",
   "d_967c_": "Stores the upper joystick Y-axis threshold for each calibration mode.",
   "d_9682_": "Stores the current sprite or map offset for alternate sprite draw.",
   "d_9684_": "Points to the saved-demo playback buffer; d_9686 is its segment-word alias.",
   "d_9686_": "Aliases the segment word of d_9684, the saved-demo playback buffer pointer.",
-  "d_9688_": "Holds the record array for level object marker 0x302C.",
-  "d_9818_": "Holds the record array for level object marker 0x301F.",
+  "d_9688_": "Stores per-instance state for pop-up floor spike from map word 0x302C.",
+  "d_9818_": "Stores per-instance state for dn floppy bonus box from map word 0x301F.",
   "d_9b38_": "Holds the lookup or pointer table for episode sprite resource.",
-  "d_9b3a_": "Holds the record array for level object marker 0x300A.",
-  "d_9d92_": "Stores the X-coordinate or X-related value for marker 0x3040 world.",
-  "d_9d94_": "Stores the Y-coordinate or Y-related value for marker 0x3040 world.",
-  "d_9d96_": "Stores the X-coordinate or X-related value for marker 0x3034 world.",
+  "d_9b3a_": "Stores per-instance state for left-firing flamethrower from map word 0x300A.",
+  "d_9d92_": "Stores the world X coordinate for message sign from map word 0x3040.",
+  "d_9d94_": "Stores the world Y coordinate for message sign from map word 0x3040.",
+  "d_9d96_": "Stores the world X coordinate for access-card reader from map word 0x3034.",
   "d_9d98_": "Latches the last processed fire-button state to prevent repeated edge-triggered actions.",
-  "d_9d99_": "Holds the record array for level object marker 0x301D.",
-  "d_a0b9_": "Stores the Y-coordinate or Y-related value for marker 0x3034 world.",
+  "d_9d99_": "Stores per-instance state for football bonus box from map word 0x301D.",
+  "d_a0b9_": "Stores the world Y coordinate for access-card reader from map word 0x3034.",
   "d_a0bb_": "Holds the buffer used for duke graphics.",
-  "d_a0bf_": "Holds the record array for level object marker 0x3037.",
+  "d_a0bf_": "Stores per-instance state for letter d bonus from map word 0x3037.",
   "d_a0ef_": "Points to the object sprite buffer; d_a0f1 is its segment-word alias.",
   "d_a0f1_": "Aliases the segment word of d_a0ef, the object sprite buffer pointer.",
   "d_a0f3_": "Latches the last processed jump-button state to prevent repeated edge-triggered actions.",
@@ -296,121 +296,121 @@
   "d_a0fa_": "Stores the most recent keyboard scan code read by the keyboard interrupt handler.",
   "d_a0fb_": "Points to the current sprite pixel data; d_a0fd is its segment-word alias.",
   "d_a0fd_": "Aliases the segment word of d_a0fb, the current sprite pixel data pointer.",
-  "d_a0ff_": "Holds the record array for level object marker 0x300D.",
-  "d_a357_": "Holds the record array for level object marker 0x301E.",
-  "d_a677_": "Tracks the current state of marker 0x3040 active.",
+  "d_a0ff_": "Stores per-instance state for wheeled techbot from map word 0x300D.",
+  "d_a357_": "Stores per-instance state for joystick bonus box from map word 0x301E.",
+  "d_a677_": "Tracks whether message sign from map word 0x3040 is active.",
   "d_a679_": "Tracks the current state of player sprite refresh.",
-  "d_a67b_": "Stores the X-coordinate or X-related value for marker 0x3008 world.",
+  "d_a67b_": "Stores the world X coordinate for ceiling-clinger bonus box from map word 0x3008.",
   "d_a67d_": "Records whether the Backspace scan code is currently held.",
-  "d_a67e_": "Stores the Y-coordinate or Y-related value for marker 0x3008 world.",
-  "d_a680_": "Holds the record array for level object marker 0x303C.",
+  "d_a67e_": "Stores the world Y coordinate for ceiling-clinger bonus box from map word 0x3008.",
+  "d_a680_": "Stores per-instance state for flame creature from map word 0x303C.",
   "d_a8d8_": "Tracks the current state of sound interrupt active.",
   "d_a8d9_": "Tracks the current state of keyboard interrupt.",
-  "d_a8da_": "Holds the record array for level object marker 0x3001.",
-  "d_ab32_": "Holds the record array for level object marker 0x300F.",
+  "d_a8da_": "Stores per-instance state for elevator from map word 0x3001.",
+  "d_ab32_": "Stores per-instance state for raygun ammunition bonus from map word 0x300F.",
   "d_abd2_": "Stores the current count or capacity for formation active object records.",
   "d_abd4_": "Stores the horizontal positions of the active enemy-formation members.",
   "d_abe6_": "Accumulates horizontal movement deltas for the active enemy formation.",
   "d_abe8_": "Provides four auxiliary bytes beside the formation state; the checked-in sources do not show their use.",
-  "d_abec_": "Holds the record array for level object marker 0x300E.",
-  "d_ae44_": "Holds the record array for level object marker 0x3031.",
+  "d_abec_": "Stores per-instance state for fire wheel techbot from map word 0x300E.",
+  "d_ae44_": "Stores per-instance state for bouncing spiky bomb from map word 0x3031.",
   "d_b09c_": "Stores the vertical positions of the active enemy-formation members.",
   "d_b0ae_": "Accumulates vertical movement deltas for the active enemy formation.",
   "d_b0b0_": "Provides four auxiliary bytes beside the formation state; the checked-in sources do not show their use.",
-  "d_b0b4_": "Holds the record array for level object marker 0x3010.",
-  "d_b3d4_": "Tracks the current state of marker 0x3033 active.",
-  "d_b3d6_": "Holds the record array for level object marker 0x301A.",
-  "d_b62e_": "Stores the X-coordinate or X-related value for marker 0x3019 world.",
-  "d_b630_": "Stores the X-coordinate or X-related value for marker 0x3042 world.",
-  "d_b632_": "Stores the Y-coordinate or Y-related value for marker 0x3019 world.",
-  "d_b634_": "Stores the Y-coordinate or Y-related value for marker 0x3042 world.",
+  "d_b0b4_": "Stores per-instance state for robot techbot from map word 0x3010.",
+  "d_b3d4_": "Tracks whether access-card bonus box from map word 0x3033 is active.",
+  "d_b3d6_": "Stores per-instance state for horizontal blue force field from map word 0x301A.",
+  "d_b62e_": "Stores the world X coordinate for collapsing bridge from map word 0x3019.",
+  "d_b630_": "Stores the world X coordinate for dr. proton boss (episode 3) from map word 0x3042.",
+  "d_b632_": "Stores the world Y coordinate for collapsing bridge from map word 0x3019.",
+  "d_b634_": "Stores the world Y coordinate for dr. proton boss (episode 3) from map word 0x3042.",
   "d_b636_": "Tracks whether formation update is active.",
   "d_b638_": "The title screen bitmap (dn.dnX), four planes of 8000 bytes.",
   "d_b63c_": "Holds the record array for moving actor.",
-  "d_b6bc_": "Holds the record array for level object marker 0x300C.",
+  "d_b6bc_": "Stores per-instance state for jumping techbot from map word 0x300C.",
   "d_b9dc_": "Tracks whether ending sequence is active.",
   "d_b9de_": "Holds the record array for level tile animation.",
-  "d_c01e_": "Holds the record array for level object marker 0x3018.",
-  "d_c276_": "Stores the X-coordinate or X-related value for marker 0x3041 world.",
+  "d_c01e_": "Stores per-instance state for turkey drumstick bonus box from map word 0x3018.",
+  "d_c276_": "Stores the world X coordinate for dr. proton display screen from map word 0x3041.",
   "d_c278_": "Records whether the requested demo file was loaded successfully.",
-  "d_c279_": "Stores the X-coordinate or X-related value for marker 0x302F world.",
-  "d_c27b_": "Stores the X-coordinate or X-related value for marker 0x3030 world.",
+  "d_c279_": "Stores the world X coordinate for teleporter endpoint leading to 0x3030 from map word 0x302F.",
+  "d_c27b_": "Stores the world X coordinate for teleporter endpoint leading to 0x302f from map word 0x3030.",
   "d_c27d_": "Holds the buffer used for badguy graphics.",
-  "d_c281_": "Tracks whether level object marker 0x3019 is active.",
-  "d_c283_": "Tracks the current state of marker 0x3042 active.",
+  "d_c281_": "Tracks whether collapsing bridge from map word 0x3019 is active.",
+  "d_c283_": "Tracks whether dr. proton boss (episode 3) from map word 0x3042 is active.",
   "d_c285_": "Holds the buffer used for credits graphics.",
-  "d_c289_": "Stores the Y-coordinate or Y-related value for marker 0x3041 world.",
-  "d_c28b_": "Stores the Y-coordinate or Y-related value for marker 0x302F world.",
-  "d_c28d_": "Stores the Y-coordinate or Y-related value for marker 0x3030 world.",
+  "d_c289_": "Stores the world Y coordinate for dr. proton display screen from map word 0x3041.",
+  "d_c28b_": "Stores the world Y coordinate for teleporter endpoint leading to 0x3030 from map word 0x302F.",
+  "d_c28d_": "Stores the world Y coordinate for teleporter endpoint leading to 0x302f from map word 0x3030.",
   "d_c28f_": "Holds the buffer used for ending graphics.",
-  "d_c293_": "Tracks the current state of marker 0x3042 hint.",
+  "d_c293_": "Tracks hint display state for dr. proton boss (episode 3) from map word 0x3042.",
   "d_c295_": "Stores the current count or capacity for world actor records.",
   "d_c297_": "Selects which joystick axis and button mapping is active.",
-  "d_c299_": "Holds the record array for level object marker 0x3002.",
-  "d_c681_": "Tracks the current state of marker 0x3041 active.",
+  "d_c299_": "Stores per-instance state for left-moving conveyor belt start from map word 0x3002.",
+  "d_c681_": "Tracks whether dr. proton display screen from map word 0x3041 is active.",
   "d_c683_": "Tracks the current state of player level transition.",
-  "d_c684_": "Tracks the current state of marker 0x302F active.",
-  "d_c686_": "Tracks the current animation or interaction phase for marker 0x302F interaction.",
-  "d_c688_": "Tracks the current state of marker 0x3030 active.",
-  "d_c68a_": "Tracks the current animation or interaction phase for marker 0x302F animation.",
+  "d_c684_": "Tracks whether teleporter endpoint leading to 0x3030 from map word 0x302F is active.",
+  "d_c686_": "Tracks player interaction with teleporter endpoint leading to 0x3030 from map word 0x302F.",
+  "d_c688_": "Tracks whether teleporter endpoint leading to 0x302f from map word 0x3030 is active.",
+  "d_c68a_": "Tracks animation for teleporter endpoint leading to 0x3030 from map word 0x302F.",
   "d_c68c_": "Records whether the up control is currently pressed.",
-  "d_c68d_": "Stores the X-coordinate or X-related value for marker 0x302B world.",
-  "d_c68f_": "Stores the Y-coordinate or Y-related value for marker 0x302B world.",
-  "d_c691_": "Holds the record array for level object marker 0x302A.",
-  "d_c8e9_": "Tracks the current state of marker 0x302B active.",
+  "d_c68d_": "Stores the world X coordinate for blue reactor hazard from map word 0x302B.",
+  "d_c68f_": "Stores the world Y coordinate for blue reactor hazard from map word 0x302B.",
+  "d_c691_": "Stores per-instance state for falling acme sign from map word 0x302A.",
+  "d_c8e9_": "Tracks whether blue reactor hazard from map word 0x302B is active.",
   "d_c8eb_": "Holds the record array for object collision pool.",
-  "d_c915_": "Holds the record array for level object marker 0x302D.",
+  "d_c915_": "Stores per-instance state for magenta flag bonus box from map word 0x302D.",
   "d_cb6d_": "Holds the record array for world actor.",
   "d_cbb5_": "Holds pointers to sound sample sequences used by the timer interrupt handler.",
   "d_cbb7_": "Aliases the segment word of the first far pointer in d_cbb5; it is not a separate metadata table.",
   "d_cc7d_": "Points to the vga upper page data used by the game.",
   "d_cc81_": "Tracks the current state of control confirmation.",
-  "d_cc82_": "Tracks the current state of marker 0x3020 active.",
-  "d_cc84_": "Holds the record array for level object marker 0x3058.",
+  "d_cc82_": "Tracks whether robohand bonus box from map word 0x3020 is active.",
+  "d_cc84_": "Stores per-instance state for upward floor spikes from map word 0x3058.",
   "d_d134_": "Records whether the down control is currently pressed.",
   "d_d135_": "Records whether the fire control is currently pressed.",
-  "d_d136_": "Stores the width used by level-map marker type 0x3019 collision checks.",
+  "d_d136_": "Stores the width of collapsing bridge from map word 0x3019.",
   "d_d138_": "Records whether the jump control is currently pressed.",
-  "d_d139_": "Tracks the current state of marker 0x302F interaction.",
-  "d_d13b_": "Tracks the current state of marker 0x3030 interaction.",
-  "d_d13d_": "Stores the X-coordinate or X-related value for marker 0x3035 world.",
+  "d_d139_": "Tracks player interaction with teleporter endpoint leading to 0x3030 from map word 0x302F.",
+  "d_d13b_": "Tracks player interaction with teleporter endpoint leading to 0x302f from map word 0x3030.",
+  "d_d13d_": "Stores the world X coordinate for robohand activation switch from map word 0x3035.",
   "d_d13f_": "Records whether the left control is currently pressed.",
-  "d_d140_": "Stores the Y-coordinate or Y-related value for marker 0x3035 world.",
-  "d_d142_": "Counts updates for marker 0x3042 animation.",
+  "d_d140_": "Stores the world Y coordinate for robohand activation switch from map word 0x3035.",
+  "d_d142_": "Counts dr. proton boss (episode 3) instances placed by map word 0x3042.",
   "d_d144_": "Stores the current index for player sprite animation.",
-  "d_d146_": "Tracks the current state of marker 0x3041 interaction.",
+  "d_d146_": "Tracks player interaction with dr. proton display screen from map word 0x3041.",
   "d_d148_": "Tracks the current state of keyboard control lock.",
   "d_d149_": "Stores the first character entered for the secret-code sequence.",
   "d_d14b_": "Stores the second character entered for the secret-code sequence.",
   "d_d14d_": "Stores the third character entered for the secret-code sequence.",
   "d_d14f_": "Holds the buffer used for secret code input.",
-  "d_d155_": "Tracks the current state of marker 0x3019 animation.",
-  "d_d157_": "Holds the record array for level object marker 0x3048.",
+  "d_d155_": "Tracks animation for collapsing bridge from map word 0x3019.",
+  "d_d157_": "Stores per-instance state for red key lock from map word 0x3048.",
   "d_d1cf_": "Holds the record array for free object pool.",
   "d_d247_": "Tracks the current state of player gameplay.",
   "d_d249_": "Stores active-state flags for the members of the enemy formation.",
-  "d_d261_": "Holds the record array for level object marker 0x3016.",
-  "d_d4b9_": "Stores the X-coordinate or X-related value for marker 0x3019 screen.",
-  "d_d4bb_": "Stores the map row of the level-map marker type 0x3019 object.",
+  "d_d261_": "Stores per-instance state for right-facing wallcrawler from map word 0x3016.",
+  "d_d4b9_": "Stores the screen X coordinate for collapsing bridge from map word 0x3019.",
+  "d_d4bb_": "Stores the map row for collapsing bridge from map word 0x3019.",
   "d_d4bd_": "Stores the X-coordinate or X-related value for door lock world.",
   "d_d4bf_": "Tracks the current state of player projectile.",
   "d_d4c0_": "Records whether the right control is currently pressed.",
   "d_d4c1_": "Stores the Y-coordinate or Y-related value for door lock world.",
   "d_d4c3_": "Holds the record array for ambient object.",
   "d_d56b_": "Tracks whether joystick is active.",
-  "d_d56c_": "Tracks the current state of marker 0x3042 open.",
-  "d_d56e_": "Counts updates for marker 0x302B animation.",
+  "d_d56c_": "Tracks the open state of dr. proton boss (episode 3) from map word 0x3042.",
+  "d_d56e_": "Counts blue reactor hazard instances placed by map word 0x302B.",
   "d_d570_": "Tracks the current state of door or key interaction.",
-  "d_d572_": "Tracks the current state of marker 0x302B open.",
+  "d_d572_": "Tracks the open state of blue reactor hazard from map word 0x302B.",
   "d_d574_": "Stores the X-coordinate or X-related value for secret block world.",
   "d_d576_": "Tracks the current state of player invulnerability.",
   "d_d577_": "Stores the Y-coordinate or Y-related value for secret block world.",
   "d_d579_": "Stores the priority of the currently playing sound effect.",
-  "d_d57a_": "Tracks the current state of marker 0x3037 bonus.",
+  "d_d57a_": "Tracks the current state of letter d bonus from map word 0x3037.",
   "d_d57c_": "Stores the current level-progress word written to saved-game data.",
-  "d_d57e_": "Stores auxiliary state bytes for the level-map marker type 0x300D objects.",
-  "d_d646_": "Holds the record array for marker 0x3001 tile below.",
-  "d_d70e_": "Stores the current count or capacity for marker 0x3044 entity records.",
+  "d_d57e_": "Tracks the current state of wheeled techbot from map word 0x300D.",
+  "d_d646_": "Stores per-instance state for elevator from map word 0x3001.",
+  "d_d70e_": "Counts door keys placed by map word 0x3044.",
   "d_d710_": "Holds the buffer used for secondary sound bank.",
   "d_d714_": "Holds the buffer used for primary sound bank.",
   "d_d718_": "Counts timer interrupts between calls to the prior BIOS timer handler; the handler chains every eight ticks.",
@@ -471,77 +471,77 @@
   "g1_363b": "Tests the player x alignment and returns the result to its caller.",
   "g1_367e": "Checks the level tile at a position and handles the special breakable-tile case.",
   "g1_3714": "Returns nonzero when either map cell covered by a position contains a blocking tile.",
-  "g1_376f": "Updates and draws records from level-map marker 0x3000; the concrete entity identity is not established by source.",
-  "g1_3882": "Updates and draws records from level-map marker 0x3001; the concrete entity identity is not established by source.",
-  "g1_3a98": "Updates and draws records from level-map marker 0x3002; the concrete entity identity is not established by source.",
-  "g1_3cbc": "Updates and draws records from level-map marker 0x3006; the concrete entity identity is not established by source.",
-  "g1_3e06": "Updates and draws records from level-map marker 0x3007; the concrete entity identity is not established by source.",
-  "g1_42b8": "Updates and draws records from level-map marker 0x3008; the concrete entity identity is not established by source.",
-  "g1_43fa": "Updates and draws records from level-map marker 0x3009; the concrete entity identity is not established by source.",
-  "g1_4638": "Updates and draws records from level-map marker 0x300A; the concrete entity identity is not established by source.",
-  "g1_4874": "Updates and draws records from level-map marker 0x300B; the concrete entity identity is not established by source.",
-  "g1_4d42": "Draws the six sprite cells that form a two-column, three-row actor graphic.",
-  "g1_4f91": "Updates and draws records from level-map marker 0x300C; the concrete entity identity is not established by source.",
-  "g1_5427": "Draws a two-cell-wide actor row and marks player contact when the row overlaps Duke.",
-  "g1_54e1": "Updates and draws records from level-map marker 0x300D; the concrete entity identity is not established by source.",
-  "g1_573d": "Updates and draws records from level-map marker 0x3020; the concrete entity identity is not established by source.",
-  "g1_5887": "Updates and draws records from level-map marker 0x3033; the concrete entity identity is not established by source.",
-  "g1_59cf": "Draws a two-column, two-row actor graphic and marks player contact when it overlaps Duke.",
-  "g1_5b0b": "Updates and draws records from level-map marker 0x300E; the concrete entity identity is not established by source.",
-  "g1_5d6f": "Updates and draws records from level-map marker 0x300F; the concrete entity identity is not established by source.",
-  "g1_5f0c": "Updates and draws records from level-map marker 0x3010; the concrete entity identity is not established by source.",
+  "g1_376f": "Updates or activates empty grey bonus box from map word 0x3000.",
+  "g1_3882": "Updates or activates elevator from map word 0x3001.",
+  "g1_3a98": "Updates or activates left-moving conveyor belt start from map word 0x3002.",
+  "g1_3cbc": "Updates or activates jump boots bonus box from map word 0x3006.",
+  "g1_3e06": "Updates or activates rocket from map word 0x3007.",
+  "g1_42b8": "Updates or activates ceiling-clinger bonus box from map word 0x3008.",
+  "g1_43fa": "Updates or activates right-firing flamethrower from map word 0x3009.",
+  "g1_4638": "Updates or activates left-firing flamethrower from map word 0x300A.",
+  "g1_4874": "Updates or activates flying techbot from map word 0x300B.",
+  "g1_4d42": "Draws the six-cell Jumping Techbot sprite from map word 0x300C.",
+  "g1_4f91": "Updates or activates jumping techbot from map word 0x300C.",
+  "g1_5427": "Draws the two-cell Wheeled Techbot sprite from map word 0x300D.",
+  "g1_54e1": "Updates or activates wheeled techbot from map word 0x300D.",
+  "g1_573d": "Updates or activates robohand bonus box from map word 0x3020.",
+  "g1_5887": "Updates or activates access-card bonus box from map word 0x3033.",
+  "g1_59cf": "Draws the two-by-two Fire Wheel Techbot sprite from map word 0x300E.",
+  "g1_5b0b": "Updates or activates fire wheel techbot from map word 0x300E.",
+  "g1_5d6f": "Updates or activates raygun ammunition bonus from map word 0x300F.",
+  "g1_5f0c": "Updates or activates robot techbot from map word 0x3010.",
   "g1_6183": "Draws a two-column, two-row actor graphic from the second sprite sheet region.",
   "g1_6292": "Handles the door and key interaction using current game state and input.",
-  "g1_6445": "Updates and draws records from level-map marker 0x3012; the concrete entity identity is not established by source.",
-  "g1_6947": "Updates and draws records from level-map marker 0x3013; the concrete entity identity is not established by source.",
-  "g1_6afd": "Updates and draws records from level-map marker 0x3014; the concrete entity identity is not established by source.",
-  "g1_6b82": "Updates and draws records from level-map marker 0x3015; the concrete entity identity is not established by source.",
-  "g1_6e71": "Updates and draws records from level-map marker 0x3016; the concrete entity identity is not established by source.",
-  "g1_7163": "Updates and draws records from level-map marker 0x3018; the concrete entity identity is not established by source.",
-  "g1_73d3": "Updates and draws records from level-map marker 0x3019; the concrete entity identity is not established by source.",
-  "g1_74c2": "Updates and draws records from level-map marker 0x301A; the concrete entity identity is not established by source.",
-  "g1_75b9": "Draws two vertically stacked sprite cells for an actor.",
-  "g1_7647": "Updates and draws records from level-map marker 0x301B; the concrete entity identity is not established by source.",
-  "g1_784b": "Updates and draws records from level-map marker 0x301D; the concrete entity identity is not established by source.",
-  "g1_79d9": "Updates and draws records from level-map marker 0x301E; the concrete entity identity is not established by source.",
-  "g1_7b68": "Updates and draws records from level-map marker 0x301F; the concrete entity identity is not established by source.",
-  "g1_7cfa": "Updates and draws records from level-map marker 0x3021; the concrete entity identity is not established by source.",
-  "g1_7dff": "Draws a four-cell-wide actor row and marks player contact in its center cells.",
-  "g1_7f4a": "Draws the wide actor sprite using the active page and graphics resources.",
-  "g1_8069": "Updates and draws records from level-map marker 0x3022; the concrete entity identity is not established by source.",
-  "g1_8506": "Updates and draws records from level-map marker 0x3023; the concrete entity identity is not established by source.",
-  "g1_87bf": "Updates and draws records from level-map marker 0x3024; the concrete entity identity is not established by source.",
+  "g1_6445": "Updates or activates dynamite bonus from map word 0x3012.",
+  "g1_6947": "Updates or activates snake techbots from map word 0x3013.",
+  "g1_6afd": "Updates or activates shimmering water effect from map word 0x3014.",
+  "g1_6b82": "Updates or activates soda-can bonus box from map word 0x3015.",
+  "g1_6e71": "Updates or activates right-facing wallcrawler from map word 0x3016.",
+  "g1_7163": "Updates or activates turkey drumstick bonus box from map word 0x3018.",
+  "g1_73d3": "Updates or activates collapsing bridge from map word 0x3019.",
+  "g1_74c2": "Updates or activates horizontal blue force field from map word 0x301A.",
+  "g1_75b9": "Draws the rotating fan sprite for map words 0x301B and 0x301C.",
+  "g1_7647": "Updates or activates left-blowing rotating fan from map word 0x301B.",
+  "g1_784b": "Updates or activates football bonus box from map word 0x301D.",
+  "g1_79d9": "Updates or activates joystick bonus box from map word 0x301E.",
+  "g1_7b68": "Updates or activates dn floppy bonus box from map word 0x301F.",
+  "g1_7cfa": "Updates or activates vertical force field from map word 0x3021.",
+  "g1_7dff": "Draws a four-cell Helicopter Techbot row from map word 0x3022.",
+  "g1_7f4a": "Draws a wide Helicopter Techbot row from map word 0x3022.",
+  "g1_8069": "Updates or activates helicopter techbot from map word 0x3022.",
+  "g1_8506": "Updates or activates balloon bonus box from map word 0x3023.",
+  "g1_87bf": "Updates or activates security camera from map word 0x3024.",
   "g1_892b": "Draws the animated level tile using the active page and graphics resources.",
-  "g1_899e": "Updates and draws records from level-map marker 0x3029; the concrete entity identity is not established by source.",
-  "g1_8b5b": "Updates and draws records from level-map marker 0x302A; the concrete entity identity is not established by source.",
-  "g1_8ec1": "Updates and draws records from level-map marker 0x302B; the concrete entity identity is not established by source.",
-  "g1_9698": "Updates and draws records from level-map marker 0x302C; the concrete entity identity is not established by source.",
-  "g1_9757": "Updates and draws records from level-map marker 0x302D; the concrete entity identity is not established by source.",
-  "g1_9986": "Updates and draws records from level-map marker 0x302E; the concrete entity identity is not established by source.",
+  "g1_899e": "Updates or activates nuclear molecule bonus box from map word 0x3029.",
+  "g1_8b5b": "Updates or activates falling acme sign from map word 0x302A.",
+  "g1_8ec1": "Updates or activates blue reactor hazard from map word 0x302B.",
+  "g1_9698": "Updates or activates pop-up floor spike from map word 0x302C.",
+  "g1_9757": "Updates or activates magenta flag bonus box from map word 0x302D.",
+  "g1_9986": "Updates or activates radio bonus box from map word 0x302E.",
   "g1_9bb5": "Draws the level object animation using the active page and graphics resources.",
-  "g1_a032": "Activates the level object created from map marker 0x302F when its trigger condition is met.",
-  "g1_a125": "Activates the level object created from map marker 0x3030 when its trigger condition is met.",
-  "g1_a218": "Updates and draws records from level-map marker 0x3031; the concrete entity identity is not established by source.",
-  "g1_a30a": "Advances and draws falling hazards, applying player contact and spawning their impact effect.",
-  "g1_a3e7": "Updates and draws records from level-map marker 0x3034; the concrete entity identity is not established by source.",
-  "g1_a53a": "Updates and draws records from level-map marker 0x3035; the concrete entity identity is not established by source.",
-  "g1_a6f4": "Updates the secret block state from its current state and inputs.",
-  "g1_a75c": "Updates and draws records from level-map marker 0x3037; the concrete entity identity is not established by source.",
-  "g1_aa1b": "Draws the two sprite cells used by the climbing actor.",
-  "g1_aac2": "Updates and draws records from level-map marker 0x303B; the concrete entity identity is not established by source.",
+  "g1_a032": "Updates or activates teleporter endpoint leading to 0x3030 from map word 0x302F.",
+  "g1_a125": "Updates or activates teleporter endpoint leading to 0x302f from map word 0x3030.",
+  "g1_a218": "Updates or activates bouncing spiky bomb from map word 0x3031.",
+  "g1_a30a": "Updates the stationary spiky bomb placed by map word 0x3057.",
+  "g1_a3e7": "Updates or activates access-card reader from map word 0x3034.",
+  "g1_a53a": "Updates or activates robohand activation switch from map word 0x3035.",
+  "g1_a6f4": "Completes the robohand-operated bridge raised by map word 0x3036 when its solid tile appears.",
+  "g1_a75c": "Updates or activates letter d bonus from map word 0x3037.",
+  "g1_aa1b": "Draws the Wallcrawler sprite for map words 0x3016 and 0x3017.",
+  "g1_aac2": "Updates or activates purple rabbit bonus from map word 0x303B.",
   "g1_af06": "Draws two vertically stacked effect cells from the actor sprite resource.",
-  "g1_af94": "Updates and draws records from level-map marker 0x303C; the concrete entity identity is not established by source.",
+  "g1_af94": "Updates or activates flame creature from map word 0x303C.",
   "g1_b118": "Waits for the for level start condition or input event.",
-  "g1_b1fd": "Updates and draws records from level-map marker 0x3040; the concrete entity identity is not established by source.",
-  "g1_b292": "Draws a two-by-two actor graphic selected by its animation variant and marks player contact.",
-  "g1_b595": "Updates and draws records from level-map marker 0x3042; the concrete entity identity is not established by source.",
-  "g1_b926": "Draws a large two-by-two actor graphic and clears its active flag when the right edge is outside the view.",
+  "g1_b1fd": "Updates or activates message sign from map word 0x3040.",
+  "g1_b292": "Draws Dr. Proton's boss frames for map words 0x3042 and 0x3043.",
+  "g1_b595": "Updates or activates dr. proton boss (episode 3) from map word 0x3042.",
+  "g1_b926": "Draws the Dr. Proton display for map word 0x3041.",
   "g1_ba39": "Updates the level lock or exit from its current state and inputs.",
   "g1_bb9f": "Draws the four directional hint icons on the level screen using the current hint flags.",
-  "g1_bccb": "Updates and draws records from level-map marker 0x3044; the concrete entity identity is not established by source.",
-  "g1_bdd9": "Updates and draws records from level-map marker 0x3048; the concrete entity identity is not established by source.",
+  "g1_bccb": "Updates or activates red key from map word 0x3044.",
+  "g1_bdd9": "Updates or activates red key lock from map word 0x3048.",
   "g1_c0c7": "Advances alternate tile-animation offsets and draws the visible level-tile animation records.",
-  "g1_c1b2": "Draws visible marker 0x3058 objects and marks player contact when one overlaps Duke.",
+  "g1_c1b2": "Draws the spike hazards placed by map words 0x3058 and 0x3059.",
   "g1_c243": "Registers a level-object update callback for execution by the gameplay loop.",
   "g1_c287": "Scans level-map marker values, initializes the corresponding object records, and registers their update callbacks.",
   "g1_de26": "Reads the level's 16-bit tile map from the named file into the level-map buffer.",
@@ -784,77 +784,77 @@
   "g1_363b": "test_player_x_alignment",
   "g1_367e": "test_level_tile_special_state",
   "g1_3714": "is_level_position_blocked",
-  "g1_376f": "update_actor_3000",
-  "g1_3882": "update_actor_3001",
-  "g1_3a98": "update_actor_3002",
-  "g1_3cbc": "update_actor_3006",
-  "g1_3e06": "update_actor_3007",
-  "g1_42b8": "update_actor_3008",
-  "g1_43fa": "update_actor_3009",
-  "g1_4638": "update_actor_300a",
-  "g1_4874": "update_actor_300b",
-  "g1_4d42": "draw_six_tile_actor_sprite",
-  "g1_4f91": "update_actor_300c",
-  "g1_5427": "draw_two_tile_wide_actor_sprite",
-  "g1_54e1": "update_actor_300d",
-  "g1_573d": "update_actor_3020",
-  "g1_5887": "update_actor_3033",
-  "g1_59cf": "draw_two_by_two_actor_sprite",
-  "g1_5b0b": "update_actor_300e",
-  "g1_5d6f": "update_actor_300f",
-  "g1_5f0c": "update_actor_3010",
+  "g1_376f": "update_empty_bonus_box",
+  "g1_3882": "update_elevator",
+  "g1_3a98": "update_conveyor_belt",
+  "g1_3cbc": "update_jump_boots_box",
+  "g1_3e06": "update_rocket",
+  "g1_42b8": "update_ceiling_clinger_box",
+  "g1_43fa": "update_right_flame_turret",
+  "g1_4638": "update_left_flame_turret",
+  "g1_4874": "update_flying_techbot",
+  "g1_4d42": "draw_jumping_techbot_sprite",
+  "g1_4f91": "update_jumping_techbot",
+  "g1_5427": "draw_wheeled_techbot_sprite",
+  "g1_54e1": "update_wheeled_techbot",
+  "g1_573d": "update_robohand_box",
+  "g1_5887": "update_access_card_box",
+  "g1_59cf": "draw_fire_wheel_techbot_sprite",
+  "g1_5b0b": "update_fire_wheel_techbot",
+  "g1_5d6f": "update_ammo_box",
+  "g1_5f0c": "update_robot_techbot",
   "g1_6183": "draw_two_by_two_actor_variant",
   "g1_6292": "handle_door_and_key_interaction",
-  "g1_6445": "update_actor_3012",
-  "g1_6947": "update_actor_3013",
-  "g1_6afd": "update_actor_3014",
-  "g1_6b82": "update_actor_3015",
-  "g1_6e71": "update_actor_3016",
-  "g1_7163": "update_actor_3018",
-  "g1_73d3": "update_actor_3019",
-  "g1_74c2": "update_actor_301a",
-  "g1_75b9": "draw_two_tile_tall_actor_sprite",
-  "g1_7647": "update_actor_301b",
-  "g1_784b": "update_actor_301d",
-  "g1_79d9": "update_actor_301e",
-  "g1_7b68": "update_actor_301f",
-  "g1_7cfa": "update_actor_3021",
-  "g1_7dff": "draw_four_wide_actor_sprite",
-  "g1_7f4a": "draw_wide_actor_sprite",
-  "g1_8069": "update_actor_3022",
-  "g1_8506": "update_actor_3023",
-  "g1_87bf": "update_actor_3024",
+  "g1_6445": "update_dynamite_box",
+  "g1_6947": "update_snake_techbot",
+  "g1_6afd": "update_water_shimmer",
+  "g1_6b82": "update_soda_can_bonus",
+  "g1_6e71": "update_wallcrawler",
+  "g1_7163": "update_turkey_bonus",
+  "g1_73d3": "update_collapsing_bridge",
+  "g1_74c2": "update_horizontal_force_field",
+  "g1_75b9": "draw_rotating_fan_sprite",
+  "g1_7647": "update_rotating_fan",
+  "g1_784b": "update_football_box",
+  "g1_79d9": "update_joystick_box",
+  "g1_7b68": "update_floppy_disk_box",
+  "g1_7cfa": "update_vertical_force_field",
+  "g1_7dff": "draw_helicopter_quad_sprite",
+  "g1_7f4a": "draw_helicopter_wide_sprite",
+  "g1_8069": "update_helicopter_techbot",
+  "g1_8506": "update_balloon_bonus",
+  "g1_87bf": "update_security_camera",
   "g1_892b": "draw_animated_level_tile",
-  "g1_899e": "update_actor_3029",
-  "g1_8b5b": "update_actor_302a",
-  "g1_8ec1": "update_actor_302b",
-  "g1_9698": "update_actor_302c",
-  "g1_9757": "update_actor_302d",
-  "g1_9986": "update_actor_302e",
+  "g1_899e": "update_molecule_bonus_box",
+  "g1_8b5b": "update_falling_sign",
+  "g1_8ec1": "update_reactor",
+  "g1_9698": "update_popup_spikes",
+  "g1_9757": "update_magenta_flag_box",
+  "g1_9986": "update_radio_box",
   "g1_9bb5": "draw_level_object_animation",
-  "g1_a032": "activate_actor_302f",
-  "g1_a125": "activate_actor_3030",
-  "g1_a218": "update_actor_3031",
-  "g1_a30a": "update_falling_hazards",
-  "g1_a3e7": "update_actor_3034",
-  "g1_a53a": "update_actor_3035",
-  "g1_a6f4": "update_secret_block_state",
-  "g1_a75c": "update_actor_3037",
-  "g1_aa1b": "draw_climbing_actor_sprite",
-  "g1_aac2": "update_actor_303b",
+  "g1_a032": "activate_teleporter_entry",
+  "g1_a125": "activate_teleporter_exit",
+  "g1_a218": "update_red_bomb",
+  "g1_a30a": "update_stationary_bomb_hazards",
+  "g1_a3e7": "update_access_card_reader",
+  "g1_a53a": "update_robohand_switch",
+  "g1_a6f4": "update_robohand_bridge_state",
+  "g1_a75c": "update_letter_bonus",
+  "g1_aa1b": "draw_wallcrawler_sprite",
+  "g1_aac2": "update_rabbit_bonus",
   "g1_af06": "draw_tall_effect_sprite",
-  "g1_af94": "update_actor_303c",
+  "g1_af94": "update_fire_creature",
   "g1_b118": "wait_for_level_start",
-  "g1_b1fd": "update_actor_3040",
-  "g1_b292": "draw_actor_sprite_by_variant",
-  "g1_b595": "update_actor_3042",
-  "g1_b926": "draw_large_actor_sprite",
+  "g1_b1fd": "update_message_sign",
+  "g1_b292": "draw_dr_proton_boss_sprite",
+  "g1_b595": "update_dr_proton",
+  "g1_b926": "draw_proton_display_sprite",
   "g1_ba39": "update_level_lock_or_exit",
   "g1_bb9f": "draw_level_marker_tiles",
-  "g1_bccb": "update_actor_3044",
-  "g1_bdd9": "update_actor_3048",
+  "g1_bccb": "update_door_keys",
+  "g1_bdd9": "update_door_locks",
   "g1_c0c7": "animate_level_tile_records",
-  "g1_c1b2": "draw_marker_3058_objects",
+  "g1_c1b2": "draw_spike_hazard_sprites",
   "g1_c243": "register_level_update_callback",
   "g1_c287": "create_objects_from_level_map",
   "g1_de26": "load_level_tile_map",
@@ -1014,7 +1014,7 @@
   "d_0439": "player_death_state",
   "d_043a": "player_action_state",
   "d_043b": "player_animation_phase",
-  "d_043c": "actor_3000_count",
+  "d_043c": "empty_bonus_box_count",
   "d_043e": "collision_sound_record_count",
   "d_0440": "contact_flash_delta_table_a",
   "d_0476": "contact_flash_delta_table_b",
@@ -1026,64 +1026,64 @@
   "d_051e": "moving_object_count",
   "d_0520": "pickup_object_count",
   "d_0522": "moving_actor_count",
-  "d_0524": "actor_3001_count",
-  "d_0526": "actor_3002_count",
-  "d_0528": "actor_3006_world_x",
-  "d_052a": "actor_3006_world_y",
-  "d_052c": "actor_3006_state",
-  "d_052e": "actor_3008_state",
-  "d_0530": "actor_3020_world_x",
-  "d_0532": "actor_3020_world_y",
-  "d_0534": "actor_3020_state",
-  "d_0536": "actor_3033_world_x",
-  "d_0538": "actor_3033_world_y",
-  "d_053a": "actor_3033_state",
-  "d_053c": "actor_3033_enabled",
-  "d_053e": "actor_3007_count",
-  "d_0540": "actor_3009_count",
-  "d_0542": "actor_300a_count",
-  "d_0544": "actor_300b_count",
+  "d_0524": "elevator_count",
+  "d_0526": "conveyor_belt_count",
+  "d_0528": "jump_boots_box_world_x",
+  "d_052a": "jump_boots_box_world_y",
+  "d_052c": "jump_boots_box_state",
+  "d_052e": "ceiling_clinger_box_state",
+  "d_0530": "robohand_box_world_x",
+  "d_0532": "robohand_box_world_y",
+  "d_0534": "robohand_box_state",
+  "d_0536": "access_card_box_world_x",
+  "d_0538": "access_card_box_world_y",
+  "d_053a": "access_card_box_state",
+  "d_053c": "access_card_box_enabled",
+  "d_053e": "rocket_count",
+  "d_0540": "right_flame_turret_count",
+  "d_0542": "left_flame_turret_count",
+  "d_0544": "flying_techbot_count",
   "d_0546": "moving_item_path_delta_table_a",
   "d_0576": "moving_item_path_delta_table_b",
-  "d_05a6": "actor_300b_screen_anim_offset",
-  "d_05a8": "actor_300b_animation_frame",
-  "d_05aa": "actor_300c_count",
-  "d_05ac": "actor_300d_count",
-  "d_05ae": "actor_300e_animation_state",
-  "d_05b0": "actor_300e_animation_counter",
-  "d_05b2": "actor_300e_count",
-  "d_05b4": "actor_300f_count",
-  "d_05b6": "actor_3010_count",
-  "d_05b8": "actor_3012_count",
-  "d_05ba": "actor_3014_count",
-  "d_05bc": "actor_3015_count",
-  "d_05be": "actor_3016_count",
-  "d_05c0": "actor_3018_count",
-  "d_05c2": "actor_301a_count",
-  "d_05c4": "actor_301b_count",
-  "d_05c6": "actor_301d_count",
-  "d_05c8": "actor_301e_count",
-  "d_05ca": "actor_301f_count",
-  "d_05cc": "actor_3021_count",
-  "d_05ce": "actor_3022_count",
-  "d_05d0": "actor_3023_count",
-  "d_05d2": "actor_3024_count",
-  "d_05d4": "actor_3025_count",
-  "d_05d6": "actor_3029_count",
-  "d_05d8": "actor_302a_count",
-  "d_05da": "actor_302c_count",
-  "d_05dc": "actor_302d_count",
-  "d_05de": "actor_302e_count",
-  "d_05e0": "actor_3031_count",
+  "d_05a6": "fly_techbot_screen_anim_offset",
+  "d_05a8": "flying_techbot_animation_frame",
+  "d_05aa": "jumping_techbot_count",
+  "d_05ac": "wheeled_techbot_count",
+  "d_05ae": "fire_wheel_animation_state",
+  "d_05b0": "fire_wheel_animation_counter",
+  "d_05b2": "fire_wheel_techbot_count",
+  "d_05b4": "ammo_box_count",
+  "d_05b6": "robot_techbot_count",
+  "d_05b8": "dynamite_box_count",
+  "d_05ba": "water_shimmer_count",
+  "d_05bc": "soda_can_bonus_count",
+  "d_05be": "wallcrawler_count",
+  "d_05c0": "turkey_bonus_count",
+  "d_05c2": "horizontal_force_field_count",
+  "d_05c4": "rotating_fan_count",
+  "d_05c6": "football_box_count",
+  "d_05c8": "joystick_box_count",
+  "d_05ca": "floppy_disk_box_count",
+  "d_05cc": "vertical_force_field_count",
+  "d_05ce": "helicopter_techbot_count",
+  "d_05d0": "balloon_bonus_count",
+  "d_05d2": "security_camera_count",
+  "d_05d4": "animated_level_tile_count",
+  "d_05d6": "molecule_bonus_box_count",
+  "d_05d8": "falling_sign_count",
+  "d_05da": "popup_spikes_count",
+  "d_05dc": "magenta_flag_box_count",
+  "d_05de": "radio_box_count",
+  "d_05e0": "red_bomb_count",
   "d_05e2": "level_vertical_motion_table",
-  "d_05fe": "actor_303c_count",
-  "d_0600": "actor_303b_count",
-  "d_0602": "actor_3042_animation_frame_0",
-  "d_0604": "actor_3042_animation_frame_1",
-  "d_0606": "actor_3042_animation_frame_2",
-  "d_0608": "actor_3042_animation_frame_3",
-  "d_060a": "actor_3042_animation_frame_4",
-  "d_060c": "actor_3042_animation_frame_5",
+  "d_05fe": "fire_creature_count",
+  "d_0600": "rabbit_bonus_count",
+  "d_0602": "dr_proton_animation_frame_0",
+  "d_0604": "dr_proton_animation_frame_1",
+  "d_0606": "dr_proton_animation_frame_2",
+  "d_0608": "dr_proton_animation_frame_3",
+  "d_060a": "dr_proton_animation_frame_4",
+  "d_060c": "dr_proton_animation_frame_5",
   "d_060e": "gameplay_animation_flag",
   "d_0610": "player_airborne_state",
   "d_0611": "player_damage_immunity_state",
@@ -1095,34 +1095,34 @@
   "d_0648": "projectile_flash_sprite_offset",
   "d_064a": "ambient_object_sprite_offset",
   "d_064c": "contact_flash_cycle_index",
-  "d_064e": "actor_3002_animation_phase",
+  "d_064e": "conveyor_belt_animation_phase",
   "d_0650": "multi_tile_actor_sprite_offsets",
-  "d_0698": "actor_300c_motion_delta_table",
-  "d_06dc": "actor_300d_animation_phase",
-  "d_06de": "actor_300d_animation_counter",
-  "d_06e0": "actor_3010_sprite_offset",
+  "d_0698": "jumpbot_motion_delta_table",
+  "d_06dc": "wheeled_techbot_animation_phase",
+  "d_06de": "wheelbot_animation_counter",
+  "d_06e0": "robot_techbot_sprite_offset",
   "d_06e2": "door_interaction_phase",
-  "d_06e3": "actor_3013_sprite_offset",
-  "d_06e5": "actor_3014_sprite_offset",
-  "d_06e7": "actor_3015_sprite_offset",
-  "d_06e9": "actor_3016_upper_sprite_offset",
-  "d_06eb": "actor_3016_lower_sprite_offset",
-  "d_06ed": "actor_301a_sprite_offset",
-  "d_06ef": "actor_3021_sprite_offset",
-  "d_06f1": "actor_3022_animation_phase",
-  "d_06f3": "actor_3023_sprite_offset",
-  "d_06f5": "actor_3024_sprite_offset",
-  "d_06f7": "actor_3029_sprite_offset",
-  "d_06f9": "actor_302a_sprite_offset",
-  "d_06fb": "actor_302b_sprite_offset",
-  "d_06fd": "actor_302c_animation_phase",
-  "d_06fe": "actor_302d_sprite_offset",
-  "d_0700": "actor_303c_animation_phase",
-  "d_0702": "actor_3042_motion_delta_table",
-  "d_071a": "actor_3041_sprite_frame",
-  "d_071c": "actor_3041_animation_counter",
-  "d_071e": "actor_3041_event_pending",
-  "d_0720": "actor_3041_sprite_offset",
+  "d_06e3": "snake_techbot_sprite_offset",
+  "d_06e5": "water_shimmer_sprite_offset",
+  "d_06e7": "soda_can_bonus_sprite_offset",
+  "d_06e9": "wallcrawler_upper_sprite_offset",
+  "d_06eb": "wallcrawler_lower_sprite_offset",
+  "d_06ed": "h_force_field_sprite_offset",
+  "d_06ef": "v_force_field_sprite_offset",
+  "d_06f1": "helicopter_animation_phase",
+  "d_06f3": "balloon_bonus_sprite_offset",
+  "d_06f5": "security_camera_sprite_offset",
+  "d_06f7": "molecule_box_sprite_offset",
+  "d_06f9": "falling_sign_sprite_offset",
+  "d_06fb": "reactor_sprite_offset",
+  "d_06fd": "popup_spikes_animation_phase",
+  "d_06fe": "magenta_flag_box_sprite_offset",
+  "d_0700": "fire_creature_animation_phase",
+  "d_0702": "dr_proton_motion_delta_table",
+  "d_071a": "proton_display_sprite_frame",
+  "d_071c": "proton_screen_animation_counter",
+  "d_071e": "proton_display_event_pending",
+  "d_0720": "proton_display_sprite_offset",
   "d_0b46": "hint_mode_enabled",
   "d_0b47": "episode_drop_filename_table",
   "d_0b9f": "credits_scroll_position",
@@ -1137,7 +1137,7 @@
   "d_4ed4_": "title_graphic_frame_index",
   "d_4ed6_": "level_play_state",
   "d_4ed8_": "hidden_object_state",
-  "d_4eda_": "actor_300e_object_state_table",
+  "d_4eda_": "fire_wheel_object_state_table",
   "d_4fa2_": "high_score_values",
   "d_4fa4_": "score_entry_0_upper_word_alias",
   "d_4fa6_": "high_score_entry_1_alias",
@@ -1152,31 +1152,31 @@
   "d_5006_": "level_loading_state",
   "d_5008_": "high_score_player_names",
   "d_5076_": "high_score_name_edit_buffer",
-  "d_5081_": "actor_300c_object_marker_table",
-  "d_5149_": "actor_3035_state",
+  "d_5081_": "jumpbot_object_marker_table",
+  "d_5149_": "robohand_switch_state",
   "d_514b_": "level_update_callback_table",
-  "d_52db_": "actor_3035_animation_state",
+  "d_52db_": "robohand_switch_animation_state",
   "d_52dd_": "projectile_records",
   "d_5305_": "credits_text_position",
-  "d_5307_": "actor_3035_active_state",
-  "d_5309_": "actor_3037_object_count",
+  "d_5307_": "robohand_switch_active_state",
+  "d_5309_": "letter_bonus_object_count",
   "d_530b_": "pending_sound_priority_flag",
-  "d_530c_": "actor_3037_animation_state",
+  "d_530c_": "letter_bonus_animation_state",
   "d_530e_": "user_demo_recording_state",
   "d_530f_": "secret_block_collision_state",
-  "d_5310_": "actor_3013_formation_state",
-  "d_5312_": "actor_303b_update_state",
+  "d_5310_": "snake_techbot_formation_state",
+  "d_5312_": "rabbit_bonus_update_state",
   "d_5314_": "exit_lock_animation_state",
   "d_5316_": "secret_block_animation_state",
   "d_5318_": "game_session_abort_flag",
-  "d_5319_": "actor_3048_object_count",
+  "d_5319_": "door_tile_animation_count",
   "d_531b_": "pending_sound_effect_index",
-  "d_531c_": "actor_302a_update_state",
+  "d_531c_": "falling_sign_update_state",
   "d_531e_": "level_object_pool_531e_count",
   "d_5320_": "level_collision_sound_records",
   "d_551e_": "animated_actor_pool_records",
-  "d_5548_": "actor_3048_entity_count",
-  "d_554a_": "actor_3042_interaction_state",
+  "d_5548_": "door_lock_count",
+  "d_554a_": "dr_proton_interaction_state",
   "d_554c_": "selected_save_slot",
   "d_554d_": "keyboard_hotkey_count",
   "d_554f_": "control_hint_up_flag",
@@ -1191,11 +1191,11 @@
   "d_555a_": "hint_revealed_object_4",
   "d_555b_": "hint_revealed_object_5",
   "d_555c_": "hint_revealed_object_6",
-  "d_555d_": "actor_3012_records",
+  "d_555d_": "dynamite_box_records",
   "d_5a0d_": "user_demo_buffer",
   "d_5a0f_": "user_demo_buffer_segment_alias",
   "d_5a11_": "hint_revealed_object_7",
-  "d_5a12_": "actor_3015_records",
+  "d_5a12_": "soda_can_bonus_records",
   "d_5c6a_": "hint_revealed_object_8",
   "d_5c6b_": "hint_revealed_object_9",
   "d_5c6c_": "falling_hazard_records",
@@ -1203,27 +1203,27 @@
   "d_5ec4_": "player_sprite_resource_buffer",
   "d_5ec6_": "player_sprite_segment_alias",
   "d_5ec8_": "hint_revealed_object_10",
-  "d_5ec9_": "actor_3022_records",
+  "d_5ec9_": "helicopter_techbot_records",
   "d_6379_": "active_sprite_draw_flag",
   "d_637a_": "sprite_graphics_buffer",
   "d_637c_": "sprite_graphics_segment_alias",
   "d_637e_": "hint_revealed_object_11",
-  "d_637f_": "actor_300b_records",
-  "d_669f_": "actor_3000_records",
+  "d_637f_": "flying_techbot_records",
+  "d_669f_": "empty_bonus_box_records",
   "d_68f7_": "transporter_hint_pending",
   "d_68f8_": "player_score",
   "d_68fa_": "player_score_upper_word_alias",
-  "d_68fc_": "actor_3024_records",
+  "d_68fc_": "security_camera_records",
   "d_6b54_": "font_glyph_data_buffer",
   "d_6b56_": "font_glyph_buffer_segment_alias",
-  "d_6b58_": "actor_3044_records",
-  "d_6bb2_": "actor_3007_records",
+  "d_6b58_": "door_key_records",
+  "d_6bb2_": "rocket_records",
   "d_6e0a_": "draw_page_index",
-  "d_6e0b_": "actor_302e_records",
-  "d_7063_": "actor_3029_records",
-  "d_70db_": "actor_3014_records",
-  "d_726b_": "actor_3021_records",
-  "d_73fb_": "actor_303b_records",
+  "d_6e0b_": "radio_box_records",
+  "d_7063_": "molecule_bonus_box_records",
+  "d_70db_": "water_shimmer_records",
+  "d_726b_": "vertical_force_field_records",
+  "d_73fb_": "rabbit_bonus_records",
   "d_771b_": "keyboard_key_d_pressed",
   "d_771c_": "joystick_x_axis_threshold_low",
   "d_7722_": "joystick_y_axis_threshold_low",
@@ -1231,30 +1231,30 @@
   "d_7729_": "level_tile_map",
   "d_772b_": "level_map_segment_alias",
   "d_772d_": "keyboard_key_o_pressed",
-  "d_772e_": "actor_3009_records",
+  "d_772e_": "right_flame_turret_records",
   "d_7986_": "vga_lower_page_pointer",
   "d_798a_": "access_card_or_door_state",
-  "d_798c_": "actor_301b_records",
-  "d_7cac_": "actor_3023_records",
-  "d_7f04_": "actor_3034_active_state",
+  "d_798c_": "rotating_fan_records",
+  "d_7cac_": "balloon_bonus_records",
+  "d_7f04_": "access_card_reader_active_state",
   "d_7f06_": "animated_level_tile_records",
   "d_9676_": "joystick_x_axis_threshold_high",
   "d_967c_": "joystick_y_axis_threshold_high",
   "d_9682_": "alternate_sprite_draw_offset",
   "d_9684_": "saved_demo_buffer",
   "d_9686_": "saved_demo_buffer_segment_alias",
-  "d_9688_": "actor_302c_records",
-  "d_9818_": "actor_301f_records",
+  "d_9688_": "popup_spikes_records",
+  "d_9818_": "floppy_disk_box_records",
   "d_9b38_": "episode_sprite_resource_table",
-  "d_9b3a_": "actor_300a_records",
-  "d_9d92_": "actor_3040_world_x",
-  "d_9d94_": "actor_3040_world_y",
-  "d_9d96_": "actor_3034_world_x",
+  "d_9b3a_": "left_flame_turret_records",
+  "d_9d92_": "message_sign_world_x",
+  "d_9d94_": "message_sign_world_y",
+  "d_9d96_": "access_card_reader_world_x",
   "d_9d98_": "fire_button_latch",
-  "d_9d99_": "actor_301d_records",
-  "d_a0b9_": "actor_3034_world_y",
+  "d_9d99_": "football_box_records",
+  "d_a0b9_": "access_card_reader_world_y",
   "d_a0bb_": "duke_graphics_buffer",
-  "d_a0bf_": "actor_3037_records",
+  "d_a0bf_": "letter_bonus_records",
   "d_a0ef_": "object_sprite_buffer",
   "d_a0f1_": "object_sprite_segment_alias",
   "d_a0f3_": "jump_button_latch",
@@ -1264,121 +1264,121 @@
   "d_a0fa_": "last_keyboard_scan_code",
   "d_a0fb_": "sprite_pixel_data_pointer",
   "d_a0fd_": "sprite_pixel_segment_alias",
-  "d_a0ff_": "actor_300d_records",
-  "d_a357_": "actor_301e_records",
-  "d_a677_": "actor_3040_active_state",
+  "d_a0ff_": "wheeled_techbot_records",
+  "d_a357_": "joystick_box_records",
+  "d_a677_": "message_sign_active_state",
   "d_a679_": "player_sprite_refresh_state",
-  "d_a67b_": "actor_3008_world_x",
+  "d_a67b_": "ceiling_clinger_box_world_x",
   "d_a67d_": "keyboard_backspace_pressed",
-  "d_a67e_": "actor_3008_world_y",
-  "d_a680_": "actor_303c_records",
+  "d_a67e_": "ceiling_clinger_box_world_y",
+  "d_a680_": "fire_creature_records",
   "d_a8d8_": "sound_interrupt_active_state",
   "d_a8d9_": "keyboard_interrupt_state",
-  "d_a8da_": "actor_3001_records",
-  "d_ab32_": "actor_300f_records",
+  "d_a8da_": "elevator_records",
+  "d_ab32_": "ammo_box_records",
   "d_abd2_": "formation_active_object_count",
   "d_abd4_": "formation_object_x_positions",
   "d_abe6_": "formation_world_x_accumulator",
   "d_abe8_": "formation_x_auxiliary_bytes",
-  "d_abec_": "actor_300e_records",
-  "d_ae44_": "actor_3031_records",
+  "d_abec_": "fire_wheel_techbot_records",
+  "d_ae44_": "red_bomb_records",
   "d_b09c_": "formation_object_y_positions",
   "d_b0ae_": "formation_world_y_accumulator",
   "d_b0b0_": "formation_y_auxiliary_bytes",
-  "d_b0b4_": "actor_3010_records",
-  "d_b3d4_": "actor_3033_active_state",
-  "d_b3d6_": "actor_301a_records",
-  "d_b62e_": "actor_3019_world_x",
-  "d_b630_": "actor_3042_world_x",
-  "d_b632_": "actor_3019_world_y",
-  "d_b634_": "actor_3042_world_y",
+  "d_b0b4_": "robot_techbot_records",
+  "d_b3d4_": "access_card_box_active_state",
+  "d_b3d6_": "horizontal_force_field_records",
+  "d_b62e_": "collapsing_bridge_world_x",
+  "d_b630_": "dr_proton_world_x",
+  "d_b632_": "collapsing_bridge_world_y",
+  "d_b634_": "dr_proton_world_y",
   "d_b636_": "formation_update_enabled",
   "d_b638_": "title_screen_buffer",
   "d_b63c_": "moving_actor_records",
-  "d_b6bc_": "actor_300c_records",
+  "d_b6bc_": "jumping_techbot_records",
   "d_b9dc_": "ending_sequence_enabled",
   "d_b9de_": "level_tile_animation_records",
-  "d_c01e_": "actor_3018_records",
-  "d_c276_": "actor_3041_world_x",
+  "d_c01e_": "turkey_bonus_records",
+  "d_c276_": "proton_display_world_x",
   "d_c278_": "demo_file_load_success",
-  "d_c279_": "actor_302f_world_x",
-  "d_c27b_": "actor_3030_world_x",
+  "d_c279_": "teleporter_entry_world_x",
+  "d_c27b_": "teleporter_exit_world_x",
   "d_c27d_": "badguy_graphics_buffer",
-  "d_c281_": "actor_3019_enabled",
-  "d_c283_": "actor_3042_active_state",
+  "d_c281_": "collapsing_bridge_enabled",
+  "d_c283_": "dr_proton_active_state",
   "d_c285_": "credits_graphics_buffer",
-  "d_c289_": "actor_3041_world_y",
-  "d_c28b_": "actor_302f_world_y",
-  "d_c28d_": "actor_3030_world_y",
+  "d_c289_": "proton_display_world_y",
+  "d_c28b_": "teleporter_entry_world_y",
+  "d_c28d_": "teleporter_exit_world_y",
   "d_c28f_": "ending_graphics_buffer",
-  "d_c293_": "actor_3042_hint_state",
+  "d_c293_": "dr_proton_hint_state",
   "d_c295_": "world_actor_count",
   "d_c297_": "joystick_configuration_mode",
-  "d_c299_": "actor_3002_records",
-  "d_c681_": "actor_3041_active_state",
+  "d_c299_": "conveyor_belt_records",
+  "d_c681_": "proton_display_active_state",
   "d_c683_": "player_level_transition_state",
-  "d_c684_": "actor_302f_active_state",
-  "d_c686_": "actor_302f_interaction_phase",
-  "d_c688_": "actor_3030_active_state",
-  "d_c68a_": "actor_302f_animation_phase",
+  "d_c684_": "teleporter_entry_active_state",
+  "d_c686_": "tele_in_interaction_phase",
+  "d_c688_": "teleporter_exit_active_state",
+  "d_c68a_": "tele_in_animation_phase",
   "d_c68c_": "control_up_pressed",
-  "d_c68d_": "actor_302b_world_x",
-  "d_c68f_": "actor_302b_world_y",
-  "d_c691_": "actor_302a_records",
-  "d_c8e9_": "actor_302b_active_state",
+  "d_c68d_": "reactor_world_x",
+  "d_c68f_": "reactor_world_y",
+  "d_c691_": "falling_sign_records",
+  "d_c8e9_": "reactor_active_state",
   "d_c8eb_": "object_collision_pool_records",
-  "d_c915_": "actor_302d_records",
+  "d_c915_": "magenta_flag_box_records",
   "d_cb6d_": "world_actor_records",
   "d_cbb5_": "sound_sample_pointer_table",
   "d_cbb7_": "sound_pointer_segment_alias",
   "d_cc7d_": "vga_upper_page_pointer",
   "d_cc81_": "control_confirmation_state",
-  "d_cc82_": "actor_3020_active_state",
-  "d_cc84_": "actor_3058_records",
+  "d_cc82_": "robohand_box_active_state",
+  "d_cc84_": "spike_hazard_records",
   "d_d134_": "control_down_pressed",
   "d_d135_": "control_fire_pressed",
-  "d_d136_": "actor_3019_width",
+  "d_d136_": "collapsing_bridge_width",
   "d_d138_": "control_jump_pressed",
-  "d_d139_": "actor_302f_interaction_state",
-  "d_d13b_": "actor_3030_interaction_state",
-  "d_d13d_": "actor_3035_world_x",
+  "d_d139_": "tele_in_interaction_state",
+  "d_d13b_": "tele_out_interaction_state",
+  "d_d13d_": "robohand_switch_world_x",
   "d_d13f_": "control_left_pressed",
-  "d_d140_": "actor_3035_world_y",
-  "d_d142_": "actor_3042_animation_counter",
+  "d_d140_": "robohand_switch_world_y",
+  "d_d142_": "dr_proton_animation_counter",
   "d_d144_": "player_sprite_animation_index",
-  "d_d146_": "actor_3041_interaction_state",
+  "d_d146_": "proton_screen_interaction_state",
   "d_d148_": "keyboard_control_lock_state",
   "d_d149_": "secret_code_character_0",
   "d_d14b_": "secret_code_character_1",
   "d_d14d_": "secret_code_character_2",
   "d_d14f_": "secret_code_input_buffer",
-  "d_d155_": "actor_3019_animation_state",
-  "d_d157_": "actor_3048_records",
+  "d_d155_": "weak_bridge_animation_state",
+  "d_d157_": "door_lock_records",
   "d_d1cf_": "free_object_pool_records",
   "d_d247_": "player_gameplay_state",
   "d_d249_": "formation_object_active_flags",
-  "d_d261_": "actor_3016_records",
-  "d_d4b9_": "actor_3019_screen_x",
-  "d_d4bb_": "actor_3019_map_row",
+  "d_d261_": "wallcrawler_records",
+  "d_d4b9_": "collapsing_bridge_screen_x",
+  "d_d4bb_": "collapsing_bridge_map_row",
   "d_d4bd_": "door_lock_world_x",
   "d_d4bf_": "player_projectile_state",
   "d_d4c0_": "control_right_pressed",
   "d_d4c1_": "door_lock_world_y",
   "d_d4c3_": "ambient_object_records",
   "d_d56b_": "joystick_enabled",
-  "d_d56c_": "actor_3042_open_state",
-  "d_d56e_": "actor_302b_animation_counter",
+  "d_d56c_": "dr_proton_open_state",
+  "d_d56e_": "reactor_animation_counter",
   "d_d570_": "door_or_key_interaction_state",
-  "d_d572_": "actor_302b_open_state",
+  "d_d572_": "reactor_open_state",
   "d_d574_": "secret_block_world_x",
   "d_d576_": "player_invulnerability_state",
   "d_d577_": "secret_block_world_y",
   "d_d579_": "current_sound_priority",
-  "d_d57a_": "actor_3037_bonus_state",
+  "d_d57a_": "letter_bonus_state",
   "d_d57c_": "level_progress_word",
-  "d_d57e_": "actor_300d_auxiliary_states",
-  "d_d646_": "actor_3001_tile_below_records",
-  "d_d70e_": "actor_3044_entity_count",
+  "d_d57e_": "wheelbot_auxiliary_states",
+  "d_d646_": "elevator_tile_below_records",
+  "d_d70e_": "door_key_count",
   "d_d710_": "secondary_sound_bank_buffer",
   "d_d714_": "primary_sound_bank_buffer",
   "d_d718_": "bios_timer_chain_divider"
@@ -1450,11 +1450,6 @@
   "display_title_screen": {
    "si": "byte_offset"
   },
-  "draw_actor_sprite_by_variant": {
-   "a0": "variant",
-   "a1": "x",
-   "a2": "y"
-  },
   "draw_actor_sprite_pair": {
    "a0": "frame",
    "a1": "world_x",
@@ -1470,15 +1465,16 @@
   "draw_buffered_screen_effect": {
    "si": "effect_index"
   },
-  "draw_climbing_actor_sprite": {
-   "a0": "frame",
+  "draw_dr_proton_boss_sprite": {
+   "a0": "variant",
    "a1": "x",
    "a2": "y"
   },
-  "draw_four_wide_actor_sprite": {
+  "draw_fire_wheel_techbot_sprite": {
    "a0": "frame",
-   "a1": "x",
-   "a2": "y"
+   "a1": "world_x",
+   "a2": "world_y",
+   "offset": "sprite_offset"
   },
   "draw_framed_dialog_box": {
    "a0": "height_rows",
@@ -1490,6 +1486,16 @@
   "draw_game_setup_menu": {
    "a0": "text_x"
   },
+  "draw_helicopter_quad_sprite": {
+   "a0": "frame",
+   "a1": "x",
+   "a2": "y"
+  },
+  "draw_helicopter_wide_sprite": {
+   "a0": "frame",
+   "a1": "x",
+   "a2": "y"
+  },
   "draw_high_score_table": {
    "a0": "text_x",
    "buffer": "number_text"
@@ -1497,17 +1503,17 @@
   "draw_in_game_help_menu": {
    "a0": "text_x"
   },
+  "draw_jumping_techbot_sprite": {
+   "a0": "world_y",
+   "a1": "world_x",
+   "a2": "sprite_index",
+   "p1": "x_coord"
+  },
   "draw_keyboard_binding_values": {
    "a0": "text_x"
   },
   "draw_keyboard_mode_settings": {
    "a0": "text_x"
-  },
-  "draw_large_actor_sprite": {
-   "a0": "sprite_frame",
-   "a1": "actor_world_x",
-   "a2": "actor_world_y",
-   "offset": "sprite_data_offset"
   },
   "draw_level_marker_tiles": {
    "di": "draw_pass",
@@ -1521,9 +1527,6 @@
   "draw_main_menu": {
    "a0": "text_x"
   },
-  "draw_marker_3058_objects": {
-   "p": "marker_record"
-  },
   "draw_page_frame_template": {
    "di": "page_index",
    "si": "row_offset"
@@ -1534,11 +1537,14 @@
    "a2": "sprite_y",
    "offset": "sprite_offset"
   },
-  "draw_six_tile_actor_sprite": {
-   "a0": "world_y",
-   "a1": "world_x",
-   "a2": "sprite_index",
-   "p1": "x_coord"
+  "draw_proton_display_sprite": {
+   "a0": "sprite_frame",
+   "a1": "actor_world_x",
+   "a2": "actor_world_y",
+   "offset": "sprite_data_offset"
+  },
+  "draw_spike_hazard_sprites": {
+   "p": "marker_record"
   },
   "draw_tall_effect_sprite": {
    "a0": "y",
@@ -1561,19 +1567,7 @@
    "di": "column_offset",
    "si": "video_offset"
   },
-  "draw_two_by_two_actor_sprite": {
-   "a0": "frame",
-   "a1": "world_x",
-   "a2": "world_y",
-   "offset": "sprite_offset"
-  },
   "draw_two_by_two_actor_variant": {
-   "a0": "frame",
-   "a1": "world_x",
-   "a2": "world_y",
-   "offset": "sprite_offset"
-  },
-  "draw_two_tile_wide_actor_sprite": {
    "a0": "frame",
    "a1": "world_x",
    "a2": "world_y",
@@ -1590,10 +1584,16 @@
   "draw_video_page_template": {
    "si": "video_offset"
   },
-  "draw_wide_actor_sprite": {
+  "draw_wallcrawler_sprite": {
    "a0": "frame",
    "a1": "x",
    "a2": "y"
+  },
+  "draw_wheeled_techbot_sprite": {
+   "a0": "frame",
+   "a1": "world_x",
+   "a2": "world_y",
+   "offset": "sprite_offset"
   },
   "handle_game_setup_input": {
    "a0": "text_x"
@@ -1843,106 +1843,69 @@
   "toggle_sound_setting": {
    "a0": "text_x"
   },
-  "update_actor_3000": {
+  "update_ammo_box": {
    "p": "actor"
-  },
-  "update_actor_3001": {
-   "p": "actor",
-   "si": "i"
-  },
-  "update_actor_3002": {
-   "actor_302a_record": "actor",
-   "height": "actor_height"
-  },
-  "update_actor_3007": {
-   "p": "actor"
-  },
-  "update_actor_3009": {
-   "p": "actor"
-  },
-  "update_actor_300a": {
-   "p": "actor"
-  },
-  "update_actor_300b": {
-   "obj": "actor"
-  },
-  "update_actor_300c": {
-   "p": "actor"
-  },
-  "update_actor_300d": {
-   "p": "actor"
-  },
-  "update_actor_300e": {
-   "p": "actor"
-  },
-  "update_actor_300f": {
-   "p": "actor"
-  },
-  "update_actor_3010": {
-   "p": "actor",
-   "status": "removed_actor_state"
-  },
-  "update_actor_3012": {
-   "p": "actor"
-  },
-  "update_actor_3013": {
-   "active": "all_inactive"
-  },
-  "update_actor_3014": {
-   "p": "actor"
-  },
-  "update_actor_3015": {
-   "p": "actor"
-  },
-  "update_actor_3016": {
-   "p": "actor_record"
-  },
-  "update_actor_3018": {
-   "p": "actor_record"
-  },
-  "update_actor_3019": {
-   "si": "tile_column"
-  },
-  "update_actor_3021": {
-   "p": "actor_record"
-  },
-  "update_actor_3022": {
-   "p": "actor_record"
-  },
-  "update_actor_3023": {
-   "p": "actor_record"
-  },
-  "update_actor_3024": {
-   "p": "actor_record"
-  },
-  "update_actor_3029": {
-   "p": "actor_record",
-   "si": "actor_index"
-  },
-  "update_actor_3031": {
-   "p": "actor_record"
-  },
-  "update_actor_3037": {
-   "p": "actor_record"
-  },
-  "update_actor_3044": {
-   "p": "actor_record",
-   "si": "record_index"
-  },
-  "update_actor_3048": {
-   "p": "marker_record"
   },
   "update_animated_actor_pool": {
    "p": "animated_actor"
   },
+  "update_balloon_bonus": {
+   "p": "actor_record"
+  },
+  "update_collapsing_bridge": {
+   "si": "tile_column"
+  },
   "update_collision_effect_pool": {
    "p": "collision_effect"
+  },
+  "update_conveyor_belt": {
+   "actor_302a_record": "actor",
+   "height": "actor_height"
+  },
+  "update_door_keys": {
+   "p": "actor_record",
+   "si": "record_index"
+  },
+  "update_door_locks": {
+   "p": "marker_record"
+  },
+  "update_dynamite_box": {
+   "p": "actor"
+  },
+  "update_elevator": {
+   "p": "actor",
+   "si": "i"
+  },
+  "update_empty_bonus_box": {
+   "p": "actor"
+  },
+  "update_fire_wheel_techbot": {
+   "p": "actor"
+  },
+  "update_flying_techbot": {
+   "obj": "actor"
+  },
+  "update_helicopter_techbot": {
+   "p": "actor_record"
   },
   "update_joystick_axis_state": {
    "sample": "port_value"
   },
+  "update_jumping_techbot": {
+   "p": "actor"
+  },
+  "update_left_flame_turret": {
+   "p": "actor"
+  },
+  "update_letter_bonus": {
+   "p": "actor_record"
+  },
   "update_level_lock_or_exit": {
    "si": "unused_register"
+  },
+  "update_molecule_bonus_box": {
+   "p": "actor_record",
+   "si": "actor_index"
   },
   "update_moving_actor_pool": {
    "p": "moving_actor"
@@ -1952,6 +1915,43 @@
   },
   "update_pickup_object_pool": {
    "p": "pickup_object"
+  },
+  "update_red_bomb": {
+   "p": "actor_record"
+  },
+  "update_right_flame_turret": {
+   "p": "actor"
+  },
+  "update_robot_techbot": {
+   "p": "actor",
+   "status": "removed_actor_state"
+  },
+  "update_rocket": {
+   "p": "actor"
+  },
+  "update_security_camera": {
+   "p": "actor_record"
+  },
+  "update_snake_techbot": {
+   "active": "all_inactive"
+  },
+  "update_soda_can_bonus": {
+   "p": "actor"
+  },
+  "update_turkey_bonus": {
+   "p": "actor_record"
+  },
+  "update_vertical_force_field": {
+   "p": "actor_record"
+  },
+  "update_wallcrawler": {
+   "p": "actor_record"
+  },
+  "update_water_shimmer": {
+   "p": "actor"
+  },
+  "update_wheeled_techbot": {
+   "p": "actor"
   },
   "wait_for_keyboard_or_joystick": {
    "a0": "sprite_x",
@@ -1980,7 +1980,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_300b_record"
+   "name": "flying_techbot_record"
   },
   "G1_4D42_RECORD": {
    "fields": {
@@ -2001,7 +2001,7 @@
     "x": "map_row",
     "y": "map_column"
    },
-   "name": "actor_3002_record"
+   "name": "conveyor_belt_record"
   },
   "cell_pair": {
    "fields": {
@@ -2022,7 +2022,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3000_record"
+   "name": "empty_bonus_box_record"
   },
   "g1_3882_record": {
    "fields": {
@@ -2030,7 +2030,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3001_record"
+   "name": "elevator_record"
   },
   "g1_3e06_record": {
    "fields": {
@@ -2038,7 +2038,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3007_record"
+   "name": "rocket_record"
   },
   "g1_43fa_record": {
    "fields": {
@@ -2046,7 +2046,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3009_record"
+   "name": "right_flame_turret_record"
   },
   "g1_4638_entry": {
    "fields": {
@@ -2054,7 +2054,7 @@
     "position4": "world_y",
     "state": "state"
    },
-   "name": "actor_300a_record"
+   "name": "left_flame_turret_record"
   },
   "g1_4f91_record": {
    "fields": {
@@ -2063,7 +2063,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_300c_record"
+   "name": "jumping_techbot_record"
   },
   "g1_54e1_record": {
    "fields": {
@@ -2071,7 +2071,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_300d_record"
+   "name": "wheeled_techbot_record"
   },
   "g1_5b0b_record": {
    "fields": {
@@ -2079,7 +2079,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_300e_record"
+   "name": "fire_wheel_techbot_record"
   },
   "g1_5d6f_record": {
    "fields": {
@@ -2088,7 +2088,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_300f_record"
+   "name": "ammo_box_record"
   },
   "g1_5f0c_record": {
    "fields": {
@@ -2097,7 +2097,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3010_record"
+   "name": "robot_techbot_record"
   },
   "g1_6445_record": {
    "fields": {
@@ -2108,14 +2108,14 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3012_record"
+   "name": "dynamite_box_record"
   },
   "g1_6afd_record": {
    "fields": {
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3014_record"
+   "name": "water_shimmer_record"
   },
   "g1_6b82_record": {
    "fields": {
@@ -2123,7 +2123,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3015_record"
+   "name": "soda_can_bonus_record"
   },
   "g1_6e71_record": {
    "fields": {
@@ -2131,7 +2131,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3016_record"
+   "name": "wallcrawler_record"
   },
   "g1_7163_record": {
    "fields": {
@@ -2139,7 +2139,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3018_record"
+   "name": "turkey_bonus_record"
   },
   "g1_7647_record": {
    "fields": {
@@ -2148,7 +2148,7 @@
     "value1": "world_x",
     "value2": "world_y"
    },
-   "name": "actor_301b_record"
+   "name": "rotating_fan_record"
   },
   "g1_784b_record": {
    "fields": {
@@ -2157,7 +2157,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_301d_record"
+   "name": "football_box_record"
   },
   "g1_79d9_record": {
    "fields": {
@@ -2166,7 +2166,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_301e_record"
+   "name": "joystick_box_record"
   },
   "g1_7b68_record": {
    "fields": {
@@ -2175,7 +2175,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_301f_record"
+   "name": "floppy_disk_box_record"
   },
   "g1_8069_record": {
    "fields": {
@@ -2186,7 +2186,7 @@
     "f8": "hit_points",
     "fa": "fall_counter"
    },
-   "name": "actor_3022_record"
+   "name": "helicopter_techbot_record"
   },
   "g1_8506_record": {
    "fields": {
@@ -2194,7 +2194,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3023_record"
+   "name": "balloon_bonus_record"
   },
   "g1_87bf_record": {
    "fields": {
@@ -2202,7 +2202,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3024_record"
+   "name": "security_camera_record"
   },
   "g1_892b_record": {
    "fields": {
@@ -2218,14 +2218,14 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3029_record"
+   "name": "molecule_bonus_box_record"
   },
   "g1_9698_record": {
    "fields": {
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_302c_record"
+   "name": "popup_spikes_record"
   },
   "g1_9757_row": {
    "fields": {
@@ -2233,7 +2233,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_302d_record"
+   "name": "magenta_flag_box_record"
   },
   "g1_9986_record": {
    "fields": {
@@ -2241,7 +2241,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_302e_record"
+   "name": "radio_box_record"
   },
   "g1_a218_record": {
    "fields": {
@@ -2249,7 +2249,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3031_record"
+   "name": "red_bomb_record"
   },
   "g1_a30a_record": {
    "fields": {
@@ -2266,7 +2266,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3037_record"
+   "name": "letter_bonus_record"
   },
   "g1_aac2_record": {
    "fields": {
@@ -2275,7 +2275,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_303b_record"
+   "name": "rabbit_bonus_record"
   },
   "g1_af94_record": {
    "fields": {
@@ -2283,7 +2283,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_303c_record"
+   "name": "fire_creature_record"
   },
   "g1_c1b2_record": {
    "fields": {
@@ -2291,7 +2291,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3058_record"
+   "name": "spike_hazard_record"
   },
   "g2_3980_record": {
    "fields": {
@@ -2313,7 +2313,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_302a_record"
+   "name": "falling_sign_record"
   },
   "row0613": {
    "fields": {
@@ -2336,7 +2336,7 @@
     "b": "world_x",
     "c": "world_y"
    },
-   "name": "actor_3044_record"
+   "name": "door_key_record"
   },
   "t_52dd": {
    "fields": {
@@ -2366,7 +2366,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_3021_record"
+   "name": "vertical_force_field_record"
   },
   "t_b3d6": {
    "fields": {
@@ -2374,7 +2374,7 @@
     "x": "world_x",
     "y": "world_y"
    },
-   "name": "actor_301a_record"
+   "name": "horizontal_force_field_record"
   },
   "t_b63c": {
    "fields": {

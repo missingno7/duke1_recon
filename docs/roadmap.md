@@ -42,9 +42,10 @@ outputs with `layout/oracle.lock.json`.
      unit's `_BSS` by a hash of the name (rule BSS-ORDER);
    * done 2026-10-14: parameter and local names (six workers, maps in
      `layout/game-names.json` "params"); demo buffers typed `char far *`;
-   * open: low-confidence names (`update_actor_30XX` once each actor is identified, see
-     the confidence column in `build/workers/luna-names2/names.json`), subsystem section
-     comments, and the matching-era forms that were tried and must stay (documented
+   * done 2026-10-14: every level actor identified (code, rendered sprites, level
+     placement, ModdingWiki map table; `docs/actors.md`) and named; subsystem section
+     banners and file overviews; title/menu loop and projectile helpers renamed;
+   * open: names that are still modest guesses outside the actors, and the matching-era forms that were tried and must stay (documented
      `goto`s in ten functions, shift chains in the sound bank loaders, the flat
      `ACTOR_TILE_OFFSETS` view, the out-of-record store in `actor_3021_records`, far
      pointer additions on video memory): each carries a comment saying why.

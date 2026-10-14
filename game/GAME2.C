@@ -43,29 +43,29 @@ char last_keyboard_scan_code;
 /* 0xa0fb; accepted scalar type. */
 char far *sprite_pixel_data_pointer;
 /* 0xa0ff; array extent from address gap. */
-struct actor_300d_record actor_300d_records[100];
+struct wheeled_techbot_record wheeled_techbot_records[100];
 /* 0xa357; array extent from address gap. */
-struct actor_301e_record actor_301e_records[100];
+struct joystick_box_record joystick_box_records[100];
 /* 0xa677; accepted scalar type. */
-int actor_3040_active_state;
+int message_sign_active_state;
 /* 0xa679; accepted scalar type. */
 int player_sprite_refresh_state;
 /* 0xa67b; accepted scalar type. */
-int actor_3008_world_x;
+int ceiling_clinger_box_world_x;
 /* 0xa67d; accepted scalar type. */
 char keyboard_backspace_pressed;
 /* 0xa67e; accepted scalar type. */
-int actor_3008_world_y;
+int ceiling_clinger_box_world_y;
 /* 0xa680; array extent from address gap. */
-struct actor_303c_record actor_303c_records[100];
+struct fire_creature_record fire_creature_records[100];
 /* 0xa8d8; accepted scalar type. */
 char sound_interrupt_active_state;
 /* 0xa8d9; accepted scalar type. */
 char keyboard_interrupt_state;
 /* 0xa8da; array extent from address gap. */
-struct actor_3001_record actor_3001_records[100];
+struct elevator_record elevator_records[100];
 /* 0xab32; array extent from address gap. */
-struct actor_300f_record actor_300f_records[20];
+struct ammo_box_record ammo_box_records[20];
 /* 0xabd2; accepted scalar type. */
 int formation_active_object_count;
 /* 0xabd4; array extent from address gap. */
@@ -75,9 +75,9 @@ int formation_world_x_accumulator;
 /* UNREFERENCED: [0xabe8,0xabec) has no accepted object start or direct DS reference. */
 char formation_x_auxiliary_bytes[4];
 /* 0xabec; array extent from address gap. */
-struct actor_300e_record actor_300e_records[100];
+struct fire_wheel_techbot_record fire_wheel_techbot_records[100];
 /* 0xae44; array extent from address gap. */
-struct actor_3031_record actor_3031_records[100];
+struct red_bomb_record red_bomb_records[100];
 /* 0xb09c; array extent from address gap. */
 int formation_object_y_positions[9];
 /* 0xb0ae; accepted scalar type. */
@@ -85,19 +85,19 @@ int formation_world_y_accumulator;
 /* UNREFERENCED: [0xb0b0,0xb0b4) has no accepted object start or direct DS reference. */
 char formation_y_auxiliary_bytes[4];
 /* 0xb0b4; array extent from address gap. */
-struct actor_3010_record actor_3010_records[100];
+struct robot_techbot_record robot_techbot_records[100];
 /* 0xb3d4; accepted scalar type. */
-int actor_3033_active_state;
+int access_card_box_active_state;
 /* 0xb3d6; array extent from address gap. */
-struct actor_301a_record actor_301a_records[100];
+struct horizontal_force_field_record horizontal_force_field_records[100];
 /* 0xb62e; accepted scalar type. */
-int actor_3019_world_x;
+int collapsing_bridge_world_x;
 /* 0xb630; accepted scalar type. */
-int actor_3042_world_x;
+int dr_proton_world_x;
 /* 0xb632; accepted scalar type. */
-int actor_3019_world_y;
+int collapsing_bridge_world_y;
 /* 0xb634; accepted scalar type. */
-int actor_3042_world_y;
+int dr_proton_world_y;
 /* 0xb636; accepted scalar type. */
 int formation_update_enabled;
 /* 0xb638; accepted scalar type. */
@@ -105,71 +105,71 @@ char far *title_screen_buffer;
 /* 0xb63c; array extent from address gap. */
 struct moving_actor_record moving_actor_records[16];
 /* 0xb6bc; array extent from address gap. */
-struct actor_300c_record actor_300c_records[100];
+struct jumping_techbot_record jumping_techbot_records[100];
 /* 0xb9dc; accepted scalar type. */
 int ending_sequence_enabled;
 /* 0xb9de; array extent from address gap. */
 struct level_tile_animation_record level_tile_animation_records[200];
 /* 0xc01e; array extent from address gap. */
-struct actor_3018_record actor_3018_records[100];
+struct turkey_bonus_record turkey_bonus_records[100];
 /* 0xc276; accepted scalar type. */
-int actor_3041_world_x;
+int proton_display_world_x;
 /* 0xc278; accepted scalar type. */
 char demo_file_load_success;
 /* 0xc279; accepted scalar type. */
-int actor_302f_world_x;
+int teleporter_entry_world_x;
 /* 0xc27b; accepted scalar type. */
-int actor_3030_world_x;
+int teleporter_exit_world_x;
 /* 0xc27d; accepted scalar type. */
 char far *badguy_graphics_buffer;
 /* 0xc281; accepted scalar type. */
-int actor_3019_enabled;
+int collapsing_bridge_enabled;
 /* 0xc283; accepted scalar type. */
-int actor_3042_active_state;
+int dr_proton_active_state;
 /* 0xc285; accepted scalar type. */
 char far *credits_graphics_buffer;
 /* 0xc289; accepted scalar type. */
-int actor_3041_world_y;
+int proton_display_world_y;
 /* 0xc28b; accepted scalar type. */
-int actor_302f_world_y;
+int teleporter_entry_world_y;
 /* 0xc28d; accepted scalar type. */
-int actor_3030_world_y;
+int teleporter_exit_world_y;
 /* 0xc28f; accepted scalar type. */
 char far *ending_graphics_buffer;
 /* 0xc293; accepted scalar type. */
-int actor_3042_hint_state;
+int dr_proton_hint_state;
 /* 0xc295; accepted scalar type. */
 int world_actor_count;
 /* 0xc297; accepted scalar type. */
 int joystick_configuration_mode;
 /* 0xc299; array extent from address gap. */
-struct actor_3002_record actor_3002_records[100];
+struct conveyor_belt_record conveyor_belt_records[100];
 /* 0xc681; accepted scalar type. */
-int actor_3041_active_state;
+int proton_display_active_state;
 /* 0xc683; accepted scalar type. */
 char player_level_transition_state;
 /* 0xc684; accepted scalar type. */
-int actor_302f_active_state;
+int teleporter_entry_active_state;
 /* 0xc686; accepted scalar type. */
-int actor_302f_interaction_phase;
+int tele_in_interaction_phase;
 /* 0xc688; accepted scalar type. */
-int actor_3030_active_state;
+int teleporter_exit_active_state;
 /* 0xc68a; accepted scalar type. */
-int actor_302f_animation_phase;
+int tele_in_animation_phase;
 /* 0xc68c; accepted scalar type. */
 char control_up_pressed;
 /* 0xc68d; accepted scalar type. */
-int actor_302b_world_x;
+int reactor_world_x;
 /* 0xc68f; accepted scalar type. */
-int actor_302b_world_y;
+int reactor_world_y;
 /* 0xc691; array extent from address gap. */
-struct actor_302a_record actor_302a_records[100];
+struct falling_sign_record falling_sign_records[100];
 /* 0xc8e9; accepted scalar type. */
-int actor_302b_active_state;
+int reactor_active_state;
 /* 0xc8eb; array extent from address gap. */
 struct collision_effect_record object_collision_pool_records[7];
 /* 0xc915; array extent from address gap. */
-struct actor_302d_record actor_302d_records[100];
+struct magenta_flag_box_record magenta_flag_box_records[100];
 /* 0xcb6d; array extent from address gap. */
 struct world_actor_record world_actor_records[9];
 /* 0xcbb5; array extent from address gap. */
@@ -179,33 +179,33 @@ char far *vga_upper_page_pointer;
 /* 0xcc81; accepted scalar type. */
 char control_confirmation_state;
 /* 0xcc82; accepted scalar type. */
-int actor_3020_active_state;
+int robohand_box_active_state;
 /* 0xcc84; array extent from address gap. */
-struct actor_3058_record actor_3058_records[200];
+struct spike_hazard_record spike_hazard_records[200];
 /* 0xd134; accepted scalar type. */
 char control_down_pressed;
 /* 0xd135; accepted scalar type. */
 char control_fire_pressed;
 /* 0xd136; accepted scalar type. */
-int actor_3019_width;
+int collapsing_bridge_width;
 /* 0xd138; accepted scalar type. */
 char control_jump_pressed;
 /* 0xd139; accepted scalar type. */
-int actor_302f_interaction_state;
+int tele_in_interaction_state;
 /* 0xd13b; accepted scalar type. */
-int actor_3030_interaction_state;
+int tele_out_interaction_state;
 /* 0xd13d; accepted scalar type. */
-int actor_3035_world_x;
+int robohand_switch_world_x;
 /* 0xd13f; accepted scalar type. */
 char control_left_pressed;
 /* 0xd140; accepted scalar type. */
-int actor_3035_world_y;
+int robohand_switch_world_y;
 /* 0xd142; accepted scalar type. */
-int actor_3042_animation_counter;
+int dr_proton_animation_counter;
 /* 0xd144; accepted scalar type. */
 unsigned int player_sprite_animation_index;
 /* 0xd146; accepted scalar type. */
-int actor_3041_interaction_state;
+int proton_screen_interaction_state;
 /* 0xd148; accepted scalar type. */
 char keyboard_control_lock_state;
 /* 0xd149; array extent from address gap. */
@@ -217,9 +217,9 @@ int secret_code_character_2;
 /* UNREFERENCED: [0xd14f,0xd155) has no accepted object start or direct DS reference. */
 char secret_code_input_buffer[6];
 /* 0xd155; accepted scalar type. */
-int actor_3019_animation_state;
+int weak_bridge_animation_state;
 /* 0xd157; array extent from address gap. */
-struct level_tile_animation_record actor_3048_records[15];
+struct level_tile_animation_record door_lock_records[15];
 /* 0xd1cf; array extent from address gap. */
 struct pickup_object_record free_object_pool_records[20];
 /* 0xd247; accepted scalar type. */
@@ -227,11 +227,11 @@ int player_gameplay_state;
 /* 0xd249; array extent from address gap. */
 int formation_object_active_flags[12];
 /* 0xd261; array extent from address gap. */
-struct actor_3016_record actor_3016_records[100];
+struct wallcrawler_record wallcrawler_records[100];
 /* 0xd4b9; accepted scalar type. */
-int actor_3019_screen_x;
+int collapsing_bridge_screen_x;
 /* 0xd4bb; accepted scalar type. */
-int actor_3019_map_row;
+int collapsing_bridge_map_row;
 /* 0xd4bd; accepted scalar type. */
 int door_lock_world_x;
 /* 0xd4bf; accepted scalar type. */
@@ -245,13 +245,13 @@ struct ambient_object_record ambient_object_records[21];
 /* 0xd56b; accepted scalar type. */
 char joystick_enabled;
 /* 0xd56c; accepted scalar type. */
-int actor_3042_open_state;
+int dr_proton_open_state;
 /* 0xd56e; accepted scalar type. */
-int actor_302b_animation_counter;
+int reactor_animation_counter;
 /* 0xd570; accepted scalar type. */
 int door_or_key_interaction_state;
 /* 0xd572; accepted scalar type. */
-int actor_302b_open_state;
+int reactor_open_state;
 /* 0xd574; accepted scalar type. */
 int secret_block_world_x;
 /* 0xd576; accepted scalar type. */
@@ -261,15 +261,15 @@ int secret_block_world_y;
 /* 0xd579; accepted scalar type. */
 char current_sound_priority;
 /* 0xd57a; accepted scalar type. */
-int actor_3037_bonus_state;
+int letter_bonus_state;
 /* 0xd57c; accepted scalar type. */
 int level_progress_word;
 /* 0xd57e; array extent from address gap. */
-int actor_300d_auxiliary_states[100];
+int wheelbot_auxiliary_states[100];
 /* 0xd646; array extent from address gap. */
-int actor_3001_tile_below_records[100];
+int elevator_tile_below_records[100];
 /* 0xd70e; accepted scalar type. */
-int actor_3044_entity_count;
+int door_key_count;
 /* 0xd710; accepted scalar type. */
 char far *secondary_sound_bank_buffer;
 /* 0xd714; accepted scalar type. */
@@ -1643,7 +1643,7 @@ void pascal restore_game_state_from_slot(char slot_number)
     access_card_or_door_state = getw(save_file);
     player_contact_state = getw(save_file);
     title_graphic_frame_index = getw(save_file);
-    actor_3020_active_state = getw(save_file);
+    robohand_box_active_state = getw(save_file);
     hint_revealed_object_7 = getw(save_file);
     hint_revealed_object_9 = getw(save_file);
     hint_revealed_object_2 = getw(save_file);
@@ -2383,7 +2383,7 @@ void pascal load_primary_sound_bank(char far *filename)
     primary_sound_bank_buffer = malloc(9300);
     fread(primary_sound_bank_buffer, 9300, 1, sound_file);
     fclose(sound_file);
-    /* Header words follow each 16-byte actor_302a_record. */
+    /* Header words follow each 16-byte falling_sign_record. */
     /* Keep the nested shifts; i * 16 changes Turbo C output. */
     for (i = 0; i < 24; ++i) {
         sound_sample_pointer_table[i] = primary_sound_bank_buffer + (((struct sound_bank_index_record far *)(primary_sound_bank_buffer + ((((i << 1) << 1) << 1) << 1)))->index_words[8] >> 1 << 1);
@@ -2401,7 +2401,7 @@ void pascal load_secondary_sound_bank(char far *filename)
     secondary_sound_bank_buffer = malloc(8500);
     fread(secondary_sound_bank_buffer, 8000, 1, sound_file);
     fclose(sound_file);
-    /* Header words follow each 16-byte actor_302a_record. */
+    /* Header words follow each 16-byte falling_sign_record. */
     /* Keep the nested shifts; i * 16 changes Turbo C output. */
     for (i = 0; i < 24; ++i) {
         sound_sample_pointer_table[i + 24] = secondary_sound_bank_buffer + (((*((unsigned int far *)((char far *)secondary_sound_bank_buffer + ((((i << 1) << 1) << 1) << 1) + 16))) >> 1) << 1);
