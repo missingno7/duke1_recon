@@ -178,13 +178,37 @@ def build(srcdir: Path, ep: str, work: Path) -> dict:
     if rc != 0 or not (work / exe).exists():
         return {"status": "LINK_ERROR", "log": out.decode("latin-1")[-600:]}
     unpacked = (work / exe).read_bytes()
-    res = link.compare(unpacked, (work / f"DN{ep[-1]}.MAP").read_text("latin-1"), ep)
+    mapfile = (work / f"DN{ep[-1]}.MAP").read_text("latin-1")
+    res = link.compare(unpacked, mapfile, ep)
     packed = repack.pack(unpacked)
     want = load_json(LAYOUT / "oracle.lock.json")["episodes"][ep]["packed"]["sha256"]
     res = {"status": "EQUAL" if sha256(packed) == want else "DIFFER", "packed_sha256": sha256(packed),
            "packed_size": len(packed), "unpacked_status": res["status"],
            "differing_bytes": res["differing_bytes"], "first_diff": res["first_diff"]}
+    if res["differing_bytes"]:
+        res["differing_functions"] = differing_symbols(unpacked, mapfile, ep)
     return res
+
+
+def differing_symbols(exe: bytes, mapfile: str, ep: str, limit: int = 8) -> list:
+    """The public symbols (functions, data) that contain the first differing bytes."""
+    import re
+    import mz
+    import oracle
+    image, orig = mz.parse(exe).image, oracle.load_image(ep)[0]
+    pubs = sorted({(int(s, 16) * 16 + int(o, 16), n) for s, o, n in
+                   re.findall(r"(?m)^ ([0-9A-F]{4}):([0-9A-F]{4})\s+(\S+)\s*$", mapfile)})
+    out = []
+    for i in range(min(len(image), len(orig))):
+        if image[i] != orig[i]:
+            below = [(a, n) for a, n in pubs if a <= i]
+            a, n = below[-1] if below else (0, "?")
+            label = f"{n.lstrip('_')}+{i - a:#x}"
+            if not out or not out[-1].startswith(n.lstrip("_") + "+"):
+                out.append(label)
+                if len(out) >= limit:
+                    break
+    return out
 
 
 def main() -> int:
@@ -208,8 +232,9 @@ def main() -> int:
     for ep in ([a.episode] if a.episode else EPISODES):
         work = Path(a.keep) / ep if a.keep else BUILD / "scratch" / "standalone" / uuid.uuid4().hex[:8]
         res = build(Path(a.dir), ep, work)
-        atomic_json(BUILD / "standalone" / f"{ep}.json", res)
-        print(f"{ep}: {res['status']}  {str({k: v for k, v in res.items() if k != 'status'})[:300]}")
+        if Path(a.dir).resolve() == DEFAULT_DIR.resolve():
+            atomic_json(BUILD / "standalone" / f"{ep}.json", res)
+        print(f"{ep}: {res['status']}  {str({k: v for k, v in res.items() if k != 'status'})[:600]}")
         if not a.keep:
             shutil.rmtree(work, ignore_errors=True)
         rc |= res["status"] != "EQUAL"
